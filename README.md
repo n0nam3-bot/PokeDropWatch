@@ -56,4 +56,6 @@ The first successful scan records the current listings as a baseline; it does no
 
 There is no universal public inventory feed for every Pokémon product or retailer. Some stores block automated requests, render listings with JavaScript, personalize stock by location, or change their page structure. A failed source is shown as an error instead of being counted as a successful scan. The dashboard and email are a monitoring aid, not a guarantee of complete coverage or a reservation; confirm final price and availability with the retailer before purchasing.
 
+For detailed configuration, customization, testing, release, and ZIP patch instructions, see [docs/CONFIGURATION_AND_CHANGE_GUIDE.md](docs/CONFIGURATION_AND_CHANGE_GUIDE.md).
+
 PokéDrop Watch is an unofficial fan project and is not affiliated with Nintendo, The Pokémon Company, Pokémon Center, or the listed retailers.

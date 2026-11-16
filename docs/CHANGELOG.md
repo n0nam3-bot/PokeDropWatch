@@ -2,6 +2,17 @@
 
 All notable project changes are recorded here. Entries are ordered newest first. Dates use `YYYY-MM-DD`.
 
+## [1.0.2] — 2026-11-16
+
+### Added
+- Added `docs/CONFIGURATION_AND_CHANGE_GUIDE.md` as the canonical reference for project structure, settings, GitHub configuration, customization rules, testing, change requests, and ZIP patch releases.
+
+### Changed
+- Linked the detailed configuration and change guide from the README.
+
+### Tests
+- Passed all 10 automated tests, source-configuration JSON validation, and a clean-copy ZIP patch installation/path check.
+
 ## [1.0.1] — 2026-11-16
 
 ### Changed
