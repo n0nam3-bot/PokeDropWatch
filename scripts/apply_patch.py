@@ -15,7 +15,7 @@ MAX_FILES = 1000
 MAX_UNCOMPRESSED = 50 * 1024 * 1024
 BLOCKED_TOP_LEVEL = {".git", "updates"}
 REPOSITORY_ROOT_NAMES = {
-    "docs", "monitor", "config", "scripts", "tests",
+    "docs", "monitor", "config", "scripts", "tests", "firebase",
     "README.md", ".gitignore", ".nojekyll",
 }
 

@@ -31,7 +31,7 @@
           <p class="eyebrow">THE TRAINER'S RESTOCK RADAR</p>
           <h1>Catch the drop.<br><span>Not the disappointment.</span></h1>
           <p class="hero-sub">A quiet watch over Pokémon cards, collectibles, plush and more. Get an email when a monitored source changes.</p>
-          <div class="hero-foot"><span class="shield-icon">✓</span> No AI. No paid API. No account on this page.</div>
+          <div class="hero-foot"><span class="shield-icon">✓</span> No AI-generated picks · Verified email alerts · Admin-approved subscribers</div>
         </div>
         <div class="hero-emblem" aria-hidden="true">
           <div class="emblem-ring"><div class="emblem-ball"><span></span></div></div>
@@ -76,20 +76,78 @@
         <div id="alertList" class="alert-list"><div class="empty-state large-empty"><span class="empty-ball">◉</span><strong>No alerts yet</strong><span>Once the monitor completes its first scan, new drops and changes will show here.</span></div></div>
       </section>
 
-      <section class="setup-panel">
-        <div class="setup-icon">✉</div>
-        <div class="setup-copy"><p class="eyebrow">DON'T MISS THE NEXT ONE</p><h2>Send alerts to your inbox</h2><p>Add your email credentials once in your GitHub repository's Actions secrets. Setup steps are in the included README.</p></div>
-        <span class="setup-badge">FREE EMAIL</span>
+      <section class="section-block subscription-section" id="subscriptions">
+        <div class="section-heading">
+          <div><p class="eyebrow">TRAINER ALERTS</p><h2>Get Pokémon drop notifications</h2></div>
+          <span class="section-note">Email verification required</span>
+        </div>
+        <div class="subscription-grid">
+          <section class="form-panel">
+            <div class="form-intro"><span class="form-icon">✉</span><div><h3>Apply for alerts</h3><p>Verify your email first. New applications are reviewed by the site administrator before alerts begin.</p></div></div>
+            <form id="subscribeForm">
+              <label for="subscribeEmail">Email address</label>
+              <input id="subscribeEmail" type="email" autocomplete="email" required placeholder="you@example.com">
+              <fieldset class="choice-group">
+                <legend>What would you like to follow?</legend>
+                <div class="choice-grid">
+                  <label><input type="checkbox" name="category" value="tcg" checked> Pokémon TCG</label>
+                  <label><input type="checkbox" name="category" value="plush" checked> Plush</label>
+                  <label><input type="checkbox" name="category" value="collectibles" checked> Collectibles</label>
+                  <label><input type="checkbox" name="category" value="games" checked> Games</label>
+                  <label><input type="checkbox" name="category" value="news" checked> News</label>
+                </div>
+              </fieldset>
+              <fieldset class="choice-group">
+                <legend>Retailers and sources</legend>
+                <div class="choice-grid retailer-choices">
+                  <label><input type="checkbox" name="retailer" value="all" checked> All retailers</label>
+                  <label><input type="checkbox" name="retailer" value="pokemon-center"> Pokémon Center</label>
+                  <label><input type="checkbox" name="retailer" value="target"> Target</label>
+                  <label><input type="checkbox" name="retailer" value="walmart"> Walmart</label>
+                  <label><input type="checkbox" name="retailer" value="best-buy"> Best Buy</label>
+                  <label><input type="checkbox" name="retailer" value="gamestop"> GameStop</label>
+                  <label><input type="checkbox" name="retailer" value="amazon"> Amazon</label>
+                  <label><input type="checkbox" name="retailer" value="pokebeach"> PokéBeach</label>
+                </div>
+              </fieldset>
+              <button id="subscribeButton" class="primary-button" type="submit">Send verification link</button>
+            </form>
+            <div class="form-divider"><span>Already subscribed?</span></div>
+            <form id="unsubscribeForm" class="unsubscribe-form">
+              <label for="unsubscribeEmail">Email address for secure unsubscribe</label>
+              <div class="inline-form"><input id="unsubscribeEmail" type="email" autocomplete="email" required placeholder="you@example.com"><button id="unsubscribeButton" class="secondary-button" type="submit">Send link</button></div>
+              <p class="field-note">A secure link is sent to the entered address. The link itself does not unsubscribe anyone; the recipient must confirm on the website.</p>
+            </form>
+            <div id="subscriptionAccount" class="account-panel" hidden>
+              <div><span class="eyebrow">YOUR SUBSCRIPTION</span><strong id="subscriberEmail"></strong><p id="subscriberState"></p></div>
+              <div class="account-actions"><button id="savePreferencesButton" class="secondary-button" type="button" hidden>Save preferences</button><button id="subscriberSignOutButton" class="quiet-button" type="button" hidden>Sign out</button></div>
+            </div>
+            <div id="unsubscribeConfirm" class="confirm-panel" hidden>
+              <strong>Email ownership verified</strong>
+              <p>Confirm to stop all PokéDrop Watch notification emails for this address.</p>
+              <button id="confirmUnsubscribeButton" class="danger-button" type="button">Confirm unsubscribe</button>
+            </div>
+            <p id="subscriptionStatus" class="form-status" role="status" aria-live="polite">Subscription applications require Firebase setup by the site owner. See the setup guide in the repository.</p>
+          </section>
+          <aside class="subscription-aside">
+            <div class="aside-mark">◉</div>
+            <h3>Verified. Reviewed. In control.</h3>
+            <p>Applications are approved by the site administrator. Email ownership is verified before an application is stored.</p>
+            <p>Unsubscribing requires a fresh email sign-in link and a final confirmation. Knowing someone's email address is not enough to remove them.</p>
+            <a href="./FIREBASE_SETUP.html">How subscription security works ↗</a>
+          </aside>
+        </div>
       </section>
 
       <footer class="footer">
         <a class="footer-brand" href="./"><span class="mini-ball"></span> PokéDrop Watch</a>
         <span>Fan-made tracker · Not affiliated with Pokémon or retailers</span>
-        <a href="https://github.com" target="_blank" rel="noopener noreferrer">Powered by GitHub Actions</a>
+        <div class="footer-links"><a href="./admin.html">Administrator</a><a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub Actions</a></div>
       </footer>
     </main>
   </div>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="./app.js" defer></script>
+  <script type="module" src="./subscriptions.js"></script>
 </body>
 </html>

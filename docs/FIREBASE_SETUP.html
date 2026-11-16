@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#c83232">
+  <title>Firebase Setup · PokéDrop Watch</title>
+  <link rel="stylesheet" href="./styles.css">
+  <style>
+    .guide-wrap{max-width:850px;margin:28px auto 50px}.guide-card{background:#fff;border:1px solid var(--line);border-radius:11px;padding:22px;margin:14px 0}.guide-card h2{font:700 19px system-ui,sans-serif;margin:0 0 9px}.guide-card p,.guide-card li{font-size:11px;line-height:1.75;color:#66675f}.guide-card ol,.guide-card ul{padding-left:20px}.guide-card code{font-size:10px;background:#f3f3ef;border-radius:4px;padding:2px 4px;overflow-wrap:anywhere}.guide-card pre{overflow:auto;background:#282b29;color:#f6f4ee;padding:13px;border-radius:7px;font-size:10px}.guide-callout{padding:13px;border-radius:8px;background:#fff5df;color:#806324;font-size:11px;line-height:1.6}.guide-wrap h1{font:700 clamp(28px,5vw,40px) system-ui,sans-serif;letter-spacing:-1.3px;margin:6px 0}.guide-wrap .lede{font-size:12px;color:var(--muted);line-height:1.6}.guide-card a{color:var(--red);font-weight:700}.guide-nav{display:flex;gap:15px;flex-wrap:wrap;margin:18px 0}.guide-nav a{font-size:10px;color:var(--red);font-weight:700}
+    @media(max-width:600px){.guide-wrap{margin:20px auto 35px}.guide-card{padding:16px}.guide-card h2{font-size:17px}.guide-card p,.guide-card li{font-size:10px}}
+  </style>
+</head>
+<body>
+  <div class="site-shell guide-wrap">
+    <header class="topbar">
+      <a class="brand" href="./"><span class="pokeball" aria-hidden="true"><i></i></span><span><strong>PokéDrop</strong><small>WATCH</small></span></a>
+      <a class="text-link" href="./admin.html">Administrator →</a>
+    </header>
+    <main>
+      <p class="eyebrow">ONE-TIME OWNER SETUP</p>
+      <h1>Connect the subscriber system</h1>
+      <p class="lede">PokéDrop Watch uses Firebase Authentication and Firestore for verified applications, private subscriber records, approval, and unsubscribe confirmation. The public website stays on GitHub Pages.</p>
+      <div class="guide-callout">This is designed for Firebase's no-cost Spark plan and a small, low-volume community. Firebase, GitHub Actions, and Gmail have quotas; free does not mean unlimited. Do not enable billing just to complete these steps.</div>
+      <nav class="guide-nav"><a href="#firebase">1. Firebase project</a><a href="#auth">2. Email sign-in</a><a href="#config">3. Web config</a><a href="#github">4. GitHub secrets</a><a href="#pages">5. Publish site</a><a href="#test">6. Test</a></nav>
+
+      <section class="guide-card" id="firebase">
+        <h2>1. Create Firebase and Firestore</h2>
+        <ol>
+          <li>Open <a href="https://console.firebase.google.com/" target="_blank" rel="noopener">Firebase Console</a> and create a project. Keep it on the Spark plan; Analytics is not required.</li>
+          <li>Open Build → Firestore Database → Create database. Choose the database location carefully because it cannot be changed later.</li>
+          <li>Open Firestore's Rules tab. Copy the entire file <code>firebase/firestore.rules</code> from the GitHub repository into the rules editor.</li>
+          <li>In the Firebase Console rules editor, replace <code>replace-with-your-admin-email@example.com</code> with your lowercase administrator email. Publish the rules there. Keep the placeholder in the public GitHub copy; do not commit your real administrator email.</li>
+        </ol>
+        <p>Do not leave Firestore in test mode. The published rules are what prevent a visitor from viewing or changing another subscriber's record.</p>
+      </section>
+
+      <section class="guide-card" id="auth">
+        <h2>2. Enable verified email-link sign-in</h2>
+        <ol>
+          <li>Open Build → Authentication → Get started.</li>
+          <li>Under Sign-in method, enable Email/Password and the Email link (passwordless sign-in) option.</li>
+          <li>Open Authentication Settings → Authorized domains. Add <code>YOUR-GITHUB-USERNAME.github.io</code> (hostname only, no repository path).</li>
+        </ol>
+        <p>Visitors receive a sign-in link. They must open it to prove mailbox ownership before an application is created. Unsubscribing requires another sign-in link and a separate confirmation button.</p>
+      </section>
+
+      <section class="guide-card" id="config">
+        <h2>3. Register a Firebase web app</h2>
+        <ol>
+          <li>Open Project settings → General → Your apps. Add a Web app; Firebase Hosting is not required.</li>
+          <li>Copy the web SDK values.</li>
+          <li>In GitHub, open <code>docs/firebase-config.js</code>. Replace the placeholders for <code>apiKey</code>, <code>authDomain</code>, <code>projectId</code>, <code>appId</code>, and <code>messagingSenderId</code>.</li>
+          <li>Save and commit the file. The administrator email is deliberately not stored in public website JavaScript.</li>
+        </ol>
+        <p>The browser config is public by design. Never paste the Firebase service-account private key into this file or any file in <code>docs/</code>.</p>
+      </section>
+
+      <section class="guide-card" id="github">
+        <h2>4. Add private GitHub Actions secrets</h2>
+        <ol>
+          <li>In Firebase Project settings → Service accounts, generate a new private key and download the JSON.</li>
+          <li>In GitHub repository Settings → Secrets and variables → Actions, create secret <code>FIREBASE_SERVICE_ACCOUNT_JSON</code> and paste the full JSON file contents as its value.</li>
+          <li>Create secret <code>SMTP_USERNAME</code> with the Gmail sender address.</li>
+          <li>Create secret <code>SMTP_APP_PASSWORD</code> with that Gmail account's App Password (not the normal account password).</li>
+          <li>Optionally create secret <code>ALERT_EMAIL</code> to receive an additional owner-only copy.</li>
+          <li>Create Actions variable <code>PUBLIC_SITE_URL</code> with the complete Pages URL, including repository path, for example <code>https://YOUR-GITHUB-USERNAME.github.io/REPOSITORY-NAME/</code>.</li>
+        </ol>
+        <p>Never upload the service-account JSON file to the repository or include it in a ZIP patch. If the key is exposed, revoke it and generate a replacement.</p>
+        <p>Replace <code>.github/workflows/pokedrop-watch.yml</code> with the release's supplied workflow file so it passes the two Firebase values into the monitor step. Workflow files are updated directly in GitHub, not through normal ZIP patches.</p>
+        <p>Gmail App Passwords require two-step verification and may be unavailable for some account types or administrator policies. Gmail sending limits apply; start with a small group.</p>
+      </section>
+
+      <section class="guide-card" id="pages">
+        <h2>5. Publish the actual website</h2>
+        <ol>
+          <li>In the repository open Settings → Pages.</li>
+          <li>Choose Deploy from a branch, branch <code>main</code>, folder <code>/docs</code>, then Save.</li>
+          <li>Open the Pages URL GitHub displays. It normally looks like <code>https://YOUR-GITHUB-USERNAME.github.io/REPOSITORY-NAME/</code>.</li>
+        </ol>
+        <p>The repository Code tab will always show the README. Visitors use the separate Pages URL. The website starts at <code>docs/index.html</code>; the private admin page is <code>/admin.html</code> below the same Pages base URL.</p>
+      </section>
+
+      <section class="guide-card" id="test">
+        <h2>6. Test the full flow</h2>
+        <ol>
+          <li>Submit a test application from the public site using an email address you can open.</li>
+          <li>Open its Firebase email link. The page should confirm the application is pending admin approval.</li>
+          <li>Open the Administrator link, enter the admin email configured privately in Firestore rules, request its secure link, and sign in.</li>
+          <li>Approve the test application in the admin dashboard.</li>
+          <li>Run the GitHub Actions workflow manually. New matching product events will be sent to active subscribers; approving someone does not trigger historical alerts.</li>
+          <li>Test unsubscribe: request a fresh link from the public site, open it, and press Confirm unsubscribe.</li>
+        </ol>
+        <p>Subscriber email addresses stay in Firestore. They are not written to the public dashboard status file or shared with other subscribers.</p>
+      </section>
+      <footer class="footer"><a class="footer-brand" href="./"><span class="mini-ball"></span> PokéDrop Watch</a><span>Unofficial fan project · GitHub Pages + Firebase</span><a href="./admin.html">Admin page</a></footer>
+    </main>
+  </div>
+</body>
+</html>

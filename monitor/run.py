@@ -9,6 +9,7 @@ import sys
 from pathlib import Path
 
 from engine import make_session, scan_source, send_email, utc_now
+from subscribers import dispatch_subscriber_notifications
 
 
 def read_json(path: Path, default):
@@ -42,6 +43,7 @@ def main() -> int:
         "events": [],
         "pending_email": [],
         "email_status": "Not configured",
+        "subscriber_delivery_status": "Not configured",
     })
     settings = config.get("settings", {})
     sources = [s for s in config.get("sources", []) if s.get("enabled", True)]
@@ -87,11 +89,12 @@ def main() -> int:
     pending_events = list(pending.values())
     state["events"] = (new_events + state.get("events", []))[:int(settings.get("history_limit", 100))]
 
-    if pending_events:
+    owner_recipient_configured = bool(os.environ.get("ALERT_EMAIL", "").strip())
+    if pending_events and owner_recipient_configured:
         try:
             sent, message = send_email(pending_events, os.environ, settings.get("email_digest_subject_prefix", "PokéDrop Watch"))
         except Exception as exc:
-            sent, message = False, f"Email send failed and will be retried: {str(exc)[:240]}"
+            sent, message = False, f"Email send failed and will be retried ({type(exc).__name__})."
         if sent:
             sent_ids = {event["id"] for event in pending_events}
             for event in state["events"]:
@@ -102,9 +105,20 @@ def main() -> int:
         else:
             state["pending_email"] = pending_events[:100]
             state["email_status"] = message
+    elif pending_events:
+        # Do not accumulate a personal digest backlog when no personal recipient is configured.
+        # Subscriber events are queued privately per active subscriber below.
+        state["pending_email"] = []
+        state["email_status"] = "Owner-only alert copy is not configured."
     else:
         state["pending_email"] = []
-        state["email_status"] = "No new alerts in this scan."
+        state["email_status"] = "No new personal alerts in this scan."
+
+    state["subscriber_delivery_status"] = dispatch_subscriber_notifications(
+        new_events,
+        os.environ,
+        settings.get("email_digest_subject_prefix", "PokéDrop Watch"),
+    )
 
     product_source_ids = {source["id"] for source in sources if source.get("type") in {"catalog", "product"}}
     state["summary"] = {
@@ -115,7 +129,7 @@ def main() -> int:
         "tracked_products": sum(state.get("items", {}).get(source_id, {}).get("last_item_count", 0) for source_id in product_source_ids),
     }
     write_json(state_path, state)
-    print(f"Finished: {len(new_events)} new alert(s), {failures} source failure(s). {state['email_status']}")
+    print(f"Finished: {len(new_events)} new alert(s), {failures} source failure(s). {state['email_status']} Subscriber delivery: {state['subscriber_delivery_status']}")
     # A partial source failure is visible in the dashboard; it should not discard successful scans.
     return 0
 

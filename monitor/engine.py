@@ -313,14 +313,24 @@ def price_text(item: dict[str, Any]) -> str:
     return f"{symbol}{float(val):,.2f}"
 
 
+def _retailer_key(value: str) -> str:
+    value = clean_text(value, 100).lower()
+    value = value.replace("pokémon", "pokemon")
+    return re.sub(r"[^a-z0-9]+", "-", value).strip("-") or "other"
+
+
 def event_record(event_type: str, item: dict[str, Any], source: dict[str, Any], previous_price: Any = None, detail: str = "") -> dict[str, Any]:
     identity = f"{source['id']}|{item.get('url')}|{event_type}|{item.get('price')}|{utc_now()}"
+    retailer = item.get("retailer") or source.get("retailer") or source.get("name", "Source")
+    category = source.get("category") or ("news" if source.get("type") == "rss" else "collectibles")
     return {
         "id": hashlib.sha256(identity.encode("utf-8")).hexdigest()[:18],
         "type": event_type,
         "title": item.get("title") or source.get("name", "Pokémon item"),
         "url": item.get("url") or source["url"],
-        "retailer": item.get("retailer") or source.get("retailer") or source.get("name", "Source"),
+        "retailer": retailer,
+        "retailer_key": source.get("retailer_key") or _retailer_key(retailer),
+        "category": category,
         "source_name": source.get("name", "Source"),
         "source_id": source["id"],
         "price": item.get("price"),
@@ -422,7 +432,7 @@ def scan_source(session: requests.Session, source: dict[str, Any], settings: dic
     return events, {"state": current_source_state, "status": status}
 
 
-def html_email(events: list[dict[str, Any]], brand: str = "PokéDrop Watch") -> tuple[str, str, str]:
+def html_email(events: list[dict[str, Any]], brand: str = "PokéDrop Watch", manage_url: str = "") -> tuple[str, str, str]:
     count = len(events)
     subject_line = f"{brand}: {count} Pokémon alert{'s' if count != 1 else ''}"
     cards_html = []
@@ -461,6 +471,12 @@ def html_email(events: list[dict[str, Any]], brand: str = "PokéDrop Watch") -> 
             <div style="margin-top:13px"><a href="{safe_link}" style="display:inline-block;padding:10px 15px;background:#c83232;color:#fff;text-decoration:none;border-radius:7px;font:700 13px Arial,sans-serif">View item / source →</a></div>
           </td></tr>
         """)
+    manage_html = (
+        f'<p style="margin:10px 0 0"><a href="{html.escape(manage_url, quote=True)}" '
+        'style="color:#a62e2e;font-weight:700">Manage preferences or request secure unsubscribe</a></p>'
+        if manage_url else ""
+    )
+    manage_text = f"\nManage preferences or request secure unsubscribe: {manage_url}" if manage_url else ""
     html_body = f"""<!doctype html><html><body style="margin:0;background:#f5f5f3;padding:24px 10px">
       <table role="presentation" cellpadding="0" cellspacing="0" style="max-width:620px;width:100%;margin:0 auto;background:#fff;border:1px solid #e8e8e5;border-radius:12px;overflow:hidden">
         <tr><td style="background:#c83232;padding:20px 22px;color:#fff">
@@ -470,22 +486,29 @@ def html_email(events: list[dict[str, Any]], brand: str = "PokéDrop Watch") -> 
         {''.join(cards_html)}
         <tr><td style="padding:16px 20px;background:#fafaf8;font:12px/1.6 Arial,sans-serif;color:#777">
           Automated public-page monitor. Prices and availability can change quickly; confirm on the retailer's page before purchasing. Not affiliated with Nintendo, The Pokémon Company, or any retailer.
+          {manage_html}
         </td></tr>
       </table></body></html>"""
-    text_body = f"{brand}\n{count} new Pokémon update(s) detected\n\n" + "\n---\n".join(cards_text) + "\nPrices and availability can change quickly. Confirm with the retailer.\n"
+    text_body = f"{brand}\n{count} new Pokémon update(s) detected\n\n" + "\n---\n".join(cards_text) + "\nPrices and availability can change quickly. Confirm with the retailer.\n" + manage_text + "\n"
     return subject_line, html_body, text_body
 
 
-def send_email(events: list[dict[str, Any]], env: dict[str, str], prefix: str = "PokéDrop Watch") -> tuple[bool, str]:
+def send_email(
+    events: list[dict[str, Any]],
+    env: dict[str, str],
+    prefix: str = "PokéDrop Watch",
+    recipient: str | None = None,
+    manage_url: str = "",
+) -> tuple[bool, str]:
     username = env.get("SMTP_USERNAME", "").strip()
     password = env.get("SMTP_APP_PASSWORD", "").strip()
-    recipient = env.get("ALERT_EMAIL", "").strip()
+    recipient = (recipient or env.get("ALERT_EMAIL", "")).strip()
     if not (username and password and recipient):
-        return False, "Email is not configured; add SMTP_USERNAME, SMTP_APP_PASSWORD and ALERT_EMAIL repository secrets."
+        return False, "Email is not configured; add SMTP_USERNAME and SMTP_APP_PASSWORD plus a recipient."
     import smtplib
     host = (env.get("SMTP_HOST") or "smtp.gmail.com").strip()
     port = int(env.get("SMTP_PORT") or "587")
-    subject, html_body, text_body = html_email(events, prefix)
+    subject, html_body, text_body = html_email(events, prefix, manage_url)
     msg = EmailMessage()
     msg["Subject"] = subject
     msg["From"] = username
@@ -498,4 +521,4 @@ def send_email(events: list[dict[str, Any]], env: dict[str, str], prefix: str = 
         server.ehlo()
         server.login(username, password)
         server.send_message(msg)
-    return True, f"Email digest sent to {recipient}."
+    return True, "Email digest sent successfully."

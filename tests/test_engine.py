@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'monitor'))
-from engine import extract_structured_products, normalize_availability, parse_rss, stable_url
+from engine import extract_structured_products, normalize_availability, parse_rss, stable_url, event_record, html_email
 from bs4 import BeautifulSoup
 
 
@@ -29,6 +29,24 @@ class EngineTests(unittest.TestCase):
         self.assertEqual(products[0]['title'], 'Pokémon TCG Example Elite Trainer Box')
         self.assertEqual(products[0]['price'], 49.99)
         self.assertEqual(products[0]['availability'], 'in_stock')
+
+    def test_event_record_carries_subscription_filters(self):
+        event = event_record('restock', {'title': 'Pokémon box', 'url': 'https://shop.example/box'}, {
+            'id': 'pc-tcg', 'name': 'Pokémon Center TCG', 'retailer': 'Pokémon Center',
+            'type': 'catalog', 'category': 'tcg', 'retailer_key': 'pokemon-center',
+            'url': 'https://shop.example/tcg'
+        })
+        self.assertEqual(event['category'], 'tcg')
+        self.assertEqual(event['retailer_key'], 'pokemon-center')
+
+    def test_email_contains_secure_manage_link(self):
+        subject, html_body, text_body = html_email(
+            [{'id': '1', 'type': 'restock', 'title': 'Pokémon box', 'url': 'https://shop.example/box', 'retailer': 'Example', 'price': 49.99, 'availability': 'in_stock'}],
+            manage_url='https://example.github.io/watch/?unsubscribe=1#subscriptions'
+        )
+        self.assertIn('PokéDrop Watch', subject)
+        self.assertIn('request secure unsubscribe', html_body)
+        self.assertIn('https://example.github.io/watch/?unsubscribe=1#subscriptions', text_body)
 
     def test_rss_items_are_parsed(self):
         sample = '''<rss version="2.0"><channel><item><title>New Pokémon collection announced</title>

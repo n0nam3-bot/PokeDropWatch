@@ -15,7 +15,9 @@
       "type": "catalog",
       "url": "https://www.pokemoncenter.com/category/trading-card-game",
       "enabled": true,
-      "notes": "Official Pokémon Center TCG listing. Product discovery depends on the public page exposing product links or structured data."
+      "notes": "Official Pokémon Center TCG listing. Product discovery depends on the public page exposing product links or structured data.",
+      "category": "tcg",
+      "retailer_key": "pokemon-center"
     },
     {
       "id": "pokemon-center-plush",
@@ -24,7 +26,9 @@
       "type": "catalog",
       "url": "https://www.pokemoncenter.com/category/plush",
       "enabled": true,
-      "notes": "Official Pokémon Center plush listing."
+      "notes": "Official Pokémon Center plush listing.",
+      "category": "plush",
+      "retailer_key": "pokemon-center"
     },
     {
       "id": "target-pokemon",
@@ -33,7 +37,9 @@
       "type": "catalog",
       "url": "https://www.target.com/s?searchTerm=pokemon",
       "enabled": true,
-      "notes": "Search listing; retailer may limit automated access or render listings in JavaScript."
+      "notes": "Search listing; retailer may limit automated access or render listings in JavaScript.",
+      "category": "collectibles",
+      "retailer_key": "target"
     },
     {
       "id": "walmart-pokemon",
@@ -42,7 +48,9 @@
       "type": "catalog",
       "url": "https://www.walmart.com/search?q=pokemon",
       "enabled": true,
-      "notes": "Search listing; marketplace sellers and availability can vary by location."
+      "notes": "Search listing; marketplace sellers and availability can vary by location.",
+      "category": "collectibles",
+      "retailer_key": "walmart"
     },
     {
       "id": "best-buy-pokemon",
@@ -51,7 +59,9 @@
       "type": "catalog",
       "url": "https://www.bestbuy.com/site/searchpage.jsp?st=pokemon",
       "enabled": true,
-      "notes": "Search listing; page structure may change."
+      "notes": "Search listing; page structure may change.",
+      "category": "collectibles",
+      "retailer_key": "best-buy"
     },
     {
       "id": "gamestop-pokemon",
@@ -60,7 +70,9 @@
       "type": "catalog",
       "url": "https://www.gamestop.com/search/?q=pokemon",
       "enabled": true,
-      "notes": "Search listing; page structure may change."
+      "notes": "Search listing; page structure may change.",
+      "category": "collectibles",
+      "retailer_key": "gamestop"
     },
     {
       "id": "amazon-pokemon-tcg",
@@ -69,7 +81,9 @@
       "type": "catalog",
       "url": "https://www.amazon.com/s?k=pokemon+trading+cards",
       "enabled": true,
-      "notes": "Search listing; Amazon may block automated access or show region/personalized results."
+      "notes": "Search listing; Amazon may block automated access or show region/personalized results.",
+      "category": "tcg",
+      "retailer_key": "amazon"
     },
     {
       "id": "pokebeach-news",
@@ -78,7 +92,9 @@
       "type": "rss",
       "url": "https://www.pokebeach.com/feed",
       "enabled": true,
-      "notes": "Independent Pokémon TCG news feed; useful for product announcements and release information, not live stock confirmation."
+      "notes": "Independent Pokémon TCG news feed; useful for product announcements and release information, not live stock confirmation.",
+      "category": "news",
+      "retailer_key": "pokebeach"
     }
   ]
 }

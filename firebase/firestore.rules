@@ -1,0 +1,82 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function verifiedEmail() {
+      return signedIn()
+        && request.auth.token.email_verified == true
+        && request.auth.token.email is string;
+    }
+
+    // Replace this value with the lowercase administrator email address
+    // also entered in docs/firebase-config.js.
+    function isAdmin() {
+      return verifiedEmail()
+        && request.auth.token.email == 'replace-with-your-admin-email@example.com';
+    }
+
+    function ownsSubscriber(uid) {
+      return verifiedEmail()
+        && request.auth.uid == uid
+        && resource.data.email == request.auth.token.email;
+    }
+
+    function validPreferences(data) {
+      return data.categories is list
+        && data.categories.size() >= 1
+        && data.categories.size() <= 5
+        && data.categories.toSet().hasOnly(['tcg', 'plush', 'collectibles', 'games', 'news'])
+        && data.retailers is list
+        && data.retailers.size() >= 1
+        && data.retailers.size() <= 8
+        && data.retailers.toSet().hasOnly(['all', 'pokemon-center', 'target', 'walmart', 'best-buy', 'gamestop', 'amazon', 'pokebeach']);
+    }
+
+    match /subscribers/{uid} {
+      // Visitors can create only their own pending application after completing
+      // Firebase email-link verification. They cannot choose their own status.
+      allow create: if verifiedEmail()
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasAll(['email', 'status', 'categories', 'retailers', 'createdAt', 'updatedAt'])
+        && request.resource.data.keys().hasOnly(['email', 'status', 'categories', 'retailers', 'createdAt', 'updatedAt'])
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.status == 'pending'
+        && validPreferences(request.resource.data);
+
+      // Subscribers can read their own record; only the configured admin can list all records.
+      allow get: if isAdmin() || (verifiedEmail() && request.auth.uid == uid);
+      allow list: if isAdmin();
+
+      // The owner can edit preferences, reapply after rejection/unsubscription,
+      // or unsubscribe themselves. Only the admin may approve, reject, suspend,
+      // reactivate, or remove a record.
+      allow update: if isAdmin()
+        || (ownsSubscriber(uid)
+          && request.resource.data.email == resource.data.email
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['categories', 'retailers', 'updatedAt'])
+          && request.resource.data.status == resource.data.status
+          && validPreferences(request.resource.data))
+        || (ownsSubscriber(uid)
+          && request.resource.data.email == resource.data.email
+          && request.resource.data.status == 'unsubscribed'
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'unsubscribedAt', 'updatedAt']))
+        || (ownsSubscriber(uid)
+          && resource.data.status in ['unsubscribed', 'rejected']
+          && request.resource.data.email == resource.data.email
+          && request.resource.data.status == 'pending'
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'categories', 'retailers', 'updatedAt', 'reappliedAt'])
+          && validPreferences(request.resource.data));
+
+      allow delete: if isAdmin();
+
+      // Notification delivery records are written only by the trusted GitHub
+      // Actions service account, never by public browser clients.
+      match /deliveries/{deliveryId} {
+        allow read, write: if false;
+      }
+    }
+  }
+}

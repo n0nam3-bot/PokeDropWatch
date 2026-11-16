@@ -2,3 +2,6 @@ __pycache__/
 *.py[cod]
 .venv/
 .env
+*service-account*.json
+*firebase-adminsdk*.json
+firebase-debug.log

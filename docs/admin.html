@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#c83232">
+  <meta name="description" content="Private PokéDrop Watch subscriber administration.">
+  <title>Admin · PokéDrop Watch</title>
+  <link rel="icon" href="./pokeball.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="site-shell admin-shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="PokéDrop Watch home">
+        <span class="pokeball" aria-hidden="true"><i></i></span>
+        <span><strong>PokéDrop</strong><small>ADMIN</small></span>
+      </a>
+      <a class="text-link" href="./">← Public website</a>
+    </header>
+
+    <main>
+      <section class="admin-hero">
+        <p class="eyebrow">PRIVATE ADMINISTRATION</p>
+        <h1>Subscriber management</h1>
+        <p>Review verified applications and control who receives PokéDrop Watch email alerts.</p>
+      </section>
+
+      <section id="adminSetupNotice" class="setup-notice" role="status">
+        Admin access is not configured. Follow <a href="./FIREBASE_SETUP.html">the Firebase setup guide</a> first.
+      </section>
+
+      <section id="adminLoginPanel" class="form-panel admin-login-panel">
+        <form id="adminLoginForm">
+          <label for="adminEmailInput">Administrator email</label>
+          <input id="adminEmailInput" type="email" autocomplete="email" required placeholder="Your verified admin email">
+          <button id="adminLoginButton" class="primary-button" type="submit">Email secure sign-in link</button>
+          <p id="adminLoginStatus" class="form-status" role="status" aria-live="polite">Enter the email address configured as administrator in the private Firestore rules. Only that verified account can view subscriber records.</p>
+        </form>
+      </section>
+
+      <section id="adminDashboard" hidden>
+        <div class="admin-toolbar">
+          <div><p class="eyebrow">ACCESS GRANTED</p><h2>Subscriber overview</h2><span id="adminIdentity" class="muted-text"></span></div>
+          <button id="adminSignOut" class="secondary-button" type="button">Sign out</button>
+        </div>
+        <div class="metrics admin-metrics">
+          <article class="metric-card"><span class="metric-label">PENDING</span><strong id="pendingCount">0</strong><span class="metric-caption">awaiting review</span></article>
+          <article class="metric-card"><span class="metric-label">ACTIVE</span><strong id="activeCount">0</strong><span class="metric-caption">receive alerts</span></article>
+          <article class="metric-card"><span class="metric-label">OTHER</span><strong id="otherCount">0</strong><span class="metric-caption">paused or closed</span></article>
+        </div>
+        <div class="admin-list-heading">
+          <h2>Applications and subscribers</h2>
+          <select id="subscriberFilter" aria-label="Filter subscribers">
+            <option value="all">All records</option>
+            <option value="pending">Pending</option>
+            <option value="active">Active</option>
+            <option value="suspended">Suspended</option>
+            <option value="rejected">Rejected</option>
+            <option value="unsubscribed">Unsubscribed</option>
+            <option value="removed">Removed</option>
+          </select>
+        </div>
+        <div id="subscriberList" class="subscriber-list"><div class="empty-state">Loading subscriber records…</div></div>
+        <p id="adminActionStatus" class="form-status" role="status" aria-live="polite"></p>
+      </section>
+
+      <footer class="footer">
+        <a class="footer-brand" href="./"><span class="mini-ball"></span> PokéDrop Watch</a>
+        <span>Subscriber records are restricted by Firestore security rules.</span>
+      </footer>
+    </main>
+  </div>
+  <script type="module" src="./admin.js"></script>
+</body>
+</html>

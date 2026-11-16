@@ -2,7 +2,7 @@
 
 **Purpose:** This is the project's reference manual for configuring, customizing, testing, and changing PokéDrop Watch. Read it before making a change. It is intended to prevent assumptions, undocumented settings, accidental regressions, and inconsistent updates.
 
-**Current documented release:** 1.0.2  
+**Current documented release:** 1.1.0  
 **Last updated:** 2026-11-16
 
 ---
@@ -12,7 +12,7 @@
 1. **Inspect before editing.** Read the current repository files, this guide, the README, the roadmap, the changelog, and the relevant tests before changing anything. The checked-out repository is the source of truth; do not rely on an old ZIP, an old chat message, or memory when the live files are available.
 2. **Do not guess.** Do not invent configuration keys, file paths, retailer capabilities, completed features, or test results. Confirm each detail in the code or test it. When a required detail is not known, state the uncertainty and choose the least disruptive safe behavior rather than silently assuming.
 3. **Keep changes targeted.** Change only what the request requires. Do not replace working code, redesign the interface, rename files, remove features, or reorganize folders unless the request requires it.
-4. **Preserve the product direction.** Keep the project free to run with GitHub Pages and GitHub Actions. Keep the interface minimal, Pokémon-themed, responsive on phones and desktop, and free of unnecessary decoration. Do not add AI services, paid APIs, subscriptions, or new hosting dependencies unless explicitly requested.
+4. **Preserve the product direction.** Keep the project free to run with GitHub Pages, GitHub Actions, and the approved Firebase/Gmail free-tier subscriber architecture. Keep the interface minimal, Pokémon-themed, responsive on phones and desktop, and free of unnecessary decoration. Do not add AI services, paid APIs, or new hosting dependencies unless explicitly requested.
 5. **No fake completion.** Do not add a roadmap checkmark until the feature is implemented and verified. Do not claim a retailer works simply because its URL is configured. Report blocked sources and limitations honestly.
 6. **Test after every code or configuration change.** Run the relevant tests and the full automated test suite. Add or update tests for changed behavior. Report failures; never hide, delete, or weaken a test just to get a passing result.
 7. **Keep documentation synchronized.** Update the README when setup or required configuration changes. Update the roadmap when implementation status changes. Add every released change to the top of the changelog. Update this guide whenever the supported configuration, workflow, folder layout, test process, or patch process changes.
@@ -30,11 +30,16 @@
 | `monitor/run.py` | Loads config, runs scans, persists state, sends digest | Keep the command-line entry point and default state path compatible unless a migration is deliberately planned. |
 | `monitor/engine.py` | Fetching, parsing, product/news extraction, change detection, email formatting/sending | Add or change parsing logic here only after confirming the actual source format and adding tests. |
 | `monitor/requirements.txt` | Python runtime dependencies | Avoid unnecessary dependencies. Document why a dependency is needed and keep version bounds appropriate. |
-| `docs/index.html` | Dashboard structure | Preserve accessibility, responsive layout, and current feature behavior. |
-| `docs/styles.css` | Dashboard appearance and responsive styling | Keep the visual style minimal and Pokémon-themed. Check phone and desktop layouts after changes. |
+| `docs/index.html` | Public dashboard and visitor subscription form | Preserve accessibility, responsive layout, and current feature behavior. |
+| `docs/styles.css` | Dashboard, subscription, and admin appearance | Keep the visual style minimal and Pokémon-themed. Check phone and desktop layouts after changes. |
 | `docs/app.js` | Dashboard state loading, rendering, search, and filters | The dashboard reads `./data/state.json`; keep its data contract synchronized with `monitor/run.py`. |
+| `docs/subscriptions.js` | Public application, preference, email-link, and unsubscribe flows | Never grant approval from browser input. Keep owner operations restricted by Firestore rules. |
+| `docs/admin.html`, `docs/admin.js` | Static administrator interface and subscriber controls | The page shell is public; subscriber data/actions are protected by Firestore rules. Test with an admin and a non-admin account. |
+| `docs/firebase-config.js`, `docs/firebase-client.js` | Public Firebase web-app config and browser SDK setup | Web config is public. Never place service-account credentials here. |
+| `firebase/firestore.rules` | Subscriber database security rules | Set the administrator email only in the deployed Firebase Console rules; keep the placeholder in the public repository copy. Test user, admin, and unauthenticated access. |
+| `monitor/subscribers.py` | Private subscriber lookup, preference matching, queued email delivery, and retries | Subscriber email addresses must never be written to public dashboard state or Actions logs. |
 | `docs/data/state.json` | Generated scan state, source health, and alert history | Treat as runtime data generated by the monitor. Do not hand-edit it as a way to configure sources. Avoid deleting it because it contains the baseline used for change detection. |
-| `docs/manifest.webmanifest`, `docs/sw.js` | PWA metadata and service worker | Update the cache version when necessary after changing cached assets; verify install and refresh behavior. |
+| `docs/manifest.webmanifest`, `docs/sw.js` | PWA metadata and network-first service worker | The worker fetches current same-origin files first and uses cache only offline; bump the cache key when changing the app shell and verify refresh behavior. |
 | `docs/ROADMAP.md` | Staged feature plan and implementation checkboxes | Check an item only after implementation and verification. Keep future work unchecked. |
 | `docs/CHANGELOG.md` | Released changes, newest first | Add a dated version entry at the top for each delivered release. |
 | `docs/CONFIGURATION_AND_CHANGE_GUIDE.md` | This operating and change reference | Keep accurate as the project evolves. |
@@ -69,19 +74,32 @@ Open **Settings → Pages** and publish from:
 
 The dashboard is the static site in `docs/`. The monitor writes its current status and alert data to `docs/data/state.json`. Do not change the publish folder without also changing the workflow and the dashboard paths.
 
-### 3.3 Optional email notifications
+### 3.3 Firebase subscription system and email notifications
 
-Add these under **Settings → Secrets and variables → Actions → New repository secret**:
+The public subscription feature uses Firebase Authentication email-link sign-in and Cloud Firestore. No Google Sheet, Apps Script deployment, Firebase Cloud Function, or paid application server is part of this implementation.
 
-| Secret name | Required? | Meaning |
-|---|---|---|
-| `SMTP_USERNAME` | Yes, for email | Gmail account used as the sender. |
-| `SMTP_APP_PASSWORD` | Yes, for email | Google App Password for that account; not the normal Gmail sign-in password. |
-| `ALERT_EMAIL` | Yes, for email | Destination address that receives alerts. |
-| `SMTP_HOST` | No | SMTP server; defaults to `smtp.gmail.com`. |
-| `SMTP_PORT` | No | SMTP port; defaults to `587`. |
+Follow `docs/FIREBASE_SETUP.md` for the step-by-step console setup. The important configuration points are:
 
-Email is optional. Without the three required secrets, monitoring and the dashboard can still run, but email will not be delivered. Never put passwords, app passwords, tokens, or private credentials in `config/sources.json`, a source URL, the README, a public issue, or a patch ZIP.
+- `docs/firebase-config.js` contains only public Firebase web-app configuration. It must not contain the administrator email, service-account JSON, SMTP credentials, or other private keys.
+- `firebase/firestore.rules` is the security boundary. Replace the administrator email placeholder in the Firebase Console rules editor only, then publish. Keep the placeholder in the public repository copy; do not commit the real admin email. Never leave Firestore in test mode.
+- `FIREBASE_SERVICE_ACCOUNT_JSON` is a GitHub Actions secret containing the complete Firebase service-account JSON. It is used only by the monitor on GitHub's runner. Never commit the JSON file or paste it into a public project file.
+- `SMTP_USERNAME` and `SMTP_APP_PASSWORD` are GitHub Actions secrets used to send individual alert emails. `ALERT_EMAIL` is optional and receives an extra owner-only copy; it is not required for subscriber fan-out.
+- `PUBLIC_SITE_URL` is a GitHub Actions repository variable containing the complete Pages URL, including the repository path. It supplies the preference/unsubscribe link in emails.
+- `.github/workflows/pokedrop-watch.yml` must pass `FIREBASE_SERVICE_ACCOUNT_JSON` and `PUBLIC_SITE_URL` into the monitor step. The supplied release workflow includes these values. Workflow files are intentionally excluded from ordinary patch ZIPs and must be updated directly in GitHub when the workflow itself changes.
+
+Subscriber statuses are `pending`, `active`, `rejected`, `suspended`, `unsubscribed`, and `removed`. A visitor can create a `pending` record only after Firebase email-link sign-in verifies the visitor's mailbox. A verified visitor can read only their own record, update their categories/retailers, and mark their own record `unsubscribed`. Only the configured verified administrator can list records or change approval/administrative status.
+
+The administrator email is kept out of public website JavaScript and the public repository. It is configured only in the deployed Firestore rules. The admin page may accept an email address for link delivery, but Firestore rules alone decide whether the verified account has administrator access. Protect that mailbox with a strong login and two-step verification.
+
+The browser applies a one-minute resend cooldown. Firebase Authentication also applies service-side email sending and abuse limits. The cooldown is a usability control, not a complete CAPTCHA or bot-defense system. If the service grows beyond a small community, add stronger abuse controls and a dedicated transactional email provider before increasing volume.
+
+`monitor/subscribers.py` queries only `active` records and matches each alert against the saved category and retailer preferences. Each subscriber receives a separate email; no subscriber addresses are exposed to other recipients. Pending delivery batches and retry status are stored in private Firestore subcollections. No subscriber email, UID, or delivery record may be added to `docs/data/state.json` or printed into public Actions logs.
+
+Firebase Spark, GitHub Actions, and Gmail all have usage limits. The intended deployment is a no-cost, low-volume setup, not a guarantee of unlimited delivery. Check current provider quotas in their respective consoles before inviting a large subscriber group.
+
+### 3.4 GitHub Pages URL versus repository README
+
+The repository Code tab normally displays `README.md`; that is not the public website. Set **Settings → Pages → Deploy from a branch → `main` → `/docs`**. The website entry point is `docs/index.html`, the public site root is the URL GitHub Pages displays, and the administrator page is `/admin.html` under that same repository path. If the Pages URL displays the README, check that `docs/index.html` exists on `main` and that the publish folder is `/docs`, not `/root`.
 
 ## 4. Configuring sources and scan behavior
 
@@ -109,6 +127,8 @@ Every source in `sources` should have:
 | `id` | Yes | Unique, stable identifier. Use lowercase letters, numbers, and hyphens. Do not casually rename an existing ID: the ID keys its stored baseline and history. |
 | `name` | Yes | Human-readable source name shown on the dashboard. |
 | `retailer` | Yes for product sources | Retailer or publisher label used in dashboard and alert details. |
+| `category` | Recommended | Subscriber preference category: `tcg`, `plush`, `collectibles`, `games`, or `news`. Defaults to `collectibles` for product sources and `news` for RSS. |
+| `retailer_key` | Recommended | Subscriber filter key such as `pokemon-center`, `target`, `walmart`, `best-buy`, `gamestop`, `amazon`, or `pokebeach`. Defaults to a normalized retailer label. |
 | `type` | Yes | One of the supported types listed below: `catalog`, `product`, or `rss`. |
 | `url` | Yes | Public HTTP or HTTPS catalog, product, or feed URL. |
 | `enabled` | Recommended | `true` to scan it; `false` to skip it without deleting its configuration. |
@@ -137,17 +157,17 @@ The state file is `docs/data/state.json`. Keep it between updates so the monitor
 
 ## 5. Dashboard customization rules
 
-- `docs/index.html` controls page structure; `docs/styles.css` controls visual presentation; `docs/app.js` controls data rendering and interactions.
+- `docs/index.html` controls public page structure; `docs/styles.css` controls visual presentation; `docs/app.js` controls monitor data rendering; `docs/subscriptions.js` controls visitor subscription actions; `docs/admin.html` and `docs/admin.js` provide the private admin interface.
 - The dashboard loads `docs/data/state.json` through a relative `./data/state.json` URL. Preserve this relative path so the site works on a GitHub Pages project subpath.
 - Keep the dashboard responsive on small mobile screens and larger desktop displays. Test narrow phone widths, tablet widths, and desktop widths after layout changes.
 - Preserve the minimal Pokémon-inspired appearance. Avoid unnecessary animation, oversized controls, clutter, popups, or unrelated branding.
 - Keep the dashboard truthful: show source errors as errors; do not convert missing/unknown prices or stock states into positive claims.
 - If changing the JSON structure written by `monitor/run.py`, update `docs/app.js` and tests in the same change. Maintain compatibility with previously saved `docs/data/state.json`, or include a safe migration plan.
-- If changing offline/PWA assets, inspect `docs/manifest.webmanifest` and `docs/sw.js`; update the service-worker cache key/version when needed so old cached files do not mask the change.
+- If changing offline/PWA assets, inspect `docs/manifest.webmanifest` and `docs/sw.js`; update the service-worker cache key/version when changing the app shell; the worker is network-first so online configuration and code updates are not masked by stale cached files.
 
 ## 6. Email customization rules
 
-Email generation and sending currently live in `monitor/engine.py`. The alert message can include event title, retailer/source, listed price, availability, previous price when available, detection time, and a direct source/product link.
+Email formatting and SMTP transport live in `monitor/engine.py`; private subscriber filtering and retry queueing live in `monitor/subscribers.py`. The alert message can include event title, retailer/source, listed price, availability, previous price when available, detection time, and a direct source/product link.
 
 When changing email content or behavior:
 
@@ -155,8 +175,10 @@ When changing email content or behavior:
 2. Keep the product link direct and clearly labeled. Do not create invented checkout links.
 3. Keep unavailable data explicitly unknown or omit it; do not infer a price or stock status.
 4. Do not expose SMTP credentials or other secrets in the email body, logs, dashboard, or state file.
-5. Add tests for HTML escaping, missing optional data, and any new email behavior.
-6. Update this guide and the README if new secrets or configuration fields are introduced.
+5. Add tests for HTML escaping, missing optional data, subscriber preference matching, individual-recipient delivery, and retry behavior.
+6. Keep a secure preference/unsubscribe link in subscriber emails. The link must require an email sign-in and a separate confirmation; never add a raw public unsubscribe endpoint that changes a record based only on an email address.
+7. Do not log recipient email addresses, SMTP exception text, subscriber UIDs, or service-account content into public Actions logs or `docs/data/state.json`.
+8. Update this guide and the README if new secrets or configuration fields are introduced.
 
 ## 7. Required testing and validation
 
@@ -316,7 +338,22 @@ Only include headings that apply. Describe outcomes, not vague statements such a
 
 ---
 
-## 12. Definition of done
+## 12. Subscriber privacy and security checks
+
+For every subscription-system change, verify all of the following:
+
+- An application cannot be created until Firebase email-link sign-in completes and the Firebase Auth token reports a verified email.
+- A visitor can read only their own subscriber document. A normal verified account cannot list all subscribers or modify another user's record.
+- A visitor cannot set their own status to `active`, `rejected`, `suspended`, or `removed`.
+- An unsubscribe operation requires a fresh sign-in link and a separate confirmation action; merely entering another person's email must never alter that person's record.
+- The configured administrator can list and manage records only when signed in with the exact verified admin email configured privately in Firestore rules, and non-admin accounts are denied by Firestore rules even if they manually call the SDK.
+- Product alert email delivery sends one message per recipient. No To/CC/BCC list containing multiple subscribers is allowed.
+- Delivery-retry documents are in private Firestore subcollections and are not copied to the public status JSON.
+- Secrets remain in GitHub Actions Secrets. Firebase web configuration values are public identifiers and must never contain a private key.
+- Update `firebase/firestore.rules`, `docs/firebase-config.js`, `docs/FIREBASE_SETUP.md`, and tests together when changing roles, collection paths, status names, or preferences.
+
+## 13. Definition of done
+
 
 A change is complete only when all applicable statements are true:
 
