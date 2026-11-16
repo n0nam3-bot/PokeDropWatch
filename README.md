@@ -1,89 +1,59 @@
 # PokéDrop Watch
 
-A free, Pokémon-themed product/restock monitor with a mobile-friendly dashboard, scheduled GitHub Actions scans, optional email alerts, and ZIP-based updates. It uses conventional page/RSS parsing; it does not use AI or a paid API.
+PokéDrop Watch is a free, Pokémon-themed drop and restock monitor. It runs scheduled checks through GitHub Actions, publishes a mobile-friendly dashboard with GitHub Pages, and can email a digest when monitored products or news feeds change. It uses normal HTML/structured-data and RSS parsing; it does not use AI services, paid APIs, or a separate hosting account.
 
-## IMPORTANT: corrected ZIP installer
+## What it does
 
-The earlier workflow only reacted to a file named exactly `install.zip`, even though the downloads were named `PokeDropWatch_Install.zip` and `PokeDropWatch_Starter_Bundle.zip`. This corrected workflow accepts ZIP files with any filename in the repository root. It can also open the original starter bundle and extract the nested application ZIP.
+- Checks the configured Pokémon product/catalog pages and RSS feeds on the schedule in `.github/workflows/pokedrop-watch.yml` (currently every 15 minutes; GitHub may delay scheduled runs).
+- Detects new product listings after the first scan establishes a baseline.
+- Detects an availability change from out of stock to in stock or preorder, when the source exposes that information.
+- Detects listed price drops and other price changes when both the previous and current prices are available.
+- Tracks new entries in configured Pokémon news RSS feeds. News alerts are announcements, not proof of product availability.
+- Publishes scan time, source health, listing counts, and recent alerts to the dashboard in `docs/`.
+- Provides a responsive dashboard with search, alert filters, and installable-PWA support on compatible mobile browsers.
+- Can send an HTML email digest with the item title, retailer/source, listed price, availability, previous price when available, detection time, and a direct link.
+- Supports ZIP-based application patches so later updates can replace only the files included in the patch.
 
-## One-time setup (can be done from a phone)
+## What needs to be configured
 
-### 1. Add the permanent workflow
+### 1. GitHub Actions
 
-1. Open your GitHub repository in a browser.
-2. Tap **Add file → Create new file**.
-3. In the filename field, enter exactly `.github/workflows/pokedrop-watch.yml`.
-4. Open the separately supplied `pokedrop-watch.yml`, copy all of its contents, and paste them into the GitHub editor.
-5. Commit the new file to the `main` branch.
+The repository must have GitHub Actions enabled. Under **Settings → Actions → General → Workflow permissions**, allow **Read and write permissions** so the workflow can save scan state, install ZIP updates, and commit changed files.
 
-This is the only file that must be placed manually. GitHub must have this workflow before it can unzip anything uploaded later.
+The permanent workflow is `.github/workflows/pokedrop-watch.yml`. Its current schedule is `*/15 * * * *`. Change the workflow's `schedule` cron expression to change the interval; the `check_interval_minutes` value in `config/sources.json` is descriptive and does not control GitHub's schedule.
 
-### 2. Upload the application ZIP
+### 2. GitHub Pages
 
-Upload either of these to the **repository root** (not inside a folder):
+Under **Settings → Pages**, publish from the `main` branch and the `/docs` folder. The dashboard reads the public status file at `docs/data/state.json`, which the monitor updates after each scan.
 
-- `PokeDropWatch_Install_FIXED.zip`
-- `PokeDropWatch_Starter_Bundle_FIXED.zip`
+### 3. Email alerts (optional)
 
-The corrected workflow also recognizes the earlier names `PokeDropWatch_Install.zip`, `PokeDropWatch_Starter_Bundle.zip`, and `install.zip`. It extracts the application to its repository-relative folders (`docs/`, `monitor/`, `config/`, `scripts/`, and `tests/`), removes the uploaded ZIP after successful installation, and commits the extracted files.
+Email is disabled until the following repository **Actions secrets** are configured:
 
-If you already uploaded one of the earlier ZIPs before fixing the workflow, you do not need to upload it again. When you commit the corrected workflow, it also triggers a run and inspects ZIPs already present in the repository root. You can also start it manually from **Actions → PokeDrop Watch → Run workflow**.
+| Secret | Value |
+|---|---|
+| `SMTP_USERNAME` | Gmail address used to send the alerts |
+| `SMTP_APP_PASSWORD` | Google App Password for that Gmail account (not the normal account password) |
+| `ALERT_EMAIL` | Destination email address for notifications |
 
-### 3. Allow the workflow to save extracted files
+`SMTP_HOST` and `SMTP_PORT` are optional. They default to `smtp.gmail.com` and `587`. The sender and recipient can be the same address. Never put credentials in `config/sources.json` or commit them to the repository.
 
-In GitHub, open **Settings → Actions → General → Workflow permissions** and select **Read and write permissions**, then save. The workflow needs this permission to commit extracted files and updated scan status.
+Without the three required secrets, product/news scans and the dashboard still run; email delivery does not.
 
-Also make sure Actions are enabled for the repository.
+### 4. Sources and scan behavior
 
-### 4. Publish the dashboard
+Edit `config/sources.json` to enable or disable sources or add a source URL. Each source needs a unique `id`, a display `name`, a `retailer`, a `type`, a `url`, and an `enabled` value. Supported source types are:
 
-Open **Settings → Pages**. Under **Build and deployment**, choose **Deploy from a branch**, select `main`, choose `/docs`, and save. The Pages URL appears on that screen after deployment.
+- `catalog` — a retailer listing/search page. The scanner looks for product structured data and product links in the returned HTML.
+- `product` — one specific product-detail URL.
+- `rss` — an RSS/Atom feed used for Pokémon news or announcements.
 
-### 5. Enable optional email notifications
+The starting watchlist includes Pokémon Center TCG and plush listings, Target, Walmart, Best Buy, GameStop, Amazon Pokémon TCG search results, and the PokéBeach news feed. Sources can be changed to suit the products and stores being followed.
 
-Email delivery uses Gmail SMTP and a Google App Password.
+The first successful scan records the current listings as a baseline; it does not send a wave of alerts for every item already listed. Later scans compare results with the saved state. Product prices and availability are only reported when the public page exposes them.
 
-1. Enable Google 2-Step Verification and create an App Password.
-2. In the repository, open **Settings → Secrets and variables → Actions** and add these repository secrets:
-   - `SMTP_USERNAME` — the Gmail address used to send alerts.
-   - `SMTP_APP_PASSWORD` — the 16-character Google App Password (without spaces).
-   - `ALERT_EMAIL` — the address that should receive alerts.
-   - `SMTP_HOST` — `smtp.gmail.com`.
-   - `SMTP_PORT` — `587`.
-3. Never put the App Password in a file or commit it to GitHub.
+## Important coverage notes
 
-Without these secrets, the monitor still scans and updates the dashboard, but email cannot be sent.
+There is no universal public inventory feed for every Pokémon product or retailer. Some stores block automated requests, render listings with JavaScript, personalize stock by location, or change their page structure. A failed source is shown as an error instead of being counted as a successful scan. The dashboard and email are a monitoring aid, not a guarantee of complete coverage or a reservation; confirm final price and availability with the retailer before purchasing.
 
-## How it works
-
-- GitHub Actions attempts a scan every 15 minutes. GitHub can delay scheduled runs during busy periods.
-- The first successful scan establishes a baseline rather than emailing every old listing.
-- Later runs detect changes in listing presence, published price, stock/preorder state, and monitored Pokémon news RSS items.
-- A notification includes the title, retailer/source, published price when available, stock state, previous price when detected, detection time, and direct link.
-- The dashboard is static and does not require a server, database, paid API, or AI service.
-
-## ZIP updates after installation
-
-For later code updates, upload a ZIP to either the repository root or the `updates/` folder. The ZIP should contain repository-relative paths, for example:
-
-- `docs/app.js`
-- `docs/styles.css`
-- `monitor/engine.py`
-- `config/sources.json`
-
-The patch installer also strips one extra wrapper folder automatically. For example, `MyUpdate/docs/app.js` is installed as `docs/app.js`. The workflow validates ZIP paths, rejects path traversal and symlinks, and does not allow a patch ZIP to overwrite `.github/workflows/`. It then commits the changed files and removes the uploaded ZIP.
-
-## Coverage limitations
-
-There is no single public inventory feed for every Pokémon release or retailer. Stores may block automated requests, render inventory only in JavaScript, personalize stock by location, or change their page markup. The source list is in `config/sources.json`; the dashboard reports individual scan failures. An unpublished price is shown as unavailable rather than guessed. Always confirm price and stock with the retailer before purchasing.
-
-The current starting sources include Pokémon Center, Target, Walmart, Best Buy, GameStop, Amazon, and PokéBeach RSS. Category/search pages can be less reliable than exact product URLs.
-
-## Local tests
-
-```bash
-python -m pip install -r monitor/requirements.txt
-python -m unittest discover -s tests -v
-```
-
-PokéDrop Watch is an unofficial fan-made tracker. Pokémon and retailer names belong to their respective owners.
+PokéDrop Watch is an unofficial fan project and is not affiliated with Nintendo, The Pokémon Company, Pokémon Center, or the listed retailers.
