@@ -2,6 +2,20 @@
 
 All notable project changes are recorded here. Entries are ordered newest first. Dates use `YYYY-MM-DD`.
 
+## [1.1.1] — 2026-11-16
+
+### Changed
+- Rewrote the Firebase setup guide as a click-by-click procedure with direct Firebase Console, Google Account, GitHub Pages, Actions secrets, Actions variables, and workflow links.
+- Added exact field mappings for Firebase Web App configuration, exact GitHub secret/variable names, copy/paste locations, test steps, and troubleshooting for common setup errors.
+- Clarified that the administrator email is entered only in the deployed Firebase Rules editor, never in public JavaScript or the committed rules file.
+- Corrected the administrator-email comment in the public Firestore rules template.
+- Linked the HTML and Markdown setup guides prominently from the README.
+
+### Tests
+- Confirmed all setup links, repository paths, and required configuration names are present in the guide.
+- Verified the ZIP patch contains only intended repository-relative files and installs into a clean copy.
+- Ran the project's automated Python test suite.
+
 ## [1.1.0] — 2026-11-16
 
 ### Added

@@ -11,8 +11,8 @@ service cloud.firestore {
         && request.auth.token.email is string;
     }
 
-    // Replace this value with the lowercase administrator email address
-    // also entered in docs/firebase-config.js.
+    // Replace this placeholder only in the Firebase Console Rules editor with the
+    // lowercase administrator email. Keep the public repository copy unchanged.
     function isAdmin() {
       return verifiedEmail()
         && request.auth.token.email == 'replace-with-your-admin-email@example.com';

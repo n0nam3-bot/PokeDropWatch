@@ -78,7 +78,7 @@ The dashboard is the static site in `docs/`. The monitor writes its current stat
 
 The public subscription feature uses Firebase Authentication email-link sign-in and Cloud Firestore. No Google Sheet, Apps Script deployment, Firebase Cloud Function, or paid application server is part of this implementation.
 
-Follow `docs/FIREBASE_SETUP.md` for the step-by-step console setup. The important configuration points are:
+Follow `docs/FIREBASE_SETUP.html` (mobile-friendly, with clickable direct Console links) or `docs/FIREBASE_SETUP.md` (full text checklist) for the exact click-by-click setup. The guide includes direct Firebase Console URLs, exact GitHub Settings URLs, field-by-field Web App config mapping, required secret and variable names, and troubleshooting. The important configuration points are:
 
 - `docs/firebase-config.js` contains only public Firebase web-app configuration. It must not contain the administrator email, service-account JSON, SMTP credentials, or other private keys.
 - `firebase/firestore.rules` is the security boundary. Replace the administrator email placeholder in the Firebase Console rules editor only, then publish. Keep the placeholder in the public repository copy; do not commit the real admin email. Never leave Firestore in test mode.

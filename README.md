@@ -26,7 +26,7 @@ The intended setup uses free tiers and does not require Vercel, Google Sheets, a
 
 ## Required configuration
 
-Follow [docs/FIREBASE_SETUP.md](docs/FIREBASE_SETUP.md) for the complete first-time setup. In summary, the site owner must:
+Follow the click-by-click [Firebase and GitHub setup guide](docs/FIREBASE_SETUP.html) (or the [Markdown version](docs/FIREBASE_SETUP.md)) for exact Console URLs, menu selections, repository links, required secret names, and values. Start with the GitHub owner/repository names and follow the guide in order. In summary, the site owner must:
 
 1. Create a Firebase project on the no-cost Spark plan, create Firestore, enable Firebase Authentication email-link sign-in, and add the GitHub Pages hostname as an authorized domain.
 2. Paste the Firebase web-app values into `docs/firebase-config.js`.

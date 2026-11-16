@@ -1,129 +1,285 @@
-# PokéDrop Watch — Firebase Setup
+# PokéDrop Watch — exact owner setup instructions
 
-This guide configures the public subscription form, private subscriber database, administrator approval page, and subscriber email delivery. It is a one-time setup. The website remains hosted on GitHub Pages; no Vercel account, Google Sheet, paid server, or Cloud Function is required.
+This is the click-by-click setup guide for the current v1.1 application. Follow it from top to bottom. You only need to do this once, unless you change Firebase projects, the GitHub repository, or the email-sending account.
 
-The intended no-cost setup uses Firebase's Spark plan, GitHub Pages/Actions, and a Gmail account for alert delivery. Free plans have quotas and provider terms can change. This is intended for a small, low-volume community, not unlimited bulk email. Do not add a billing account just to follow this guide.
+**The website is hosted by GitHub Pages. Firebase provides the subscriber database and email-link sign-in. GitHub Actions runs the monitor. Gmail sends product-alert emails.** You do not need Vercel, Google Sheets, Firebase Hosting, Cloud Functions, or a paid server.
 
-## 1. Create the Firebase project
+> **Cost note:** This setup is designed to stay on Firebase's no-cost Spark plan and the free allowances of GitHub/Gmail. Free plans have quotas and provider terms can change. Do not add a billing account or upgrade to a paid plan just to follow this guide. A free service is not unlimited email or unlimited database usage.
 
-1. Open the Firebase Console and create a project for PokéDrop Watch.
-2. Keep the project on the no-cost Spark plan. Analytics are not required; you may turn them off.
-3. In **Build → Firestore Database**, create a database.
-4. Choose a database location close to you and your expected subscribers. The location cannot be changed after creation.
-5. Open the **Rules** tab. Replace the starter rules with the complete contents of `firebase/firestore.rules` from this repository.
-6. In the Firebase Console rules editor, replace `replace-with-your-admin-email@example.com` with the lowercase email address that will own the site administrator account. Publish the rules there. Keep the placeholder in the public GitHub copy; do not commit your real administrator email.
+---
 
-Do not leave Firestore in test mode. The supplied rules make subscriber records private, permit a verified user to read only their own record, and permit only the configured verified administrator to view or change the full subscriber list.
+## Before you start: identify your GitHub address
 
-## 2. Enable secure email sign-in
+Open your PokéDrop Watch repository in GitHub.
 
-1. Open **Build → Authentication → Get started**.
-2. Under **Sign-in method**, enable **Email/Password** and enable the **Email link (passwordless sign-in)** option within that provider.
-3. Open **Settings → Authorized domains**.
-4. Add the hostname used by GitHub Pages, normally `YOUR-GITHUB-USERNAME.github.io`. Add any custom domain separately if one is used.
-5. Save the changes.
+The repository address looks like:
 
-The application and unsubscribe flows use Firebase email-link sign-in. Opening the link proves access to that mailbox. The unsubscribe link then presents a separate confirmation button; the email link alone does not unsubscribe the person.
+`https://github.com/OWNER/REPOSITORY`
 
-## 3. Register the website as a Firebase web app
+Write down the two parts:
 
-1. Open **Project settings → General → Your apps** and add a **Web app**.
-2. Register it with a name such as `PokeDrop Watch Website`. Hosting in Firebase is not required.
-3. Copy the web configuration values from the Firebase SDK setup panel.
-4. In this repository, open `docs/firebase-config.js` and replace the placeholders for `apiKey`, `authDomain`, `projectId`, `appId`, and `messagingSenderId` with the matching values.
-5. Save and commit the file. The administrator email is deliberately not stored in public website JavaScript.
+- `OWNER` = your GitHub username or organization name.
+- `REPOSITORY` = the repository name, without `.git`.
 
-The Firebase web configuration is intended to be public in a browser application. It is not a password. The private service-account JSON in the next section must never be committed to the repository or placed in `docs/`.
+For example, if the repository address is `https://github.com/example-user/PokeDropWatch`, then `OWNER` is `example-user` and `REPOSITORY` is `PokeDropWatch`.
 
-## 4. Give GitHub Actions private database access
+Whenever a link below contains `OWNER`, `REPOSITORY`, or `PROJECT_ID`, replace that word with your actual value before opening the link.
 
-The scheduled monitor runs on GitHub's runner. It needs a private service-account credential so it can read approved subscribers and write private delivery-retry records. This key stays in GitHub Actions Secrets and is never sent to the public website.
+Your normal GitHub Pages address for a project repository is:
 
-1. In Firebase **Project settings → Service accounts**, choose **Generate new private key** and download the JSON file.
-2. In GitHub, open the PokéDrop Watch repository → **Settings → Secrets and variables → Actions → New repository secret**.
-3. Set the name to `FIREBASE_SERVICE_ACCOUNT_JSON`.
-4. Open the downloaded JSON file and paste its entire contents as the secret value. Save it.
-5. Do not upload the JSON file to the repository, an issue, a chat, or a patch ZIP. If it is ever exposed, revoke the key and generate a new one.
+`https://OWNER.github.io/REPOSITORY/`
 
-The monitor uses the service account only in GitHub Actions to read subscriber records with status `active` and write delivery records under each subscriber's private Firestore document.
+Special case: if the repository itself is named `OWNER.github.io`, the Pages address is `https://OWNER.github.io/` (there is no repository path).
 
-## 5. Configure email delivery
+The Firebase Authorized Domain is only the hostname, for example `example-user.github.io`. Do **not** include `https://`, a slash, or the repository name in that field.
 
-The Firebase sign-in links are sent by Firebase Authentication. Product alert emails are sent separately by the Gmail account configured in GitHub Actions.
+---
 
-In GitHub → repository **Settings → Secrets and variables → Actions**, add:
+## Step 1 — Create the Firebase project
 
-| Name | Type | Value |
-|---|---|---|
-| `SMTP_USERNAME` | Secret | Gmail address that sends product alerts. |
-| `SMTP_APP_PASSWORD` | Secret | Gmail App Password, not the normal account password. |
-| `FIREBASE_SERVICE_ACCOUNT_JSON` | Secret | Full service-account JSON from step 4. |
-| `ALERT_EMAIL` | Optional secret | Address for an extra owner-only copy of the alert digest. It is not required for subscriber delivery. |
-| `SMTP_HOST` | Optional secret | Defaults to `smtp.gmail.com`. |
-| `SMTP_PORT` | Optional secret | Defaults to `587`. |
+1. Open the **[Firebase Console](https://console.firebase.google.com/)**.
+2. Sign in with the Google account you will use to own the project.
+3. Select **Create a project** (or **Add project**).
+4. Enter the project name `PokeDrop Watch` and continue.
+5. When asked about Google Analytics, choose **Disable Google Analytics**. Analytics is not used by this app.
+6. Finish creating the project.
+7. Keep the project on the **Spark (no-cost) plan**. Do not click Upgrade or add a billing account.
+8. Find the **Project ID**: click the gear icon beside Project Overview → **Project settings** → **General** → copy the **Project ID**. Save it privately; you will use it in the direct Firebase links below.
 
-Gmail App Passwords require two-step verification on the Google account and may not be available for every account type or administrator policy. Gmail imposes sending limits. Start with a small, approved subscriber group and do not treat a personal Gmail mailbox as a high-volume email platform.
+Your project-specific Firebase Console links have this format:
 
-Also add a repository **Actions variable** (not a secret):
+- Project overview: `https://console.firebase.google.com/project/PROJECT_ID/overview`
+- Firestore: `https://console.firebase.google.com/project/PROJECT_ID/firestore`
+- Authentication providers: `https://console.firebase.google.com/project/PROJECT_ID/authentication/providers`
+- Authentication settings: `https://console.firebase.google.com/project/PROJECT_ID/authentication/settings`
+- Project settings: `https://console.firebase.google.com/project/PROJECT_ID/settings/general`
+- Service accounts: `https://console.firebase.google.com/project/PROJECT_ID/settings/serviceaccounts/adminsdk`
 
-| Name | Value |
+Replace `PROJECT_ID` with the Project ID you just copied.
+
+## Step 2 — Create the private Firestore database and publish its security rules
+
+1. Open your project's **[Firestore Database page](https://console.firebase.google.com/)**. To go directly, use `https://console.firebase.google.com/project/PROJECT_ID/firestore` with your Project ID substituted.
+2. Click **Create database**.
+3. Choose **Standard edition** if the console asks which edition to use.
+4. Choose **Start in production mode**. Do not choose test mode.
+5. Choose a database location near you or the majority of your expected visitors. **The location cannot be changed after the database is created.**
+6. Finish creating the database.
+7. Open the **Rules** tab.
+8. In a separate browser tab, open this rules file from your repository: `https://raw.githubusercontent.com/OWNER/REPOSITORY/main/firebase/firestore.rules` (replace `OWNER` and `REPOSITORY`). This opens the raw text of the exact rules file.
+9. Copy the entire rules file and paste it into the Firestore Rules editor, replacing all starter text.
+10. In the Firebase Rules editor only, find this placeholder:
+
+   `replace-with-your-admin-email@example.com`
+
+11. Replace it with the lowercase email address you will use as the site administrator. Example: `trainer@example.com`.
+12. Click **Publish**.
+
+**Important privacy rule:** The real administrator email belongs only in the Firebase Console's deployed Rules. Leave the placeholder in the public GitHub file `firebase/firestore.rules`. Do not put your real administrator email in `docs/firebase-config.js`, a public source file, a ZIP patch, or a GitHub issue.
+
+## Step 3 — Turn on passwordless email-link sign-in
+
+1. Open `https://console.firebase.google.com/project/PROJECT_ID/authentication/providers` using your Project ID.
+2. If you see **Get started**, click it.
+3. Open the **Sign-in method** or **Sign-in providers** tab if it is not already selected.
+4. Select **Email/Password**.
+5. Turn on **Enable**.
+6. Also turn on **Email link (passwordless sign-in)** within the Email/Password provider.
+7. Save the provider settings.
+8. Open `https://console.firebase.google.com/project/PROJECT_ID/authentication/settings`.
+9. Find **Authorized domains** and choose **Add domain**.
+10. Enter your GitHub Pages hostname only: `OWNER.github.io`.
+11. Click **Add** or **Save**. If you use a custom domain, add that hostname as a separate entry too.
+
+Example: if your Pages URL is `https://example-user.github.io/PokeDropWatch/`, the Authorized Domain value is exactly `example-user.github.io`.
+
+The app uses Firebase email-link sign-in to verify mailbox ownership. Users must open the email link to complete an application or unsubscribe request.
+
+## Step 4 — Register the website as a Firebase Web App and copy its config
+
+1. Open `https://console.firebase.google.com/project/PROJECT_ID/settings/general`.
+2. Scroll down to **Your apps**.
+3. Click the **Web** icon (`</>`) to add a Web app.
+4. Enter the app nickname `PokeDrop Watch Website`.
+5. Do **not** select or set up Firebase Hosting. The website is hosted by GitHub Pages.
+6. Click **Register app**.
+7. Firebase will show a `firebaseConfig` object. Keep that page open.
+8. In another tab, open this exact file in your GitHub repository: `https://github.com/OWNER/REPOSITORY/edit/main/docs/firebase-config.js`.
+9. In the GitHub editor, replace the five placeholder values in the existing object with the matching values from the Firebase `firebaseConfig` object:
+
+   | In `docs/firebase-config.js` | Copy the value named in Firebase |
+   |---|---|
+   | `apiKey` | `apiKey` |
+   | `authDomain` | `authDomain` |
+   | `projectId` | `projectId` |
+   | `appId` | `appId` |
+   | `messagingSenderId` | `messagingSenderId` |
+
+10. Keep the property names and surrounding quotes, and change only the text between the quotes. Do not paste the service-account JSON here.
+11. Scroll down and click **Commit changes**. Use the default commit message and commit directly to `main`.
+
+The Firebase Web App config is browser-visible configuration; it is not the service-account private key. Never put the service-account JSON in `docs/` or any public file.
+
+## Step 5 — Create the private Firebase service-account key
+
+1. Open `https://console.firebase.google.com/project/PROJECT_ID/settings/serviceaccounts/adminsdk`.
+2. Confirm that the selected project is PokéDrop Watch.
+3. In the **Firebase Admin SDK** section, click **Generate new private key**.
+4. Confirm the prompt and download the `.json` file to your phone or computer.
+5. Keep that downloaded file private. Do not upload it to GitHub, a public folder, a ZIP patch, a support post, or this chat.
+6. Open the JSON file using a text viewer. Select and copy the **entire contents**, from the first `{` to the final `}`. Do not copy only the `private_key` field.
+
+You will paste the full JSON text into a GitHub Actions secret in Step 7. After saving the secret, you may delete the downloaded JSON file from your device if you do not need a secure backup.
+
+## Step 6 — Create a Gmail App Password for product alerts
+
+The Firebase sign-in/verification links are sent by Firebase Authentication. Separate Pokémon product-alert emails are sent from the Gmail account you configure here.
+
+1. Sign in to the Gmail account you want PokéDrop Watch to send alerts from.
+2. Open **[Google Account Security](https://myaccount.google.com/security)**.
+3. Under **How you sign in to Google**, enable **2-Step Verification** if it is not already enabled.
+4. Open **[Google App Passwords](https://myaccount.google.com/apppasswords)**.
+5. If Google asks you to sign in again, do so.
+6. Create an App Password named `PokeDrop Watch` (or choose any descriptive name Google permits).
+7. Copy the generated 16-character App Password. If Google displays spaces for readability, enter the password without the spaces.
+8. Use the Gmail address as `SMTP_USERNAME` and the App Password as `SMTP_APP_PASSWORD` in the next step.
+
+If the App Password page says the setting is unavailable, do not use your normal Gmail password. Some Google account types or security policies do not allow App Passwords. In that case, stop here rather than weakening account security; an alternative email provider integration would need to be added and tested separately.
+
+## Step 7 — Add the exact GitHub Actions secrets and variable
+
+1. Open your repository's **[Actions secrets page](https://github.com/OWNER/REPOSITORY/settings/secrets/actions)** after replacing `OWNER` and `REPOSITORY`.
+2. Under **Repository secrets**, click **New repository secret** for each required item below.
+3. Enter the exact secret name and value, then click **Add secret**.
+
+Create these three required secrets:
+
+| Exact secret name | Exact value to paste |
 |---|---|
-| `PUBLIC_SITE_URL` | The complete public site URL, including the repository path and trailing slash, for example `https://YOUR-GITHUB-USERNAME.github.io/REPOSITORY-NAME/`. |
+| `FIREBASE_SERVICE_ACCOUNT_JSON` | The complete contents of the Firebase service-account JSON file from Step 5. |
+| `SMTP_USERNAME` | The full Gmail address from Step 6, for example `pokedrop.alerts@gmail.com`. |
+| `SMTP_APP_PASSWORD` | The 16-character Gmail App Password from Step 6, without spaces. |
 
-The notification email uses this URL to link back to the secure preference/unsubscribe form.
+Optional secrets:
 
-## 6. Update the GitHub Actions workflow
+| Secret name | Value / purpose |
+|---|---|
+| `ALERT_EMAIL` | Your email address if you also want an owner-only copy of each new alert digest. Leave it unset if you do not need a separate owner copy. |
+| `SMTP_HOST` | Usually leave unset. The monitor defaults to `smtp.gmail.com`. |
+| `SMTP_PORT` | Usually leave unset. The monitor defaults to `587`. |
 
-The monitor workflow must pass the private service-account secret and public site URL to `monitor/run.py`.
+4. Now open your repository's **[Actions variables page](https://github.com/OWNER/REPOSITORY/settings/variables/actions)**.
+5. Under **Repository variables**, click **New repository variable**.
+6. Enter the exact name `PUBLIC_SITE_URL`.
+7. Set its value to your complete GitHub Pages address, including the final slash. Example: `https://example-user.github.io/PokeDropWatch/`.
+8. Click **Add variable**.
 
-Replace the existing `.github/workflows/pokedrop-watch.yml` with the workflow file supplied alongside this release. Keep the exact path and filename. The replacement continues to scan on its scheduled interval and apply ZIP updates, and adds these environment values to the monitor step:
+`PUBLIC_SITE_URL` is a variable, not a secret. Do not put the Firebase service-account JSON or Gmail App Password into the Variables section.
 
-- `FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}`
-- `PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}`
+## Step 8 — Install or replace the scheduled workflow
 
-Workflow files are intentionally not installed by ordinary application patch ZIPs. This one-time workflow replacement must be made directly at `.github/workflows/pokedrop-watch.yml` in GitHub.
+The workflow file must be located at this exact path:
 
-## 7. Publish the actual website (not the repository README)
+`.github/workflows/pokedrop-watch.yml`
 
-In the GitHub repository:
+It must be the supplied `pokedrop-watch.yml` file for this release. It contains the 15-minute scheduled scan, ZIP installation/patch handling, tests, and the Firebase/Gmail environment variables.
 
-1. Open **Settings → Pages**.
-2. Under **Build and deployment**, choose **Deploy from a branch**.
-3. Select branch `main` and folder `/docs`.
-4. Save.
-5. Open the GitHub Pages URL shown on that page. It normally looks like `https://YOUR-GITHUB-USERNAME.github.io/REPOSITORY-NAME/`.
+**On a phone using GitHub in a browser:**
 
-The repository's Code tab will still show `README.md`; that is normal. Visitors use the separate GitHub Pages URL. The website entry point is `docs/index.html`. The private admin page is `docs/admin.html` at `/REPOSITORY-NAME/admin.html`.
+1. Open the repository's **Code** tab.
+2. Open the `.github` folder, then `workflows`, then `pokedrop-watch.yml`.
+3. Tap the pencil/Edit button.
+4. Replace the entire file contents with the contents of the supplied `pokedrop-watch.yml` download.
+5. Commit the change to the `main` branch.
 
-If the Pages URL still displays the README, verify that `docs/index.html` exists on the `main` branch and that Pages is set to `/docs`, not `/root`.
+If the file does not exist, use **Add file → Create new file**, enter `.github/workflows/pokedrop-watch.yml` as the filename (including all folders), paste the supplied workflow contents, and commit to `main`.
 
-## 8. First-time administrator login
+Direct edit link: `https://github.com/OWNER/REPOSITORY/edit/main/.github/workflows/pokedrop-watch.yml`.
 
-1. Open the public website and select **Administrator** in the footer, or open `/admin.html` directly.
-2. Enter the same lowercase administrator email you configured privately in the deployed Firestore rules. The address is not embedded in public website code.
-3. Request the secure sign-in link and open it from the same browser.
-4. Firestore rules—not the browser—decide whether the verified account can manage subscriber records. A non-admin account is denied access.
-5. Open **Subscriber management** to review pending applications.
+**Do not put this workflow inside an ordinary application patch ZIP.** The patch installer deliberately blocks changes to `.github/workflows/`; this file is edited directly in GitHub.
 
-Only the configured, verified administrator email can list subscriber records or approve, reject, suspend, reactivate, or remove them. A visitor cannot promote themselves by changing browser data.
+## Step 9 — Tell GitHub Pages to publish the website folder
 
-## 9. Test the complete flow
+1. Open your repository's **[GitHub Pages settings](https://github.com/OWNER/REPOSITORY/settings/pages)**.
+2. Find **Build and deployment**.
+3. For **Source**, select **Deploy from a branch**.
+4. For **Branch**, select `main`.
+5. For the folder, select `/docs` (not `/root`).
+6. Click **Save**.
+7. Wait for GitHub Pages to finish deploying. Open the URL displayed on the Pages settings page.
 
-1. Open the public site and submit an application using an email address you can access.
-2. Open the Firebase email sign-in link. The website should show that the application is pending approval.
-3. Open the administrator page using the configured admin email.
-4. Approve the test application.
-5. Confirm its status changes to active in the administrator list.
-6. Run the GitHub Actions workflow manually once. The monitor will queue/send matching new alerts to active subscribers; it does not send historical products simply because someone was approved.
-7. Test unsubscribe. Enter the subscriber email on the public page, open the secure link, and press **Confirm unsubscribe**. Confirm the admin list shows `unsubscribed`.
+The website starts at `docs/index.html`. The public address will be `https://OWNER.github.io/REPOSITORY/` for a normal project repository. The administrator page is the same address followed by `admin.html`.
 
-The first source scan establishes a baseline. It may not create a product alert until a later scan detects a change. To test email delivery immediately, use the workflow's existing test procedure or wait for a real detected change; do not edit production Firestore records to manufacture an alert.
+The repository's **Code** tab will continue to show `README.md`. That is normal; visitors must open the Pages URL, not the GitHub repository Code tab.
 
-## Privacy and operating limits
+## Step 10 — Sign in as the site administrator
 
-- Subscriber email addresses are stored in Firestore, not in the public `docs/data/state.json` file.
-- The public browser can create only a verified pending application and can edit its own notification preferences or unsubscribe its own record.
-- GitHub Actions uses the service-account secret for private delivery. Each subscriber receives an individual email; subscriber addresses are not exposed to other recipients.
-- Pending email deliveries are stored in private Firestore subcollections and retried on later workflow runs.
-- Firebase, GitHub Actions, and Gmail each have quotas and anti-abuse limits. The no-cost setup is practical for a small community but is not unlimited or guaranteed for large-scale distribution.
-- Firebase's built-in email-link protections and a local resend cooldown reduce casual abuse. A public service that grows significantly should add stronger abuse controls and use a dedicated transactional email provider before increasing volume.
+1. Open the public website's `/admin.html` page. Example: `https://example-user.github.io/PokeDropWatch/admin.html`.
+2. Enter the exact lowercase administrator email address you put into the deployed Firestore Rules in Step 2.
+3. Tap **Email secure sign-in link**.
+4. Open the email and tap the Firebase sign-in link. Open it in the same browser where you requested it so the saved email can be matched.
+5. Return to the admin page if the link does not automatically return you there.
+6. The page should show **Subscriber overview**. If it says the account is not authorized, check the administrator email in the deployed Firestore Rules and republish those rules.
+
+The real administrator email is not stored in public JavaScript. Firestore's deployed security rules decide which verified email can administer subscriber records.
+
+## Step 11 — Run the first scan and test a subscription
+
+1. Open your repository's **[PokéDrop Watch Actions page](https://github.com/OWNER/REPOSITORY/actions/workflows/pokedrop-watch.yml)**.
+2. Select the **PokeDrop Watch** workflow.
+3. Tap **Run workflow**, keep branch `main`, and tap **Run workflow** again to confirm.
+4. Open the new run and wait for the steps to finish. A green check means the workflow completed; open any step to inspect its log.
+5. Open the public Pages website and submit a test subscription using an email address you can access. Choose at least one category and one retailer (or leave **All retailers** selected).
+6. Open the Firebase email link from that mailbox. The site should report that the application is pending approval.
+7. Open `/admin.html`, sign in as administrator, find the pending test address, and tap **Approve**.
+8. Run the workflow manually again. The next newly detected matching event can be emailed to that approved subscriber.
+9. Test unsubscribe from the public page: enter the subscriber's email, request the link, open the link, then press **Confirm unsubscribe**. The admin list should show `unsubscribed`.
+
+**Important first-scan behavior:** The first successful retailer scan establishes a baseline. It does not send an alert for every item already on the page. Alerts are generated for changes detected by later scans. Approving a subscriber does not send historical alerts.
+
+## If something does not work
+
+| What you see | Check this exact setting |
+|---|---|
+| `Firebase is not configured` | Check that all five values in `docs/firebase-config.js` were replaced and committed. Reload the Pages website after deployment. |
+| `auth/unauthorized-continue-uri` or an unauthorized domain message | Firebase Console → Authentication → Settings → Authorized domains. Add `OWNER.github.io` as the hostname only. |
+| `auth/operation-not-allowed` | Firebase Console → Authentication → Sign-in method/providers → Email/Password. Enable both Email/Password and Email link (passwordless sign-in), then save. |
+| Admin page says account is not authorized | Firestore Database → Rules. Confirm the real, lowercase admin email is in the deployed rule and click Publish again. Do not add it to public JavaScript. |
+| `Missing or insufficient permissions` on the admin page | Check that the signed-in email exactly matches the email in the deployed Firestore Rules and that its email link sign-in was completed. |
+| GitHub Actions says Firebase service account is missing/unavailable | Repository Settings → Secrets and variables → Actions. Confirm `FIREBASE_SERVICE_ACCOUNT_JSON` exists and contains the entire JSON file, not just one field. |
+| Product-alert email fails | Confirm `SMTP_USERNAME` is the Gmail address, `SMTP_APP_PASSWORD` is the App Password (not the normal password), and 2-Step Verification is enabled. Open the Actions log for the monitor step. |
+| The page shows the README instead of the Pokémon site | Repository Settings → Pages. Set Source to Deploy from a branch, branch `main`, folder `/docs`, then Save. Open the Pages URL shown there. |
+| No product email arrives after the first scan | The first scan is only a baseline. Also confirm the subscriber is `active`, its categories/retailers match the event, and the Gmail secrets are present. |
+
+## Exact links at a glance
+
+Replace `OWNER`, `REPOSITORY`, and `PROJECT_ID` with your values before opening links that contain them.
+
+| What you need | Direct link |
+|---|---|
+| Firebase Console | https://console.firebase.google.com/ |
+| Firestore database | https://console.firebase.google.com/project/PROJECT_ID/firestore |
+| Firebase Authentication providers | https://console.firebase.google.com/project/PROJECT_ID/authentication/providers |
+| Firebase Authentication authorized domains | https://console.firebase.google.com/project/PROJECT_ID/authentication/settings |
+| Firebase Web App config / Project settings | https://console.firebase.google.com/project/PROJECT_ID/settings/general |
+| Firebase service-account key | https://console.firebase.google.com/project/PROJECT_ID/settings/serviceaccounts/adminsdk |
+| Google Account security | https://myaccount.google.com/security |
+| Gmail App Passwords | https://myaccount.google.com/apppasswords |
+| GitHub Actions secrets | https://github.com/OWNER/REPOSITORY/settings/secrets/actions |
+| GitHub Actions variables | https://github.com/OWNER/REPOSITORY/settings/variables/actions |
+| GitHub Pages settings | https://github.com/OWNER/REPOSITORY/settings/pages |
+| GitHub Actions workflow runs | https://github.com/OWNER/REPOSITORY/actions/workflows/pokedrop-watch.yml |
+| Edit the public Firebase config file | https://github.com/OWNER/REPOSITORY/edit/main/docs/firebase-config.js |
+| Copy the Firestore rules source | https://raw.githubusercontent.com/OWNER/REPOSITORY/main/firebase/firestore.rules |
+| Edit the scheduled workflow | https://github.com/OWNER/REPOSITORY/edit/main/.github/workflows/pokedrop-watch.yml |
+
+---
+
+## Security reminders
+
+- Never commit the Firebase service-account JSON, Gmail App Password, or other private credential.
+- The Firebase browser config is public; the service-account JSON is private.
+- Keep the real administrator email only in the deployed Firebase Rules editor. Keep the placeholder in the public repository file.
+- Do not switch Firestore to test mode.
+- Do not give GitHub Actions secrets to a third party or paste them into an issue.
+- Start with a small number of approved subscribers. Gmail, Firebase, and GitHub each enforce quotas and abuse limits.
