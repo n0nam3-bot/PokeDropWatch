@@ -1,0 +1,84 @@
+{
+  "settings": {
+    "check_interval_minutes": 15,
+    "request_timeout_seconds": 25,
+    "max_items_per_catalog": 100,
+    "history_limit": 100,
+    "email_digest_subject_prefix": "PokéDrop Watch",
+    "user_agent": "PokeDropWatch/1.0 (+https://github.com; public product availability monitor)"
+  },
+  "sources": [
+    {
+      "id": "pokemon-center-tcg",
+      "name": "Pokémon Center · Trading Card Game",
+      "retailer": "Pokémon Center",
+      "type": "catalog",
+      "url": "https://www.pokemoncenter.com/category/trading-card-game",
+      "enabled": true,
+      "notes": "Official Pokémon Center TCG listing. Product discovery depends on the public page exposing product links or structured data."
+    },
+    {
+      "id": "pokemon-center-plush",
+      "name": "Pokémon Center · Plush",
+      "retailer": "Pokémon Center",
+      "type": "catalog",
+      "url": "https://www.pokemoncenter.com/category/plush",
+      "enabled": true,
+      "notes": "Official Pokémon Center plush listing."
+    },
+    {
+      "id": "target-pokemon",
+      "name": "Target · Pokémon",
+      "retailer": "Target",
+      "type": "catalog",
+      "url": "https://www.target.com/s?searchTerm=pokemon",
+      "enabled": true,
+      "notes": "Search listing; retailer may limit automated access or render listings in JavaScript."
+    },
+    {
+      "id": "walmart-pokemon",
+      "name": "Walmart · Pokémon",
+      "retailer": "Walmart",
+      "type": "catalog",
+      "url": "https://www.walmart.com/search?q=pokemon",
+      "enabled": true,
+      "notes": "Search listing; marketplace sellers and availability can vary by location."
+    },
+    {
+      "id": "best-buy-pokemon",
+      "name": "Best Buy · Pokémon",
+      "retailer": "Best Buy",
+      "type": "catalog",
+      "url": "https://www.bestbuy.com/site/searchpage.jsp?st=pokemon",
+      "enabled": true,
+      "notes": "Search listing; page structure may change."
+    },
+    {
+      "id": "gamestop-pokemon",
+      "name": "GameStop · Pokémon",
+      "retailer": "GameStop",
+      "type": "catalog",
+      "url": "https://www.gamestop.com/search/?q=pokemon",
+      "enabled": true,
+      "notes": "Search listing; page structure may change."
+    },
+    {
+      "id": "amazon-pokemon-tcg",
+      "name": "Amazon · Pokémon TCG",
+      "retailer": "Amazon",
+      "type": "catalog",
+      "url": "https://www.amazon.com/s?k=pokemon+trading+cards",
+      "enabled": true,
+      "notes": "Search listing; Amazon may block automated access or show region/personalized results."
+    },
+    {
+      "id": "pokebeach-news",
+      "name": "PokéBeach · Pokémon TCG News",
+      "retailer": "PokéBeach",
+      "type": "rss",
+      "url": "https://www.pokebeach.com/feed",
+      "enabled": true,
+      "notes": "Independent Pokémon TCG news feed; useful for product announcements and release information, not live stock confirmation."
+    }
+  ]
+}

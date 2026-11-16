@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#c83232">
+  <meta name="description" content="A simple Pokémon product drop and restock tracker.">
+  <title>PokéDrop Watch</title>
+  <link rel="icon" href="./pokeball.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="PokéDrop Watch home">
+        <span class="pokeball" aria-hidden="true"><i></i></span>
+        <span><strong>PokéDrop</strong><small>WATCH</small></span>
+      </a>
+      <div class="topbar-right">
+        <span class="live-pill"><span class="live-dot"></span> AUTOMATED WATCH</span>
+        <button id="refreshButton" class="icon-button" type="button" aria-label="Refresh status" title="Refresh status">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M5.6 9a7 7 0 0 1 11.8-2L20 12M4 12l2.6 5a7 7 0 0 0 11.8-2"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">THE TRAINER'S RESTOCK RADAR</p>
+          <h1>Catch the drop.<br><span>Not the disappointment.</span></h1>
+          <p class="hero-sub">A quiet watch over Pokémon cards, collectibles, plush and more. Get an email when a monitored source changes.</p>
+          <div class="hero-foot"><span class="shield-icon">✓</span> No AI. No paid API. No account on this page.</div>
+        </div>
+        <div class="hero-emblem" aria-hidden="true">
+          <div class="emblem-ring"><div class="emblem-ball"><span></span></div></div>
+          <span class="spark spark-one">✦</span><span class="spark spark-two">✧</span>
+        </div>
+      </section>
+
+      <section class="status-strip" aria-label="Monitor status">
+        <div class="status-title"><span class="status-led" id="overallLed"></span><span id="overallStatus">Waiting for first scan</span></div>
+        <div class="last-check" id="lastChecked">The first scan runs after setup.</div>
+      </section>
+
+      <section class="metrics" aria-label="Monitor summary">
+        <article class="metric-card"><span class="metric-label">SOURCES ONLINE</span><strong id="onlineCount">—</strong><span class="metric-caption">public pages and feeds</span></article>
+        <article class="metric-card"><span class="metric-label">LISTINGS SEEN</span><strong id="listingCount">—</strong><span class="metric-caption">across successful scans</span></article>
+        <article class="metric-card"><span class="metric-label">NEW ALERTS</span><strong id="alertCount">0</strong><span class="metric-caption">recently detected</span></article>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading">
+          <div><p class="eyebrow">WHERE WE'RE LOOKING</p><h2>Watchlist sources</h2></div>
+          <span class="section-note" id="sourceCount">8 configured</span>
+        </div>
+        <div id="sourceGrid" class="source-grid">
+          <div class="empty-state">Source status will appear after the first scan.</div>
+        </div>
+        <p class="fine-print">A source marked unavailable may block automated requests or require JavaScript. The monitor reports that instead of treating it as a successful scan.</p>
+      </section>
+
+      <section class="section-block alerts-section">
+        <div class="section-heading alerts-heading">
+          <div><p class="eyebrow">FRESH FROM THE RADAR</p><h2>Latest alerts</h2></div>
+          <label class="search-wrap"><span class="sr-only">Search alerts</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg><input id="alertSearch" type="search" placeholder="Find an item…" autocomplete="off"></label>
+        </div>
+        <div class="filter-row" role="group" aria-label="Filter alerts">
+          <button class="filter-chip active" data-filter="all" type="button">All</button>
+          <button class="filter-chip" data-filter="new_drop" type="button">New drops</button>
+          <button class="filter-chip" data-filter="restock" type="button">Restocks</button>
+          <button class="filter-chip" data-filter="price_drop" type="button">Price drops</button>
+          <button class="filter-chip" data-filter="news" type="button">News</button>
+        </div>
+        <div id="alertList" class="alert-list"><div class="empty-state large-empty"><span class="empty-ball">◉</span><strong>No alerts yet</strong><span>Once the monitor completes its first scan, new drops and changes will show here.</span></div></div>
+      </section>
+
+      <section class="setup-panel">
+        <div class="setup-icon">✉</div>
+        <div class="setup-copy"><p class="eyebrow">DON'T MISS THE NEXT ONE</p><h2>Send alerts to your inbox</h2><p>Add your email credentials once in your GitHub repository's Actions secrets. Setup steps are in the included README.</p></div>
+        <span class="setup-badge">FREE EMAIL</span>
+      </section>
+
+      <footer class="footer">
+        <a class="footer-brand" href="./"><span class="mini-ball"></span> PokéDrop Watch</a>
+        <span>Fan-made tracker · Not affiliated with Pokémon or retailers</span>
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer">Powered by GitHub Actions</a>
+      </footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="./app.js" defer></script>
+</body>
+</html>

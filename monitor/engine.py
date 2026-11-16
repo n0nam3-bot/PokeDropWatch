@@ -1,0 +1,501 @@
+"""Deterministic public-page, product and RSS monitoring for PokéDrop Watch."""
+from __future__ import annotations
+
+import hashlib
+import html
+import json
+import re
+import time
+import xml.etree.ElementTree as ET
+from datetime import datetime, timezone
+from email.message import EmailMessage
+from typing import Any, Iterable
+from urllib.parse import urljoin, urlparse, urlunparse
+
+import requests
+from bs4 import BeautifulSoup
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
+
+
+STOCK_IN = {"instock", "limitedavailability", "onlineonly", "presale", "preorder"}
+STOCK_OUT = {"outofstock", "soldout", "discontinued", "backorder"}
+PRODUCT_PATH_HINTS = ("/product", "/products/", "/ip/", "/dp/", "/gp/product/", "/site/", "/p/")
+PRICE_RE = re.compile(r"(?:\$|USD\s*)(\d{1,5}(?:,\d{3})*(?:\.\d{2})?)", re.I)
+
+
+def utc_now() -> str:
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+
+def clean_text(value: Any, limit: int = 500) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, (dict, list)):
+        value = json.dumps(value, ensure_ascii=False)
+    text = re.sub(r"\s+", " ", html.unescape(str(value))).strip()
+    return text[:limit]
+
+
+def stable_url(url: str) -> str:
+    parsed = urlparse(url)
+    # Tracking parameters create duplicate IDs and noisy changes.
+    return urlunparse((parsed.scheme.lower(), parsed.netloc.lower(), parsed.path.rstrip("/"), "", "", ""))
+
+
+def money(value: Any) -> tuple[float | None, str]:
+    if value is None:
+        return None, ""
+    if isinstance(value, (int, float)):
+        return float(value), "USD"
+    match = re.search(r"(\d+(?:[,.]\d{1,2})?)", str(value).replace(",", ""))
+    if not match:
+        return None, ""
+    try:
+        return float(match.group(1)), "USD"
+    except ValueError:
+        return None, ""
+
+
+def normalize_availability(value: Any) -> str:
+    raw = clean_text(value, 120).lower()
+    token = raw.rsplit("/", 1)[-1].replace(" ", "").replace("-", "").replace("_", "")
+    if token in STOCK_IN:
+        return "in_stock" if token not in {"presale", "preorder"} else "preorder"
+    if token in STOCK_OUT:
+        return "out_of_stock"
+    if any(word in raw for word in ("outofstock", "sold out", "unavailable", "not available")):
+        return "out_of_stock"
+    if any(word in raw for word in ("instock", "in stock", "available now", "add to cart")):
+        return "in_stock"
+    if "preorder" in raw or "pre-order" in raw:
+        return "preorder"
+    return "unknown"
+
+
+def _walk_json(value: Any) -> Iterable[dict[str, Any]]:
+    if isinstance(value, dict):
+        yield value
+        for child in value.values():
+            yield from _walk_json(child)
+    elif isinstance(value, list):
+        for child in value:
+            yield from _walk_json(child)
+
+
+def _first_image(image: Any) -> str:
+    if isinstance(image, list):
+        image = image[0] if image else ""
+    if isinstance(image, dict):
+        image = image.get("url") or image.get("contentUrl") or ""
+    return clean_text(image, 1000)
+
+
+def extract_structured_products(soup: BeautifulSoup, base_url: str, retailer: str) -> list[dict[str, Any]]:
+    found: dict[str, dict[str, Any]] = {}
+    for script in soup.find_all("script", attrs={"type": re.compile("ld\\+json", re.I)}):
+        raw = script.string or script.get_text(" ", strip=True)
+        if not raw:
+            continue
+        try:
+            payload = json.loads(raw.strip().strip(";"))
+        except (json.JSONDecodeError, TypeError):
+            continue
+        for node in _walk_json(payload):
+            kind = node.get("@type", [])
+            if isinstance(kind, str):
+                kinds = [kind]
+            else:
+                kinds = [str(k) for k in kind]
+            if not any(k.lower().endswith("product") for k in kinds):
+                continue
+            name = clean_text(node.get("name"), 240)
+            raw_url = node.get("url") or node.get("@id") or ""
+            product_url = urljoin(base_url, raw_url) if raw_url else ""
+            if not name or not product_url:
+                continue
+            offers = node.get("offers") or {}
+            if isinstance(offers, list):
+                offers = offers[0] if offers else {}
+            if not isinstance(offers, dict):
+                offers = {}
+            price, currency = money(offers.get("price") or offers.get("lowPrice"))
+            availability = normalize_availability(offers.get("availability"))
+            item = {
+                "title": name,
+                "url": stable_url(product_url),
+                "price": price,
+                "currency": clean_text(offers.get("priceCurrency") or currency or "USD", 8),
+                "availability": availability,
+                "image": _first_image(node.get("image")),
+                "sku": clean_text(node.get("sku") or node.get("productID"), 80),
+                "retailer": retailer,
+            }
+            found[item["url"]] = item
+    return list(found.values())
+
+
+def extract_catalog_links(soup: BeautifulSoup, base_url: str, retailer: str, limit: int) -> list[dict[str, Any]]:
+    found: dict[str, dict[str, Any]] = {}
+    base_host = urlparse(base_url).netloc
+    for anchor in soup.find_all("a", href=True):
+        href = urljoin(base_url, anchor.get("href", ""))
+        parsed = urlparse(href)
+        if parsed.scheme not in {"http", "https"}:
+            continue
+        # Search results often link to third-party navigation and recommendations.
+        if parsed.netloc and not (parsed.netloc == base_host or parsed.netloc.endswith("." + base_host)):
+            continue
+        path = parsed.path.lower()
+        if not any(hint in path for hint in PRODUCT_PATH_HINTS):
+            continue
+        title = clean_text(anchor.get("aria-label") or anchor.get("title") or anchor.get_text(" ", strip=True), 240)
+        if len(title) < 8 or title.lower() in {"learn more", "see details", "view product"}:
+            continue
+        stable = stable_url(href)
+        # Retailer listing cards often expose their price/stock next to the link,
+        # even when they omit Product JSON-LD. Read only a nearby card-sized parent.
+        card = anchor
+        card_text = clean_text(anchor.get_text(" ", strip=True), 1800)
+        for parent in anchor.parents:
+            if getattr(parent, "name", None) in {"body", "html"}:
+                break
+            candidate = clean_text(parent.get_text(" ", strip=True), 1800)
+            if candidate and (PRICE_RE.search(candidate) or re.search(r"in stock|out of stock|sold out|pre-?order", candidate, re.I)):
+                card, card_text = parent, candidate
+                break
+        price_match = PRICE_RE.search(card_text)
+        price_value, currency = money(price_match.group(1)) if price_match else (None, "USD")
+        availability = normalize_availability(card_text)
+        image_tag = card.find("img") if hasattr(card, "find") else None
+        image_url = ""
+        if image_tag:
+            image_url = urljoin(base_url, image_tag.get("src") or image_tag.get("data-src") or image_tag.get("data-lazy-src") or "")
+        found[stable] = {
+            "title": title,
+            "url": stable,
+            "price": price_value,
+            "currency": currency or "USD",
+            "availability": availability,
+            "image": image_url,
+            "sku": "",
+            "retailer": retailer,
+        }
+        if len(found) >= limit:
+            break
+    return list(found.values())
+
+
+def enrich_prices_from_page(soup: BeautifulSoup, products: list[dict[str, Any]]) -> None:
+    # Structured data above is preferred. This catches simple product detail pages.
+    meta_price = soup.find("meta", attrs={"property": "product:price:amount"}) or soup.find("meta", attrs={"itemprop": "price"})
+    meta_currency = soup.find("meta", attrs={"property": "product:price:currency"}) or soup.find("meta", attrs={"itemprop": "priceCurrency"})
+    if meta_price and products:
+        val, _ = money(meta_price.get("content"))
+        if val is not None:
+            products[0]["price"] = val
+            products[0]["currency"] = clean_text(meta_currency.get("content") if meta_currency else "USD", 8)
+
+
+def parse_product_page(html_text: str, url: str, retailer: str) -> dict[str, Any]:
+    soup = BeautifulSoup(html_text, "html.parser")
+    products = extract_structured_products(soup, url, retailer)
+    if products:
+        return products[0]
+    title = clean_text((soup.find("meta", property="og:title") or {}).get("content") if soup.find("meta", property="og:title") else soup.title.get_text(" ", strip=True) if soup.title else url, 240)
+    desc = soup.find("meta", attrs={"name": "description"})
+    body_text = clean_text(soup.get_text(" ", strip=True), 12000).lower()
+    price = None
+    currency = "USD"
+    price_meta = soup.find("meta", attrs={"property": "product:price:amount"}) or soup.find("meta", attrs={"itemprop": "price"})
+    if price_meta:
+        price, _ = money(price_meta.get("content"))
+    if price is None:
+        match = PRICE_RE.search(body_text)
+        if match:
+            price, _ = money(match.group(1))
+    availability = "unknown"
+    for selector in [
+        {"itemprop": "availability"},
+        {"class": re.compile(r"availability|stock|inventory", re.I)},
+        {"id": re.compile(r"availability|stock|inventory", re.I)},
+    ]:
+        tag = soup.find(attrs=selector)
+        if tag:
+            availability = normalize_availability(tag.get("href") or tag.get("content") or tag.get_text(" ", strip=True))
+            if availability != "unknown":
+                break
+    if availability == "unknown":
+        if any(p in body_text for p in ("out of stock", "sold out", "currently unavailable", "temporarily unavailable")):
+            availability = "out_of_stock"
+        elif any(p in body_text for p in ("add to cart", "in stock", "available now")):
+            availability = "in_stock"
+        elif "pre-order" in body_text or "preorder" in body_text:
+            availability = "preorder"
+    image_tag = soup.find("meta", property="og:image")
+    return {
+        "title": title or clean_text(desc.get("content") if desc else url, 240),
+        "url": stable_url(url),
+        "price": price,
+        "currency": currency,
+        "availability": availability,
+        "image": clean_text(image_tag.get("content") if image_tag else "", 1000),
+        "sku": "",
+        "retailer": retailer,
+    }
+
+
+def parse_rss(xml_text: str, source: dict[str, Any]) -> list[dict[str, Any]]:
+    try:
+        root = ET.fromstring(xml_text)
+    except ET.ParseError as exc:
+        raise ValueError(f"RSS/XML could not be parsed: {exc}") from exc
+    entries = root.findall(".//item")
+    if not entries:
+        entries = [el for el in root.iter() if el.tag.split("}")[-1].lower() == "entry"]
+    items = []
+    for entry in entries[:50]:
+        values: dict[str, str] = {}
+        for child in list(entry):
+            key = child.tag.split("}")[-1].lower()
+            if key == "link":
+                val = child.attrib.get("href") or child.text or ""
+            else:
+                val = "".join(child.itertext())
+            values.setdefault(key, clean_text(val, 3000))
+        title = values.get("title", "")
+        link = values.get("link", "")
+        if not title or not link:
+            continue
+        summary = values.get("description") or values.get("summary") or values.get("content", "")
+        identifier = values.get("guid") or values.get("id") or link
+        items.append({
+            "key": hashlib.sha256(identifier.encode("utf-8")).hexdigest()[:20],
+            "title": title[:240],
+            "url": urljoin(source["url"], link),
+            "summary": re.sub(r"<[^>]+>", " ", summary)[:420],
+            "published": values.get("pubdate") or values.get("published") or values.get("updated") or "",
+            "retailer": source.get("retailer") or source.get("name", "News feed"),
+            "image": "",
+        })
+    return items
+
+
+def make_session(user_agent: str) -> requests.Session:
+    session = requests.Session()
+    retry = Retry(total=2, connect=2, read=2, backoff_factor=1.0, status_forcelist=(429, 500, 502, 503, 504), allowed_methods=frozenset(["GET"]))
+    adapter = HTTPAdapter(max_retries=retry, pool_connections=10, pool_maxsize=10)
+    session.mount("http://", adapter)
+    session.mount("https://", adapter)
+    session.headers.update({
+        "User-Agent": user_agent,
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,application/rss+xml;q=0.8,*/*;q=0.7",
+        "Accept-Language": "en-US,en;q=0.8",
+    })
+    return session
+
+
+def fetch(session: requests.Session, url: str, timeout: int) -> tuple[str, str]:
+    response = session.get(url, timeout=timeout, allow_redirects=True)
+    response.raise_for_status()
+    content_type = response.headers.get("content-type", "").lower()
+    if "text/html" not in content_type and "xml" not in content_type and "text/plain" not in content_type:
+        raise ValueError(f"Unsupported response type: {content_type or 'unknown'}")
+    return response.text, response.url
+
+
+def price_text(item: dict[str, Any]) -> str:
+    val = item.get("price")
+    if val is None:
+        return "Price not published on the monitored page"
+    currency = item.get("currency") or "USD"
+    symbol = "$" if currency.upper() == "USD" else f"{currency} "
+    return f"{symbol}{float(val):,.2f}"
+
+
+def event_record(event_type: str, item: dict[str, Any], source: dict[str, Any], previous_price: Any = None, detail: str = "") -> dict[str, Any]:
+    identity = f"{source['id']}|{item.get('url')}|{event_type}|{item.get('price')}|{utc_now()}"
+    return {
+        "id": hashlib.sha256(identity.encode("utf-8")).hexdigest()[:18],
+        "type": event_type,
+        "title": item.get("title") or source.get("name", "Pokémon item"),
+        "url": item.get("url") or source["url"],
+        "retailer": item.get("retailer") or source.get("retailer") or source.get("name", "Source"),
+        "source_name": source.get("name", "Source"),
+        "source_id": source["id"],
+        "price": item.get("price"),
+        "currency": item.get("currency") or "USD",
+        "previous_price": previous_price,
+        "availability": item.get("availability", "unknown"),
+        "image": item.get("image", ""),
+        "summary": clean_text(item.get("summary") or detail, 420),
+        "detected_at": utc_now(),
+        "email_sent": False,
+    }
+
+
+def scan_source(session: requests.Session, source: dict[str, Any], settings: dict[str, Any], state: dict[str, Any]) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    started = time.monotonic()
+    source_id = source["id"]
+    old_source_state = state.setdefault("items", {}).get(source_id, {})
+    current_source_state: dict[str, Any] = dict(old_source_state)
+    events: list[dict[str, Any]] = []
+    url = source["url"]
+    html_text, final_url = fetch(session, url, int(settings.get("request_timeout_seconds", 25)))
+    kind = source["type"]
+    count = 0
+
+    if kind == "rss":
+        entries = parse_rss(html_text, source)
+        seen = current_source_state.get("seen", {})
+        if not current_source_state.get("initialized"):
+            for item in entries:
+                seen[item["key"]] = {"title": item["title"], "url": item["url"], "first_seen": utc_now()}
+        else:
+            for item in entries:
+                if item["key"] not in seen:
+                    events.append(event_record("news", item, source))
+                    seen[item["key"]] = {"title": item["title"], "url": item["url"], "first_seen": utc_now()}
+        current_source_state = {"seen": dict(list(seen.items())[-250:]), "initialized": True}
+        count = len(entries)
+    elif kind in {"catalog", "product"}:
+        soup = BeautifulSoup(html_text, "html.parser")
+        if kind == "product":
+            products = [parse_product_page(html_text, final_url, source.get("retailer", source.get("name", "Retailer")))]
+        else:
+            retailer = source.get("retailer", source.get("name", "Retailer"))
+            products = extract_structured_products(soup, final_url, retailer)
+            structured_urls = {p["url"] for p in products}
+            fallback = extract_catalog_links(soup, final_url, retailer, int(settings.get("max_items_per_catalog", 100)))
+            for item in fallback:
+                if item["url"] not in structured_urls:
+                    products.append(item)
+            # Keep the list bounded, with structured items first.
+            products = products[:int(settings.get("max_items_per_catalog", 100))]
+        previous_items = current_source_state.get("products", {})
+        next_items = dict(previous_items)
+        for item in products:
+            key = item.get("url") or item.get("sku") or item.get("title")
+            if not key:
+                continue
+            old = previous_items.get(key)
+            if old is None:
+                if current_source_state.get("initialized"):
+                    events.append(event_record("new_drop", item, source, detail="New product listing detected."))
+            else:
+                was = old.get("availability", "unknown")
+                now = item.get("availability", "unknown")
+                if was == "out_of_stock" and now in {"in_stock", "preorder"}:
+                    events.append(event_record("restock", item, source, old.get("price"), "Previously unavailable; the listing now reports availability."))
+                old_price, new_price = old.get("price"), item.get("price")
+                if old_price is not None and new_price is not None and float(new_price) != float(old_price):
+                    direction = "price_drop" if float(new_price) < float(old_price) else "price_change"
+                    events.append(event_record(direction, item, source, old_price, "Listed price changed."))
+                if was == "unknown" and now in {"in_stock", "preorder"} and old.get("availability_checked"):
+                    events.append(event_record("restock", item, source, old.get("price"), "The listing now reports availability."))
+            item_state = dict(item)
+            item_state["last_seen"] = utc_now()
+            item_state["availability_checked"] = item.get("availability") != "unknown"
+            next_items[key] = item_state
+        current_source_state = {"products": dict(list(next_items.items())[-500:]), "initialized": True}
+        count = len(products)
+    else:
+        raise ValueError(f"Unsupported source type: {kind}")
+
+    current_source_state["last_success"] = utc_now()
+    current_source_state["last_item_count"] = count
+    elapsed_ms = int((time.monotonic() - started) * 1000)
+    status = {
+        "id": source_id,
+        "name": source.get("name", source_id),
+        "retailer": source.get("retailer", ""),
+        "type": kind,
+        "url": url,
+        "status": "ok",
+        "last_checked": utc_now(),
+        "items_found": count,
+        "new_alerts": len(events),
+        "duration_ms": elapsed_ms,
+        "message": f"Scanned successfully · {count} listing(s) found",
+        "notes": source.get("notes", ""),
+    }
+    return events, {"state": current_source_state, "status": status}
+
+
+def html_email(events: list[dict[str, Any]], brand: str = "PokéDrop Watch") -> tuple[str, str, str]:
+    count = len(events)
+    subject_line = f"{brand}: {count} Pokémon alert{'s' if count != 1 else ''}"
+    cards_html = []
+    cards_text = []
+    labels = {
+        "new_drop": "NEW LISTING",
+        "restock": "RESTOCK",
+        "price_drop": "PRICE DROP",
+        "price_change": "PRICE CHANGE",
+        "news": "POKÉMON NEWS",
+    }
+    for event in events:
+        title = clean_text(event.get("title"), 240)
+        link = event.get("url", "")
+        safe_link = html.escape(link, quote=True)
+        kind = labels.get(event.get("type"), "UPDATE")
+        price = price_text(event)
+        availability = event.get("availability", "unknown").replace("_", " ").title()
+        previous = event.get("previous_price")
+        previous_text = f"Previous price: ${float(previous):,.2f}\n" if previous is not None else ""
+        summary = clean_text(event.get("summary"), 420)
+        cards_text.append(
+            f"{kind}\n{title}\nStore/source: {event.get('retailer', '—')}\nPrice: {price}\nAvailability: {availability}\n{previous_text}Link: {link}\n{summary}\n"
+        )
+        cards_html.append(f"""
+          <tr><td style="padding:18px 20px;border-bottom:1px solid #ececec">
+            <div style="font:700 11px Arial,sans-serif;letter-spacing:1.2px;color:#c83232;margin-bottom:7px">{html.escape(kind)}</div>
+            <div style="font:700 17px Arial,sans-serif;color:#202124;line-height:1.35;margin-bottom:8px">{html.escape(title)}</div>
+            <div style="font:13px Arial,sans-serif;color:#5f6368;line-height:1.7">
+              <strong>Store/source:</strong> {html.escape(clean_text(event.get('retailer')))}<br>
+              <strong>Price:</strong> {html.escape(price)}<br>
+              <strong>Availability:</strong> {html.escape(availability)}<br>
+              {f'<strong>Previous price:</strong> ${float(previous):,.2f}<br>' if previous is not None else ''}
+              {html.escape(summary)}
+            </div>
+            <div style="margin-top:13px"><a href="{safe_link}" style="display:inline-block;padding:10px 15px;background:#c83232;color:#fff;text-decoration:none;border-radius:7px;font:700 13px Arial,sans-serif">View item / source →</a></div>
+          </td></tr>
+        """)
+    html_body = f"""<!doctype html><html><body style="margin:0;background:#f5f5f3;padding:24px 10px">
+      <table role="presentation" cellpadding="0" cellspacing="0" style="max-width:620px;width:100%;margin:0 auto;background:#fff;border:1px solid #e8e8e5;border-radius:12px;overflow:hidden">
+        <tr><td style="background:#c83232;padding:20px 22px;color:#fff">
+          <div style="font:800 21px Arial,sans-serif">◉ {html.escape(brand)}</div>
+          <div style="font:13px Arial,sans-serif;opacity:.92;margin-top:5px">{count} new Pokémon update{'s' if count != 1 else ''} detected</div>
+        </td></tr>
+        {''.join(cards_html)}
+        <tr><td style="padding:16px 20px;background:#fafaf8;font:12px/1.6 Arial,sans-serif;color:#777">
+          Automated public-page monitor. Prices and availability can change quickly; confirm on the retailer's page before purchasing. Not affiliated with Nintendo, The Pokémon Company, or any retailer.
+        </td></tr>
+      </table></body></html>"""
+    text_body = f"{brand}\n{count} new Pokémon update(s) detected\n\n" + "\n---\n".join(cards_text) + "\nPrices and availability can change quickly. Confirm with the retailer.\n"
+    return subject_line, html_body, text_body
+
+
+def send_email(events: list[dict[str, Any]], env: dict[str, str], prefix: str = "PokéDrop Watch") -> tuple[bool, str]:
+    username = env.get("SMTP_USERNAME", "").strip()
+    password = env.get("SMTP_APP_PASSWORD", "").strip()
+    recipient = env.get("ALERT_EMAIL", "").strip()
+    if not (username and password and recipient):
+        return False, "Email is not configured; add SMTP_USERNAME, SMTP_APP_PASSWORD and ALERT_EMAIL repository secrets."
+    import smtplib
+    host = (env.get("SMTP_HOST") or "smtp.gmail.com").strip()
+    port = int(env.get("SMTP_PORT") or "587")
+    subject, html_body, text_body = html_email(events, prefix)
+    msg = EmailMessage()
+    msg["Subject"] = subject
+    msg["From"] = username
+    msg["To"] = recipient
+    msg.set_content(text_body)
+    msg.add_alternative(html_body, subtype="html")
+    with smtplib.SMTP(host, port, timeout=25) as server:
+        server.ehlo()
+        server.starttls()
+        server.ehlo()
+        server.login(username, password)
+        server.send_message(msg)
+    return True, f"Email digest sent to {recipient}."
