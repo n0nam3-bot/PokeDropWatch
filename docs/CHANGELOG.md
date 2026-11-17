@@ -2,6 +2,32 @@
 
 All notable project changes are recorded here. Entries are ordered newest first. Dates use `YYYY-MM-DD`.
 
+## [1.2.0] — 2026-11-16
+
+### Fixed
+- Tightened retailer catalog parsing to reject review counts, ratings, option links, generic calls to action, and unrelated products that were previously being mistaken for product listings.
+- Added Pokémon-name relevance checks so the product feed does not treat arbitrary retailer navigation or unrelated search tiles as Pokémon drops.
+- Changed source health reporting: a page that responds but produces no recognizable Pokémon product/feed entries is now marked `NO MATCH`, not `ONLINE`.
+- Filtered malformed legacy product events from the public feed and cleaned non-Pokémon product records from the scanner's next saved state.
+
+### Added
+- Added retailer product image extraction from JSON-LD, product-card image attributes, RSS media thumbnails, and article image markup when available.
+- Added product category inference for Pokémon TCG, plush, games, accessories/apparel, and general collectibles.
+- Added separate Latest alerts and All tracked products views.
+- Added dashboard filters for item category and retailer, plus an exact-title search option shared by both views.
+- Added an Accessories & apparel notification category to subscription preferences and Firestore validation.
+- Expanded the Amazon search from Pokémon TCG-only to Pokémon products generally, using a fresh baseline to prevent existing products from being sent as a burst of false new-drop emails.
+
+### Notes
+- Existing Firebase projects must manually republish the updated `firebase/firestore.rules` template after installing this release. Preserve the administrator email in the deployed Console rules; do not commit it to GitHub.
+- Product photos are displayed only when a monitored page exposes a usable image URL; retailer hotlink restrictions can still prevent some images from loading.
+- Retailer pages may block automated requests or render product tiles with JavaScript. A `NO MATCH` status is an honest signal that this scan did not verify any usable product listing.
+
+### Tests
+- Added sample tests reproducing the screenshot's `98 ratings` and `See options` false positives.
+- Added tests for product thumbnails, RSS thumbnails, item categorization, Pokémon relevance, and no-match source status.
+
+
 ## [1.1.1] — 2026-11-16
 
 ### Changed

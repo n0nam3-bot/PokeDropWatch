@@ -122,7 +122,7 @@ export function watchAuth(callback) {
 }
 
 export function categoryLabel(value) {
-  return ({ tcg: 'Pokémon TCG', plush: 'Plush', collectibles: 'Collectibles', games: 'Games', news: 'News' })[value] || value;
+  return ({ tcg: 'Pokémon TCG', plush: 'Plush', collectibles: 'Collectibles', games: 'Games', accessories: 'Accessories & apparel', news: 'News' })[value] || value;
 }
 
 export function retailerLabel(value) {

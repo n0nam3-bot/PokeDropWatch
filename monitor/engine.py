@@ -21,6 +21,29 @@ from urllib3.util.retry import Retry
 STOCK_IN = {"instock", "limitedavailability", "onlineonly", "presale", "preorder"}
 STOCK_OUT = {"outofstock", "soldout", "discontinued", "backorder"}
 PRODUCT_PATH_HINTS = ("/product", "/products/", "/ip/", "/dp/", "/gp/product/", "/site/", "/p/")
+NON_PRODUCT_PATH_HINTS = (
+    "product-reviews", "customer-reviews", "review/", "reviews/", "bestsellers",
+    "offer-listing", "help/", "gp/aw/", "gp/slredirect", "cart", "wishlist",
+)
+POKEMON_TERMS = (
+    "pokemon", "pikachu", "charizard", "charmander", "squirtle", "bulbasaur",
+    "eevee", "jolteon", "vaporeon", "flareon", "mewtwo", "mew", "snorlax",
+    "gengar", "lucario", "greninja", "gengar", "psyduck", "jigglypuff",
+    "dragonite", "gardevoir", "umbreon", "espeon", "arcanine", "lapras",
+    "ditto", "magikarp", "gyarados", "rayquaza", "mimikyu", "piplup",
+    "turtwig", "chimchar", "totodile", "cyndaquil", "chikorita", "treecko",
+    "torchic", "mudkip", "lugia", "ho oh", "celebi", "kyogre", "groudon",
+    "dialga", "palkia", "giratina", "arceus", "zekrom", "reshiram", "kyurem",
+    "xerneas", "yveltal", "solgaleo", "lunala", "zacian", "zamazenta",
+    "koraidon", "miraidon", "sylveon", "glaceon", "leafeon", "vulpix",
+    "ninetales", "machamp", "blastoise", "venusaur", "scizor", "heracross",
+    "cinderace", "sprigatito", "fuecoco", "quaxly", "pawmi", "team rocket",
+)
+NOISE_TITLE_RE = re.compile(
+    r"^(?:\d+\s*(?:ratings?|reviews?)|see options?|view options?|" 
+    r"customer reviews?|read reviews?|sponsored|shop now|learn more|" 
+    r"add to cart|buy now|quick view|view details?)$", re.I
+)
 PRICE_RE = re.compile(r"(?:\$|USD\s*)(\d{1,5}(?:,\d{3})*(?:\.\d{2})?)", re.I)
 
 
@@ -83,12 +106,150 @@ def _walk_json(value: Any) -> Iterable[dict[str, Any]]:
             yield from _walk_json(child)
 
 
-def _first_image(image: Any) -> str:
+def normalize_match_text(value: Any) -> str:
+    text = clean_text(value, 1200).lower().replace("é", "e").replace("’", "'")
+    return re.sub(r"[^a-z0-9]+", " ", text).strip()
+
+
+def is_pokemon_relevant(value: Any) -> bool:
+    text = normalize_match_text(value)
+    if not text:
+        return False
+    padded = f" {text} "
+    return any(f" {term} " in padded for term in POKEMON_TERMS)
+
+
+def is_valid_event(event: dict[str, Any]) -> bool:
+    """Keep scoped Pokémon news and verified Pokémon product-title events."""
+    return event.get("category") == "news" or event.get("type") == "news" or is_pokemon_relevant(event.get("title", ""))
+
+
+def infer_category(title: Any, fallback: str = "collectibles") -> str:
+    text = normalize_match_text(title)
+    if fallback == "news":
+        return "news"
+    tcg_terms = (
+        "trading card", "pokemon tcg", "booster", "elite trainer", " etb ",
+        "trainer box", "card collection", "battle deck", "theme deck", "blister",
+        "pokemon cards", "card sleeves", "trading cards", "tcg "
+    )
+    plush_terms = ("plush", "stuffed animal", "soft toy", "plushie")
+    game_terms = (
+        "nintendo switch", "switch game", "video game", "game card", "pokemon legends",
+        "pokemon scarlet", "pokemon violet", "pokemon sword", "pokemon shield",
+        "brilliant diamond", "shining pearl", "pokemon arceus", "pokemon game"
+    )
+    accessory_terms = (
+        "binder", "deck box", "playmat", "sleeves", "backpack", "keychain", "key chain",
+        "case", "apparel", "shirt", "hoodie", "hat", "blanket", "wallet", "bottle",
+        "accessory", "accessories", "lunch box", "pin set"
+    )
+    padded = f" {text} "
+    if any(term.strip() in text for term in tcg_terms):
+        return "tcg"
+    if any(term in text for term in plush_terms):
+        return "plush"
+    if any(term in text for term in game_terms):
+        return "games"
+    if any(term in text for term in accessory_terms):
+        return "accessories"
+    return fallback if fallback in {"tcg", "plush", "games", "accessories", "collectibles"} else "collectibles"
+
+
+def _first_image(image: Any, base_url: str = "") -> str:
     if isinstance(image, list):
-        image = image[0] if image else ""
+        image = next((value for value in image if value), "")
     if isinstance(image, dict):
-        image = image.get("url") or image.get("contentUrl") or ""
-    return clean_text(image, 1000)
+        image = image.get("url") or image.get("contentUrl") or image.get("thumbnailUrl") or ""
+    value = clean_text(image, 1000)
+    return urljoin(base_url, value) if value else ""
+
+
+def _is_noise_title(value: Any) -> bool:
+    text = clean_text(value, 240)
+    return not text or bool(NOISE_TITLE_RE.fullmatch(text)) or len(text) < 10
+
+
+def _card_ancestor(anchor):
+    """Find the nearest bounded product tile rather than a rating/link wrapper."""
+    fallback = None
+    for parent in anchor.parents:
+        if getattr(parent, "name", None) in {"body", "html"}:
+            break
+        text = clean_text(parent.get_text(" ", strip=True), 3500)
+        if not text:
+            continue
+        classes = " ".join(parent.get("class", [])) if parent.get("class") else ""
+        marker = " ".join([
+            classes,
+            clean_text(parent.get("id"), 120),
+            clean_text(parent.get("data-testid"), 120),
+            clean_text(parent.get("data-component-type"), 120),
+            clean_text(parent.get("data-cy"), 120),
+        ]).lower()
+        marked_tile = any(token in marker for token in (
+            "product", "sku-item", "search-result", "producttile", "product-tile", "grid-item"
+        ))
+        has_image = parent.find("img") is not None
+        has_price = PRICE_RE.search(text) is not None
+        if marked_tile and len(text) <= 3500:
+            return parent
+        if fallback is None and has_image and has_price and len(text) <= 2200:
+            fallback = parent
+    return fallback or anchor.parent
+
+
+def _card_title(card, anchor) -> str:
+    candidates: list[str] = []
+    for selector in ("h2", "h3", "[data-cy*='title']", "[data-testid*='title']", "[class*='product-title']", "[class*='title-recipe']"):
+        try:
+            for element in card.select(selector)[:4]:
+                candidates.append(clean_text(element.get_text(" ", strip=True), 240))
+        except Exception:
+            pass
+    for image in card.find_all("img")[:5]:
+        candidates.extend([
+            clean_text(image.get("alt"), 240),
+            clean_text(image.get("title"), 240),
+        ])
+    for element in card.find_all(["a", "span"], limit=45):
+        if element is anchor or element.get("aria-label") or element.get("title"):
+            candidates.extend([
+                clean_text(element.get("aria-label"), 240),
+                clean_text(element.get("title"), 240),
+                clean_text(element.get_text(" ", strip=True), 240),
+            ])
+    useful = []
+    seen = set()
+    for value in candidates:
+        if _is_noise_title(value) or not is_pokemon_relevant(value):
+            continue
+        normalized = normalize_match_text(value)
+        if normalized in seen:
+            continue
+        seen.add(normalized)
+        # Prefer descriptive product names rather than a generic CTA or short brand label.
+        score = min(len(value), 180) + (35 if "pokemon" in normalized else 0)
+        if any(term in normalized for term in ("booster", "plush", "figure", "elite trainer", "collection", "nintendo switch")):
+            score += 25
+        useful.append((score, value))
+    if not useful:
+        return ""
+    return max(useful, key=lambda item: item[0])[1]
+
+
+def _image_from_card(card, base_url: str) -> str:
+    for image in card.find_all("img")[:8]:
+        for key in ("data-a-hires", "data-src", "data-lazy-src", "data-original", "src"):
+            candidate = clean_text(image.get(key), 1000)
+            if candidate and not candidate.startswith("data:"):
+                return urljoin(base_url, candidate)
+        srcset = clean_text(image.get("srcset"), 2000)
+        if srcset:
+            candidate = srcset.split(",")[-1].strip().split(" ")[0]
+            if candidate and not candidate.startswith("data:"):
+                return urljoin(base_url, candidate)
+    return ""
 
 
 def extract_structured_products(soup: BeautifulSoup, base_url: str, retailer: str) -> list[dict[str, Any]]:
@@ -103,16 +264,13 @@ def extract_structured_products(soup: BeautifulSoup, base_url: str, retailer: st
             continue
         for node in _walk_json(payload):
             kind = node.get("@type", [])
-            if isinstance(kind, str):
-                kinds = [kind]
-            else:
-                kinds = [str(k) for k in kind]
+            kinds = [kind] if isinstance(kind, str) else [str(k) for k in kind]
             if not any(k.lower().endswith("product") for k in kinds):
                 continue
             name = clean_text(node.get("name"), 240)
             raw_url = node.get("url") or node.get("@id") or ""
             product_url = urljoin(base_url, raw_url) if raw_url else ""
-            if not name or not product_url:
+            if not name or not product_url or not is_pokemon_relevant(name):
                 continue
             offers = node.get("offers") or {}
             if isinstance(offers, list):
@@ -121,56 +279,51 @@ def extract_structured_products(soup: BeautifulSoup, base_url: str, retailer: st
                 offers = {}
             price, currency = money(offers.get("price") or offers.get("lowPrice"))
             availability = normalize_availability(offers.get("availability"))
+            image = _first_image(node.get("image"), base_url)
             item = {
                 "title": name,
                 "url": stable_url(product_url),
                 "price": price,
                 "currency": clean_text(offers.get("priceCurrency") or currency or "USD", 8),
                 "availability": availability,
-                "image": _first_image(node.get("image")),
+                "image": image,
                 "sku": clean_text(node.get("sku") or node.get("productID"), 80),
                 "retailer": retailer,
             }
+            item["category"] = infer_category(name)
             found[item["url"]] = item
     return list(found.values())
 
 
 def extract_catalog_links(soup: BeautifulSoup, base_url: str, retailer: str, limit: int) -> list[dict[str, Any]]:
     found: dict[str, dict[str, Any]] = {}
-    base_host = urlparse(base_url).netloc
+    base_host = urlparse(base_url).netloc.lower()
     for anchor in soup.find_all("a", href=True):
         href = urljoin(base_url, anchor.get("href", ""))
         parsed = urlparse(href)
         if parsed.scheme not in {"http", "https"}:
             continue
-        # Search results often link to third-party navigation and recommendations.
-        if parsed.netloc and not (parsed.netloc == base_host or parsed.netloc.endswith("." + base_host)):
+        host = parsed.netloc.lower()
+        if host and not (host == base_host or host.endswith("." + base_host)):
             continue
         path = parsed.path.lower()
+        if any(hint in path for hint in NON_PRODUCT_PATH_HINTS):
+            continue
         if not any(hint in path for hint in PRODUCT_PATH_HINTS):
             continue
-        title = clean_text(anchor.get("aria-label") or anchor.get("title") or anchor.get_text(" ", strip=True), 240)
-        if len(title) < 8 or title.lower() in {"learn more", "see details", "view product"}:
+
+        card = _card_ancestor(anchor)
+        title = _card_title(card, anchor)
+        if not title:
             continue
         stable = stable_url(href)
-        # Retailer listing cards often expose their price/stock next to the link,
-        # even when they omit Product JSON-LD. Read only a nearby card-sized parent.
-        card = anchor
-        card_text = clean_text(anchor.get_text(" ", strip=True), 1800)
-        for parent in anchor.parents:
-            if getattr(parent, "name", None) in {"body", "html"}:
-                break
-            candidate = clean_text(parent.get_text(" ", strip=True), 1800)
-            if candidate and (PRICE_RE.search(candidate) or re.search(r"in stock|out of stock|sold out|pre-?order", candidate, re.I)):
-                card, card_text = parent, candidate
-                break
+        if stable in found:
+            continue
+        card_text = clean_text(card.get_text(" ", strip=True), 2200)
         price_match = PRICE_RE.search(card_text)
         price_value, currency = money(price_match.group(1)) if price_match else (None, "USD")
         availability = normalize_availability(card_text)
-        image_tag = card.find("img") if hasattr(card, "find") else None
-        image_url = ""
-        if image_tag:
-            image_url = urljoin(base_url, image_tag.get("src") or image_tag.get("data-src") or image_tag.get("data-lazy-src") or "")
+        image_url = _image_from_card(card, base_url)
         found[stable] = {
             "title": title,
             "url": stable,
@@ -180,11 +333,11 @@ def extract_catalog_links(soup: BeautifulSoup, base_url: str, retailer: str, lim
             "image": image_url,
             "sku": "",
             "retailer": retailer,
+            "category": infer_category(title),
         }
         if len(found) >= limit:
             break
     return list(found.values())
-
 
 def enrich_prices_from_page(soup: BeautifulSoup, products: list[dict[str, Any]]) -> None:
     # Structured data above is preferred. This catches simple product detail pages.
@@ -239,9 +392,10 @@ def parse_product_page(html_text: str, url: str, retailer: str) -> dict[str, Any
         "price": price,
         "currency": currency,
         "availability": availability,
-        "image": clean_text(image_tag.get("content") if image_tag else "", 1000),
+        "image": urljoin(url, clean_text(image_tag.get("content") if image_tag else "", 1000)),
         "sku": "",
         "retailer": retailer,
+        "category": infer_category(title, "collectibles"),
     }
 
 
@@ -256,13 +410,26 @@ def parse_rss(xml_text: str, source: dict[str, Any]) -> list[dict[str, Any]]:
     items = []
     for entry in entries[:50]:
         values: dict[str, str] = {}
+        image_url = ""
+        encoded_content = ""
         for child in list(entry):
             key = child.tag.split("}")[-1].lower()
             if key == "link":
                 val = child.attrib.get("href") or child.text or ""
+            elif key in {"content", "encoded"}:
+                val = "".join(child.itertext())
+                encoded_content += " " + val
             else:
                 val = "".join(child.itertext())
-            values.setdefault(key, clean_text(val, 3000))
+            values.setdefault(key, clean_text(val, 5000))
+            if key in {"thumbnail", "content"} and child.attrib.get("url"):
+                image_url = child.attrib.get("url")
+            if key == "enclosure" and child.attrib.get("type", "").startswith("image/"):
+                image_url = child.attrib.get("url", "")
+        if not image_url and encoded_content:
+            image_match = re.search(r'<img[^>]+(?:src|data-src)=["\']([^"\']+)', encoded_content, re.I)
+            if image_match:
+                image_url = image_match.group(1)
         title = values.get("title", "")
         link = values.get("link", "")
         if not title or not link:
@@ -276,10 +443,10 @@ def parse_rss(xml_text: str, source: dict[str, Any]) -> list[dict[str, Any]]:
             "summary": re.sub(r"<[^>]+>", " ", summary)[:420],
             "published": values.get("pubdate") or values.get("published") or values.get("updated") or "",
             "retailer": source.get("retailer") or source.get("name", "News feed"),
-            "image": "",
+            "image": urljoin(source["url"], image_url) if image_url else "",
+            "category": "news",
         })
     return items
-
 
 def make_session(user_agent: str) -> requests.Session:
     session = requests.Session()
@@ -322,7 +489,7 @@ def _retailer_key(value: str) -> str:
 def event_record(event_type: str, item: dict[str, Any], source: dict[str, Any], previous_price: Any = None, detail: str = "") -> dict[str, Any]:
     identity = f"{source['id']}|{item.get('url')}|{event_type}|{item.get('price')}|{utc_now()}"
     retailer = item.get("retailer") or source.get("retailer") or source.get("name", "Source")
-    category = source.get("category") or ("news" if source.get("type") == "rss" else "collectibles")
+    category = item.get("category") or infer_category(item.get("title", ""), source.get("category") or ("news" if source.get("type") == "rss" else "collectibles"))
     return {
         "id": hashlib.sha256(identity.encode("utf-8")).hexdigest()[:18],
         "type": event_type,
@@ -348,9 +515,13 @@ def scan_source(session: requests.Session, source: dict[str, Any], settings: dic
     started = time.monotonic()
     source_id = source["id"]
     old_source_state = state.setdefault("items", {}).get(source_id, {})
+    url = source["url"]
+    # A changed source URL represents a new search scope. Establish a fresh
+    # baseline instead of announcing every pre-existing result as a new drop.
+    if old_source_state.get("source_url") and old_source_state.get("source_url") != url:
+        old_source_state = {}
     current_source_state: dict[str, Any] = dict(old_source_state)
     events: list[dict[str, Any]] = []
-    url = source["url"]
     html_text, final_url = fetch(session, url, int(settings.get("request_timeout_seconds", 25)))
     kind = source["type"]
     count = 0
@@ -382,7 +553,17 @@ def scan_source(session: requests.Session, source: dict[str, Any], settings: dic
                     products.append(item)
             # Keep the list bounded, with structured items first.
             products = products[:int(settings.get("max_items_per_catalog", 100))]
-        previous_items = current_source_state.get("products", {})
+        # Retail search pages contain navigation, review counts, sponsored cross-sells,
+        # and other noise. Only persist cards whose actual product title identifies
+        # a Pokémon product or recognizable Pokémon character.
+        products = [item for item in products if is_pokemon_relevant(item.get("title", "")) and not _is_noise_title(item.get("title", ""))]
+        for item in products:
+            item["category"] = infer_category(item.get("title", ""), source.get("category", "collectibles"))
+            item["retailer_key"] = source.get("retailer_key") or _retailer_key(item.get("retailer") or source.get("retailer") or source.get("name", "Other"))
+        previous_items = {
+            key: value for key, value in current_source_state.get("products", {}).items()
+            if is_pokemon_relevant(value.get("title", "")) and not _is_noise_title(value.get("title", ""))
+        }
         next_items = dict(previous_items)
         for item in products:
             key = item.get("url") or item.get("sku") or item.get("title")
@@ -413,20 +594,27 @@ def scan_source(session: requests.Session, source: dict[str, Any], settings: dic
         raise ValueError(f"Unsupported source type: {kind}")
 
     current_source_state["last_success"] = utc_now()
+    current_source_state["source_url"] = url
     current_source_state["last_item_count"] = count
     elapsed_ms = int((time.monotonic() - started) * 1000)
+    status_value = "ok" if count > 0 else "warning"
+    status_message = (
+        f"Scanned successfully · {count} relevant Pokémon listing(s) found"
+        if count > 0 else
+        "Page responded, but no relevant Pokémon product/feed entries were recognized. This is not a confirmed product scan."
+    )
     status = {
         "id": source_id,
         "name": source.get("name", source_id),
         "retailer": source.get("retailer", ""),
         "type": kind,
         "url": url,
-        "status": "ok",
+        "status": status_value,
         "last_checked": utc_now(),
         "items_found": count,
         "new_alerts": len(events),
         "duration_ms": elapsed_ms,
-        "message": f"Scanned successfully · {count} listing(s) found",
+        "message": status_message,
         "notes": source.get("notes", ""),
     }
     return events, {"state": current_source_state, "status": status}

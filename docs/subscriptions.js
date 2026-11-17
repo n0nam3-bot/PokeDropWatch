@@ -39,7 +39,7 @@ import {
   }
 
   function applyPreferencesToForm(record) {
-    const categories = record?.categories || ['tcg', 'plush', 'collectibles', 'games', 'news'];
+    const categories = record?.categories || ['tcg', 'plush', 'collectibles', 'games', 'accessories', 'news'];
     const retailers = record?.retailers || ['all'];
     document.querySelectorAll('input[name="category"]').forEach(input => { input.checked = categories.includes(input.value); });
     document.querySelectorAll('input[name="retailer"]').forEach(input => { input.checked = retailers.includes(input.value); });

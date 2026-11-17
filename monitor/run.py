@@ -8,7 +8,7 @@ import os
 import sys
 from pathlib import Path
 
-from engine import make_session, scan_source, send_email, utc_now
+from engine import is_valid_event, make_session, scan_source, send_email, utc_now
 from subscribers import dispatch_subscriber_notifications
 
 
@@ -46,21 +46,48 @@ def main() -> int:
         "subscriber_delivery_status": "Not configured",
     })
     settings = config.get("settings", {})
+    # Remove malformed/non-Pokémon product cards left by older loose catalog parsing.
+    # News items are retained because a configured Pokémon news feed is already scoped.
+    state["events"] = [event for event in state.get("events", []) if is_valid_event(event)]
+    state["pending_email"] = [event for event in state.get("pending_email", []) if is_valid_event(event)]
+    # Scrub old loose-parser product baselines too, including sources that may fail
+    # this run, so historic noise cannot inflate the public tracked-products count.
+    for source_state in state.get("items", {}).values():
+        products = source_state.get("products")
+        if isinstance(products, dict):
+            products = {
+                key: item for key, item in products.items()
+                if is_valid_event({"category": item.get("category"), "title": item.get("title", "")})
+            }
+            source_state["products"] = products
+            source_state["last_item_count"] = len(products)
     sources = [s for s in config.get("sources", []) if s.get("enabled", True)]
     if not sources:
         raise SystemExit("No enabled sources found in config/sources.json")
+    # Remove baselines for retired/disabled source IDs; otherwise old products from
+    # a renamed source could appear indefinitely in the public tracked-products view.
+    active_source_ids = {source["id"] for source in sources}
+    state["items"] = {
+        source_id: source_state for source_id, source_state in state.get("items", {}).items()
+        if source_id in active_source_ids
+    }
 
     session = make_session(settings.get("user_agent", "PokeDropWatch/1.0"))
     source_status = []
     new_events = []
     failures = 0
+    warnings = 0
     for source in sources:
         try:
             events, result = scan_source(session, source, settings, state)
             state.setdefault("items", {})[source["id"]] = result["state"]
             source_status.append(result["status"])
             new_events.extend(events)
-            print(f"OK {source['id']}: {result['status']['items_found']} item(s), {len(events)} alert(s)")
+            if result["status"].get("status") == "warning":
+                warnings += 1
+                print(f"WARNING {source['id']}: {result['status']['message']}")
+            else:
+                print(f"OK {source['id']}: {result['status']['items_found']} relevant item(s), {len(events)} alert(s)")
         except Exception as exc:  # one blocked source must not prevent other stores from scanning
             failures += 1
             prior = next((x for x in state.get("source_status", []) if x.get("id") == source["id"]), {})
@@ -72,7 +99,7 @@ def main() -> int:
                 "url": source.get("url", ""),
                 "status": "error",
                 "last_checked": utc_now(),
-                "items_found": prior.get("items_found", 0),
+                "items_found": state.get("items", {}).get(source["id"], {}).get("last_item_count", prior.get("items_found", 0)),
                 "new_alerts": 0,
                 "message": f"Scan failed: {str(exc)[:240]}",
                 "notes": source.get("notes", ""),
@@ -125,11 +152,12 @@ def main() -> int:
         "enabled_sources": len(sources),
         "successful_sources": sum(1 for x in source_status if x["status"] == "ok"),
         "failed_sources": failures,
+        "warning_sources": warnings,
         "new_alerts": len(new_events),
         "tracked_products": sum(state.get("items", {}).get(source_id, {}).get("last_item_count", 0) for source_id in product_source_ids),
     }
     write_json(state_path, state)
-    print(f"Finished: {len(new_events)} new alert(s), {failures} source failure(s). {state['email_status']} Subscriber delivery: {state['subscriber_delivery_status']}")
+    print(f"Finished: {len(new_events)} new alert(s), {failures} source error(s), {warnings} source(s) with no recognized Pokémon results. {state['email_status']} Subscriber delivery: {state['subscriber_delivery_status']}")
     # A partial source failure is visible in the dashboard; it should not discard successful scans.
     return 0
 

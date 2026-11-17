@@ -6,11 +6,11 @@ import json
 import os
 from typing import Any, Callable
 
-from engine import send_email, utc_now
+from engine import is_valid_event, send_email, utc_now
 
 
 def event_matches_preferences(event: dict[str, Any], subscriber: dict[str, Any]) -> bool:
-    categories = subscriber.get("categories") or ["tcg", "plush", "collectibles", "games", "news"]
+    categories = subscriber.get("categories") or ["tcg", "plush", "collectibles", "games", "accessories", "news"]
     retailers = subscriber.get("retailers") or ["all"]
     category = event.get("category") or "collectibles"
     retailer = event.get("retailer_key") or "other"
@@ -103,14 +103,18 @@ def dispatch_subscriber_notifications(
             # A status-only query uses Firestore's automatic single-field index.
             for delivery_snapshot in deliveries_ref.where("status", "==", "pending").stream():
                 delivery = delivery_snapshot.to_dict() or {}
-                events = delivery.get("events") or []
+                raw_events = delivery.get("events") or []
+                events = [event for event in raw_events if is_valid_event(event)]
                 if not events:
                     delivery_snapshot.reference.update({
-                        "status": "failed",
-                        "last_error": "Empty delivery batch; no email was sent.",
+                        "status": "suppressed",
+                        "events": [],
+                        "last_error": "Batch contained no verified Pokémon product/news events; no email was sent.",
                         "updated_at": utc_now(),
                     })
                     continue
+                if len(events) != len(raw_events):
+                    delivery_snapshot.reference.update({"events": events, "updated_at": utc_now()})
                 if not smtp_ready:
                     queued_count += 1
                     continue

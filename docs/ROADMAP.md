@@ -15,7 +15,11 @@ The roadmap records what is implemented in the current code and what remains pla
 - [x] New-entry detection for configured Pokémon news feeds.
 - [x] Persistent scan state and recent alert history in `docs/data/state.json`.
 - [x] Per-source success/failure reporting and an overall scan summary.
-- [x] Responsive, minimal Pokémon-themed dashboard with alert search and filters.
+- [x] Responsive, minimal Pokémon-themed dashboard with alert-type, item-category, retailer, and exact-title filtering.
+- [x] Separate alert history from a browseable view of current tracked catalog products.
+- [x] Product thumbnails from structured data, retailer card images, and RSS media metadata when exposed.
+- [x] Reject generic retailer navigation/rating text and unrelated products from the Pokémon alert feed.
+- [x] Distinguish sources with recognized results from pages that load but return no recognizable Pokémon items.
 - [x] PWA manifest and service worker for compatible mobile browsers.
 - [x] ZIP patch application with path validation and automated tests.
 

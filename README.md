@@ -4,7 +4,8 @@ PokéDrop Watch is a Pokémon-themed product drop and restock tracker. The publi
 
 ## What the website does
 
-- Displays monitor status, source health, recent Pokémon product/news alerts, listed prices, and links to the retailer pages.
+- Displays source health, recent Pokémon alerts, and a separate **All tracked products** view with available product photos, listed prices, categories, retailer names, and direct product links.
+- Filters both views by product category, retailer, and product title; an exact-title option is available. The alert view also filters by new drops, restocks, price drops, and news.
 - Lets visitors apply for email alerts after verifying control of their email address.
 - Holds applications for administrator approval before any product alerts are sent.
 - Lets subscribers choose product categories and retailers, update their preferences, and unsubscribe through a fresh email sign-in link plus a separate confirmation.
@@ -31,6 +32,7 @@ Follow the click-by-click [Firebase and GitHub setup guide](docs/FIREBASE_SETUP.
 1. Create a Firebase project on the no-cost Spark plan, create Firestore, enable Firebase Authentication email-link sign-in, and add the GitHub Pages hostname as an authorized domain.
 2. Paste the Firebase web-app values into `docs/firebase-config.js`.
 3. In the Firebase Console only, replace the administrator-email placeholder in `firebase/firestore.rules` with your lowercase admin email and publish the rules. Do not commit your real admin email into the public repository.
+   **Existing installations upgrading to v1.2.0 must also republish the updated rules** from `firebase/firestore.rules` in Firebase Console (keep your real administrator email in the deployed rules). This release adds the `accessories` preference category; the database rules do not update automatically when GitHub files change.
 4. Add GitHub Actions secrets `FIREBASE_SERVICE_ACCOUNT_JSON`, `SMTP_USERNAME`, and `SMTP_APP_PASSWORD`. `ALERT_EMAIL` is optional and sends an additional owner-only copy.
 5. Add the GitHub Actions variable `PUBLIC_SITE_URL` with the exact GitHub Pages URL.
 6. Replace `.github/workflows/pokedrop-watch.yml` with the workflow file supplied with this release so the monitor can access the private Firestore service account.
@@ -44,7 +46,7 @@ The monitor schedule is controlled by the `schedule` cron expression in `.github
 
 The watchlist is configured in `config/sources.json`. Supported source types are `catalog`, `product`, and `rss`. The first successful scan establishes a baseline; subsequent scans can detect newly listed products, out-of-stock to in-stock/preorder changes, listed price changes, and new news-feed entries. Each source is checked independently so a blocked retailer does not stop other scans.
 
-Retailer websites may block automated requests, render inventory through JavaScript, vary stock by location, or change their page structure. A configured URL is not a guarantee that every product or restock will be detected. The dashboard reports failed sources instead of claiming complete coverage. Confirm final stock and price with the retailer before purchasing.
+Retailer websites may block automated requests, render inventory through JavaScript, vary stock by location, or change their page structure. A source counts as having matches only when the parser recognizes relevant Pokémon product/feed entries. A page that responds but yields no relevant entries is marked **NO MATCH**, not ONLINE. A configured URL is not a guarantee that every product or restock will be detected. The dashboard reports failed sources instead of claiming complete coverage. Confirm final stock and price with the retailer before purchasing.
 
 ## ZIP updates
 

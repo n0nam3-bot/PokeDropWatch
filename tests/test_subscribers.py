@@ -151,6 +151,11 @@ class SubscriberTests(unittest.TestCase):
         result = dispatch_subscriber_notifications([], {})
         self.assertIn('FIREBASE_SERVICE_ACCOUNT_JSON', result)
 
+    def test_accessories_category_matches_subscriber_preference(self):
+        subscriber = {"categories": ["accessories"], "retailers": ["all"]}
+        event = {"category": "accessories", "retailer_key": "target"}
+        self.assertTrue(event_matches_preferences(event, subscriber))
+
 
 if __name__ == '__main__':
     unittest.main()

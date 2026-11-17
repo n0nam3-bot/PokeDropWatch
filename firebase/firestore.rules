@@ -27,8 +27,8 @@ service cloud.firestore {
     function validPreferences(data) {
       return data.categories is list
         && data.categories.size() >= 1
-        && data.categories.size() <= 5
-        && data.categories.toSet().hasOnly(['tcg', 'plush', 'collectibles', 'games', 'news'])
+        && data.categories.size() <= 6
+        && data.categories.toSet().hasOnly(['tcg', 'plush', 'collectibles', 'games', 'accessories', 'news'])
         && data.retailers is list
         && data.retailers.size() >= 1
         && data.retailers.size() <= 8

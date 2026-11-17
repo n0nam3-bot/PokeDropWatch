@@ -3,6 +3,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'monitor'))
+from unittest.mock import patch
 from engine import scan_source
 
 
@@ -48,6 +49,30 @@ class TransitionTests(unittest.TestCase):
         state['items'][source['id']] = first_result['state']
         events, _ = scan_source(FakeSession(product_page('InStock', '49.99')), source, settings, state)
         self.assertIn('price_drop', [event['type'] for event in events])
+
+    def test_catalog_page_without_recognized_pokemon_products_is_warning(self):
+        source = {'id': 'store-search', 'name': 'Store Pokémon Search', 'retailer': 'Store', 'type': 'catalog', 'url': 'https://shop.example/search?q=pokemon'}
+        settings = {'request_timeout_seconds': 1, 'max_items_per_catalog': 50}
+        state = {'items': {}}
+        body = '<html><body><a href="/product-reviews/123">98 ratings</a><a href="/gp/offer-listing/123">See options</a></body></html>'
+        with patch('engine.fetch', return_value=(body, source['url'])):
+            events, result = scan_source(FakeSession(body), source, settings, state)
+        self.assertEqual(events, [])
+        self.assertEqual(result['status']['status'], 'warning')
+        self.assertEqual(result['status']['items_found'], 0)
+        self.assertIn('no relevant Pokémon', result['status']['message'])
+
+
+    def test_changed_catalog_url_resets_baseline_without_new_drop_burst(self):
+        old_url = 'https://shop.example/search?q=pokemon-tcg'
+        new_url = 'https://shop.example/search?q=pokemon'
+        source = {'id': 'store-search', 'name': 'Store Pokémon Search', 'retailer': 'Store', 'type': 'catalog', 'url': new_url}
+        product_html = product_page('InStock')
+        state = {'items': {'store-search': {'source_url': old_url, 'initialized': True, 'products': {}}}}
+        with patch('engine.fetch', return_value=(product_html, 'https://shop.example/product/pokemon-box')):
+            events, result = scan_source(FakeSession(product_html), source, {'request_timeout_seconds': 1, 'max_items_per_catalog': 50}, state)
+        self.assertEqual(events, [])
+        self.assertEqual(result['state']['source_url'], new_url)
 
 
 if __name__ == '__main__':

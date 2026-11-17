@@ -111,7 +111,7 @@ The monitor reads `config/sources.json`. It contains a top-level `settings` obje
 |---|---:|---|
 | `check_interval_minutes` | `15` | Informational only. The actual schedule is the cron expression in the GitHub Actions workflow. |
 | `request_timeout_seconds` | `25` | HTTP request timeout for a source fetch. |
-| `max_items_per_catalog` | `100` | Maximum products retained from one catalog page. |
+| `max_items_per_catalog` | `80` | Maximum relevant Pokémon products retained from one catalog page. Product-title relevance filtering is enforced by the parser. |
 | `history_limit` | `100` | Maximum recent alert events retained in the state file. |
 | `email_digest_subject_prefix` | `PokéDrop Watch` | Prefix used in email subject lines. |
 | `user_agent` | `PokeDropWatch/1.0 (+https://github.com; public product availability monitor)` | User-Agent string sent with source requests. |
@@ -127,7 +127,7 @@ Every source in `sources` should have:
 | `id` | Yes | Unique, stable identifier. Use lowercase letters, numbers, and hyphens. Do not casually rename an existing ID: the ID keys its stored baseline and history. |
 | `name` | Yes | Human-readable source name shown on the dashboard. |
 | `retailer` | Yes for product sources | Retailer or publisher label used in dashboard and alert details. |
-| `category` | Recommended | Subscriber preference category: `tcg`, `plush`, `collectibles`, `games`, or `news`. Defaults to `collectibles` for product sources and `news` for RSS. |
+| `category` | Recommended | Subscriber preference category: `tcg`, `plush`, `collectibles`, `games`, `accessories`, or `news`. Defaults to `collectibles` for product sources and `news` for RSS. |
 | `retailer_key` | Recommended | Subscriber filter key such as `pokemon-center`, `target`, `walmart`, `best-buy`, `gamestop`, `amazon`, or `pokebeach`. Defaults to a normalized retailer label. |
 | `type` | Yes | One of the supported types listed below: `catalog`, `product`, or `rss`. |
 | `url` | Yes | Public HTTP or HTTPS catalog, product, or feed URL. |
@@ -136,7 +136,7 @@ Every source in `sources` should have:
 
 Supported source types:
 
-- **`catalog`** — a retailer category or search-results page. The current parser looks for product structured data and qualifying product links in returned HTML. It does not run a full browser or execute the retailer's JavaScript application.
+- **`catalog`** — a retailer category or search-results page. The parser looks for Pokémon-relevant product structured data and qualifying product cards in returned HTML, extracts image/price/availability data where exposed, and rejects generic rating/offer links. It does not run a full browser or execute the retailer's JavaScript application. A page that responds but yields zero relevant items is shown as `NO MATCH`, not `ONLINE`.
 - **`product`** — one product-detail page. The scanner attempts to extract the product title, price, image, and availability exposed by the page's structured data or HTML.
 - **`rss`** — an RSS or Atom feed. Feed entries are treated as news/announcement events, not confirmation that a product is in stock.
 
@@ -151,7 +151,7 @@ Supported source types:
 
 ### 4.4 Baseline and alert behavior
 
-The first successful scan creates a baseline from products currently visible on each source. It does not generate a new-item alert for every item already listed. Later scans compare the current result with saved state and can report newly discovered listings, a transition from out of stock to in stock/preorder, and listed price changes when the page exposes the relevant values. RSS/Atom entries are tracked as news announcements.
+The first successful scan creates a baseline from Pokémon-relevant products currently visible on each source. Product names must identify Pokémon or a recognized Pokémon character; generic ratings, review links, "See options" controls, and unrelated products are excluded. Product category is inferred from the title as `tcg`, `plush`, `games`, `accessories`, or `collectibles`. The public dashboard separates the change-event feed from an All tracked products view and offers category, retailer, alert-type, and exact-title filters. Current product cards are read from each source baseline in `docs/data/state.json`; they must not be presented as new drops unless a change event was detected. A fetched page with zero recognized entries is reported as `NO MATCH`, while blocked/failed requests are reported as `ISSUE`. It does not generate a new-item alert for every item already listed. Later scans compare the current result with saved state and can report newly discovered listings, a transition from out of stock to in stock/preorder, and listed price changes when the page exposes the relevant values. RSS/Atom entries are tracked as news announcements.
 
 The state file is `docs/data/state.json`. Keep it between updates so the monitor can compare scans. Removing or resetting it can cause a new baseline and may affect which changes are reported. Do not promise a price, stock count, release date, or availability location that the source page does not provide.
 
@@ -161,7 +161,9 @@ The state file is `docs/data/state.json`. Keep it between updates so the monitor
 - The dashboard loads `docs/data/state.json` through a relative `./data/state.json` URL. Preserve this relative path so the site works on a GitHub Pages project subpath.
 - Keep the dashboard responsive on small mobile screens and larger desktop displays. Test narrow phone widths, tablet widths, and desktop widths after layout changes.
 - Preserve the minimal Pokémon-inspired appearance. Avoid unnecessary animation, oversized controls, clutter, popups, or unrelated branding.
-- Keep the dashboard truthful: show source errors as errors; do not convert missing/unknown prices or stock states into positive claims.
+- Keep the dashboard truthful: show request failures as issues and pages with zero recognized Pokémon products as `NO MATCH`; do not convert missing/unknown prices or stock states into positive claims.
+- Keep product photos optional: show a neutral fallback when the retailer blocks hotlinking or does not expose an image. Never invent or substitute a different product image.
+- Keep category inference and the category filters synchronized across `monitor/engine.py`, `docs/app.js`, subscription defaults, and `firebase/firestore.rules`.
 - If changing the JSON structure written by `monitor/run.py`, update `docs/app.js` and tests in the same change. Maintain compatibility with previously saved `docs/data/state.json`, or include a safe migration plan.
 - If changing offline/PWA assets, inspect `docs/manifest.webmanifest` and `docs/sw.js`; update the service-worker cache key/version when changing the app shell; the worker is network-first so online configuration and code updates are not masked by stale cached files.
 
@@ -280,7 +282,7 @@ For ordinary application or documentation updates:
 - Store paths relative to the repository root. Example:
 
 ```text
-PokeDropWatch_Update_v1.0.3.zip
+PokeDropWatch_Update_vX.Y.Z.zip
 ├── docs/
 │   ├── app.js
 │   └── CHANGELOG.md
@@ -319,7 +321,7 @@ Do not claim semantic-version compatibility as an external guarantee; this is th
 Add new entries immediately below the title and introductory sentence, before older versions. Use this format:
 
 ```markdown
-## [1.0.3] — 2026-11-17
+## [X.Y.Z] — YYYY-MM-DD
 
 ### Added
 - Describe the user-visible capability that was added.
@@ -368,3 +370,7 @@ A change is complete only when all applicable statements are true:
 - [ ] The final delivery identifies all changed files and gives a working patch download.
 
 **Do not mark the change complete while any required item is unchecked.** If a step cannot be completed in the available environment, identify it as outstanding rather than implying it passed.
+
+## Manual Firebase Rules deployment
+
+Firestore Rules are not deployed by GitHub Pages or the ZIP patch installer. Whenever a release changes `firebase/firestore.rules`, the owner must copy the updated file into Firebase Console → Firestore Database → Rules, re-enter the private administrator email, preserve intended project-specific changes, and click Publish.

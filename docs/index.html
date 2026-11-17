@@ -45,7 +45,7 @@
       </section>
 
       <section class="metrics" aria-label="Monitor summary">
-        <article class="metric-card"><span class="metric-label">SOURCES ONLINE</span><strong id="onlineCount">—</strong><span class="metric-caption">public pages and feeds</span></article>
+        <article class="metric-card"><span class="metric-label">SOURCES WITH MATCHES</span><strong id="onlineCount">—</strong><span class="metric-caption">Pokémon listings or feed entries</span></article>
         <article class="metric-card"><span class="metric-label">LISTINGS SEEN</span><strong id="listingCount">—</strong><span class="metric-caption">across successful scans</span></article>
         <article class="metric-card"><span class="metric-label">NEW ALERTS</span><strong id="alertCount">0</strong><span class="metric-caption">recently detected</span></article>
       </section>
@@ -63,15 +63,37 @@
 
       <section class="section-block alerts-section">
         <div class="section-heading alerts-heading">
-          <div><p class="eyebrow">FRESH FROM THE RADAR</p><h2>Latest alerts</h2></div>
-          <label class="search-wrap"><span class="sr-only">Search alerts</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg><input id="alertSearch" type="search" placeholder="Find an item…" autocomplete="off"></label>
+          <div><p class="eyebrow">FRESH FROM THE RADAR</p><h2 id="feedHeading">Latest alerts</h2></div>
+          <label class="search-wrap"><span class="sr-only">Search Pokémon items</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg><input id="alertSearch" type="search" placeholder="Search an exact Pokémon item name…" autocomplete="off"></label>
         </div>
-        <div class="filter-row" role="group" aria-label="Filter alerts">
-          <button class="filter-chip active" data-filter="all" type="button">All</button>
+        <div class="view-switch" role="group" aria-label="Choose feed view">
+          <button id="alertsViewButton" class="view-switch-button active" type="button">Latest alerts</button>
+          <button id="productsViewButton" class="view-switch-button" type="button">All tracked products</button>
+        </div>
+        <div id="alertTypeFilters" class="filter-row" role="group" aria-label="Filter alert type">
+          <button class="filter-chip active" data-filter="all" type="button">All alerts</button>
           <button class="filter-chip" data-filter="new_drop" type="button">New drops</button>
           <button class="filter-chip" data-filter="restock" type="button">Restocks</button>
           <button class="filter-chip" data-filter="price_drop" type="button">Price drops</button>
           <button class="filter-chip" data-filter="news" type="button">News</button>
+        </div>
+        <p id="feedExplanation" class="feed-explanation">Alerts show changes detected after a source's first baseline scan. Existing products are tracked separately and do not generate a false new-drop alert.</p>
+        <div class="product-filter-row" aria-label="Filter products">
+          <label>Item type
+            <select id="categoryFilter">
+              <option value="all">All item types</option>
+              <option value="tcg">Trading cards &amp; TCG</option>
+              <option value="plush">Plush</option>
+              <option value="collectibles">Collectibles &amp; figures</option>
+              <option value="games">Video games</option>
+              <option value="accessories">Accessories &amp; apparel</option>
+              <option value="news">News</option>
+            </select>
+          </label>
+          <label>Retailer
+            <select id="retailerFilter"><option value="all">All retailers</option></select>
+          </label>
+          <label class="exact-match-control"><input id="exactMatch" type="checkbox"> Exact title match</label>
         </div>
         <div id="alertList" class="alert-list"><div class="empty-state large-empty"><span class="empty-ball">◉</span><strong>No alerts yet</strong><span>Once the monitor completes its first scan, new drops and changes will show here.</span></div></div>
       </section>
@@ -94,6 +116,7 @@
                   <label><input type="checkbox" name="category" value="plush" checked> Plush</label>
                   <label><input type="checkbox" name="category" value="collectibles" checked> Collectibles</label>
                   <label><input type="checkbox" name="category" value="games" checked> Games</label>
+                  <label><input type="checkbox" name="category" value="accessories" checked> Accessories &amp; apparel</label>
                   <label><input type="checkbox" name="category" value="news" checked> News</label>
                 </div>
               </fieldset>

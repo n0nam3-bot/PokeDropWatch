@@ -77,6 +77,8 @@ Replace `PROJECT_ID` with the Project ID you just copied.
 
 **Important privacy rule:** The real administrator email belongs only in the Firebase Console's deployed Rules. Leave the placeholder in the public GitHub file `firebase/firestore.rules`. Do not put your real administrator email in `docs/firebase-config.js`, a public source file, a ZIP patch, or a GitHub issue.
 
+**When upgrading an existing Firebase project:** GitHub uploads do not publish Firestore Rules automatically. After installing v1.2.0 or a later release that changes `firebase/firestore.rules`, repeat this step: open the latest rules file from your repository, copy it into **Firestore Database → Rules**, replace the placeholder with your real lowercase administrator email, preserve any project-specific rule changes you intentionally made, and tap **Publish**. The v1.2.0 rules add the `accessories` category. Until you publish them, applications selecting Accessories & apparel may be rejected by Firestore. Keep the real administrator email only in the deployed Console rules; never commit it.
+
 ## Step 3 — Turn on passwordless email-link sign-in
 
 1. Open `https://console.firebase.google.com/project/PROJECT_ID/authentication/providers` using your Project ID.
@@ -283,3 +285,8 @@ Replace `OWNER`, `REPOSITORY`, and `PROJECT_ID` with your values before opening 
 - Do not switch Firestore to test mode.
 - Do not give GitHub Actions secrets to a third party or paste them into an issue.
 - Start with a small number of approved subscribers. Gmail, Firebase, and GitHub each enforce quotas and abuse limits.
+
+
+#### Notification categories (v1.2.0)
+
+The subscription form supports Pokémon TCG, plush, collectibles, games, accessories/apparel, and Pokémon news. The Firestore security rules must permit the values `tcg`, `plush`, `collectibles`, `games`, `accessories`, and `news`. The v1.2.0 release includes the updated rules template.

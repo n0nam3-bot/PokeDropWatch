@@ -92,6 +92,7 @@
           <li>Tap <strong>Publish</strong>.</li>
         </ol>
         <div class="step-note"><strong>Keep the real admin email private:</strong> enter it only in the deployed Firebase Rules editor. Leave the placeholder in GitHub's public <code>firebase/firestore.rules</code> file. Never place the real address in <code>docs/firebase-config.js</code>.</div>
+        <div class="step-note"><strong>When upgrading an existing Firebase project:</strong> uploading files to GitHub does not publish Firestore Rules. After installing v1.2.0 or a later rules-changing release, repeat this step using the latest <code>firebase/firestore.rules</code> from your repository. Keep your real lowercase administrator email in the Console rules, preserve any intentional project-specific changes, and tap <strong>Publish</strong>. v1.2.0 adds the <code>accessories</code> preference category; until the rules are republished, accessory subscriptions may be rejected.</div>
       </section>
 
       <section class="guide-card" id="auth">
@@ -279,6 +280,11 @@
           <li>Do not switch Firestore to test mode or add billing just to finish setup.</li>
           <li>Start with a small number of approved subscribers. Firebase, Gmail, and GitHub each enforce quotas and abuse limits.</li>
         </ul>
+      </section>
+
+      <section class="guide-card">
+        <h2>Notification categories (v1.2.0)</h2>
+        <p>The subscription form supports Pokémon TCG, plush, collectibles, games, accessories/apparel, and Pokémon news. The Firestore rules template included in this release permits all six values.</p>
       </section>
 
       <footer class="footer guide-footer">

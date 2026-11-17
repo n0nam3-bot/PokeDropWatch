@@ -2,7 +2,7 @@
   "settings": {
     "check_interval_minutes": 15,
     "request_timeout_seconds": 25,
-    "max_items_per_catalog": 100,
+    "max_items_per_catalog": 80,
     "history_limit": 100,
     "email_digest_subject_prefix": "PokéDrop Watch",
     "user_agent": "PokeDropWatch/1.0 (+https://github.com; public product availability monitor)"
@@ -75,14 +75,14 @@
       "retailer_key": "gamestop"
     },
     {
-      "id": "amazon-pokemon-tcg",
-      "name": "Amazon · Pokémon TCG",
+      "id": "amazon-pokemon-products",
+      "name": "Amazon · Pokémon Products",
       "retailer": "Amazon",
       "type": "catalog",
-      "url": "https://www.amazon.com/s?k=pokemon+trading+cards",
+      "url": "https://www.amazon.com/s?k=pokemon",
       "enabled": true,
-      "notes": "Search listing; Amazon may block automated access or show region/personalized results.",
-      "category": "tcg",
+      "notes": "Broad Pokémon product search. A fresh baseline is created for this expanded search so existing results do not trigger a burst of false new-drop notifications.",
+      "category": "collectibles",
       "retailer_key": "amazon"
     },
     {
