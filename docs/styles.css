@@ -302,3 +302,186 @@ body { font-size: 16px; }
 .admin-hero h1 { font-size: clamp(25px, 3vw, 36px); line-height: 1.3; }
 .admin-toolbar h2, .admin-list-heading h2, .admin-login-panel h2 { font-size: 18px; line-height: 1.4; }
 .admin-shell .site-shell, .admin-shell { padding-bottom: 24px; }
+
+
+/* PokéDrop Watch UI patch: consistent PKMN typography, readable sizing, responsive listings. */
+html, body {
+  font-family: var(--game-font) !important;
+  font-size: 16px;
+}
+body *, body *::before, body *::after, body *::placeholder {
+  font-family: var(--game-font) !important;
+}
+
+/* Keep the desktop feed broad and show two product cards per row. */
+@media (min-width: 701px) {
+  .alert-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    gap: 14px;
+  }
+  .alert-card {
+    height: 100%;
+    min-width: 0;
+  }
+}
+
+/* Medium desktop/tablet widths: keep two cards side-by-side without squeezing prices. */
+@media (min-width: 701px) and (max-width: 899px) {
+  .alert-card {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 10px;
+    padding: 12px;
+  }
+  .alert-media {
+    width: 64px;
+    height: 64px;
+    grid-row: 1;
+  }
+  .alert-content {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .alert-price {
+    grid-column: 2;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 5px 10px;
+    min-width: 0;
+    margin-top: 0;
+    padding-top: 8px;
+    border-top: 1px solid #f0f0ed;
+    text-align: left;
+  }
+  .alert-price span {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .alert-title { font-size: 15px; }
+  .alert-meta { font-size: 12px; }
+}
+
+/* Wider PC screens use a compact thumbnail/content/price layout in each column. */
+@media (min-width: 900px) {
+  .alert-card {
+    grid-template-columns: 72px minmax(0, 1fr) minmax(92px, 108px);
+    gap: 12px;
+    padding: 14px;
+  }
+  .alert-media {
+    width: 72px;
+    height: 72px;
+  }
+  .alert-content, .alert-price { min-width: 0; }
+  .alert-title { font-size: 16px; line-height: 1.5; }
+  .alert-meta { font-size: 12px; }
+  .alert-price { overflow-wrap: anywhere; }
+  .alert-price strong { font-size: 18px; }
+  .alert-price span { font-size: 11px; line-height: 1.45; }
+}
+
+/* Phones remain a single, easy-to-scan column. */
+@media (max-width: 700px) {
+  .alert-list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    gap: 10px;
+  }
+}
+
+/* Restore readable text sizes throughout the public and admin pages. */
+.brand strong { font-size: 21px; }
+.brand small { font-size: 11px; letter-spacing: .12em; }
+.live-pill { font-size: 12px; }
+.eyebrow { font-size: 12px; line-height: 1.5; }
+.hero-sub { font-size: 16px; line-height: 1.7; }
+.hero-foot { font-size: 13px; line-height: 1.5; }
+.status-title { font-size: 14px; }
+.last-check { font-size: 13px; line-height: 1.45; }
+.metric-label { font-size: 13px; line-height: 1.45; }
+.metric-caption { font-size: 14px; line-height: 1.5; }
+.section-note { font-size: 12px; line-height: 1.5; }
+.source-name { font-size: 16px; line-height: 1.45; }
+.source-kind, .source-state { font-size: 12px; }
+.source-bottom { font-size: 13px; line-height: 1.5; }
+.fine-print { font-size: 12px; line-height: 1.7; }
+.search-wrap input { font-size: 14px; }
+.filter-chip, .view-switch-button { font-size: 13px; }
+.product-filter-row > label:not(.exact-match-control),
+.exact-match-control { font-size: 13px; }
+.product-filter-row select { font-size: 14px; }
+.alert-title { font-size: 16px; line-height: 1.5; }
+.alert-meta { font-size: 12px; line-height: 1.6; }
+.type-badge { font-size: 11px; }
+.view-link { font-size: 13px; }
+.alert-price strong { font-size: 19px; }
+.alert-price span { font-size: 12px; line-height: 1.5; }
+.empty-state { font-size: 13px; line-height: 1.6; }
+.large-empty strong { font-size: 17px; }
+.setup-copy h2 { font-size: 19px; }
+.setup-copy p:last-child { font-size: 13px; line-height: 1.6; }
+.setup-badge { font-size: 11px; }
+.footer { font-size: 12px; line-height: 1.5; }
+.footer-brand { font-size: 13px; }
+.toast { font-size: 13px; line-height: 1.5; }
+
+.form-intro h3, .subscription-aside h3 { font-size: 19px; }
+.form-intro p, .subscription-aside p { font-size: 14px; line-height: 1.65; }
+.form-panel form > label, .admin-login-panel label { font-size: 14px; line-height: 1.5; }
+.form-panel input[type="email"],
+.admin-login-panel input[type="email"],
+.admin-login-panel input[type="password"],
+.admin-login-panel input[inputmode="numeric"] { font-size: 15px; }
+.choice-group legend { font-size: 14px; }
+.choice-grid label { font-size: 13px; line-height: 1.4; }
+.primary-button, .secondary-button, .danger-button, .quiet-button,
+.small-primary, .small-secondary { font-size: 13px; }
+.form-status { font-size: 13px; line-height: 1.65; }
+.subscription-aside a { font-size: 13px; }
+.account-panel strong, .confirm-panel strong { font-size: 13px; }
+.account-panel p, .confirm-panel p { font-size: 12px; line-height: 1.55; }
+.confirm-panel p { font-size: 13px; }
+.setup-notice { font-size: 13px; line-height: 1.65; }
+.admin-hero p:last-child { font-size: 13px; line-height: 1.6; }
+.admin-toolbar h2, .admin-list-heading h2 { font-size: 20px; }
+.muted-text { font-size: 12px; line-height: 1.5; }
+.admin-list-heading select { font-size: 13px; }
+.subscriber-info strong { font-size: 14px; }
+.subscriber-info p { font-size: 12px; line-height: 1.6; }
+.subscriber-badge { font-size: 11px; }
+.small-primary, .small-secondary { min-height: 34px; }
+.form-divider { font-size: 12px; }
+.field-note { font-size: 12px; line-height: 1.55; }
+.admin-reset-copy { font-size: 13px; line-height: 1.65; }
+.verification-code-panel p { font-size: 14px; line-height: 1.6; }
+
+/* Retain practical navigation sizing on compact phones. */
+.bottom-bar small { font-size: 10px; line-height: 1.3; }
+
+@media (max-width: 700px) {
+  .hero-sub { font-size: 15px; }
+  .section-note { font-size: 11px; }
+  .source-name { font-size: 14px; }
+  .source-kind, .source-state { font-size: 10px; }
+  .source-bottom { font-size: 11px; }
+  .alert-title { font-size: 14px; }
+  .alert-meta { font-size: 11px; }
+  .alert-price strong { font-size: 16px; }
+  .alert-price span { font-size: 11px; }
+  .form-panel, .subscription-aside { padding: 16px; }
+  .choice-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 380px) {
+  .bottom-bar small { font-size: 9px; }
+  .choice-grid label { font-size: 12px; }
+}
