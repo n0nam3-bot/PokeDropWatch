@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'monitor'))
-from engine import extract_catalog_links, extract_structured_products, infer_category, is_pokemon_relevant, is_valid_event, normalize_availability, parse_rss, stable_url, event_record, html_email
+from engine import clean_product_title, extract_catalog_links, extract_structured_products, infer_category, is_pokemon_relevant, is_valid_event, normalize_availability, parse_rss, stable_url, event_record, html_email
 from bs4 import BeautifulSoup
 
 
@@ -81,6 +81,39 @@ class EngineTests(unittest.TestCase):
         self.assertEqual(infer_category('Pokémon Scarlet Violet Elite Trainer Box'), 'tcg')
         self.assertEqual(infer_category('Pokémon Legends Nintendo Switch Game'), 'games')
         self.assertEqual(infer_category('Eevee Backpack'), 'accessories')
+
+    def test_catalog_skips_transparent_image_and_uses_walmart_lazy_image(self):
+        sample = """<html><body>
+        <div class="product-tile" data-testid="product-tile">
+          <a href="/ip/pokemon-plush/12345">
+            <img alt="Pikachu Plush" src="data:image/gif;base64,AAAA"
+                 data-image-src="https://images.example/pikachu-plush.jpg">
+          </a>
+          <h3>Pikachu Plush</h3><span>$19.99</span>
+        </div>
+        </body></html>"""
+        products = extract_catalog_links(
+            BeautifulSoup(sample, 'html.parser'),
+            'https://www.walmart.com/search?q=pokemon',
+            'Walmart',
+            20,
+        )
+        self.assertEqual(len(products), 1)
+        self.assertEqual(products[0]['image'], 'https://images.example/pikachu-plush.jpg')
+
+    def test_walmart_deal_wrapper_is_removed_from_product_title(self):
+        raw = 'Deal, Pokemon TCG Mega Evolution Delta Reign Elite Trainer Box ETB, Price Now $84.87 Was $113.99'
+        self.assertEqual(
+            clean_product_title(raw),
+            'Pokemon TCG Mega Evolution Delta Reign Elite Trainer Box ETB',
+        )
+
+    def test_walmart_prismatic_surprise_box_is_tcg_not_video_game(self):
+        title = 'Deal, Pokemon Scarlet & Violet Prismatic Evolutions Surprise Box, Price Now $72.89 Was $89.99'
+        self.assertEqual(infer_category(clean_product_title(title)), 'tcg')
+
+    def test_explicit_switch_video_game_is_games(self):
+        self.assertEqual(infer_category('Pokemon Scarlet Nintendo Switch Video Game'), 'games')
 
     def test_relevance_rejects_generic_ratings(self):
         self.assertFalse(is_pokemon_relevant('98 ratings'))

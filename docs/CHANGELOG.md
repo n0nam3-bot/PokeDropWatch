@@ -2,6 +2,28 @@
 
 All notable project changes are recorded here. Entries are ordered newest first. Dates use `YYYY-MM-DD`.
 
+## [1.2.1] — 2026-11-17
+
+### Fixed
+- Added the Firebase browser API-key HTTP-referrer allowlist instructions required for email-link authentication to work across both GitHub Pages and the Firebase-hosted auth action handler.
+- Clarified the difference between a source parser miss (`NO MATCH`) and a fetch/connection failure (`ISSUE`), with the current scan report documented separately.
+- Shortened source-card status descriptions so diagnostic copy remains readable on narrow mobile cards.
+- Removed retailer wrapper text such as `Deal,` and embedded `Price Now ... Was ...` fragments from saved product titles.
+- Corrected TCG category inference so a Scarlet & Violet / Prismatic Evolutions surprise box is not mislabeled as a video game unless an explicit game platform is present.
+
+### Added
+- Added `docs/SOURCE_HEALTH.md` with definitions, a point-in-time interpretation of the reported 2/8 scan, and requirements for source-specific parser work.
+- Added lazy-load image fallback extraction and tests for Walmart-style title wrappers, product images, and Prismatic Evolutions category classification.
+
+### Notes
+- The API-key restriction change is made in Google Cloud Console; installing this ZIP does not change cloud project settings automatically.
+- Retailer-specific catalog coverage for sources currently marked `NO MATCH` or `ISSUE` remains a separate engineering task requiring current response fixtures and verification. This release does not claim those sources are fixed.
+
+### Tests
+- Automated tests verify title normalization and corrected category inference.
+- Firebase live sign-in and current retailer access remain owner-environment checks.
+
+
 ## [1.2.0] — 2026-11-16
 
 ### Fixed

@@ -60,6 +60,29 @@ def clean_text(value: Any, limit: int = 500) -> str:
     return text[:limit]
 
 
+def clean_product_title(value: Any) -> str:
+    """Remove retailer UI wrappers and price snippets from product titles."""
+    text = clean_text(value, 500)
+    text = re.sub(r"^(?:deal|sale|sponsored|clearance|online deal)\s*[,|:–—-]\s*", "", text, flags=re.I)
+    # Some retailer product tiles expose one combined accessible label such as:
+    # "Deal, Pokémon ... Surprise Box, Price Now $72.89 Was $89.99".
+    tail = re.search(
+        r"(?:[,|•·]\s*)?(?:price(?:\s+now)?|now|was)\s*[:=]?\s*\$\s*\d",
+        text,
+        flags=re.I,
+    )
+    if tail and tail.start() >= 10:
+        text = text[:tail.start()].rstrip(" ,|•·-–—")
+    # Strip retailer stock/action suffixes if included in a card's aria-label.
+    text = re.sub(
+        r'\s*(?:[,|•·]\s*)?(?:see options?|view options?|add to cart|quick view|\"?\d+ ratings?\"?)\s*$',
+        "",
+        text,
+        flags=re.I,
+    )
+    return clean_text(text, 240)
+
+
 def stable_url(url: str) -> str:
     parsed = urlparse(url)
     # Tracking parameters create duplicate IDs and noisy changes.
@@ -128,29 +151,32 @@ def infer_category(title: Any, fallback: str = "collectibles") -> str:
     text = normalize_match_text(title)
     if fallback == "news":
         return "news"
+
+    # Check unmistakable game-platform terms first. Set names such as Scarlet &
+    # Violet must not be treated as video games when they appear on TCG products.
+    strong_game_terms = (
+        "nintendo switch", "switch game", "video game", "game software",
+        "switch cartridge", "nintendo switch game", "pokemon game for switch",
+    )
     tcg_terms = (
-        "trading card", "pokemon tcg", "booster", "elite trainer", " etb ",
+        "trading card", "pokemon tcg", "booster", "elite trainer", "etb",
         "trainer box", "card collection", "battle deck", "theme deck", "blister",
-        "pokemon cards", "card sleeves", "trading cards", "tcg "
+        "pokemon cards", "card sleeves", "trading cards", "tcg",
+        "prismatic evolutions", "destined rivals", "journey together",
+        "surprise box", "pokemon trading card game",
     )
     plush_terms = ("plush", "stuffed animal", "soft toy", "plushie")
-    game_terms = (
-        "nintendo switch", "switch game", "video game", "game card", "pokemon legends",
-        "pokemon scarlet", "pokemon violet", "pokemon sword", "pokemon shield",
-        "brilliant diamond", "shining pearl", "pokemon arceus", "pokemon game"
-    )
     accessory_terms = (
         "binder", "deck box", "playmat", "sleeves", "backpack", "keychain", "key chain",
-        "case", "apparel", "shirt", "hoodie", "hat", "blanket", "wallet", "bottle",
-        "accessory", "accessories", "lunch box", "pin set"
+        "apparel", "shirt", "hoodie", "hat", "blanket", "wallet", "bottle",
+        "accessory", "accessories", "lunch box", "pin set",
     )
-    padded = f" {text} "
-    if any(term.strip() in text for term in tcg_terms):
+    if any(term in text for term in strong_game_terms):
+        return "games"
+    if any(term in text for term in tcg_terms):
         return "tcg"
     if any(term in text for term in plush_terms):
         return "plush"
-    if any(term in text for term in game_terms):
-        return "games"
     if any(term in text for term in accessory_terms):
         return "accessories"
     return fallback if fallback in {"tcg", "plush", "games", "accessories", "collectibles"} else "collectibles"
@@ -221,7 +247,8 @@ def _card_title(card, anchor) -> str:
             ])
     useful = []
     seen = set()
-    for value in candidates:
+    for raw_value in candidates:
+        value = clean_product_title(raw_value)
         if _is_noise_title(value) or not is_pokemon_relevant(value):
             continue
         normalized = normalize_match_text(value)
@@ -239,16 +266,50 @@ def _card_title(card, anchor) -> str:
 
 
 def _image_from_card(card, base_url: str) -> str:
-    for image in card.find_all("img")[:8]:
-        for key in ("data-a-hires", "data-src", "data-lazy-src", "data-original", "src"):
-            candidate = clean_text(image.get(key), 1000)
-            if candidate and not candidate.startswith("data:"):
-                return urljoin(base_url, candidate)
-        srcset = clean_text(image.get("srcset"), 2000)
-        if srcset:
-            candidate = srcset.split(",")[-1].strip().split(" ")[0]
-            if candidate and not candidate.startswith("data:"):
-                return urljoin(base_url, candidate)
+    """Find a real product image while skipping lazy-load placeholders."""
+    image_keys = (
+        "data-a-hires", "data-image-src", "data-image-url", "data-original-src",
+        "data-original", "data-lazy-src", "data-src", "src",
+    )
+
+    def usable(raw: Any) -> str:
+        value = clean_text(raw, 1200)
+        if not value or value.startswith(("data:", "blob:", "javascript:")):
+            return ""
+        low = value.lower()
+        if any(token in low for token in ("spacer.gif", "transparent.gif", "pixel.gif", "1x1.gif", "placeholder.svg")):
+            return ""
+        absolute = urljoin(base_url, value)
+        return absolute if urlparse(absolute).scheme in {"http", "https"} else ""
+
+    for image in card.find_all("img")[:12]:
+        for key in image_keys:
+            candidate = usable(image.get(key))
+            if candidate:
+                return candidate
+        # srcset often contains the actual loaded image while src is a tiny placeholder.
+        srcsets = [image.get("srcset", "")]
+        picture = image.find_parent("picture")
+        if picture is not None:
+            srcsets.extend(source.get("srcset", "") for source in picture.find_all("source"))
+        options: list[tuple[float, str]] = []
+        for srcset in srcsets:
+            for entry in clean_text(srcset, 4000).split(","):
+                parts = entry.strip().split()
+                if not parts:
+                    continue
+                candidate = usable(parts[0])
+                if not candidate:
+                    continue
+                score = 1.0
+                if len(parts) > 1:
+                    descriptor = parts[1].lower()
+                    number = re.search(r"([0-9.]+)", descriptor)
+                    if number:
+                        score = float(number.group(1)) * (1000 if descriptor.endswith("w") else 1)
+                options.append((score, candidate))
+        if options:
+            return max(options, key=lambda item: item[0])[1]
     return ""
 
 
@@ -267,7 +328,7 @@ def extract_structured_products(soup: BeautifulSoup, base_url: str, retailer: st
             kinds = [kind] if isinstance(kind, str) else [str(k) for k in kind]
             if not any(k.lower().endswith("product") for k in kinds):
                 continue
-            name = clean_text(node.get("name"), 240)
+            name = clean_product_title(node.get("name"))
             raw_url = node.get("url") or node.get("@id") or ""
             product_url = urljoin(base_url, raw_url) if raw_url else ""
             if not name or not product_url or not is_pokemon_relevant(name):
@@ -493,7 +554,7 @@ def event_record(event_type: str, item: dict[str, Any], source: dict[str, Any], 
     return {
         "id": hashlib.sha256(identity.encode("utf-8")).hexdigest()[:18],
         "type": event_type,
-        "title": item.get("title") or source.get("name", "Pokémon item"),
+        "title": clean_product_title(item.get("title") or source.get("name", "Pokémon item")),
         "url": item.get("url") or source["url"],
         "retailer": retailer,
         "retailer_key": source.get("retailer_key") or _retailer_key(retailer),
@@ -556,6 +617,8 @@ def scan_source(session: requests.Session, source: dict[str, Any], settings: dic
         # Retail search pages contain navigation, review counts, sponsored cross-sells,
         # and other noise. Only persist cards whose actual product title identifies
         # a Pokémon product or recognizable Pokémon character.
+        for item in products:
+            item["title"] = clean_product_title(item.get("title", ""))
         products = [item for item in products if is_pokemon_relevant(item.get("title", "")) and not _is_noise_title(item.get("title", ""))]
         for item in products:
             item["category"] = infer_category(item.get("title", ""), source.get("category", "collectibles"))

@@ -42,3 +42,8 @@
 .type-badge.tracked{background:#edf1f8;color:#54647d}
 .source-bottom span{overflow-wrap:anywhere;line-height:1.45}
 @media(max-width:600px){.view-switch-button{flex:1;text-align:center}.feed-explanation{font-size:9px}.source-bottom{align-items:flex-start}.source-bottom span{max-width:76%}}
+
+/* v1.2.1: keep source health explanations readable on narrow mobile cards. */
+.source-bottom{align-items:flex-start}
+.source-bottom span{flex:1 1 auto;min-width:0;max-width:none;overflow-wrap:anywhere;line-height:1.45}
+.source-bottom a{flex:0 0 auto;white-space:nowrap}

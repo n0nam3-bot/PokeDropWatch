@@ -78,9 +78,11 @@
       badge.title = source.message || stateLabel;
       top.append(left, badge);
       const bottom = node('div', 'source-bottom');
-      let description = `${source.items_found || 0} relevant`;
-      if (status !== 'ok' && source.message) description = source.message;
-      const detail = node('span', '', description.slice(0, 100));
+      let description;
+      if (status === 'ok') description = `${source.items_found || 0} Pokémon listings recognized`;
+      else if (status === 'warning') description = 'Page loaded · no usable product matches';
+      else description = 'Request failed · inspect scan log';
+      const detail = node('span', '', description);
       detail.title = source.message || description;
       bottom.append(detail);
       const link = node('a', '', 'OPEN ↗');
@@ -211,7 +213,7 @@
     $('listingCount').textContent = String(summary.tracked_products ?? '—');
     $('alertCount').textContent = String(summary.new_alerts ?? 0);
     $('overallStatus').textContent = sources.length
-      ? `${matches} sources with matches · ${warnings} no matches · ${failures} errors`
+      ? `${matches} source matches · ${warnings} parser misses · ${failures} request errors`
       : 'Waiting for first scan';
     $('overallLed').className = `status-led ${sources.length && failures === 0 && warnings === 0 ? 'ok' : sources.length ? 'warn' : ''}`;
     $('lastChecked').textContent = data.last_checked ? `Last checked ${dateText(data.last_checked)}` : 'The first scan runs after setup.';

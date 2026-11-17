@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#c83232">
+  <meta name="description" content="Understand PokéDrop Watch retailer source statuses and scan results.">
+  <title>Source health · PokéDrop Watch</title>
+  <link rel="icon" href="./pokeball.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <style>
+    .health-wrap{max-width:900px;margin:22px auto 48px}
+    .health-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;margin:14px 0}
+    .health-card h1{font:750 clamp(27px,6vw,40px)/1.08 system-ui,sans-serif;letter-spacing:-1.2px;margin:8px 0 10px}
+    .health-card h2{font:700 18px system-ui,sans-serif;margin:0 0 12px}
+    .health-card h3{font:700 13px system-ui,sans-serif;margin:17px 0 7px}
+    .health-card p,.health-card li{font-size:12px;line-height:1.75;color:#60615a}
+    .health-card ol,.health-card ul{padding-left:22px}
+    .health-card table{width:100%;border-collapse:collapse;font-size:11px;margin:10px 0}
+    .health-card th,.health-card td{text-align:left;vertical-align:top;padding:9px 7px;border-bottom:1px solid var(--line)}
+    .health-card th{background:#fafaf7}
+    .health-card a{color:var(--red);font-weight:700}
+    .health-pill{display:inline-block;border-radius:5px;padding:4px 7px;font-size:9px;font-weight:800;letter-spacing:.5px}
+    .match{background:#eaf5ee;color:#32815b}.nomatch{background:#fff5df;color:#946a16}.issue{background:#fff0ec;color:#bd5545}
+    @media(max-width:620px){.health-wrap{margin:12px auto 30px}.health-card{padding:15px}.health-card p,.health-card li{font-size:11px}.health-card table{font-size:10px}.health-card th,.health-card td{padding:7px 5px}}
+  </style>
+</head>
+<body>
+  <div class="site-shell health-wrap">
+    <header class="topbar">
+      <a class="brand" href="./"><span class="pokeball" aria-hidden="true"><i></i></span><span><strong>PokéDrop</strong><small>SOURCE HEALTH</small></span></a>
+      <a class="text-link" href="./">← Dashboard</a>
+    </header>
+    <main class="health-card">
+      <p class="eyebrow">MONITORING DIAGNOSTICS</p>
+      <h1>What source health actually means</h1>
+      <p>A source badge describes the latest automated fetch and parser result. It does not promise that a retailer has inventory, and a successful scan does not prove every product was discovered.</p>
+      <table>
+        <thead><tr><th>Status</th><th>Meaning</th><th>Does not mean</th></tr></thead>
+        <tbody>
+          <tr><td><span class="health-pill match">MATCHES</span></td><td>The page/feed was fetched and the current parser recognized one or more Pokémon entries.</td><td>It does not mean every product was captured or all items are in stock.</td></tr>
+          <tr><td><span class="health-pill nomatch">NO MATCH</span></td><td>The page responded, but the parser recognized zero usable Pokémon entries.</td><td>It does not mean the retailer has no Pokémon products. The page may need a retailer-specific adapter or JavaScript rendering.</td></tr>
+          <tr><td><span class="health-pill issue">ISSUE</span></td><td>The request failed before parsing, for example due to connection timeout, blocking, TLS, DNS, or HTTP error.</td><td>It does not prove the retailer is offline for human visitors.</td></tr>
+        </tbody>
+      </table>
+    </main>
+    <section class="health-card">
+      <h2>Interpreting the scan reported on November 16, 2026</h2>
+      <p>The reported monitor run at 7:48 PM showed <strong>2 of 8 sources with matches</strong>. This is a parser coverage result, not a stock count.</p>
+      <table>
+        <thead><tr><th>Source</th><th>Reported status</th><th>Recognized entries</th></tr></thead>
+        <tbody>
+          <tr><td>Walmart · Pokémon</td><td><span class="health-pill match">MATCHES</span></td><td>5</td></tr>
+          <tr><td>Amazon · Pokémon Products</td><td><span class="health-pill match">MATCHES</span></td><td>68</td></tr>
+          <tr><td>Pokémon Center · TCG</td><td><span class="health-pill nomatch">NO MATCH</span></td><td>0</td></tr>
+          <tr><td>Pokémon Center · Plush</td><td><span class="health-pill nomatch">NO MATCH</span></td><td>0</td></tr>
+          <tr><td>Target · Pokémon</td><td><span class="health-pill nomatch">NO MATCH</span></td><td>0</td></tr>
+          <tr><td>GameStop · Pokémon</td><td><span class="health-pill nomatch">NO MATCH</span></td><td>0</td></tr>
+          <tr><td>Best Buy · Pokémon</td><td><span class="health-pill issue">ISSUE</span></td><td>Connection failure</td></tr>
+          <tr><td>PokéBeach · Pokémon TCG News</td><td><span class="health-pill issue">ISSUE</span></td><td>Connection failure</td></tr>
+        </tbody>
+      </table>
+      <p>The 73 recognized listings are the sum of 68 Amazon and 5 Walmart entries in that particular run. This is a point-in-time report; retailer layouts and network protections can change.</p>
+    </section>
+    <section class="health-card">
+      <h2>What needs work next</h2>
+      <ol>
+        <li>Build and maintain retailer-specific adapters instead of assuming all catalog pages use the same HTML layout.</li>
+        <li>Record HTTP status, final URL, content type, page title, recognized count, and a short diagnostic for each failed scan.</li>
+        <li>Keep sanitized HTML fixtures and parser tests for each retailer.</li>
+        <li>Verify title, category, image, price, and stock state independently.</li>
+        <li>Keep parser misses separate from request failures. Never display a blocked or unrecognized source as a successful match.</li>
+      </ol>
+      <h3>Why an item may have no image or price</h3>
+      <p>An image or price is only shown when the retailer exposes one in structured product data, product-card markup, or known metadata. Some sites load this data later with JavaScript, return placeholders, or block external image hotlinks. In those cases the dashboard uses a neutral fallback and does not invent an image or price.</p>
+      <h3>Manual diagnosis</h3>
+      <ol>
+        <li>Open the source URL from the dashboard and confirm the Pokémon products are visible in a normal browser.</li>
+        <li>Open the matching GitHub Actions run and expand <strong>Scan sources and send email digest</strong>.</li>
+        <li>For <strong>NO MATCH</strong>, determine whether the returned page HTML contains product titles, links, images, and price data.</li>
+        <li>For <strong>ISSUE</strong>, inspect the complete connection exception or HTTP status.</li>
+        <li>Save a sanitized response fixture before writing a retailer-specific parser. Remove session, cart, account, address, and other personal data.</li>
+      </ol>
+      <p><a href="./SOURCE_HEALTH.md">Open the source health reference in Markdown ↗</a></p>
+    </section>
+    <footer class="footer"><span class="footer-brand"><span class="mini-ball"></span> PokéDrop Watch</span><a href="./">Back to dashboard</a></footer>
+  </div>
+</body>
+</html>

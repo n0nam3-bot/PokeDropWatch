@@ -20,6 +20,7 @@ The roadmap records what is implemented in the current code and what remains pla
 - [x] Product thumbnails from structured data, retailer card images, and RSS media metadata when exposed.
 - [x] Reject generic retailer navigation/rating text and unrelated products from the Pokémon alert feed.
 - [x] Distinguish sources with recognized results from pages that load but return no recognizable Pokémon items.
+- [x] Explain `MATCHES`, `NO MATCH`, and `ISSUE` separately in the dashboard and source-health reference.
 - [x] PWA manifest and service worker for compatible mobile browsers.
 - [x] ZIP patch application with path validation and automated tests.
 
@@ -54,11 +55,11 @@ The roadmap records what is implemented in the current code and what remains pla
 
 ## Stage 4 — Retailer coverage and detection quality
 
-**Status: In progress**
+**Status: In progress — generic parsing currently recognizes Amazon and Walmart in the reported scan; other sources need targeted work.**
 
 - [x] Extend watchlist through `config/sources.json` for supported source formats.
 - [x] Support broad catalog pages and individual product-detail URLs.
-- [ ] Add dedicated retailer adapters for stores whose product data is hidden behind JavaScript or custom page structures.
+- [ ] Add dedicated retailer adapters for stores whose product data is hidden behind JavaScript or custom page structures (current reported gaps include Pokémon Center, Target, GameStop, Best Buy, and PokéBeach).
 - [ ] Add automated integration checks for each configured retailer and alert when a page structure stops yielding product data.
 - [ ] Improve product identity matching when the same item appears through multiple retailers or URLs.
 - [ ] Add location-aware inventory checks where retailers expose a permitted public location-based source.

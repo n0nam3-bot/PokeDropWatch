@@ -1,6 +1,6 @@
 # PokéDrop Watch — exact owner setup instructions
 
-This is the click-by-click setup guide for the current v1.1 application. Follow it from top to bottom. You only need to do this once, unless you change Firebase projects, the GitHub repository, or the email-sending account.
+This is the click-by-click setup guide for the current v1.2 application. Follow it from top to bottom. You only need to do this once, unless you change Firebase projects, the GitHub repository, or the email-sending account.
 
 **The website is hosted by GitHub Pages. Firebase provides the subscriber database and email-link sign-in. GitHub Actions runs the monitor. Gmail sends product-alert emails.** You do not need Vercel, Google Sheets, Firebase Hosting, Cloud Functions, or a paid server.
 
@@ -121,6 +121,31 @@ The app uses Firebase email-link sign-in to verify mailbox ownership. Users must
 11. Scroll down and click **Commit changes**. Use the default commit message and commit directly to `main`.
 
 The Firebase Web App config is browser-visible configuration; it is not the service-account private key. Never put the service-account JSON in `docs/` or any public file.
+
+### Step 4B — Allow both Firebase Authentication and GitHub Pages to use the browser API key
+
+This step matters when the Firebase Web API key has **Website / HTTP referrer** restrictions. Firebase's email-link handler opens on the Firebase `firebaseapp.com` domain first, then returns the visitor to GitHub Pages. If the Firebase domain is missing from the key's allowlist, clicking the email can fail with `403 API_KEY_HTTP_REFERRER_BLOCKED` even though Firebase sent the email successfully.
+
+1. Open **[Google Cloud API Credentials for the current PokéDrop Watch Firebase project](https://console.cloud.google.com/apis/credentials?project=project-4868291462124176670)**.
+2. Find the browser API key whose value matches the `apiKey` field in `docs/firebase-config.js`. Do not edit the Firebase service-account key; this is the public Web API key.
+3. Tap the key name to edit it.
+4. Under **Application restrictions**, select **Websites** or **HTTP referrers (web sites)**.
+5. In the website restrictions list, add both of these exact patterns:
+
+   ```text
+   https://n0nam3-bot.github.io/*
+   https://project-4868291462124176670.firebaseapp.com/*
+   ```
+
+6. Keep any other valid website patterns your project already needs. Do not remove the existing allowed entries unless you know they are obsolete.
+7. Save the API key. Leave the **API restrictions** section unchanged; this fix is specifically for the website/referrer allowlist.
+8. Wait a few minutes, return to `https://n0nam3-bot.github.io/PokeDropWatch/admin.html`, request a **new** sign-in link, and open the new email.
+
+If you later move to a different GitHub Pages host or Firebase project, replace the two patterns with the new site host and the new project's `<PROJECT_ID>.firebaseapp.com` host. Keep the `/*` suffix.
+
+**Separate Firebase check:** open **[Firebase Authentication → Settings](https://console.firebase.google.com/project/project-4868291462124176670/authentication/settings)** and confirm `n0nam3-bot.github.io` appears under **Authorized domains**. Enter only the hostname—no `https://`, path, or slash. The Firebase `project-4868291462124176670.firebaseapp.com` domain should remain available for the email action handler.
+
+**Do not treat the Web API key as a password.** Firebase browser configuration is expected to be visible to site visitors. Firestore security rules and Authentication protect subscriber data. Never publish the service-account JSON or Gmail App Password.
 
 ## Step 5 — Create the private Firebase service-account key
 
@@ -244,7 +269,8 @@ The real administrator email is not stored in public JavaScript. Firestore's dep
 | What you see | Check this exact setting |
 |---|---|
 | `Firebase is not configured` | Check that all five values in `docs/firebase-config.js` were replaced and committed. Reload the Pages website after deployment. |
-| `auth/unauthorized-continue-uri` or an unauthorized domain message | Firebase Console → Authentication → Settings → Authorized domains. Add `OWNER.github.io` as the hostname only. |
+| `403 API_KEY_HTTP_REFERRER_BLOCKED` when opening a Firebase email link | Google Cloud → APIs & Services → Credentials → edit the Firebase browser API key → Application restrictions → Websites. Allow both `https://n0nam3-bot.github.io/*` and `https://project-4868291462124176670.firebaseapp.com/*`. Save, wait a few minutes, and request a new sign-in link. |
+| `auth/unauthorized-continue-uri` or an unauthorized domain message | Firebase Console → Authentication → Settings → Authorized domains. Add `n0nam3-bot.github.io` as the hostname only. |
 | `auth/operation-not-allowed` | Firebase Console → Authentication → Sign-in method/providers → Email/Password. Enable both Email/Password and Email link (passwordless sign-in), then save. |
 | Admin page says account is not authorized | Firestore Database → Rules. Confirm the real, lowercase admin email is in the deployed rule and click Publish again. Do not add it to public JavaScript. |
 | `Missing or insufficient permissions` on the admin page | Check that the signed-in email exactly matches the email in the deployed Firestore Rules and that its email link sign-in was completed. |
@@ -262,7 +288,8 @@ Replace `OWNER`, `REPOSITORY`, and `PROJECT_ID` with your values before opening 
 | Firebase Console | https://console.firebase.google.com/ |
 | Firestore database | https://console.firebase.google.com/project/PROJECT_ID/firestore |
 | Firebase Authentication providers | https://console.firebase.google.com/project/PROJECT_ID/authentication/providers |
-| Firebase Authentication authorized domains | https://console.firebase.google.com/project/PROJECT_ID/authentication/settings |
+| Firebase Authentication authorized domains | https://console.firebase.google.com/project/project-4868291462124176670/authentication/settings |
+| Google Cloud API credentials / referrer restrictions | https://console.cloud.google.com/apis/credentials?project=project-4868291462124176670 |
 | Firebase Web App config / Project settings | https://console.firebase.google.com/project/PROJECT_ID/settings/general |
 | Firebase service-account key | https://console.firebase.google.com/project/PROJECT_ID/settings/serviceaccounts/adminsdk |
 | Google Account security | https://myaccount.google.com/security |

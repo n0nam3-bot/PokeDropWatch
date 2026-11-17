@@ -374,3 +374,23 @@ A change is complete only when all applicable statements are true:
 ## Manual Firebase Rules deployment
 
 Firestore Rules are not deployed by GitHub Pages or the ZIP patch installer. Whenever a release changes `firebase/firestore.rules`, the owner must copy the updated file into Firebase Console → Firestore Database → Rules, re-enter the private administrator email, preserve intended project-specific changes, and click Publish.
+
+
+## Firebase browser API-key referrer restrictions
+
+Firebase email-link authentication opens its action handler on the configured `<PROJECT_ID>.firebaseapp.com` auth domain before returning to GitHub Pages. When a Firebase Web API key is restricted to HTTP referrers, allow both the public site and the Firebase auth handler. For the current PokéDrop Watch deployment, the allowed patterns are:
+
+```text
+https://n0nam3-bot.github.io/*
+https://project-4868291462124176670.firebaseapp.com/*
+```
+
+Edit the matching Firebase browser API key in [Google Cloud API Credentials](https://console.cloud.google.com/apis/credentials?project=project-4868291462124176670). This resolves `403 API_KEY_HTTP_REFERRER_BLOCKED` errors caused by the missing Firebase auth domain. Do not paste service-account JSON or Gmail credentials into the browser config. See `docs/FIREBASE_SETUP.md` → Step 4B for the mobile click-by-click procedure.
+
+## Source health interpretation
+
+- `MATCHES`: current fetch succeeded and the parser recognized Pokémon listings or feed entries.
+- `NO MATCH`: fetch succeeded but the parser recognized no usable entries; this does not mean the retailer has no inventory.
+- `ISSUE`: the request failed before parsing.
+
+Record real scan evidence and preserve the distinction between a parser miss and a network failure. Do not claim retailer coverage until a source-specific fixture and scan test both pass. See `docs/SOURCE_HEALTH.md`.

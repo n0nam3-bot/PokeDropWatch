@@ -55,3 +55,12 @@ After the initial workflow and app are installed, ordinary application/documenta
 For source customization, tests, release rules, and future change requests, see [docs/CONFIGURATION_AND_CHANGE_GUIDE.md](docs/CONFIGURATION_AND_CHANGE_GUIDE.md).
 
 PokéDrop Watch is an unofficial fan project and is not affiliated with Nintendo, The Pokémon Company, Pokémon Center, or any listed retailer.
+
+
+## Operations reference
+
+- [Firebase setup, including API-key referrer restrictions](docs/FIREBASE_SETUP.html)
+- [Source health meanings and scan diagnostics](docs/SOURCE_HEALTH.md)
+- [Configuration and change guide](docs/CONFIGURATION_AND_CHANGE_GUIDE.md)
+- [Roadmap](docs/ROADMAP.md)
+- [Changelog](docs/CHANGELOG.md)

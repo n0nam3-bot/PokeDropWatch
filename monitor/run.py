@@ -8,7 +8,7 @@ import os
 import sys
 from pathlib import Path
 
-from engine import is_valid_event, make_session, scan_source, send_email, utc_now
+from engine import clean_product_title, is_valid_event, make_session, scan_source, send_email, utc_now
 from subscribers import dispatch_subscriber_notifications
 
 
@@ -46,7 +46,15 @@ def main() -> int:
         "subscriber_delivery_status": "Not configured",
     })
     settings = config.get("settings", {})
-    # Remove malformed/non-Pokémon product cards left by older loose catalog parsing.
+    # Normalize older retailer card labels before filtering legacy events.
+    # This removes wrappers such as "Deal," and embedded price text without
+    # changing the underlying product URL or generating a new alert.
+    for event in state.get("events", []):
+        if event.get("type") != "news":
+            event["title"] = clean_product_title(event.get("title", ""))
+    for event in state.get("pending_email", []):
+        if event.get("type") != "news":
+            event["title"] = clean_product_title(event.get("title", ""))
     # News items are retained because a configured Pokémon news feed is already scoped.
     state["events"] = [event for event in state.get("events", []) if is_valid_event(event)]
     state["pending_email"] = [event for event in state.get("pending_email", []) if is_valid_event(event)]
@@ -55,6 +63,9 @@ def main() -> int:
     for source_state in state.get("items", {}).values():
         products = source_state.get("products")
         if isinstance(products, dict):
+            for saved_item in products.values():
+                if isinstance(saved_item, dict):
+                    saved_item["title"] = clean_product_title(saved_item.get("title", ""))
             products = {
                 key: item for key, item in products.items()
                 if is_valid_event({"category": item.get("category"), "title": item.get("title", "")})

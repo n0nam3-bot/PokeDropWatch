@@ -48,7 +48,7 @@
       <p class="lede">This is the exact setup guide for the website, subscriber database, email verification, and product-alert delivery. It includes direct console links, exact field names, and where each value belongs. No Vercel, Google Sheets, Firebase Hosting, Cloud Functions, or paid server is required.</p>
       <div class="guide-callout"><strong>Cost:</strong> This is designed for Firebase Spark, GitHub's free usage allowance, and Gmail. Each service has quotas; free does not mean unlimited email or database usage. Do not add billing or upgrade plans just to complete these steps.</div>
       <nav class="guide-nav" aria-label="Setup steps">
-        <a href="#github-names">GitHub names</a><a href="#firebase-project">1. Firebase project</a><a href="#firestore">2. Firestore</a><a href="#auth">3. Email sign-in</a><a href="#webapp">4. Web app config</a><a href="#service-account">5. Service key</a><a href="#gmail">6. Gmail</a><a href="#secrets">7. Secrets</a><a href="#workflow">8. Workflow</a><a href="#pages">9. Pages</a><a href="#admin">10. Admin</a><a href="#test">11. Test</a>
+        <a href="#github-names">GitHub names</a><a href="#firebase-project">1. Firebase project</a><a href="#firestore">2. Firestore</a><a href="#auth">3. Email sign-in</a><a href="#webapp">4. Web app config</a><a href="#api-key">API key allowlist</a><a href="#service-account">5. Service key</a><a href="#gmail">6. Gmail</a><a href="#secrets">7. Secrets</a><a href="#workflow">8. Workflow</a><a href="#pages">9. Pages</a><a href="#admin">10. Admin</a><a href="#test">11. Test</a>
       </nav>
 
       <section class="guide-card" id="github-names">
@@ -132,6 +132,26 @@
           <li>Do not paste a service-account JSON file into this file. Tap <strong>Commit changes</strong> and commit to <code>main</code>.</li>
         </ol>
         <p>The Firebase Web App config is public browser configuration. It is not a password. The service-account JSON in Step 5 is private and must never go in a website file.</p>
+      </section>
+
+      <section class="guide-card" id="api-key">
+        <h2>4B. Allow the Firebase email handler and GitHub Pages in the API key restrictions</h2>
+        <div class="step-note"><strong>Important:</strong> Firebase's email sign-in link first opens on the project's <code>firebaseapp.com</code> authentication domain, then returns to GitHub Pages. If the browser API key only allows GitHub Pages, the email link can fail with <code>403 API_KEY_HTTP_REFERRER_BLOCKED</code>.</div>
+        <p><a class="direct-link" href="https://console.cloud.google.com/apis/credentials?project=project-4868291462124176670" target="_blank" rel="noopener">Open Google Cloud API Credentials for this Firebase project ↗</a></p>
+        <ol>
+          <li>Find the browser API key matching the <code>apiKey</code> value in <code>docs/firebase-config.js</code>. Do not select a service-account key.</li>
+          <li>Tap the API key name to edit it.</li>
+          <li>Under <strong>Application restrictions</strong>, choose <strong>Websites</strong> or <strong>HTTP referrers (web sites)</strong>.</li>
+          <li>Add both exact website patterns below. Keep any other valid entries already present.</li>
+        </ol>
+        <pre>https://n0nam3-bot.github.io/*
+https://project-4868291462124176670.firebaseapp.com/*</pre>
+        <ol start="5">
+          <li>Tap <strong>Save</strong>. Leave the API restrictions section unchanged; this error is specifically an HTTP-referrer restriction.</li>
+          <li>Wait a few minutes. Open <a href="https://n0nam3-bot.github.io/PokeDropWatch/admin.html" target="_blank" rel="noopener">the PokéDrop Watch administrator page ↗</a>, request a new email link, and open the new email.</li>
+        </ol>
+        <p>Also confirm <code>n0nam3-bot.github.io</code> is listed in <a href="https://console.firebase.google.com/project/project-4868291462124176670/authentication/settings" target="_blank" rel="noopener">Firebase Authentication → Settings → Authorized domains ↗</a>. Enter the hostname only, without protocol or path.</p>
+        <div class="step-note"><strong>Privacy:</strong> the Firebase Web API key is public browser configuration. Do not publish the Firebase service-account JSON or Gmail App Password.</div>
       </section>
 
       <section class="guide-card" id="service-account">
@@ -242,7 +262,8 @@
         <h2>Common setup errors</h2>
         <table><thead><tr><th>Message / symptom</th><th>What to check</th></tr></thead><tbody>
           <tr><td><code>Firebase is not configured</code></td><td>All five values in <code>docs/firebase-config.js</code> must be replaced and committed. Reload Pages after deployment.</td></tr>
-          <tr><td><code>auth/unauthorized-continue-uri</code> or unauthorized domain</td><td>Authentication → Settings → Authorized domains. Add <code>OWNER.github.io</code> as hostname only.</td></tr>
+          <tr><td><code>403 API_KEY_HTTP_REFERRER_BLOCKED</code> when an email link opens</td><td>Google Cloud API Credentials → edit the Firebase browser API key → Application restrictions → Websites. Add <code>https://n0nam3-bot.github.io/*</code> and <code>https://project-4868291462124176670.firebaseapp.com/*</code>. Save, wait a few minutes, then request a new email link.</td></tr>
+          <tr><td><code>auth/unauthorized-continue-uri</code> or unauthorized domain</td><td>Authentication → Settings → Authorized domains. Add <code>n0nam3-bot.github.io</code> as hostname only.</td></tr>
           <tr><td><code>auth/operation-not-allowed</code></td><td>Authentication → Sign-in providers → Email/Password. Enable Email/Password and Email link (passwordless sign-in), then save.</td></tr>
           <tr><td>Admin account not authorized / insufficient permissions</td><td>Firestore → Rules. Verify the deployed administrator email exactly matches the signed-in verified email; tap Publish again.</td></tr>
           <tr><td>Firebase service account missing</td><td>GitHub Settings → Secrets and variables → Actions. Confirm <code>FIREBASE_SERVICE_ACCOUNT_JSON</code> contains the complete JSON.</td></tr>
@@ -258,7 +279,8 @@
         <p><a href="https://console.firebase.google.com/" target="_blank" rel="noopener">Firebase Console</a><br>
         <a href="https://console.firebase.google.com/project/PROJECT_ID/firestore" target="_blank" rel="noopener">Firestore database</a><br>
         <a href="https://console.firebase.google.com/project/PROJECT_ID/authentication/providers" target="_blank" rel="noopener">Authentication providers</a><br>
-        <a href="https://console.firebase.google.com/project/PROJECT_ID/authentication/settings" target="_blank" rel="noopener">Authorized domains</a><br>
+        <a href="https://console.firebase.google.com/project/project-4868291462124176670/authentication/settings" target="_blank" rel="noopener">Authorized domains for this project</a><br>
+        <a href="https://console.cloud.google.com/apis/credentials?project=project-4868291462124176670" target="_blank" rel="noopener">Google Cloud API key referrer restrictions</a><br>
         <a href="https://console.firebase.google.com/project/PROJECT_ID/settings/general" target="_blank" rel="noopener">Firebase Web App config</a><br>
         <a href="https://console.firebase.google.com/project/PROJECT_ID/settings/serviceaccounts/adminsdk" target="_blank" rel="noopener">Firebase service-account key</a><br>
         <a href="https://myaccount.google.com/security" target="_blank" rel="noopener">Google Account Security</a><br>
