@@ -2,11 +2,11 @@
 // The private administrator email belongs only in the deployed Firestore rules,
 // never in this public file.
 export const firebaseConfig = {
-  apiKey: 'PASTE_FIREBASE_WEB_API_KEY',
-  authDomain: 'YOUR_PROJECT_ID.firebaseapp.com',
-  projectId: 'YOUR_PROJECT_ID',
-  appId: 'PASTE_FIREBASE_WEB_APP_ID',
-  messagingSenderId: 'PASTE_FIREBASE_MESSAGING_SENDER_ID'
+  apiKey: 'AIzaSyDYii-b7PW8iX3RMM7EhqnzF2vB7XDRJOs',
+  authDomain: 'project-4868291462124176670.firebaseapp.com',
+  projectId: 'project-4868291462124176670',
+  appId: '1:828639177624:web:e5f7383e38aba5d608d9ed',
+  messagingSenderId: '828639177624'
 };
 
 export function isFirebaseConfigured() {
