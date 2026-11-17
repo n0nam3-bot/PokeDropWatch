@@ -1,5 +1,31 @@
 # Changelog
 
+## v1.4.0 — 2026-11-17
+
+- Replaced Firebase Authentication admin sign-in/reset links with the private Apps Script password API and branded six-digit reset codes sent by `pokedropwatch.notify@gmail.com`.
+- Fixed initialization races on both the public subscription form and admin page by registering Apps Script iframe message listeners before navigation.
+- Replaced Firestore client rules with deny-all rules; subscriber data is accessed only by trusted service-account backends.
+- Moved detailed owner setup from the public Pages directory to `owner-docs/SETUP.md`; the old public Firebase setup URL now redirects to the home page.
+- Improved retailer scan handling to probe alternate URLs, merge and deduplicate products, and parse direct JSON responses in addition to structured/embedded JSON and HTML cards.
+- Changed newly discovered catalog records to **FIRST SEEN** unless a verified release/drop date exists; these discoveries are not emailed as new drops.
+- Migrated legacy `NEW DROP` records to `FIRST SEEN`, cleaned titles, consolidated duplicate product baselines, and prevented first-seen events from entering email queues.
+- Improved TCG classification, source tooltips, Amazon canonical identity, title cleanup, and product image extraction.
+- Updated the sticky top bar, sticky feed filters, fixed bottom navigation, desktop product width, larger text, and pixel-font hooks; corrected the repository GitHub link and duplicate retailer checkbox.
+- Added an exact owner setup guide for Apps Script Script Properties, service-account access, Gmail, GitHub secrets, deployment, and local DaFont font installation.
+- Replaced the outdated Firebase Auth browser module with a retired no-op stub, bumped the PWA shell cache to v8, and removed public setup-page references from the subscription flow so old Firebase sign-in code is no longer used by the current site.
+- Rewrote the owner guide to require updating/redeploying the existing Apps Script project rather than accidentally leaving an older Google-hosted version active.
+- Reset and subscriber verification codes now retain their original 10-minute expiry even after an incorrect attempt; newer administrator reset requests invalidate older reset codes.
+- Expanded retailer scans with up to three configured public search alternates for Target, Walmart, Best Buy, GameStop and Amazon; the monitor merges results and reports how many configured URLs responded. These routes remain subject to live retailer access.
+- Added direct JSON/embedded JSON extraction fixtures, improved Amazon `data-a-dynamic-image` selection, canonicalized `www.amazon.com` and `amazon.com` ASIN links to one identity, and expanded Pokémon Card Game TCG classification.
+- Migrated legacy marketplace `NEW DROP` events to `FIRST SEEN`, collapsed duplicate first-seen records, cleaned/deduplicated the saved product baseline, and prevented unverified discoveries from being mailed as new drops. The example 2018 marketplace listing is not represented as a new release.
+- Increased desktop text sizes, narrowed the centered desktop product list to 760px, expanded source cards to show responding URL counts, and improved the display-font use across game-style UI controls. The DaFont TTF binary still must be uploaded by the owner.
+- Kept detailed owner/Firebase configuration instructions outside the public Pages site; `docs/FIREBASE_SETUP.html` is only a noindex redirect stub.
+
+### Validation
+- 51/51 Python unit tests passed after the source parser, state migration, admin architecture, and ZIP regression updates.
+- Python compilation, source JSON validation, JavaScript syntax, Apps Script syntax, and clean-copy ZIP installation passed.
+- Live retailer responses, Apps Script deployment, and branded email delivery still require owner credentials and a fresh GitHub Actions scan; they are not claimed as verified by local tests.
+
 ## [1.3.0] — 2026-11-16
 
 ### Changed

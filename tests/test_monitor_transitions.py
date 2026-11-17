@@ -4,7 +4,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'monitor'))
 from unittest.mock import patch
-from engine import scan_source
+from run import migrate_state
+from engine import scan_source, is_email_eligible_event
 
 
 class FakeResponse:
@@ -73,6 +74,72 @@ class TransitionTests(unittest.TestCase):
             events, result = scan_source(FakeSession(product_html), source, {'request_timeout_seconds': 1, 'max_items_per_catalog': 50}, state)
         self.assertEqual(events, [])
         self.assertEqual(result['state']['source_url'], new_url)
+
+    def test_existing_marketplace_new_drop_is_migrated_to_first_seen_and_deduped(self):
+        state = {
+            "events": [
+                {"id": "old-1", "type": "new_drop", "title": "Pokémon TCG 3 Booster Packs, 30 Cards Total", "retailer": "Amazon", "price": 24.75},
+                {"id": "old-2", "type": "new_drop", "title": "Pokémon TCG 3 Booster Packs, 30 Cards Total", "retailer": "Amazon", "price": 24.75},
+            ],
+            "pending_email": [
+                {"id": "old-3", "type": "new_drop", "title": "Pokémon TCG 3 Booster Packs, 30 Cards Total", "retailer": "Amazon", "price": 24.75},
+            ],
+            "items": {},
+        }
+        migrated = migrate_state(state)
+        self.assertEqual(len(migrated['events']), 1)
+        self.assertEqual(migrated['events'][0]['type'], 'first_seen')
+        self.assertIn('release dates are unverified', migrated['events'][0]['summary'])
+        self.assertEqual(migrated['pending_email'], [])
+        self.assertFalse(is_email_eligible_event(migrated['events'][0]))
+
+
+    def test_2018_marketplace_listing_is_first_seen_not_new_drop(self):
+        title = (
+            "Pokémon TCG 3 Booster Packs, 30 Cards Total, 100% Authentic, "
+            "Random Rares & Holofoils, 3 Blister Packs"
+        )
+        state = {
+            "events": [{
+                "id": "amazon-old-listing", "type": "new_drop", "title": title,
+                "retailer": "Amazon", "retailer_key": "amazon", "price": 24.75,
+                "summary": "Amazon marketplace listing; seller-created listing date 2018."
+            }],
+            "pending_email": [{
+                "id": "amazon-old-pending", "type": "new_drop", "title": title,
+                "retailer": "Amazon", "price": 24.75
+            }],
+            "items": {},
+        }
+        migrated = migrate_state(state)
+        self.assertEqual(len(migrated["events"]), 1)
+        self.assertEqual(migrated["events"][0]["type"], "first_seen")
+        self.assertIn("release dates are unverified", migrated["events"][0]["summary"])
+        self.assertEqual(migrated["pending_email"], [])
+        self.assertFalse(is_email_eligible_event(migrated["events"][0]))
+
+    def test_alternate_search_url_is_scanned_and_merged(self):
+        primary = 'https://shop.example/search?q=pokemon'
+        alternate = 'https://shop.example/search?q=pokemon-tcg'
+        source = {
+            'id': 'store-search', 'name': 'Store Pokémon Search', 'retailer': 'Store',
+            'type': 'catalog', 'url': primary, 'alternate_urls': [alternate]
+        }
+        empty = '<html><body><p>Search results</p></body></html>'
+        product = '''<html><head><script type="application/ld+json">
+        {"@type":"Product","name":"Pokémon TCG Mega Booster Box",
+        "url":"https://shop.example/product/pokemon-box",
+        "offers":{"price":"49.99","availability":"https://schema.org/InStock"}}
+        </script></head></html>'''
+        def fake_fetch(_session, url, _timeout):
+            return (empty, url) if url == primary else (product, url)
+        with patch('engine.fetch', side_effect=fake_fetch):
+            events, result = scan_source(FakeSession(empty), source, {'request_timeout_seconds': 1, 'max_items_per_catalog': 50}, {'items': {}})
+        self.assertEqual(result['status']['status'], 'ok')
+        self.assertEqual(result['status']['items_found'], 1)
+        self.assertEqual(result['status']['successful_urls'], 2)
+        self.assertEqual(events, [])  # First baseline is not a drop alert.
+
 
 
 if __name__ == '__main__':

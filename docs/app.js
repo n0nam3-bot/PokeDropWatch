@@ -2,8 +2,8 @@
   'use strict';
   const $ = (id) => document.getElementById(id);
   const state = { events: [], products: [], filter: 'all', category: 'all', retailer: 'all', query: '', exact: false, view: 'alerts' };
-  const labels = { new_drop: 'NEW DROP', restock: 'RESTOCK', price_drop: 'PRICE DROP', price_change: 'PRICE UPDATE', news: 'POKÉMON NEWS' };
-  const icons = { new_drop: '✦', restock: '↻', price_drop: '↓', price_change: '↕', news: '✧' };
+  const labels = { new_drop: 'FIRST SEEN', first_seen: 'FIRST SEEN', restock: 'RESTOCK', price_drop: 'PRICE DROP', price_change: 'PRICE UPDATE', news: 'POKÉMON NEWS' };
+  const icons = { new_drop: '✦', first_seen: '✦', restock: '↻', price_drop: '↓', price_change: '↕', news: '✧' };
   const categoryLabels = {
     tcg: 'Trading cards & TCG', plush: 'Plush', collectibles: 'Collectibles',
     games: 'Video games', accessories: 'Accessories & apparel', news: 'News'
@@ -29,11 +29,14 @@
   const inferCategory = (item) => {
     if (item.type === 'news' || item.category === 'news') return 'news';
     const title = normalize(item.title);
-    if (/(trading card|pokemon tcg|booster|elite trainer|trainer box|card collection|battle deck|theme deck|blister|pokemon cards|trading cards| etb )/.test(` ${title} `)) return 'tcg';
+    // Trust the scanner's explicit retailer classification for ambiguous set
+    // names such as Scarlet & Violet; only clear platform terms mean a game.
+    if (/(nintendo switch|switch game|video game software|game cartridge|switch cartridge|nintendo ds game)/.test(title)) return 'games';
+    if (/(pokemon tcg|trading card|trading cards|booster|elite trainer|trainer box|card collection|battle deck|theme deck|blister|pokemon cards| tcg |etb|surprise box|destined rivals|journey together|prismatic evolutions)/.test(` ${title} `)) return 'tcg';
+    if (item.category && ['tcg', 'plush', 'collectibles', 'games', 'accessories'].includes(item.category)) return item.category;
     if (/(plush|stuffed animal|soft toy|plushie)/.test(title)) return 'plush';
-    if (/(nintendo switch|switch game|video game|game card|pokemon legends|pokemon scarlet|pokemon violet|pokemon sword|pokemon shield|brilliant diamond|shining pearl|pokemon arceus|pokemon game)/.test(title)) return 'games';
     if (/(binder|deck box|playmat|sleeves|backpack|keychain|key chain|apparel|shirt|hoodie|hat|blanket|wallet|bottle|accessor|lunch box|pin set)/.test(title)) return 'accessories';
-    return ['tcg', 'plush', 'collectibles', 'games', 'accessories'].includes(item.category) ? item.category : 'collectibles';
+    return 'collectibles';
   };
   const money = (value, currency = 'USD') => {
     if (value === null || value === undefined || value === '') return 'Price not listed';
@@ -75,13 +78,16 @@
       const stateLabel = status === 'ok' ? 'MATCHES' : status === 'warning' ? 'NO MATCH' : 'ISSUE';
       const stateClass = status === 'ok' ? 'ok' : status === 'warning' ? 'warn' : 'error';
       const badge = node('span', `source-state ${stateClass}`, stateLabel);
-      badge.title = source.message || stateLabel;
+      badge.title = [source.message || stateLabel, source.notes || ''].filter(Boolean).join(' · ');
       top.append(left, badge);
       const bottom = node('div', 'source-bottom');
       let description;
-      if (status === 'ok') description = `${source.items_found || 0} Pokémon listings recognized`;
-      else if (status === 'warning') description = 'Page loaded · no usable product matches';
-      else description = 'Request failed · inspect scan log';
+      const succeeded = Number(source.successful_urls ?? (status === 'error' ? 0 : 1));
+      const configured = Number(source.configured_urls ?? 1);
+      const routeStatus = `${succeeded}/${configured} pages responded`;
+      if (status === 'ok') description = `${source.items_found || 0} Pokémon listings · ${routeStatus}`;
+      else if (status === 'warning') description = `No recognized items · ${routeStatus}`;
+      else description = 'All configured pages failed · inspect scan log';
       const detail = node('span', '', description);
       detail.title = source.message || description;
       bottom.append(detail);
@@ -94,17 +100,22 @@
     }
   }
   function flattenProducts(items = {}) {
-    const result = [];
+    const unique = new Map();
     for (const [sourceId, sourceState] of Object.entries(items || {})) {
       const products = sourceState && sourceState.products;
       if (!products || typeof products !== 'object') continue;
       for (const product of Object.values(products)) {
         if (!product || !isPokemonItem(product)) continue;
-        result.push({ ...product, source_id: sourceId, retailer_key: retailerKey(product) });
+        const item = { ...product, source_id: sourceId, retailer_key: retailerKey(product) };
+        const key = `${item.retailer_key}|${normalize(item.title)}`;
+        const previous = unique.get(key);
+        const score = candidate => (candidate.image ? 4 : 0) + (candidate.price != null ? 3 : 0)
+          + (candidate.availability && candidate.availability !== 'unknown' ? 2 : 0)
+          + Math.min(String(candidate.title || '').length, 240) / 240;
+        if (!previous || score(item) > score(previous)) unique.set(key, item);
       }
     }
-    result.sort((a, b) => String(b.last_seen || '').localeCompare(String(a.last_seen || '')));
-    return result;
+    return [...unique.values()].sort((a, b) => String(b.last_seen || '').localeCompare(String(a.last_seen || '')));
   }
   function populateRetailerFilter() {
     const select = $('retailerFilter');
@@ -120,7 +131,8 @@
   }
   function itemMatches(item, includeAlertType = false) {
     const category = inferCategory(item);
-    const typeOk = !includeAlertType || state.filter === 'all' || item.type === state.filter;
+    const normalizedType = item.type === 'new_drop' ? 'first_seen' : item.type;
+    const typeOk = !includeAlertType || state.filter === 'all' || normalizedType === state.filter;
     const categoryOk = state.category === 'all' || category === state.category;
     const retailerOk = state.retailer === 'all' || retailerKey(item) === state.retailer;
     const title = normalize(item.title);
@@ -162,16 +174,19 @@
     }
     content.append(meta);
     const actions = node('div', 'alert-actions');
-    actions.append(node('span', `type-badge ${isTracked ? 'tracked' : item.type || ''}`, isTracked ? 'TRACKED ITEM' : (labels[item.type] || 'UPDATE')));
+    const displayType = item.type === 'new_drop' ? 'first_seen' : item.type;
+    actions.append(node('span', `type-badge ${isTracked ? 'tracked' : displayType || ''}`, isTracked ? 'TRACKED ITEM' : (labels[displayType] || 'UPDATE')));
     const view = node('a', 'view-link', isTracked ? 'VIEW PRODUCT ↗' : 'VIEW ITEM ↗');
     view.href = safeLink(item.url); view.target = '_blank'; view.rel = 'noopener noreferrer';
     actions.append(view);
     content.append(actions);
     const price = node('div', 'alert-price');
     price.append(node('strong', '', money(item.price, item.currency)));
-    let extra = item.availability && item.availability !== 'unknown'
-      ? item.availability.replaceAll('_', ' ')
-      : 'Check retailer for stock';
+    let extra = displayType === 'first_seen'
+      ? 'Release date not verified · Check retailer for stock'
+      : (item.availability && item.availability !== 'unknown'
+        ? item.availability.replaceAll('_', ' ')
+        : 'Check retailer for stock');
     if (!isTracked && item.previous_price !== null && item.previous_price !== undefined) extra += ` · was ${money(item.previous_price, item.currency)}`;
     price.append(node('span', '', extra));
     card.append(productMedia(item), content, price);
@@ -187,7 +202,7 @@
     $('alertTypeFilters').hidden = isTracked;
     $('feedExplanation').textContent = isTracked
       ? 'Products recognized in the latest successful catalog scans. Prices and availability are only shown when the retailer page exposes them.'
-      : 'Alerts show changes detected after a source’s first baseline scan. Existing products are tracked separately and do not generate a false new-drop alert.';
+      : 'FIRST SEEN means a listing has just entered the monitor. It is not a claim that the product was newly released. Only observed restocks, price changes and Pokémon news are emailed.';
     if (!filtered.length) {
       const empty = node('div', 'empty-state large-empty');
       empty.append(node('span', 'empty-ball', '◉'));
@@ -218,7 +233,14 @@
     $('overallLed').className = `status-led ${sources.length && failures === 0 && warnings === 0 ? 'ok' : sources.length ? 'warn' : ''}`;
     $('lastChecked').textContent = data.last_checked ? `Last checked ${dateText(data.last_checked)}` : 'The first scan runs after setup.';
     renderSources(sources);
-    state.events = (data.events || []).filter(isPokemonItem);
+    const eventMap = new Map();
+    for (const rawEvent of (data.events || [])) {
+      if (!isPokemonItem(rawEvent)) continue;
+      const event = { ...rawEvent, type: rawEvent.type === 'new_drop' ? 'first_seen' : rawEvent.type };
+      const key = `${event.type}|${retailerKey(event)}|${normalize(event.title)}|${event.type === 'first_seen' ? '' : (event.price ?? '')}|${event.previous_price ?? ''}`;
+      if (!eventMap.has(key)) eventMap.set(key, event);
+    }
+    state.events = [...eventMap.values()];
     state.products = flattenProducts(data.items || {});
     populateRetailerFilter();
     renderEvents();

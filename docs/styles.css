@@ -80,3 +80,225 @@
   .verification-actions { flex-direction: column; }
   .verification-actions > button { width: 100%; }
 }
+
+/* v1.4 visual and navigation corrections */
+@font-face {
+  font-family: "PKMN RBYGSC";
+  src: url("./assets/fonts/PKMN-RBYGSC.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+:root {
+  --game-font: "PKMN RBYGSC", "Courier New", monospace;
+  --topbar-height: 78px;
+  --bottom-bar-height: 72px;
+}
+body { font-size: 16px; }
+.public-shell { padding-bottom: calc(var(--bottom-bar-height) + 34px + env(safe-area-inset-bottom)); }
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 120;
+  background: rgba(247,247,244,.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 rgba(30,30,25,.07);
+}
+.brand strong,
+.hero h1,
+.eyebrow,
+.section-heading h2,
+.metric-label,
+.live-pill,
+.source-state,
+.view-switch-button,
+.filter-chip,
+.type-badge,
+.bottom-bar small,
+.bottom-bar a > span {
+  font-family: var(--game-font);
+  font-weight: 400;
+  letter-spacing: .02em;
+}
+.brand strong { font-size: 18px; }
+.eyebrow { font-size: 11px; line-height: 1.5; letter-spacing: .07em; }
+.section-heading h2 { font-size: 25px; line-height: 1.25; }
+.hero h1 { font-size: clamp(38px, 5vw, 56px); letter-spacing: -.035em; line-height: 1.17; }
+.hero-sub { font-size: 15px; }
+.hero-foot { font-size: 12px; }
+.status-title { font-size: 13px; }
+.last-check { font-size: 12px; }
+.metric-label { font-size: 12px; letter-spacing: .04em; }
+.metric-card strong { font-size: 32px; }
+.metric-caption { font-size: 13px; line-height: 1.5; }
+.source-name { font-size: 15px; line-height: 1.4; }
+.source-kind, .source-state { font-size: 11px; }
+.source-bottom { font-size: 12px; }
+.fine-print { font-size: 11px; line-height: 1.7; }
+.alerts-section { scroll-margin-top: calc(var(--topbar-height) + 16px); }
+.subscription-section { scroll-margin-top: calc(var(--topbar-height) + 16px); }
+.feed-sticky-controls {
+  position: sticky;
+  top: calc(var(--topbar-height) + 1px);
+  z-index: 90;
+  display: grid;
+  grid-template-columns: minmax(240px, 1.15fr) minmax(220px, .85fr);
+  align-items: center;
+  gap: 9px 12px;
+  margin: 0 0 15px;
+  padding: 12px;
+  border: 1px solid rgba(220,218,210,.92);
+  border-radius: 12px;
+  background: rgba(247,247,244,.97);
+  box-shadow: 0 8px 24px rgba(30,30,25,.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.feed-sticky-controls .search-wrap { width: 100%; min-width: 0; }
+.feed-sticky-controls .view-switch { margin: 0; justify-content: flex-end; }
+.feed-sticky-controls .filter-row { grid-column: 1 / -1; margin: 0; }
+.feed-sticky-controls .product-filter-row { grid-column: 1 / -1; margin: 0; }
+.feed-sticky-controls .feed-explanation { grid-column: 1 / -1; margin: 0; }
+.filter-chip, .view-switch-button { font-size: 12px; }
+.product-filter-row > label:not(.exact-match-control) { font-size: 12px; }
+.product-filter-row select { min-height: 40px; height: 40px; font-size: 13px; }
+.exact-match-control { font-size: 12px; }
+.alert-list { width: min(100%, 760px); margin: 0 auto; }
+.alert-card {
+  grid-template-columns: 82px minmax(0, 1fr) minmax(125px, auto);
+  gap: 16px;
+  padding: 15px 17px;
+}
+.alert-media { width: 82px; height: 82px; }
+.alert-title { font-size: 17px; line-height: 1.45; }
+.alert-meta { font-size: 13px; line-height: 1.6; }
+.alert-actions { gap: 10px; }
+.type-badge { font-size: 10px; }
+.view-link { font-size: 12px; }
+.alert-price strong { font-size: 20px; }
+.alert-price span { font-size: 12px; line-height: 1.5; }
+.feed-explanation { font-size: 11px; line-height: 1.55; }
+.public-footer-note { padding: 18px 0 5px; color: var(--muted); font-size: 11px; text-align: center; }
+.bottom-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  min-height: var(--bottom-bar-height);
+  padding: 8px 18px calc(8px + env(safe-area-inset-bottom));
+  border-top: 1px solid rgba(215,213,205,.95);
+  background: rgba(255,255,255,.97);
+  box-shadow: 0 -8px 28px rgba(25,25,20,.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.bottom-bar-inner {
+  width: min(100%, 760px);
+  min-height: 48px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0,1fr));
+  align-items: center;
+  gap: 8px;
+}
+.bottom-bar a {
+  min-width: 0;
+  min-height: 46px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  border-radius: 9px;
+  color: #5d5e58;
+}
+.bottom-bar a:hover, .bottom-bar a:focus-visible { background: #fff2ee; color: var(--red-dark); outline: none; }
+.bottom-bar a > span { font-size: 17px; line-height: 1; }
+.bottom-bar small { font-size: 9px; line-height: 1.25; }
+.forgot-password-button { margin-top: 8px; padding-left: 0; color: var(--red-dark); }
+.admin-reset-copy { color: var(--muted); font-size: 12px; line-height: 1.6; margin: 8px 0 18px; }
+#resetCodeFields[hidden], #adminResetPanel[hidden], #adminDashboard[hidden] { display: none !important; }
+.admin-login-panel input[type="password"], .admin-login-panel input[inputmode="numeric"] {
+  width: 100%; min-height: 44px; margin: 0 0 13px; padding: 0 12px;
+  border: 1px solid var(--line); border-radius: 7px; background: #fff;
+  color: var(--ink); font: 14px system-ui, sans-serif;
+}
+.admin-login-panel input:focus { border-color: #cf7773; box-shadow: 0 0 0 3px rgba(200,50,50,.08); outline: none; }
+
+@media (min-width: 900px) {
+  .site-shell { max-width: 1240px; }
+  .hero { min-height: 300px; padding: 48px 58px; }
+  .hero-sub { max-width: 560px; font-size: 16px; }
+  .hero-foot { font-size: 13px; }
+  .section-heading h2 { font-size: 29px; }
+  .source-grid { gap: 13px; }
+  .source-card { padding: 17px 18px; min-height: 112px; }
+  .source-name { font-size: 14px; }
+  .source-kind, .source-state { font-size: 11px; }
+  .source-bottom { font-size: 12px; }
+  .alert-title { font-size: 16px; }
+  .alert-meta { font-size: 12px; }
+  .alert-price strong { font-size: 19px; }
+}
+@media (max-width: 700px) {
+  :root { --topbar-height: 64px; --bottom-bar-height: 64px; }
+  .public-shell { padding-bottom: calc(var(--bottom-bar-height) + 30px + env(safe-area-inset-bottom)); }
+  .feed-sticky-controls {
+    grid-template-columns: minmax(0,1fr);
+    gap: 8px;
+    padding: 9px;
+    border-radius: 9px;
+  }
+  .feed-sticky-controls .view-switch { justify-content: stretch; }
+  .feed-sticky-controls .filter-row { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 3px; scrollbar-width: thin; }
+  .feed-sticky-controls .filter-chip { flex: 0 0 auto; white-space: nowrap; }
+  .feed-sticky-controls .product-filter-row { grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
+  .feed-sticky-controls .product-filter-row > label:first-child { grid-column: auto; }
+  .feed-sticky-controls .exact-match-control { grid-column: 1 / -1; }
+  .feed-explanation { display: none; }
+  .alert-list { width: 100%; }
+  .alert-card { grid-template-columns: 62px minmax(0,1fr); gap: 10px; padding: 12px; }
+  .alert-media { width: 62px; height: 62px; grid-row: 1; }
+  .alert-content { grid-column: 2; grid-row: 1; }
+  .alert-title { font-size: 13px; }
+  .alert-meta { font-size: 10px; }
+  .alert-price { grid-column: 2; font-size: 11px; }
+  .bottom-bar { padding-left: 10px; padding-right: 10px; }
+  .bottom-bar-inner { gap: 3px; }
+  .bottom-bar a { min-height: 44px; }
+  .bottom-bar small { font-size: 8px; }
+  .bottom-bar a > span { font-size: 15px; }
+}
+@media (max-width: 380px) {
+  .bottom-bar { padding-left: 5px; padding-right: 5px; }
+  .bottom-bar small { font-size: 7px; }
+  .feed-sticky-controls .product-filter-row { grid-template-columns: minmax(0,1fr); }
+  .feed-sticky-controls .exact-match-control { grid-column: auto; }
+}
+
+/* v1.4 readability and game-menu typography refinements */
+.primary-button, .secondary-button, .quiet-button, .small-primary, .small-secondary,
+.admin-list-heading select, .bottom-bar small, .filter-chip, .view-switch-button {
+  font-family: var(--game-font);
+  letter-spacing: .015em;
+}
+@media (min-width: 900px) {
+  .site-shell { max-width: 1280px; }
+  .alert-list { width: min(100%, 760px); }
+  .alert-title { font-size: 18px; }
+  .alert-meta { font-size: 13px; }
+  .source-bottom, .fine-print { font-size: 13px; }
+  .metric-caption { font-size: 13px; }
+}
+
+/* Admin page shares the same Pokémon menu typography without sacrificing form readability. */
+.admin-hero h1, .admin-toolbar h2, .admin-list-heading h2, .admin-login-panel h2 {
+  font-family: var(--game-font);
+  font-weight: 400;
+  letter-spacing: .01em;
+}
+.admin-hero h1 { font-size: clamp(25px, 3vw, 36px); line-height: 1.3; }
+.admin-toolbar h2, .admin-list-heading h2, .admin-login-panel h2 { font-size: 18px; line-height: 1.4; }
+.admin-shell .site-shell, .admin-shell { padding-bottom: 24px; }

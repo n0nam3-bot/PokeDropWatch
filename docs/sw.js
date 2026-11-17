@@ -1,8 +1,8 @@
-const CACHE = 'pokedrop-shell-v5';
+const CACHE = 'pokedrop-shell-v8';
 const SHELL = [
   './', './index.html', './admin.html', './styles.css', './app.js',
-  './subscriptions.js', './admin.js', './firebase-client.js', './firebase-config.js', './subscription-backend-config.js', './FIREBASE_SETUP.html',
-  './pokeball.svg', './manifest.webmanifest'
+  './subscriptions.js', './admin.js', './subscription-backend-config.js',
+  './SOURCE_HEALTH.html', './pokeball.svg', './manifest.webmanifest'
 ];
 
 self.addEventListener('install', event => {
@@ -12,18 +12,16 @@ self.addEventListener('install', event => {
 
 self.addEventListener('activate', event => event.waitUntil(
   caches.keys().then(keys => Promise.all(
-    keys.filter(key => key !== CACHE).map(key => caches.delete(key))
+    keys.filter(key => key.startsWith('pokedrop-shell-') && key !== CACHE).map(key => caches.delete(key))
   )).then(() => self.clients.claim())
 ));
 
-// Network-first keeps GitHub Pages updates and owner-edited Firebase config
-// from being hidden behind an older cached copy. The cached shell is fallback
-// only when the device is offline.
+// Network-first: pages and code refresh from GitHub Pages. Only the app shell
+// is cached for offline use; public state JSON is always requested from network.
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   if (url.origin !== self.location.origin || url.pathname.endsWith('/data/state.json')) return;
   if (event.request.method !== 'GET') return;
-
   event.respondWith(fetch(event.request).then(response => {
     if (response && response.ok) {
       const copy = response.clone();

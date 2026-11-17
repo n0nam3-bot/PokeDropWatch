@@ -11,8 +11,8 @@
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-  <div class="site-shell">
-    <header class="topbar">
+  <div class="site-shell public-shell" id="top">
+    <header class="topbar" id="pageTop">
       <a class="brand" href="./" aria-label="PokéDrop Watch home">
         <span class="pokeball" aria-hidden="true"><i></i></span>
         <span><strong>PokéDrop</strong><small>WATCH</small></span>
@@ -61,41 +61,44 @@
         <p class="fine-print">MATCHES means the parser recognized Pokémon entries. NO MATCH means the page responded but its product markup was not recognized; it does not mean the retailer has no stock. ISSUE means the request failed. <a href="./SOURCE_HEALTH.html">How to read source status ↗</a></p>
       </section>
 
-      <section class="section-block alerts-section">
+      <section class="section-block alerts-section" id="alerts">
         <div class="section-heading alerts-heading">
           <div><p class="eyebrow">FRESH FROM THE RADAR</p><h2 id="feedHeading">Latest alerts</h2></div>
-          <label class="search-wrap"><span class="sr-only">Search Pokémon items</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg><input id="alertSearch" type="search" placeholder="Search an exact Pokémon item name…" autocomplete="off"></label>
+          <span class="section-note">Verified listings · updated by scheduled scans</span>
         </div>
-        <div class="view-switch" role="group" aria-label="Choose feed view">
-          <button id="alertsViewButton" class="view-switch-button active" type="button">Latest alerts</button>
-          <button id="productsViewButton" class="view-switch-button" type="button">All tracked products</button>
+        <div class="feed-sticky-controls" aria-label="Search and filter Pokémon listings">
+          <label class="search-wrap"><span class="sr-only">Search Pokémon items</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg><input id="alertSearch" type="search" placeholder="Search a Pokémon item…" autocomplete="off"></label>
+          <div class="view-switch" role="group" aria-label="Choose feed view">
+            <button id="alertsViewButton" class="view-switch-button active" type="button">Latest activity</button>
+            <button id="productsViewButton" class="view-switch-button" type="button">All tracked products</button>
+          </div>
+          <div id="alertTypeFilters" class="filter-row" role="group" aria-label="Filter alert type">
+            <button class="filter-chip active" data-filter="all" type="button">All activity</button>
+            <button class="filter-chip" data-filter="first_seen" type="button">First seen</button>
+            <button class="filter-chip" data-filter="restock" type="button">Restocks</button>
+            <button class="filter-chip" data-filter="price_drop" type="button">Price drops</button>
+            <button class="filter-chip" data-filter="news" type="button">News</button>
+          </div>
+          <div class="product-filter-row" aria-label="Filter products">
+            <label>Item type
+              <select id="categoryFilter">
+                <option value="all">All item types</option>
+                <option value="tcg">Trading cards &amp; TCG</option>
+                <option value="plush">Plush</option>
+                <option value="collectibles">Collectibles &amp; figures</option>
+                <option value="games">Video games</option>
+                <option value="accessories">Accessories &amp; apparel</option>
+                <option value="news">News</option>
+              </select>
+            </label>
+            <label>Retailer
+              <select id="retailerFilter"><option value="all">All retailers</option></select>
+            </label>
+            <label class="exact-match-control"><input id="exactMatch" type="checkbox"> Exact title</label>
+          </div>
+          <p id="feedExplanation" class="feed-explanation">First-seen means the monitor discovered a listing; it does not claim the product is newly released. Restocks require an observed out-of-stock to in-stock transition.</p>
         </div>
-        <div id="alertTypeFilters" class="filter-row" role="group" aria-label="Filter alert type">
-          <button class="filter-chip active" data-filter="all" type="button">All alerts</button>
-          <button class="filter-chip" data-filter="new_drop" type="button">New drops</button>
-          <button class="filter-chip" data-filter="restock" type="button">Restocks</button>
-          <button class="filter-chip" data-filter="price_drop" type="button">Price drops</button>
-          <button class="filter-chip" data-filter="news" type="button">News</button>
-        </div>
-        <p id="feedExplanation" class="feed-explanation">Alerts show changes detected after a source's first baseline scan. Existing products are tracked separately and do not generate a false new-drop alert.</p>
-        <div class="product-filter-row" aria-label="Filter products">
-          <label>Item type
-            <select id="categoryFilter">
-              <option value="all">All item types</option>
-              <option value="tcg">Trading cards &amp; TCG</option>
-              <option value="plush">Plush</option>
-              <option value="collectibles">Collectibles &amp; figures</option>
-              <option value="games">Video games</option>
-              <option value="accessories">Accessories &amp; apparel</option>
-              <option value="news">News</option>
-            </select>
-          </label>
-          <label>Retailer
-            <select id="retailerFilter"><option value="all">All retailers</option></select>
-          </label>
-          <label class="exact-match-control"><input id="exactMatch" type="checkbox"> Exact title match</label>
-        </div>
-        <div id="alertList" class="alert-list"><div class="empty-state large-empty"><span class="empty-ball">◉</span><strong>No alerts yet</strong><span>Once the monitor completes its first scan, new drops and changes will show here.</span></div></div>
+        <div id="alertList" class="alert-list"><div class="empty-state large-empty"><span class="empty-ball">◉</span><strong>No alerts yet</strong><span>After the next scan, verified stock and price changes will appear here.</span></div></div>
       </section>
 
       <section class="section-block subscription-section" id="subscriptions">
@@ -159,18 +162,26 @@
             <h3>Verified. Reviewed. In control.</h3>
             <p>Applications are approved by the site administrator. Email ownership is verified before an application is stored.</p>
             <p>Unsubscribing requires a one-time code delivered to that mailbox. The code is entered on this page, so opening email on another device will not move your session.</p>
-            <a href="./FIREBASE_SETUP.html">How subscription security works ↗</a>
+            <a href="./SOURCE_HEALTH.html">How monitoring status works ↗</a>
           </aside>
         </div>
       </section>
 
-      <footer class="footer">
-        <a class="footer-brand" href="./"><span class="mini-ball"></span> PokéDrop Watch</a>
-        <span>Fan-made tracker · Not affiliated with Pokémon or retailers</span>
-        <div class="footer-links"><a href="./admin.html">Administrator</a><a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub Actions</a></div>
+      <footer class="public-footer-note">
+        Fan-made tracker · Not affiliated with Pokémon or retailers ·
+        <a href="https://github.com/n0nam3-bot/PokeDropWatch" target="_blank" rel="noopener noreferrer">View the source repository ↗</a>
       </footer>
     </main>
   </div>
+  <nav class="bottom-bar" aria-label="Quick navigation">
+    <div class="bottom-bar-inner">
+      <a href="#pageTop"><span aria-hidden="true">⌂</span><small>Home</small></a>
+      <a href="#alerts"><span aria-hidden="true">▤</span><small>Alerts</small></a>
+      <a href="#subscriptions"><span aria-hidden="true">✉</span><small>Notify</small></a>
+      <a href="./admin.html"><span aria-hidden="true">⚙</span><small>Admin</small></a>
+      <a href="https://github.com/n0nam3-bot/PokeDropWatch" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">↗</span><small>GitHub</small></a>
+    </div>
+  </nav>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <iframe id="subscriptionBackendFrame" class="backend-bridge" title="Secure email verification service" aria-hidden="true" tabindex="-1"></iframe>
   <script src="./app.js" defer></script>

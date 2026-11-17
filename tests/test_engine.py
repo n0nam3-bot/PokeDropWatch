@@ -6,7 +6,7 @@ from email.utils import parseaddr
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'monitor'))
-from engine import branded_sender_header, clean_product_title, extract_catalog_links, extract_structured_products, infer_category, is_pokemon_relevant, is_valid_event, normalize_availability, parse_rss, stable_url, event_record, html_email
+from engine import (branded_sender_header, clean_product_title, extract_catalog_links, extract_structured_products, extract_json_products, extract_embedded_products, deduplicate_products, infer_category, is_pokemon_relevant, is_valid_event, is_email_eligible_event, normalize_availability, parse_rss, stable_url, event_record, html_email)
 from bs4 import BeautifulSoup
 
 
@@ -89,6 +89,54 @@ class EngineTests(unittest.TestCase):
         self.assertEqual(infer_category('Pokémon Legends Nintendo Switch Game'), 'games')
         self.assertEqual(infer_category('Eevee Backpack'), 'accessories')
 
+    def test_direct_target_json_response_yields_product_with_price_and_image(self):
+        payload = {"data": {"search": {"products": [{
+            "productName": "Pokémon Trading Card Game Mega Booster Bundle",
+            "url": "/-/A-12345678",
+            "tcin": "12345678",
+            "current_retail": {"price": 34.99},
+            "primaryImage": {"url": "https://target.scene7.com/is/image/Target/mega-box"},
+            "availabilityStatus": "IN_STOCK"
+        }]}}}
+        products = extract_json_products(payload, 'https://www.target.com/s?searchTerm=pokemon', 'Target')
+        self.assertEqual(len(products), 1)
+        self.assertEqual(products[0]['title'], 'Pokémon Trading Card Game Mega Booster Bundle')
+        self.assertEqual(products[0]['price'], 34.99)
+        self.assertEqual(products[0]['image'], 'https://target.scene7.com/is/image/Target/mega-box')
+        self.assertEqual(products[0]['category'], 'tcg')
+
+    def test_embedded_json_script_extracts_target_product(self):
+        sample = '''<html><script id="__NEXT_DATA__" type="application/json">
+        {"props":{"pageProps":{"items":[{"productTitle":"Pokemon Card Game Mega Expansion Box",
+        "productUrl":"/-/A-98765432","price":{"currentRetail":24.5},
+        "image":{"url":"https://images.example/mega.jpg"}}]}}}</script></html>'''
+        products = extract_embedded_products(BeautifulSoup(sample, 'html.parser'), 'https://www.target.com/s?searchTerm=pokemon', 'Target')
+        self.assertEqual(len(products), 1)
+        self.assertEqual(products[0]['price'], 24.5)
+        self.assertEqual(products[0]['category'], 'tcg')
+
+    def test_product_deduplication_prefers_card_with_image_and_price(self):
+        products = [
+            {"title": "Pikachu Plush 8 Inch", "retailer": "Amazon", "url": "https://amazon.com/dp/A000000001", "price": None, "image": ""},
+            {"title": "Pikachu Plush 8 Inch", "retailer": "Amazon", "url": "https://amazon.com/dp/A000000002", "price": 19.99, "image": "https://images.example/pikachu.jpg"},
+        ]
+        deduped = deduplicate_products(products)
+        self.assertEqual(len(deduped), 1)
+        self.assertEqual(deduped[0]['price'], 19.99)
+        self.assertEqual(deduped[0]['image'], 'https://images.example/pikachu.jpg')
+
+    def test_pokemon_card_game_phrase_is_classified_as_tcg(self):
+        self.assertEqual(infer_category('Pokemon Card Game MEGA Expansion Pack Storm Emerald Box'), 'tcg')
+
+    def test_first_seen_is_not_a_new_drop_or_email_alert(self):
+        self.assertFalse(is_email_eligible_event({"type": "first_seen", "title": "Pokémon booster box"}))
+        self.assertTrue(is_email_eligible_event({"type": "restock", "title": "Pokémon booster box"}))
+
+    def test_amazon_product_urls_canonicalize_to_one_asin_identity(self):
+        first = stable_url('https://www.amazon.com/gp/product/B0ABC12345?th=1&psc=1')
+        second = stable_url('https://amazon.com/dp/B0ABC12345?ref_=abc')
+        self.assertEqual(first, second)
+
     def test_catalog_skips_transparent_image_and_uses_walmart_lazy_image(self):
         sample = """<html><body>
         <div class="product-tile" data-testid="product-tile">
@@ -107,6 +155,16 @@ class EngineTests(unittest.TestCase):
         )
         self.assertEqual(len(products), 1)
         self.assertEqual(products[0]['image'], 'https://images.example/pikachu-plush.jpg')
+
+    def test_amazon_dynamic_image_attribute_selects_largest_image(self):
+        sample = '''<html><body><div data-component-type="s-search-result">
+        <a href="/dp/B0ABC12345"><img alt="Pokémon Pikachu Plush"
+        src="https://images.example/pixel.gif"
+        data-a-dynamic-image='{"https://images.example/small.jpg":[75,75],"https://images.example/large.jpg":[500,500]}'></a>
+        </div></body></html>'''
+        products = extract_catalog_links(BeautifulSoup(sample, 'html.parser'), 'https://www.amazon.com/s?k=pokemon', 'Amazon', 20)
+        self.assertEqual(len(products), 1)
+        self.assertEqual(products[0]['image'], 'https://images.example/large.jpg')
 
     def test_walmart_deal_wrapper_is_removed_from_product_title(self):
         raw = 'Deal, Pokemon TCG Mega Evolution Delta Reign Elite Trainer Box ETB, Price Now $84.87 Was $113.99'

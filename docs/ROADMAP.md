@@ -1,84 +1,64 @@
 # PokéDrop Watch Roadmap
 
-The roadmap records what is implemented in the current code and what remains planned. `[x]` means implemented in the repository; `[ ]` means not implemented or still requires live setup/verification.
+Status key: ☑ completed · ☐ planned or not yet verified
 
-## Stage 1 — Core monitor and public website
+## Stage 1 — Core monitor and public site
 
-**Status: Complete**
+- ☑ GitHub Pages public dashboard with mobile and desktop layouts
+- ☑ Scheduled GitHub Actions monitor
+- ☑ Product baseline, price transition and stock transition tracking
+- ☑ Search, exact title, item type, retailer and event-type filters
+- ☑ First-seen wording separated from verified restocks and price changes; legacy “new drop” history is migrated and excluded from email
+- ☑ Fixed header, fixed bottom navigation and sticky filter controls
+- ☐ Verify all public page routes after each GitHub Pages release
 
-- [x] Scheduled GitHub Actions scans (currently every 15 minutes).
-- [x] Configurable catalog, product-detail, and RSS/Atom source definitions.
-- [x] Product discovery from structured product data and eligible product links in returned HTML.
-- [x] New-listing detection after the initial baseline scan.
-- [x] Restock detection when a listing changes from out of stock to in stock or preorder.
-- [x] Price-drop and price-change detection when both prices are available.
-- [x] New-entry detection for configured Pokémon news feeds.
-- [x] Persistent scan state and recent alert history in `docs/data/state.json`.
-- [x] Per-source success/failure reporting and an overall scan summary.
-- [x] Responsive, minimal Pokémon-themed dashboard with alert-type, item-category, retailer, and exact-title filtering.
-- [x] Separate alert history from a browseable view of current tracked catalog products.
-- [x] Product thumbnails from structured data, retailer card images, and RSS media metadata when exposed.
-- [x] Reject generic retailer navigation/rating text and unrelated products from the Pokémon alert feed.
-- [x] Distinguish sources with recognized results from pages that load but return no recognizable Pokémon items.
-- [x] Explain `MATCHES`, `NO MATCH`, and `ISSUE` separately in the dashboard and source-health reference.
-- [x] PWA manifest and service worker for compatible mobile browsers.
-- [x] ZIP patch application with path validation and automated tests.
+## Stage 2 — Retailer coverage and product data quality
 
-## Stage 2 — Subscriber applications and administration
+- ☑ Structured data, embedded JSON, JSON response and HTML-card parsers
+- ☑ Alternate URL probing (up to three category-search fallbacks per source) and same-retailer duplicate consolidation
+- ☑ Product title cleanup and category inference for common TCG products
+- ☑ Product image extraction where retailers expose usable image URLs
+- ☐ Create and maintain a saved HTML/JSON fixture for every retailer
+- ☐ Deliver a dedicated Pokémon Center adapter with a verified product fixture
+- ☐ Deliver a dedicated Target adapter with a verified product fixture
+- ☐ Deliver a dedicated Walmart adapter with a verified product fixture
+- ☐ Deliver a dedicated Best Buy adapter with a verified product fixture
+- ☐ Deliver a dedicated GameStop adapter with a verified product fixture
+- ☐ Verify Amazon listing identity, seller/listing dates and duplicate variants
+- ☐ Add an independent Pokémon news feed with tested XML fixtures
+- ☐ Confirm a successful live scan from every retailer before changing its status to complete
 
-**Status: Implemented; Firebase setup required**
+## Stage 3 — Subscriber and admin security
 
-- [x] Public visitor application form with category and retailer preferences.
-- [x] One-time six-digit email verification codes delivered by the notification Gmail account; visitors enter the code on the same page/device.
-- [x] Verification codes expire after 10 minutes, allow up to five attempts, and are invalidated when a newer code is requested.
-- [x] Per-address cooldown, hourly rate limit, honeypot, and project-wide daily email cap.
-- [x] Pending-by-default applications; visitors cannot approve themselves.
-- [x] Private administrator sign-in uses manually created Firebase Email/Password credentials; no email link is sent at each login.
-- [x] Admin dashboard to approve, reject, suspend, reactivate, and remove records.
-- [x] Subscribers can update preferences after proving mailbox ownership with a fresh code.
-- [x] Secure unsubscribe requires a fresh email code entered on the page.
-- [x] Firestore rules restrict all subscriber documents to the administrator; Apps Script writes via a private service-account credential.
-- [ ] Complete live Firebase + Apps Script configuration and test from PC and mobile with separate admin/subscriber mailboxes.
-- [ ] Add Cloudflare Turnstile or equivalent challenge if public form abuse exceeds rate-limit protections.
+- ☑ Email ownership code verification with fixed 10-minute expiry and same-page entry
+- ☑ Administrator password sign-in through Apps Script (no Firebase action links)
+- ☑ Administrator password reset code with single-use expiry and replacement invalidation
+- ☑ Pending approval, reject, suspend, reactivate and remove controls
+- ☑ Verified same-page unsubscribe confirmation
+- ☑ Firestore data access through private service-account IAM only
+- ☐ Test full enrollment/approval/notification/unsubscribe flow against live Firebase and Gmail credentials
+- ☐ Add admin audit history and exportable subscriber counts without exposing PII
 
-## Stage 3 — Subscriber alert delivery
+## Stage 4 — Email notification quality
 
-**Status: Implemented; live email configuration required**
+- ☑ Individual subscriber digest delivery
+- ☑ Category and retailer preference filtering
+- ☑ Product price, availability, retailer and direct link in email templates
+- ☑ First-seen discovery excluded from product-drop email notifications
+- ☐ Verify branded sender identity and deliverability in Gmail, Outlook and mobile clients
+- ☐ Add per-subscriber digest frequency controls
+- ☐ Add delivery failure dashboard and bounded retry policy
 
-- [x] Store category and retailer preferences with each subscriber.
-- [x] Match each detected event against subscriber preferences.
-- [x] Send a separate email per matching active subscriber; do not expose recipient addresses.
-- [x] Store pending delivery batches privately in Firestore and retry them on later scheduled runs.
-- [x] Include secure preference/unsubscribe link in subscriber alert emails.
-- [x] Keep subscriber identifiers and addresses out of public dashboard state.
-- [ ] Configure Firebase service-account and Gmail secrets in GitHub Actions.
-- [ ] Complete end-to-end verification with an approved test subscriber and a real detected event.
-- [ ] Evaluate a free dedicated transactional email provider with a verified sending domain if Gmail/Apps Script quotas become restrictive.
+## Stage 5 — Design, accessibility and reliability
 
-## Stage 4 — Retailer coverage and detection quality
+- ☑ DaFont PKMN RBYGSC font path and CSS fallback prepared
+- ☑ Larger desktop typography and narrower centered product list
+- ☑ Owner setup instructions moved outside the published `/docs` site
+- ☐ Add the licensed/downloaded PKMN RBYGSC TTF asset to `docs/assets/fonts/`
+- ☐ Test iOS Safari, Android Chrome, tablet and desktop layouts
+- ☐ Add automated visual/accessibility checks for navigation and sticky filters
+- ☐ Add source response time and last-success timestamps to the health detail view
 
-**Status: In progress — generic parsing currently recognizes Amazon and Walmart in the reported scan; other sources need targeted work.**
+## Release rule
 
-- [x] Extend watchlist through `config/sources.json` for supported source formats.
-- [x] Support broad catalog pages and individual product-detail URLs.
-- [ ] Add dedicated retailer adapters for stores whose product data is hidden behind JavaScript or custom page structures (current reported gaps include Pokémon Center, Target, GameStop, Best Buy, and PokéBeach).
-- [ ] Add automated integration checks for each configured retailer and alert when a page structure stops yielding product data.
-- [ ] Improve product identity matching when the same item appears through multiple retailers or URLs.
-- [ ] Add location-aware inventory checks where retailers expose a permitted public location-based source.
-- [ ] Expand validated coverage for Pokémon TCG, games, toys, apparel, collectibles, and special releases.
-
-## Stage 5 — Dashboard, reliability, and release quality
-
-**Status: In progress**
-
-- [x] Responsive desktop/mobile public dashboard and subscriber forms.
-- [x] Separate administrator page with status filters and subscriber actions.
-- [x] PWA shell cache updated for the new public/admin pages and Firebase client files.
-- [x] Request timeouts and retry transient HTTP failures.
-- [x] Keep individual source failures from stopping the remaining source scans.
-- [x] Automated tests for parsing, stock/price transitions, subscriber matching, and ZIP patch safety.
-- [ ] Add dashboard sort controls for retailer, price, and detection time.
-- [ ] Add a user-managed product/keyword watchlist.
-- [ ] Add product history for price and availability over time.
-- [ ] Add an alert path for repeated workflow failures or missed scan cycles.
-- [ ] Add integration tests against controlled sample pages for every retailer adapter.
+A roadmap item that depends on a real retailer, email provider, Firebase project, or live browser must remain unchecked until it has been verified against that live service. Parser unit tests alone do not prove retailer coverage.

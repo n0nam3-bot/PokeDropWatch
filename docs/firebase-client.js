@@ -1,44 +1,14 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js';
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
-} from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js';
-import {
-  getFirestore,
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  orderBy,
-  serverTimestamp,
-  setDoc,
-  updateDoc
-} from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js';
-import { firebaseConfig, isFirebaseConfigured } from './firebase-config.js';
-
-export const firebaseReady = isFirebaseConfigured();
-const firebaseApp = firebaseReady ? initializeApp(firebaseConfig) : null;
-export const auth = firebaseReady ? getAuth(firebaseApp) : null;
-export const db = firebaseReady ? getFirestore(firebaseApp) : null;
-export const api = {
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut,
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  orderBy,
-  serverTimestamp,
-  setDoc,
-  updateDoc
-};
-
+/* Retired compatibility stub.
+ * PokéDrop Watch v1.4.0 does not use Firebase Authentication or browser-side
+ * Firestore access. Admin login, email codes, and subscriber management use
+ * the private Google Apps Script bridge; Firestore is accessed server-side
+ * with a service account. This file remains only so stale imports fail safely.
+ */
+export const firebaseReady = false;
+export const auth = null;
+export const db = null;
+export const api = Object.freeze({});
 export function watchAuth(callback) {
-  if (!firebaseReady) return () => {};
-  return api.onAuthStateChanged(auth, callback);
+  if (typeof callback === 'function') callback(null);
+  return () => {};
 }

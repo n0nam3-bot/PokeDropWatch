@@ -1,30 +1,12 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    function signedIn() {
-      return request.auth != null;
-    }
-
-    // This Firebase account is created manually by the site owner in the
-    // Firebase Authentication console. Password sign-in avoids email-link
-    // quotas and device hand-off problems. The private, deployed rule must
-    // contain the exact lower-case administrator email.
-    function isAdmin() {
-      return signedIn()
-        && request.auth.token.email is string
-        && request.auth.token.email == 'replace-with-your-admin-email@example.com';
-    }
-
-    // Subscriber records are created/updated by the trusted Apps Script
-    // service using a private service-account credential. Public visitors
-    // cannot read, create, modify, enumerate, or delete subscriber documents.
-    match /subscribers/{subscriberId} {
-      allow read, write: if isAdmin();
-
-      match /deliveries/{deliveryId} {
-        // Delivery batches are private to the scheduled monitor service.
-        allow read, write: if false;
-      }
+    // The website never accesses Firestore directly. All subscriber reads and
+    // writes go through the trusted Apps Script / GitHub Actions service account
+    // using Google IAM. Server SDK/service-account requests are not authorized
+    // by these client security rules. Deny every browser/client request.
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }

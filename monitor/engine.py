@@ -21,10 +21,13 @@ from urllib3.util.retry import Retry
 
 STOCK_IN = {"instock", "limitedavailability", "onlineonly", "presale", "preorder"}
 STOCK_OUT = {"outofstock", "soldout", "discontinued", "backorder"}
-PRODUCT_PATH_HINTS = ("/product", "/products/", "/ip/", "/dp/", "/gp/product/", "/site/", "/p/")
+PRODUCT_PATH_HINTS = (
+    "/product", "/products/", "/ip/", "/dp/", "/gp/product/", "/gp/aw/d/",
+    "/site/", "/p/", "/item/", "/product-detail/", "/-/a-", "/a-",
+)
 NON_PRODUCT_PATH_HINTS = (
     "product-reviews", "customer-reviews", "review/", "reviews/", "bestsellers",
-    "offer-listing", "help/", "gp/aw/", "gp/slredirect", "cart", "wishlist",
+    "offer-listing", "help/", "gp/slredirect", "cart", "wishlist",
 )
 POKEMON_TERMS = (
     "pokemon", "pikachu", "charizard", "charmander", "squirtle", "bulbasaur",
@@ -62,7 +65,7 @@ def clean_text(value: Any, limit: int = 500) -> str:
 
 
 def clean_product_title(value: Any) -> str:
-    """Remove retailer UI wrappers and price snippets from product titles."""
+    """Remove retailer UI wrappers, price snippets and duplicated title tails."""
     text = clean_text(value, 500)
     text = re.sub(r"^(?:deal|sale|sponsored|clearance|online deal)\s*[,|:–—-]\s*", "", text, flags=re.I)
     # Some retailer product tiles expose one combined accessible label such as:
@@ -74,20 +77,34 @@ def clean_product_title(value: Any) -> str:
     )
     if tail and tail.start() >= 10:
         text = text[:tail.start()].rstrip(" ,|•·-–—")
-    # Strip retailer stock/action suffixes if included in a card's aria-label.
     text = re.sub(
         r'\s*(?:[,|•·]\s*)?(?:see options?|view options?|add to cart|quick view|\"?\d+ ratings?\"?)\s*$',
         "",
         text,
         flags=re.I,
     )
-    return clean_text(text, 240)
+    # A few retailer accessibility labels repeat the final product phrase.
+    tokens = text.split()
+    for width in range(min(7, len(tokens) // 2), 1, -1):
+        if [t.casefold() for t in tokens[-width:]] == [t.casefold() for t in tokens[-2*width:-width]]:
+            tokens = tokens[:-width]
+            break
+    return clean_text(" ".join(tokens), 240)
 
 
 def stable_url(url: str) -> str:
     parsed = urlparse(url)
-    # Tracking parameters create duplicate IDs and noisy changes.
-    return urlunparse((parsed.scheme.lower(), parsed.netloc.lower(), parsed.path.rstrip("/"), "", "", ""))
+    host = parsed.netloc.lower().removeprefix("www.")
+    path = parsed.path.rstrip("/")
+    # Amazon exposes the same ASIN through /dp/, /gp/product/, mobile and
+    # tracking-heavy URLs. Canonicalize those to one stable product identity.
+    if host.endswith("amazon.com"):
+        match = re.search(r"/(?:dp|gp/product|gp/aw/d)/([A-Z0-9]{10})(?:/|$)", path, re.I)
+        if match:
+            return f"{parsed.scheme.lower()}://{host}/dp/{match.group(1).upper()}"
+    # Remove trailing retailer referral fragments while preserving product IDs.
+    path = re.sub(r"/ref=[^/]+$", "", path, flags=re.I)
+    return urlunparse((parsed.scheme.lower(), parsed.netloc.lower(), path, "", "", ""))
 
 
 def money(value: Any) -> tuple[float | None, str]:
@@ -148,6 +165,11 @@ def is_valid_event(event: dict[str, Any]) -> bool:
     return event.get("category") == "news" or event.get("type") == "news" or is_pokemon_relevant(event.get("title", ""))
 
 
+def is_email_eligible_event(event: dict[str, Any]) -> bool:
+    """Only send observable changes; first-seen listings have unverified release dates."""
+    return event.get("type") in {"restock", "price_drop", "price_change", "news"}
+
+
 def infer_category(title: Any, fallback: str = "collectibles") -> str:
     text = normalize_match_text(title)
     if fallback == "news":
@@ -162,7 +184,7 @@ def infer_category(title: Any, fallback: str = "collectibles") -> str:
     tcg_terms = (
         "trading card", "pokemon tcg", "booster", "elite trainer", "etb",
         "trainer box", "card collection", "battle deck", "theme deck", "blister",
-        "pokemon cards", "card sleeves", "trading cards", "tcg",
+        "pokemon cards", "pokemon card game", "card sleeves", "trading cards", "tcg",
         "prismatic evolutions", "destined rivals", "journey together",
         "surprise box", "pokemon trading card game",
     )
@@ -187,7 +209,10 @@ def _first_image(image: Any, base_url: str = "") -> str:
     if isinstance(image, list):
         image = next((value for value in image if value), "")
     if isinstance(image, dict):
-        image = image.get("url") or image.get("contentUrl") or image.get("thumbnailUrl") or ""
+        image = (
+            image.get("url") or image.get("contentUrl") or image.get("thumbnailUrl")
+            or image.get("src") or image.get("large") or image.get("largeImage") or ""
+        )
     value = clean_text(image, 1000)
     return urljoin(base_url, value) if value else ""
 
@@ -269,7 +294,7 @@ def _card_title(card, anchor) -> str:
 def _image_from_card(card, base_url: str) -> str:
     """Find a real product image while skipping lazy-load placeholders."""
     image_keys = (
-        "data-a-hires", "data-image-src", "data-image-url", "data-original-src",
+        "data-a-hires", "data-old-hires", "data-image-src", "data-image-url", "data-original-src",
         "data-original", "data-lazy-src", "data-src", "src",
     )
 
@@ -284,6 +309,25 @@ def _image_from_card(card, base_url: str) -> str:
         return absolute if urlparse(absolute).scheme in {"http", "https"} else ""
 
     for image in card.find_all("img")[:12]:
+        # Amazon frequently stores its real responsive image candidates in a
+        # JSON map instead of src/srcset. Select the largest declared variant.
+        dynamic = image.get("data-a-dynamic-image")
+        if dynamic:
+            try:
+                candidates = json.loads(dynamic)
+                if isinstance(candidates, dict):
+                    ordered = sorted(
+                        candidates.items(),
+                        key=lambda entry: (float(entry[1][0]) * float(entry[1][1]))
+                        if isinstance(entry[1], (list, tuple)) and len(entry[1]) >= 2 else 0,
+                        reverse=True,
+                    )
+                    for raw_url, _dimensions in ordered:
+                        candidate = usable(raw_url)
+                        if candidate:
+                            return candidate
+            except (json.JSONDecodeError, TypeError, ValueError):
+                pass
         for key in image_keys:
             candidate = usable(image.get(key))
             if candidate:
@@ -357,21 +401,165 @@ def extract_structured_products(soup: BeautifulSoup, base_url: str, retailer: st
     return list(found.values())
 
 
+def _json_script_payloads(soup: BeautifulSoup) -> Iterable[Any]:
+    """Read structured JSON blocks and common SPA hydration payloads safely."""
+    decoder = json.JSONDecoder()
+    for script in soup.find_all("script"):
+        raw = script.string or script.get_text(" ", strip=True)
+        if not raw or len(raw) > 2_500_000:
+            continue
+        script_id = clean_text(script.get("id"), 100).lower()
+        script_type = clean_text(script.get("type"), 100).lower()
+        interesting = (
+            "json" in script_type
+            or any(token in script_id for token in ("next", "state", "apollo", "preload", "product", "data"))
+            or any(token in raw[:50000].lower() for token in ("productid", "product_id", "productname", "producttitle", "sku"))
+        )
+        if not interesting:
+            continue
+        stripped = raw.strip()
+        try:
+            yield json.loads(stripped)
+            continue
+        except (json.JSONDecodeError, TypeError):
+            pass
+        # Support common assignments such as window.__STATE__ = {...}; without
+        # evaluating JavaScript. Only JSONDecoder's strict JSON parser is used.
+        for index, char in enumerate(stripped):
+            if char not in "[{":
+                continue
+            try:
+                value, _end = decoder.raw_decode(stripped[index:])
+                yield value
+                break
+            except json.JSONDecodeError:
+                continue
+
+
+def _node_string(node: dict[str, Any], keys: tuple[str, ...]) -> str:
+    for key in keys:
+        value = node.get(key)
+        if isinstance(value, str) and value.strip():
+            return clean_text(value, 1200)
+        if isinstance(value, (int, float)) and key in {"sku", "productId", "id"}:
+            return str(value)
+        if isinstance(value, dict):
+            for nested_key in (
+                "url", "src", "value", "amount", "displayValue", "formattedValue",
+                "current_retail", "currentRetail", "price", "formattedPrice", "priceString", "highRes",
+            ):
+                nested = value.get(nested_key)
+                if isinstance(nested, (str, int, float)) and str(nested).strip():
+                    return clean_text(nested, 1200)
+    return ""
+
+
+def extract_json_products(payload: Any, base_url: str, retailer: str) -> list[dict[str, Any]]:
+    """Extract product-like records from a JSON API response without executing code."""
+    base_host = urlparse(base_url).netloc.lower().removeprefix("www.")
+    found: dict[str, dict[str, Any]] = {}
+    name_keys = ("name", "productName", "productTitle", "title", "displayName", "webProductName", "itemName", "shortDescription")
+    url_keys = ("url", "canonicalUrl", "productUrl", "product_url", "pdpUrl", "seoUrl", "href", "link", "productPageUrl")
+    price_keys = ("price", "currentPrice", "current_retail", "currentRetail", "salePrice", "offerPrice", "priceValue", "unitPrice", "displayPrice", "formattedPrice")
+    image_keys = ("image", "imageUrl", "primaryImage", "thumbnail", "thumbnailUrl", "largeImage", "src", "image_url", "heroImage")
+    for node in _walk_json(payload):
+        title = clean_product_title(_node_string(node, name_keys))
+        if not title or _is_noise_title(title) or not is_pokemon_relevant(title):
+            continue
+        raw_url = _node_string(node, url_keys)
+        if not raw_url:
+            continue
+        product_url = urljoin(base_url, raw_url)
+        parsed = urlparse(product_url)
+        host = parsed.netloc.lower().removeprefix("www.")
+        if parsed.scheme not in {"http", "https"} or not host:
+            continue
+        if not (host == base_host or host.endswith("." + base_host)):
+            continue
+        path = parsed.path.lower()
+        retailer_key = _retailer_key(retailer)
+        target_product = retailer_key == "target" and bool(re.search(r"/-/a-\d+", path, re.I))
+        bestbuy_product = retailer_key == "best-buy" and "/site/" in path and bool(re.search(r"\.p(?:/|$)", path, re.I))
+        gamestop_product = retailer_key == "gamestop" and "/pokemon/" in path and len([part for part in path.split("/") if part]) >= 2
+        if not (target_product or bestbuy_product or gamestop_product or any(hint in path for hint in PRODUCT_PATH_HINTS) or re.search(r"/(?:sku/|product/)[a-z0-9-]+", path)):
+            continue
+        price_raw = _node_string(node, price_keys)
+        price, currency = money(price_raw)
+        image_value = next((node.get(key) for key in image_keys if node.get(key)), "")
+        image = _first_image(image_value, base_url)
+        availability = normalize_availability(_node_string(node, ("availability", "availabilityStatus", "stockStatus", "inventoryStatus", "fulfillmentStatus")))
+        sku = _node_string(node, ("sku", "productId", "tcin", "itemId", "id"))
+        item = {
+            "title": title,
+            "url": stable_url(product_url),
+            "price": price,
+            "currency": clean_text(node.get("currency") or node.get("priceCurrency") or currency or "USD", 8),
+            "availability": availability,
+            "image": image,
+            "sku": sku[:80],
+            "retailer": retailer,
+            "category": infer_category(title),
+        }
+        found[item["url"]] = item
+    return list(found.values())
+
+
+def extract_embedded_products(soup: BeautifulSoup, base_url: str, retailer: str) -> list[dict[str, Any]]:
+    """Extract product entities from retailer SPA hydration JSON (no JS execution)."""
+    base_host = urlparse(base_url).netloc.lower().removeprefix("www.")
+    found: dict[str, dict[str, Any]] = {}
+    name_keys = ("name", "productName", "productTitle", "title", "displayName", "webProductName", "itemName", "shortDescription")
+    url_keys = ("url", "canonicalUrl", "productUrl", "product_url", "pdpUrl", "seoUrl", "href", "link")
+    price_keys = ("price", "currentPrice", "salePrice", "offerPrice", "priceValue", "unitPrice", "displayPrice")
+    image_keys = ("image", "imageUrl", "primaryImage", "thumbnail", "thumbnailUrl", "largeImage", "src", "image_url", "heroImage")
+    for payload in _json_script_payloads(soup):
+        for item in extract_json_products(payload, base_url, retailer):
+            found[item["url"]] = item
+    return list(found.values())
+
+
+def deduplicate_products(products: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Collapse repeated tiles for the same exact product title at one retailer."""
+    selected: dict[tuple[str, str], dict[str, Any]] = {}
+    def quality(item: dict[str, Any]) -> int:
+        return (
+            (4 if item.get("image") else 0)
+            + (3 if item.get("price") is not None else 0)
+            + (2 if item.get("availability") not in {None, "unknown"} else 0)
+            + (1 if item.get("sku") else 0)
+            + min(len(clean_text(item.get("title"))), 240) // 60
+        )
+    for item in products:
+        title_key = normalize_match_text(item.get("title", ""))
+        retailer_key = _retailer_key(item.get("retailer", ""))
+        if not title_key:
+            continue
+        key = (retailer_key, title_key)
+        current = selected.get(key)
+        if current is None or quality(item) > quality(current):
+            selected[key] = item
+    return list(selected.values())
+
+
 def extract_catalog_links(soup: BeautifulSoup, base_url: str, retailer: str, limit: int) -> list[dict[str, Any]]:
     found: dict[str, dict[str, Any]] = {}
-    base_host = urlparse(base_url).netloc.lower()
+    base_host = urlparse(base_url).netloc.lower().removeprefix("www.")
     for anchor in soup.find_all("a", href=True):
         href = urljoin(base_url, anchor.get("href", ""))
         parsed = urlparse(href)
         if parsed.scheme not in {"http", "https"}:
             continue
-        host = parsed.netloc.lower()
+        host = parsed.netloc.lower().removeprefix("www.")
         if host and not (host == base_host or host.endswith("." + base_host)):
             continue
         path = parsed.path.lower()
         if any(hint in path for hint in NON_PRODUCT_PATH_HINTS):
             continue
-        if not any(hint in path for hint in PRODUCT_PATH_HINTS):
+        retailer_key = _retailer_key(retailer)
+        target_product = retailer_key == "target" and bool(re.search(r"/-/a-\d+", path, re.I))
+        bestbuy_product = retailer_key == "best-buy" and "/site/" in path and bool(re.search(r"\.p(?:/|$)", path, re.I))
+        gamestop_product = retailer_key == "gamestop" and "/pokemon/" in path and len([part for part in path.split("/") if part]) >= 2
+        if not (target_product or bestbuy_product or gamestop_product or any(hint in path for hint in PRODUCT_PATH_HINTS)):
             continue
 
         card = _card_ancestor(anchor)
@@ -400,6 +588,16 @@ def extract_catalog_links(soup: BeautifulSoup, base_url: str, retailer: str, lim
         if len(found) >= limit:
             break
     return list(found.values())
+
+def extract_retailer_products(soup: BeautifulSoup, base_url: str, retailer: str, limit: int) -> list[dict[str, Any]]:
+    """Combine retailer structured data, SPA payloads and product-tile links."""
+    products: list[dict[str, Any]] = []
+    products.extend(extract_structured_products(soup, base_url, retailer))
+    products.extend(extract_embedded_products(soup, base_url, retailer))
+    products.extend(extract_catalog_links(soup, base_url, retailer, limit))
+    products = [item for item in products if is_pokemon_relevant(item.get("title", "")) and not _is_noise_title(item.get("title", ""))]
+    return deduplicate_products(products)[:limit]
+
 
 def enrich_prices_from_page(soup: BeautifulSoup, products: list[dict[str, Any]]) -> None:
     # Structured data above is preferred. This catches simple product detail pages.
@@ -516,10 +714,16 @@ def make_session(user_agent: str) -> requests.Session:
     adapter = HTTPAdapter(max_retries=retry, pool_connections=10, pool_maxsize=10)
     session.mount("http://", adapter)
     session.mount("https://", adapter)
+    effective_agent = user_agent if user_agent and "PokeDropWatch/" not in user_agent else (
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    )
     session.headers.update({
-        "User-Agent": user_agent,
+        "User-Agent": effective_agent,
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,application/rss+xml;q=0.8,*/*;q=0.7",
-        "Accept-Language": "en-US,en;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Cache-Control": "no-cache",
+        "Pragma": "no-cache",
     })
     return session
 
@@ -528,7 +732,7 @@ def fetch(session: requests.Session, url: str, timeout: int) -> tuple[str, str]:
     response = session.get(url, timeout=timeout, allow_redirects=True)
     response.raise_for_status()
     content_type = response.headers.get("content-type", "").lower()
-    if "text/html" not in content_type and "xml" not in content_type and "text/plain" not in content_type:
+    if not any(kind in content_type for kind in ("text/html", "xml", "text/plain", "application/json", "+json")):
         raise ValueError(f"Unsupported response type: {content_type or 'unknown'}")
     return response.text, response.url
 
@@ -567,6 +771,7 @@ def event_record(event_type: str, item: dict[str, Any], source: dict[str, Any], 
         "previous_price": previous_price,
         "availability": item.get("availability", "unknown"),
         "image": item.get("image", ""),
+        "release_date": clean_text(item.get("release_date") or item.get("datePublished") or "", 40),
         "summary": clean_text(item.get("summary") or detail, 420),
         "detected_at": utc_now(),
         "email_sent": False,
@@ -578,18 +783,65 @@ def scan_source(session: requests.Session, source: dict[str, Any], settings: dic
     source_id = source["id"]
     old_source_state = state.setdefault("items", {}).get(source_id, {})
     url = source["url"]
-    # A changed source URL represents a new search scope. Establish a fresh
+    # A changed primary URL represents a new search scope. Establish a fresh
     # baseline instead of announcing every pre-existing result as a new drop.
     if old_source_state.get("source_url") and old_source_state.get("source_url") != url:
         old_source_state = {}
     current_source_state: dict[str, Any] = dict(old_source_state)
     events: list[dict[str, Any]] = []
-    html_text, final_url = fetch(session, url, int(settings.get("request_timeout_seconds", 25)))
+    timeout = int(settings.get("request_timeout_seconds", 25))
     kind = source["type"]
-    count = 0
+    candidate_urls = list(dict.fromkeys([url, *source.get("alternate_urls", [])]))[:4]
+    fetch_errors: list[str] = []
+    successful_urls: list[str] = []
+    collected_products: list[dict[str, Any]] = []
+    collected_entries: list[dict[str, Any]] = []
+    best_final_url = url
+    for candidate_url in candidate_urls:
+        try:
+            body, final_url = fetch(session, candidate_url, timeout)
+            successful_urls.append(candidate_url)
+        except Exception as exc:
+            fetch_errors.append(f"{candidate_url}: {type(exc).__name__}: {str(exc)[:120]}")
+            continue
+
+        if kind == "rss":
+            try:
+                parsed_entries = parse_rss(body, {**source, "url": final_url})
+            except Exception:
+                parsed_entries = []
+            collected_entries.extend(parsed_entries)
+            if parsed_entries:
+                best_final_url = final_url
+        elif kind in {"catalog", "product"}:
+            retailer = source.get("retailer", source.get("name", "Retailer"))
+            if kind == "product":
+                parsed_products = [parse_product_page(body, final_url, retailer)]
+            else:
+                try:
+                    direct_payload = json.loads(body)
+                except (json.JSONDecodeError, TypeError):
+                    direct_payload = None
+                if direct_payload is not None:
+                    parsed_products = extract_json_products(direct_payload, final_url, retailer)
+                else:
+                    soup = BeautifulSoup(body, "html.parser")
+                    parsed_products = extract_retailer_products(
+                        soup, final_url, retailer,
+                        int(settings.get("max_items_per_catalog", 100)),
+                    )
+            collected_products.extend(parsed_products)
+            if parsed_products:
+                best_final_url = final_url
+        else:
+            raise ValueError(f"Unsupported source type: {kind}")
+
+    if not successful_urls:
+        raise requests.RequestException("All configured source URLs failed. " + " | ".join(fetch_errors))
 
     if kind == "rss":
-        entries = parse_rss(html_text, source)
+        entries_by_key = {item["key"]: item for item in collected_entries}
+        entries = list(entries_by_key.values())
         seen = current_source_state.get("seen", {})
         if not current_source_state.get("initialized"):
             for item in entries:
@@ -602,25 +854,13 @@ def scan_source(session: requests.Session, source: dict[str, Any], settings: dic
         current_source_state = {"seen": dict(list(seen.items())[-250:]), "initialized": True}
         count = len(entries)
     elif kind in {"catalog", "product"}:
-        soup = BeautifulSoup(html_text, "html.parser")
-        if kind == "product":
-            products = [parse_product_page(html_text, final_url, source.get("retailer", source.get("name", "Retailer")))]
-        else:
-            retailer = source.get("retailer", source.get("name", "Retailer"))
-            products = extract_structured_products(soup, final_url, retailer)
-            structured_urls = {p["url"] for p in products}
-            fallback = extract_catalog_links(soup, final_url, retailer, int(settings.get("max_items_per_catalog", 100)))
-            for item in fallback:
-                if item["url"] not in structured_urls:
-                    products.append(item)
-            # Keep the list bounded, with structured items first.
-            products = products[:int(settings.get("max_items_per_catalog", 100))]
-        # Retail search pages contain navigation, review counts, sponsored cross-sells,
-        # and other noise. Only persist cards whose actual product title identifies
-        # a Pokémon product or recognizable Pokémon character.
-        for item in products:
+        for item in collected_products:
             item["title"] = clean_product_title(item.get("title", ""))
-        products = [item for item in products if is_pokemon_relevant(item.get("title", "")) and not _is_noise_title(item.get("title", ""))]
+        products = deduplicate_products([
+            item for item in collected_products
+            if is_pokemon_relevant(item.get("title", "")) and not _is_noise_title(item.get("title", ""))
+        ])
+        products = products[:int(settings.get("max_items_per_catalog", 100))]
         for item in products:
             item["category"] = infer_category(item.get("title", ""), source.get("category", "collectibles"))
             item["retailer_key"] = source.get("retailer_key") or _retailer_key(item.get("retailer") or source.get("retailer") or source.get("name", "Other"))
@@ -630,13 +870,17 @@ def scan_source(session: requests.Session, source: dict[str, Any], settings: dic
         }
         next_items = dict(previous_items)
         for item in products:
-            key = item.get("url") or item.get("sku") or item.get("title")
+            key = item.get("url") or item.get("sku") or normalize_match_text(item.get("title", ""))
             if not key:
                 continue
             old = previous_items.get(key)
             if old is None:
+                # Discovery time is not a release date or seller listing date.
                 if current_source_state.get("initialized"):
-                    events.append(event_record("new_drop", item, source, detail="New product listing detected."))
+                    events.append(event_record(
+                        "first_seen", item, source,
+                        detail="First observed by PokéDrop Watch. Original listing and release dates are unverified.",
+                    ))
             else:
                 was = old.get("availability", "unknown")
                 now = item.get("availability", "unknown")
@@ -649,6 +893,7 @@ def scan_source(session: requests.Session, source: dict[str, Any], settings: dic
                 if was == "unknown" and now in {"in_stock", "preorder"} and old.get("availability_checked"):
                     events.append(event_record("restock", item, source, old.get("price"), "The listing now reports availability."))
             item_state = dict(item)
+            item_state["first_seen_at"] = old.get("first_seen_at") if old else utc_now()
             item_state["last_seen"] = utc_now()
             item_state["availability_checked"] = item.get("availability") != "unknown"
             next_items[key] = item_state
@@ -660,19 +905,23 @@ def scan_source(session: requests.Session, source: dict[str, Any], settings: dic
     current_source_state["last_success"] = utc_now()
     current_source_state["source_url"] = url
     current_source_state["last_item_count"] = count
+    current_source_state["last_successful_urls"] = successful_urls
     elapsed_ms = int((time.monotonic() - started) * 1000)
     status_value = "ok" if count > 0 else "warning"
-    status_message = (
-        f"Scanned successfully · {count} relevant Pokémon listing(s) found"
-        if count > 0 else
-        "Page responded, but no relevant Pokémon product/feed entries were recognized. This is not a confirmed product scan."
-    )
+    attempts_text = f"Fetched {len(successful_urls)}/{len(candidate_urls)} configured URL(s). "
+    if count > 0:
+        status_message = attempts_text + f"{count} relevant Pokémon listing(s) recognized."
+    else:
+        status_message = attempts_text + "The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan."
+    if fetch_errors and successful_urls:
+        status_message += f" {len(fetch_errors)} alternate request(s) failed."
     status = {
         "id": source_id,
         "name": source.get("name", source_id),
         "retailer": source.get("retailer", ""),
         "type": kind,
         "url": url,
+        "response_url": best_final_url,
         "status": status_value,
         "last_checked": utc_now(),
         "items_found": count,
@@ -680,6 +929,8 @@ def scan_source(session: requests.Session, source: dict[str, Any], settings: dic
         "duration_ms": elapsed_ms,
         "message": status_message,
         "notes": source.get("notes", ""),
+        "successful_urls": len(successful_urls),
+        "configured_urls": len(candidate_urls),
     }
     return events, {"state": current_source_state, "status": status}
 
@@ -690,7 +941,8 @@ def html_email(events: list[dict[str, Any]], brand: str = "PokéDrop Watch", man
     cards_html = []
     cards_text = []
     labels = {
-        "new_drop": "NEW LISTING",
+        "new_drop": "FIRST SEEN (RELEASE UNVERIFIED)",
+        "first_seen": "FIRST SEEN (RELEASE UNVERIFIED)",
         "restock": "RESTOCK",
         "price_drop": "PRICE DROP",
         "price_change": "PRICE CHANGE",

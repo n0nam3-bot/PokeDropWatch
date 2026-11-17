@@ -27,11 +27,19 @@
         message: (error && error.message) || 'Verification service is unavailable. Please try again.'
       }));
 
-    if (message.action === 'requestCode') {
-      runner.requestVerificationCode(message.payload || {});
-    } else if (message.action === 'verifyCode') {
-      runner.verifyVerificationCode(message.payload || {});
-    }
+    const payload = message.payload || {};
+    const actions = {
+      requestCode: 'requestVerificationCode',
+      verifyCode: 'verifyVerificationCode',
+      adminLogin: 'adminLogin',
+      adminListSubscribers: 'adminListSubscribers',
+      adminUpdateSubscriber: 'adminUpdateSubscriber',
+      adminLogout: 'adminLogout',
+      requestAdminPasswordReset: 'requestAdminPasswordReset',
+      completeAdminPasswordReset: 'completeAdminPasswordReset'
+    };
+    const method = actions[message.action];
+    if (method) runner[method](payload);
   });
   window.parent.postMessage({ channel: CHANNEL, ready: true }, SITE_ORIGIN);
 </script>

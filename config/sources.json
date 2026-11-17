@@ -37,9 +37,13 @@
       "type": "catalog",
       "url": "https://www.target.com/s?searchTerm=pokemon",
       "enabled": true,
-      "notes": "Search listing; retailer may limit automated access or render listings in JavaScript.",
+      "notes": "Search listing; retailer may limit automated access or render listings in JavaScript. The monitor also checks category-specific public search URLs and merges duplicate products; availability depends on retailer access and HTML/JSON exposure.",
       "category": "collectibles",
-      "retailer_key": "target"
+      "retailer_key": "target",
+      "alternate_urls": [
+        "https://www.target.com/s?searchTerm=pokemon+trading+cards",
+        "https://www.target.com/s?searchTerm=pokemon+plush"
+      ]
     },
     {
       "id": "walmart-pokemon",
@@ -48,9 +52,13 @@
       "type": "catalog",
       "url": "https://www.walmart.com/search?q=pokemon",
       "enabled": true,
-      "notes": "Search listing; marketplace sellers and availability can vary by location.",
+      "notes": "Search listing; marketplace sellers and availability can vary by location. The monitor also checks category-specific public search URLs and merges duplicate products; availability depends on retailer access and HTML/JSON exposure.",
       "category": "collectibles",
-      "retailer_key": "walmart"
+      "retailer_key": "walmart",
+      "alternate_urls": [
+        "https://www.walmart.com/search?q=pokemon+trading+cards",
+        "https://www.walmart.com/search?q=pokemon+plush"
+      ]
     },
     {
       "id": "best-buy-pokemon",
@@ -59,9 +67,13 @@
       "type": "catalog",
       "url": "https://www.bestbuy.com/site/searchpage.jsp?st=pokemon",
       "enabled": true,
-      "notes": "Search listing; page structure may change.",
+      "notes": "Search listing; page structure may change. The monitor also checks category-specific public search URLs and merges duplicate products; availability depends on retailer access and HTML/JSON exposure.",
       "category": "collectibles",
-      "retailer_key": "best-buy"
+      "retailer_key": "best-buy",
+      "alternate_urls": [
+        "https://www.bestbuy.com/site/searchpage.jsp?st=pokemon+trading+cards",
+        "https://www.bestbuy.com/site/searchpage.jsp?st=pokemon+games"
+      ]
     },
     {
       "id": "gamestop-pokemon",
@@ -70,9 +82,13 @@
       "type": "catalog",
       "url": "https://www.gamestop.com/search/?q=pokemon",
       "enabled": true,
-      "notes": "Search listing; page structure may change.",
+      "notes": "Search listing; page structure may change. The monitor also checks category-specific public search URLs and merges duplicate products; availability depends on retailer access and HTML/JSON exposure.",
       "category": "collectibles",
-      "retailer_key": "gamestop"
+      "retailer_key": "gamestop",
+      "alternate_urls": [
+        "https://www.gamestop.com/search/?q=pokemon+trading+cards",
+        "https://www.gamestop.com/search/?q=pokemon+plush"
+      ]
     },
     {
       "id": "amazon-pokemon-products",
@@ -81,9 +97,14 @@
       "type": "catalog",
       "url": "https://www.amazon.com/s?k=pokemon",
       "enabled": true,
-      "notes": "Broad Pokémon product search. A fresh baseline is created for this expanded search so existing results do not trigger a burst of false new-drop notifications.",
+      "notes": "Broad Pokémon product search. A fresh baseline is created for this expanded search so existing results do not trigger a burst of false new-drop notifications. The monitor also checks category-specific public search URLs and merges duplicate products; availability depends on retailer access and HTML/JSON exposure.",
       "category": "collectibles",
-      "retailer_key": "amazon"
+      "retailer_key": "amazon",
+      "alternate_urls": [
+        "https://www.amazon.com/s?k=pokemon+trading+cards",
+        "https://www.amazon.com/s?k=pokemon+plush",
+        "https://www.amazon.com/s?k=pokemon+figures"
+      ]
     },
     {
       "id": "pokebeach-news",

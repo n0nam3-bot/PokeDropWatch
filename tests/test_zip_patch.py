@@ -40,6 +40,15 @@ class ZipPatchTests(unittest.TestCase):
                 "function doGet() {}"
             )
 
+    def test_strips_wrapper_for_owner_docs_only_patch(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            archive = root / "owner_patch.zip"
+            with zipfile.ZipFile(archive, "w") as zf:
+                zf.writestr("PokeDropWatch_Update/owner-docs/SETUP.md", "owner guide")
+            self.assertEqual(apply_patch(archive, root), 1)
+            self.assertEqual((root / "owner-docs/SETUP.md").read_text(), "owner guide")
+
     def test_rejects_parent_path(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

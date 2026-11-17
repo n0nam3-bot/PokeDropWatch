@@ -8,7 +8,10 @@ import os
 import sys
 from pathlib import Path
 
-from engine import clean_product_title, is_valid_event, make_session, scan_source, send_email, utc_now
+from engine import (
+    clean_product_title, deduplicate_products, is_valid_event, make_session,
+    is_email_eligible_event, normalize_match_text, scan_source, send_email, utc_now,
+)
 from subscribers import dispatch_subscriber_notifications
 
 
@@ -28,6 +31,66 @@ def write_json(path: Path, value) -> None:
     temp.replace(path)
 
 
+
+def migrate_state(state: dict) -> dict:
+    """Normalize legacy events/products without declaring old listings new drops."""
+    for collection_name in ("events", "pending_email"):
+        for event in state.get(collection_name, []):
+            if event.get("type") == "new_drop":
+                event["type"] = "first_seen"
+                event["summary"] = (
+                    "First observed by PokéDrop Watch. Original listing and release dates are unverified."
+                )
+            if event.get("type") != "news":
+                event["title"] = clean_product_title(event.get("title", ""))
+
+    # Historical discoveries are not genuine product-drop alerts. Keep a single
+    # visible first-seen record per retailer/title and never retry it as email.
+    deduped_events = []
+    seen_events = set()
+    for event in state.get("events", []):
+        if not is_valid_event(event):
+            continue
+        event_type = event.get("type", "")
+        title_key = normalize_match_text(event.get("title", ""))
+        retailer = normalize_match_text(event.get("retailer_key") or event.get("retailer") or event.get("source_name", ""))
+        price_key = "" if event_type == "first_seen" else str(event.get("price", ""))
+        previous_key = "" if event_type == "first_seen" else str(event.get("previous_price", ""))
+        url_key = str(event.get("url", "")) if event_type == "news" else ""
+        key = (event_type, retailer, title_key, price_key, previous_key, url_key)
+        if key in seen_events:
+            continue
+        seen_events.add(key)
+        deduped_events.append(event)
+    state["events"] = deduped_events
+    state["pending_email"] = [
+        event for event in state.get("pending_email", [])
+        if is_valid_event(event) and event.get("type") != "first_seen"
+    ]
+
+    # Clean legacy baselines and collapse duplicate marketplace cards with the
+    # same title at one retailer, preserving the best price/image record.
+    for source_state in state.get("items", {}).values():
+        products = source_state.get("products")
+        if not isinstance(products, dict):
+            continue
+        cleaned = []
+        for saved_item in products.values():
+            if not isinstance(saved_item, dict):
+                continue
+            saved_item["title"] = clean_product_title(saved_item.get("title", ""))
+            if is_valid_event({"category": saved_item.get("category"), "title": saved_item.get("title", "")}):
+                cleaned.append(saved_item)
+        unique = deduplicate_products(cleaned)
+        normalized_products = {}
+        for item in unique:
+            key = item.get("url") or item.get("sku") or normalize_match_text(item.get("title", ""))
+            if key:
+                normalized_products[key] = item
+        source_state["products"] = normalized_products
+        source_state["last_item_count"] = len(normalized_products)
+    return state
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", default="config/sources.json")
@@ -46,32 +109,7 @@ def main() -> int:
         "subscriber_delivery_status": "Not configured",
     })
     settings = config.get("settings", {})
-    # Normalize older retailer card labels before filtering legacy events.
-    # This removes wrappers such as "Deal," and embedded price text without
-    # changing the underlying product URL or generating a new alert.
-    for event in state.get("events", []):
-        if event.get("type") != "news":
-            event["title"] = clean_product_title(event.get("title", ""))
-    for event in state.get("pending_email", []):
-        if event.get("type") != "news":
-            event["title"] = clean_product_title(event.get("title", ""))
-    # News items are retained because a configured Pokémon news feed is already scoped.
-    state["events"] = [event for event in state.get("events", []) if is_valid_event(event)]
-    state["pending_email"] = [event for event in state.get("pending_email", []) if is_valid_event(event)]
-    # Scrub old loose-parser product baselines too, including sources that may fail
-    # this run, so historic noise cannot inflate the public tracked-products count.
-    for source_state in state.get("items", {}).values():
-        products = source_state.get("products")
-        if isinstance(products, dict):
-            for saved_item in products.values():
-                if isinstance(saved_item, dict):
-                    saved_item["title"] = clean_product_title(saved_item.get("title", ""))
-            products = {
-                key: item for key, item in products.items()
-                if is_valid_event({"category": item.get("category"), "title": item.get("title", "")})
-            }
-            source_state["products"] = products
-            source_state["last_item_count"] = len(products)
+    state = migrate_state(state)
     sources = [s for s in config.get("sources", []) if s.get("enabled", True)]
     if not sources:
         raise SystemExit("No enabled sources found in config/sources.json")
@@ -112,14 +150,19 @@ def main() -> int:
                 "last_checked": utc_now(),
                 "items_found": state.get("items", {}).get(source["id"], {}).get("last_item_count", prior.get("items_found", 0)),
                 "new_alerts": 0,
-                "message": f"Scan failed: {str(exc)[:240]}",
+                "successful_urls": 0,
+                "configured_urls": min(4, 1 + len(source.get("alternate_urls", []))),
+                "message": f"All configured URLs failed: {str(exc)[:210]}",
                 "notes": source.get("notes", ""),
             })
             print(f"ERROR {source['id']}: {exc}", file=sys.stderr)
 
     state["last_checked"] = utc_now()
     state["source_status"] = source_status
-    all_events = new_events + state.get("pending_email", [])
+    # First-seen records remain visible in the public feed but are deliberately
+    # excluded from emails; they are not proof of a new release/drop.
+    email_events = [event for event in new_events if is_email_eligible_event(event)]
+    all_events = email_events + state.get("pending_email", [])
     # Deduplicate pending events by event ID while preserving order.
     pending = {}
     for event in all_events:
@@ -153,7 +196,7 @@ def main() -> int:
         state["email_status"] = "No new personal alerts in this scan."
 
     state["subscriber_delivery_status"] = dispatch_subscriber_notifications(
-        new_events,
+        email_events,
         os.environ,
         settings.get("email_digest_subject_prefix", "PokéDrop Watch"),
     )
@@ -164,11 +207,12 @@ def main() -> int:
         "successful_sources": sum(1 for x in source_status if x["status"] == "ok"),
         "failed_sources": failures,
         "warning_sources": warnings,
-        "new_alerts": len(new_events),
+        "new_alerts": len(email_events),
+        "first_seen": sum(1 for event in new_events if event.get("type") == "first_seen"),
         "tracked_products": sum(state.get("items", {}).get(source_id, {}).get("last_item_count", 0) for source_id in product_source_ids),
     }
     write_json(state_path, state)
-    print(f"Finished: {len(new_events)} new alert(s), {failures} source error(s), {warnings} source(s) with no recognized Pokémon results. {state['email_status']} Subscriber delivery: {state['subscriber_delivery_status']}")
+    print(f"Finished: {len(email_events)} alert(s), {sum(1 for event in new_events if event.get('type') == 'first_seen')} first-seen item(s), {failures} source error(s), {warnings} parser miss(es). {state['email_status']} Subscriber delivery: {state['subscriber_delivery_status']}")
     # A partial source failure is visible in the dashboard; it should not discard successful scans.
     return 0
 

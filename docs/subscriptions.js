@@ -63,7 +63,7 @@ import { subscriptionBackendUrl, isSubscriptionBackendConfigured } from './subsc
   }
 
   async function requestCode(flow) {
-    if (!validBackendConfig()) throw new Error('The owner has not configured the email verification service yet. See FIREBASE_SETUP.html.');
+    if (!validBackendConfig()) throw new Error('The owner has not configured the email verification service yet. The owner-only setup guide is in the GitHub repository.');
     const result = await callBackend('requestCode', {
       email: flow.email,
       operation: flow.operation,
@@ -81,7 +81,7 @@ import { subscriptionBackendUrl, isSubscriptionBackendConfigured } from './subsc
   }
 
   function showSetupState() {
-    status('Email verification is not configured. The site owner must deploy the Apps Script email service and add its /exec URL to docs/subscription-backend-config.js. See FIREBASE_SETUP.html.', 'warning');
+    status('Email verification is not configured. The site owner must deploy the Apps Script email service and add its /exec URL to docs/subscription-backend-config.js. The owner-only setup guide is in the GitHub repository.', 'warning');
     $('subscribeButton').disabled = true;
     $('unsubscribeButton').disabled = true;
   }
@@ -91,11 +91,6 @@ import { subscriptionBackendUrl, isSubscriptionBackendConfigured } from './subsc
       showSetupState();
       return;
     }
-
-    frame.addEventListener('load', () => {
-      // The child also sends a ready message; this is only a diagnostic fallback.
-    });
-    frame.src = subscriptionBackendUrl;
 
     window.addEventListener('message', event => {
       if (event.source !== frame.contentWindow) return;
@@ -112,6 +107,12 @@ import { subscriptionBackendUrl, isSubscriptionBackendConfigured } from './subsc
         resolve(message.result || { ok: false, message: 'The verification service returned an empty response.' });
       }
     });
+    // Register the message listener before navigating the iframe. Apps Script
+    // can post its ready signal immediately after the document loads.
+    frame.addEventListener('load', () => {
+      // The child also sends a ready message; this is only a diagnostic fallback.
+    });
+    frame.src = subscriptionBackendUrl;
 
     $('subscribeForm').addEventListener('submit', async event => {
       event.preventDefault();

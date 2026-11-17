@@ -27,7 +27,7 @@
       </section>
 
       <section id="adminSetupNotice" class="setup-notice" role="status">
-        Admin access is not configured. Follow <a href="./FIREBASE_SETUP.html">the Firebase setup guide</a> first.
+        The owner must configure the private administrator account and Apps Script email service. See <a href="https://github.com/n0nam3-bot/PokeDropWatch/blob/main/owner-docs/SETUP.md" target="_blank" rel="noopener noreferrer">the owner setup guide</a>.
       </section>
 
       <section id="adminLoginPanel" class="form-panel admin-login-panel">
@@ -37,8 +37,26 @@
           <label for="adminPasswordInput">Password</label>
           <input id="adminPasswordInput" type="password" autocomplete="current-password" required placeholder="Your administrator password">
           <button id="adminLoginButton" class="primary-button" type="submit">Sign in</button>
-          <p id="adminLoginStatus" class="form-status" role="status" aria-live="polite">Sign in with the administrator account created privately in Firebase Authentication. No email link is sent, so you can sign in directly on this device.</p>
+          <button id="forgotPasswordButton" class="quiet-button forgot-password-button" type="button">Forgot password?</button>
+          <p id="adminLoginStatus" class="form-status" role="status" aria-live="polite">Sign in with the private PokéDrop Watch administrator password. No Firebase login email or sign-in link is used.</p>
         </form>
+      </section>
+
+      <section id="adminResetPanel" class="form-panel admin-login-panel" hidden>
+        <h2>Reset administrator password</h2>
+        <p class="admin-reset-copy">A six-digit code will be sent from PokéDrop Watch to the configured administrator mailbox. Enter it here on this device.</p>
+        <label for="resetAdminEmail">Administrator email</label>
+        <input id="resetAdminEmail" type="email" autocomplete="email" required placeholder="Administrator email">
+        <button id="requestAdminResetButton" class="primary-button" type="button">Email reset code</button>
+        <div id="resetCodeFields" hidden>
+          <label for="adminResetCode">Six-digit reset code</label>
+          <input id="adminResetCode" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="000000">
+          <label for="adminNewPassword">New password (12–128 characters)</label>
+          <input id="adminNewPassword" type="password" autocomplete="new-password" minlength="12" maxlength="128" placeholder="Choose a new password">
+          <button id="completeAdminResetButton" class="primary-button" type="button">Set new password</button>
+        </div>
+        <p id="adminResetStatus" class="form-status" role="status" aria-live="polite">A reset code is only sent if the address matches the configured administrator.</p>
+        <button id="cancelAdminResetButton" class="quiet-button" type="button">Back to sign in</button>
       </section>
 
       <section id="adminDashboard" hidden>
@@ -69,10 +87,11 @@
 
       <footer class="footer">
         <a class="footer-brand" href="./"><span class="mini-ball"></span> PokéDrop Watch</a>
-        <span>Subscriber records are restricted by Firestore security rules.</span>
+        <span>Subscriber records are only accessed through the private admin service.</span>
       </footer>
     </main>
   </div>
+  <iframe id="adminBackendFrame" class="backend-bridge" title="PokéDrop Watch secure admin service" aria-hidden="true" tabindex="-1"></iframe>
   <script type="module" src="./admin.js"></script>
 </body>
 </html>
