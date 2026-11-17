@@ -9,6 +9,7 @@ import time
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from email.message import EmailMessage
+from email.utils import formataddr
 from typing import Any, Iterable
 from urllib.parse import urljoin, urlparse, urlunparse
 
@@ -744,6 +745,11 @@ def html_email(events: list[dict[str, Any]], brand: str = "PokéDrop Watch", man
     return subject_line, html_body, text_body
 
 
+def branded_sender_header(address: str, display_name: str = "PokéDrop Watch") -> str:
+    """Return an RFC-compliant From header with a readable brand name."""
+    return formataddr((display_name, address.strip()))
+
+
 def send_email(
     events: list[dict[str, Any]],
     env: dict[str, str],
@@ -762,7 +768,8 @@ def send_email(
     subject, html_body, text_body = html_email(events, prefix, manage_url)
     msg = EmailMessage()
     msg["Subject"] = subject
-    msg["From"] = username
+    msg["From"] = branded_sender_header(username)
+    msg["Reply-To"] = username
     msg["To"] = recipient
     msg.set_content(text_body)
     msg.add_alternative(html_body, subtype="html")

@@ -1,7 +1,7 @@
-const CACHE = 'pokedrop-shell-v4';
+const CACHE = 'pokedrop-shell-v5';
 const SHELL = [
   './', './index.html', './admin.html', './styles.css', './app.js',
-  './subscriptions.js', './admin.js', './firebase-client.js', './firebase-config.js', './FIREBASE_SETUP.html',
+  './subscriptions.js', './admin.js', './firebase-client.js', './firebase-config.js', './subscription-backend-config.js', './FIREBASE_SETUP.html',
   './pokeball.svg', './manifest.webmanifest'
 ];
 

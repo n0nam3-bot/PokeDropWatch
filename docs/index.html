@@ -105,10 +105,11 @@
         </div>
         <div class="subscription-grid">
           <section class="form-panel">
-            <div class="form-intro"><span class="form-icon">✉</span><div><h3>Apply for alerts</h3><p>Verify your email first. New applications are reviewed by the site administrator before alerts begin.</p></div></div>
+            <div class="form-intro"><span class="form-icon">✉</span><div><h3>Apply for alerts</h3><p>We send a six-digit code from PokéDrop Watch. Enter it here on the same device. New applications are reviewed before alerts begin.</p></div></div>
             <form id="subscribeForm">
               <label for="subscribeEmail">Email address</label>
               <input id="subscribeEmail" type="email" autocomplete="email" required placeholder="you@example.com">
+              <label class="bot-trap" aria-hidden="true">Leave this field empty<input id="subscribeWebsite" type="text" tabindex="-1" autocomplete="off"></label>
               <fieldset class="choice-group">
                 <legend>What would you like to follow?</legend>
                 <div class="choice-grid">
@@ -133,30 +134,31 @@
                   <label><input type="checkbox" name="retailer" value="pokebeach"> PokéBeach</label>
                 </div>
               </fieldset>
-              <button id="subscribeButton" class="primary-button" type="submit">Send verification link</button>
+              <button id="subscribeButton" class="primary-button" type="submit">Email me a verification code</button>
             </form>
             <div class="form-divider"><span>Already subscribed?</span></div>
             <form id="unsubscribeForm" class="unsubscribe-form">
               <label for="unsubscribeEmail">Email address for secure unsubscribe</label>
-              <div class="inline-form"><input id="unsubscribeEmail" type="email" autocomplete="email" required placeholder="you@example.com"><button id="unsubscribeButton" class="secondary-button" type="submit">Send link</button></div>
-              <p class="field-note">A secure link is sent to the entered address. The link itself does not unsubscribe anyone; the recipient must confirm on the website.</p>
+              <div class="inline-form"><input id="unsubscribeEmail" type="email" autocomplete="email" required placeholder="you@example.com"><button id="unsubscribeButton" class="secondary-button" type="submit">Email me a code</button></div>
+              <p class="field-note">A one-time code is sent to that mailbox. You must enter it here to confirm the unsubscribe.</p>
             </form>
-            <div id="subscriptionAccount" class="account-panel" hidden>
-              <div><span class="eyebrow">YOUR SUBSCRIPTION</span><strong id="subscriberEmail"></strong><p id="subscriberState"></p></div>
-              <div class="account-actions"><button id="savePreferencesButton" class="secondary-button" type="button" hidden>Save preferences</button><button id="subscriberSignOutButton" class="quiet-button" type="button" hidden>Sign out</button></div>
-            </div>
-            <div id="unsubscribeConfirm" class="confirm-panel" hidden>
-              <strong>Email ownership verified</strong>
-              <p>Confirm to stop all PokéDrop Watch notification emails for this address.</p>
-              <button id="confirmUnsubscribeButton" class="danger-button" type="button">Confirm unsubscribe</button>
-            </div>
-            <p id="subscriptionStatus" class="form-status" role="status" aria-live="polite">Subscription applications require Firebase setup by the site owner. See the setup guide in the repository.</p>
+            <section id="verificationCodePanel" class="verification-code-panel" hidden>
+              <strong id="verificationCodeHeading">Check your email</strong>
+              <p id="verificationCodeMessage">Enter the six-digit code sent to your email address.</p>
+              <label for="verificationCodeInput">Six-digit verification code</label>
+              <input id="verificationCodeInput" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" placeholder="000000">
+              <div class="verification-actions">
+                <button id="verifyCodeButton" class="primary-button" type="button">Verify code</button>
+                <button id="resendCodeButton" class="quiet-button" type="button">Send another code</button>
+              </div>
+            </section>
+            <p id="subscriptionStatus" class="form-status" role="status" aria-live="polite">Email verification is not configured yet. Follow the owner setup guide to connect the Gmail verification service.</p>
           </section>
           <aside class="subscription-aside">
             <div class="aside-mark">◉</div>
             <h3>Verified. Reviewed. In control.</h3>
             <p>Applications are approved by the site administrator. Email ownership is verified before an application is stored.</p>
-            <p>Unsubscribing requires a fresh email sign-in link and a final confirmation. Knowing someone's email address is not enough to remove them.</p>
+            <p>Unsubscribing requires a one-time code delivered to that mailbox. The code is entered on this page, so opening email on another device will not move your session.</p>
             <a href="./FIREBASE_SETUP.html">How subscription security works ↗</a>
           </aside>
         </div>
@@ -170,6 +172,7 @@
     </main>
   </div>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <iframe id="subscriptionBackendFrame" class="backend-bridge" title="Secure email verification service" aria-hidden="true" tabindex="-1"></iframe>
   <script src="./app.js" defer></script>
   <script type="module" src="./subscriptions.js"></script>
 </body>

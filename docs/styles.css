@@ -47,3 +47,36 @@
 .source-bottom{align-items:flex-start}
 .source-bottom span{flex:1 1 auto;min-width:0;max-width:none;overflow-wrap:anywhere;line-height:1.45}
 .source-bottom a{flex:0 0 auto;white-space:nowrap}
+
+/* Same-device email code verification */
+.verification-code-panel {
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid #ead8d3;
+  border-radius: 14px;
+  background: #fffaf8;
+}
+.verification-code-panel strong { display: block; margin-bottom: 6px; }
+.verification-code-panel p { margin: 0 0 14px; color: #77736f; line-height: 1.5; }
+.verification-code-panel input {
+  width: 100%;
+  min-height: 50px;
+  box-sizing: border-box;
+  margin-top: 7px;
+  padding: 10px 14px;
+  border: 1px solid #ddd8d2;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: .35em;
+  text-align: center;
+}
+.verification-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.verification-actions .primary-button { flex: 1 1 180px; }
+.bot-trap { position: absolute !important; width: 1px !important; height: 1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; }
+.backend-bridge { position: absolute; width: 1px; height: 1px; left: -10000px; top: -10000px; border: 0; }
+@media (max-width: 520px) {
+  .verification-actions { flex-direction: column; }
+  .verification-actions > button { width: 100%; }
+}

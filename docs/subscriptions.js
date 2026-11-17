@@ -1,23 +1,16 @@
-import {
-  firebaseReady,
-  auth,
-  db,
-  api,
-  requestEmailLink,
-  completeEmailLink,
-  watchAuth,
-  categoryLabel,
-  retailerLabel
-} from './firebase-client.js';
+import { subscriptionBackendUrl, isSubscriptionBackendConfigured } from './subscription-backend-config.js';
 
 (() => {
   'use strict';
   const $ = id => document.getElementById(id);
+  const frame = $('subscriptionBackendFrame');
+  const codePanel = $('verificationCodePanel');
   const statusBox = $('subscriptionStatus');
-  const accountBox = $('subscriptionAccount');
-  const unsubscribeConfirm = $('unsubscribeConfirm');
-  let currentUser = null;
-  let currentRecord = null;
+  let bridgeReady = false;
+  let activeFlow = null;
+  let readyResolver;
+  const readyPromise = new Promise(resolve => { readyResolver = resolve; });
+  const pending = new Map();
 
   function status(message, kind = 'info') {
     statusBox.textContent = message;
@@ -32,184 +25,168 @@ import {
     const categories = selectedValues('category');
     const retailers = selectedValues('retailer');
     if (!categories.length) throw new Error('Choose at least one notification category.');
-    return {
-      categories,
-      retailers: retailers.length ? retailers : ['all']
-    };
+    return { categories, retailers: retailers.length ? retailers : ['all'] };
   }
 
-  function applyPreferencesToForm(record) {
-    const categories = record?.categories || ['tcg', 'plush', 'collectibles', 'games', 'accessories', 'news'];
-    const retailers = record?.retailers || ['all'];
-    document.querySelectorAll('input[name="category"]').forEach(input => { input.checked = categories.includes(input.value); });
-    document.querySelectorAll('input[name="retailer"]').forEach(input => { input.checked = retailers.includes(input.value); });
+  function validBackendConfig() {
+    return isSubscriptionBackendConfigured();
   }
 
-  function renderAccount(user, record) {
-    currentUser = user;
-    currentRecord = record;
-    if (!user || !record) {
-      accountBox.hidden = true;
+  function waitForBridge() {
+    if (bridgeReady) return Promise.resolve();
+    return Promise.race([
+      readyPromise,
+      new Promise((_, reject) => setTimeout(() => reject(new Error('The email verification service has not loaded. Check the Apps Script deployment URL in docs/subscription-backend-config.js.')), 20000))
+    ]);
+  }
+
+  async function callBackend(action, payload) {
+    await waitForBridge();
+    const requestId = (globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`);
+    return new Promise((resolve, reject) => {
+      const timer = setTimeout(() => {
+        pending.delete(requestId);
+        reject(new Error('The verification service did not respond. Please try again.'));
+      }, 30000);
+      pending.set(requestId, result => {
+        clearTimeout(timer);
+        if (result?.ok) resolve(result);
+        else reject(new Error(result?.message || 'The verification request failed.'));
+      });
+      frame.contentWindow.postMessage({
+        channel: 'pokedrop-watch-verification-v1',
+        requestId,
+        action,
+        payload
+      }, '*');
+    });
+  }
+
+  async function requestCode(flow) {
+    if (!validBackendConfig()) throw new Error('The owner has not configured the email verification service yet. See FIREBASE_SETUP.html.');
+    const result = await callBackend('requestCode', {
+      email: flow.email,
+      operation: flow.operation,
+      categories: flow.preferences?.categories || [],
+      retailers: flow.preferences?.retailers || ['all'],
+      website: flow.website || ''
+    });
+    activeFlow = { ...flow, sessionToken: result.sessionToken };
+    $('verificationCodeHeading').textContent = flow.operation === 'unsubscribe' ? 'Confirm your unsubscribe' : 'Verify your email address';
+    $('verificationCodeMessage').textContent = `A six-digit code was sent to ${flow.email}. Enter it below on this page. The code expires in 10 minutes.`;
+    $('verificationCodeInput').value = '';
+    codePanel.hidden = false;
+    status(result.message, 'success');
+    $('verificationCodeInput').focus({ preventScroll: true });
+  }
+
+  function showSetupState() {
+    status('Email verification is not configured. The site owner must deploy the Apps Script email service and add its /exec URL to docs/subscription-backend-config.js. See FIREBASE_SETUP.html.', 'warning');
+    $('subscribeButton').disabled = true;
+    $('unsubscribeButton').disabled = true;
+  }
+
+  function init() {
+    if (!validBackendConfig()) {
+      showSetupState();
       return;
     }
-    accountBox.hidden = false;
-    $('subscriberEmail').textContent = user.email || 'Verified account';
-    const stateText = ({
-      pending: 'Application pending administrator approval',
-      active: 'Approved — email alerts are active',
-      rejected: 'Application not approved',
-      suspended: 'Notifications are temporarily paused',
-      unsubscribed: 'You are unsubscribed',
-      removed: 'This subscription was removed by the administrator'
-    })[record.status] || 'Subscription status unavailable';
-    $('subscriberState').textContent = stateText;
-    const mayEdit = ['pending', 'active', 'suspended'].includes(record.status);
-    $('savePreferencesButton').hidden = !mayEdit;
-    $('subscriberSignOutButton').hidden = false;
-    applyPreferencesToForm(record);
-  }
 
-  async function loadOwnRecord(user) {
-    if (!user || !user.emailVerified) {
-      renderAccount(null, null);
-      return null;
-    }
-    const snapshot = await api.getDoc(api.doc(db, 'subscribers', user.uid));
-    const record = snapshot.exists() ? snapshot.data() : null;
-    renderAccount(user, record);
-    return record;
-  }
-
-  async function storeApplication(user, preferences) {
-    if (!user.emailVerified) throw new Error('Email verification was not completed. Please request a new sign-in link.');
-    const ref = api.doc(db, 'subscribers', user.uid);
-    const snapshot = await api.getDoc(ref);
-    const now = api.serverTimestamp();
-    if (!snapshot.exists()) {
-      await api.setDoc(ref, {
-        email: user.email,
-        status: 'pending',
-        categories: preferences.categories,
-        retailers: preferences.retailers,
-        createdAt: now,
-        updatedAt: now
-      });
-      return 'Your email is verified and your application has been submitted for administrator approval.';
-    }
-
-    const previous = snapshot.data();
-    if (['unsubscribed', 'rejected'].includes(previous.status)) {
-      await api.updateDoc(ref, {
-        status: 'pending',
-        categories: preferences.categories,
-        retailers: preferences.retailers,
-        updatedAt: now,
-        reappliedAt: now
-      });
-      return 'Your email is verified and your new application is pending administrator approval.';
-    }
-    await api.updateDoc(ref, {
-      categories: preferences.categories,
-      retailers: preferences.retailers,
-      updatedAt: now
+    frame.addEventListener('load', () => {
+      // The child also sends a ready message; this is only a diagnostic fallback.
     });
-    return previous.status === 'active'
-      ? 'Your notification preferences have been updated.'
-      : `Your application is currently ${previous.status || 'pending'}. Your preferences have been saved.`;
-  }
+    frame.src = subscriptionBackendUrl;
 
-  async function handleIncomingLink() {
-    const url = new URL(window.location.href);
-    if (!url.searchParams.has('oobCode') && !url.searchParams.has('mode')) return;
-    try {
-      const result = await completeEmailLink();
-      if (!result) return;
-      if (result.mode === 'unsubscribe') {
-        const snapshot = await api.getDoc(api.doc(db, 'subscribers', result.user.uid));
-        if (!snapshot.exists() || ['unsubscribed', 'removed'].includes(snapshot.data().status)) {
-          status('No active notification subscription was found for this verified email. No changes were made.', 'info');
-          unsubscribeConfirm.hidden = true;
-          return;
-        }
-        currentUser = result.user;
-        unsubscribeConfirm.hidden = false;
-        status('Email ownership verified. Confirm below to stop notifications for this address.', 'success');
+    window.addEventListener('message', event => {
+      if (event.source !== frame.contentWindow) return;
+      const message = event.data || {};
+      if (message.channel !== 'pokedrop-watch-verification-v1') return;
+      if (message.ready) {
+        bridgeReady = true;
+        readyResolver();
         return;
       }
-      const preferences = result.payload || currentPreferences();
-      const message = await storeApplication(result.user, preferences);
-      status(message, 'success');
-      await loadOwnRecord(result.user);
-    } catch (error) {
-      status(error?.message || 'The email link could not be completed. Request a new link and try again.', 'error');
-    }
-  }
-
-  async function init() {
-    if (!firebaseReady) {
-      status('Subscription setup is not finished. The site owner must configure Firebase by following ./FIREBASE_SETUP.html.', 'warning');
-      $('subscribeButton').disabled = true;
-      $('unsubscribeButton').disabled = true;
-      return;
-    }
+      if (message.requestId && pending.has(message.requestId)) {
+        const resolve = pending.get(message.requestId);
+        pending.delete(message.requestId);
+        resolve(message.result || { ok: false, message: 'The verification service returned an empty response.' });
+      }
+    });
 
     $('subscribeForm').addEventListener('submit', async event => {
       event.preventDefault();
-      const email = $('subscribeEmail').value.trim().toLowerCase();
-      $('subscribeButton').disabled = true;
+      const button = $('subscribeButton');
+      button.disabled = true;
       try {
         const preferences = currentPreferences();
-        if (currentUser?.email?.toLowerCase() === email && currentUser.emailVerified && currentRecord) {
-          const message = await storeApplication(currentUser, preferences);
-          await loadOwnRecord(currentUser);
-          status(message, 'success');
-        } else {
-          await requestEmailLink(email, 'subscribe', preferences);
-          status('Check your inbox for a secure sign-in link. Your application is not submitted until you open that link.', 'success');
-        }
+        const email = $('subscribeEmail').value.trim().toLowerCase();
+        await requestCode({
+          operation: 'subscribe',
+          email,
+          preferences,
+          website: $('subscribeWebsite').value
+        });
       } catch (error) {
-        status(error?.message || 'Unable to start your application. Please try again later.', 'error');
+        status(error?.message || 'Unable to send a verification code. Please try again later.', 'error');
       } finally {
-        $('subscribeButton').disabled = false;
+        button.disabled = false;
       }
     });
 
     $('unsubscribeForm').addEventListener('submit', async event => {
       event.preventDefault();
-      const email = $('unsubscribeEmail').value.trim().toLowerCase();
-      $('unsubscribeButton').disabled = true;
+      const button = $('unsubscribeButton');
+      button.disabled = true;
       try {
-        await requestEmailLink(email, 'unsubscribe');
-        status('If this address uses PokéDrop Watch, a secure confirmation link has been sent. Opening the link will not unsubscribe it by itself; a final confirmation is required.', 'success');
+        const email = $('unsubscribeEmail').value.trim().toLowerCase();
+        await requestCode({ operation: 'unsubscribe', email, preferences: null, website: '' });
       } catch (error) {
-        status(error?.message || 'Unable to send a verification link. Please try again later.', 'error');
+        status(error?.message || 'Unable to send a verification code. Please try again later.', 'error');
       } finally {
-        $('unsubscribeButton').disabled = false;
+        button.disabled = false;
       }
     });
 
-    $('confirmUnsubscribeButton').addEventListener('click', async () => {
-      if (!currentUser?.emailVerified) {
-        status('Verify the email address before unsubscribing.', 'error');
+    $('verifyCodeButton').addEventListener('click', async () => {
+      if (!activeFlow?.sessionToken) {
+        status('Request a new verification code first.', 'error');
         return;
       }
+      const button = $('verifyCodeButton');
+      button.disabled = true;
       try {
-        await api.updateDoc(api.doc(db, 'subscribers', currentUser.uid), {
-          status: 'unsubscribed',
-          unsubscribedAt: api.serverTimestamp(),
-          updatedAt: api.serverTimestamp()
+        const result = await callBackend('verifyCode', {
+          sessionToken: activeFlow.sessionToken,
+          code: $('verificationCodeInput').value.trim()
         });
-        unsubscribeConfirm.hidden = true;
-        status('You have been unsubscribed. No further product alerts will be sent to this address.', 'success');
-        await loadOwnRecord(currentUser);
+        status(result.message, 'success');
+        codePanel.hidden = true;
+        activeFlow = null;
       } catch (error) {
-        status(error?.message || 'Unsubscription could not be completed. Please contact the site administrator.', 'error');
+        status(error?.message || 'The code could not be verified.', 'error');
+      } finally {
+        button.disabled = false;
       }
     });
 
-    $('savePreferencesButton').addEventListener('click', () => {
-      if (currentUser?.email) $('subscribeEmail').value = currentUser.email;
-      $('subscribeForm').requestSubmit();
+    $('resendCodeButton').addEventListener('click', async () => {
+      if (!activeFlow) return;
+      const button = $('resendCodeButton');
+      button.disabled = true;
+      try {
+        await requestCode(activeFlow);
+      } catch (error) {
+        status(error?.message || 'Unable to send another code.', 'error');
+      } finally {
+        button.disabled = false;
+      }
+    });
+
+    $('verificationCodeInput').addEventListener('input', event => {
+      event.target.value = event.target.value.replace(/\D/g, '').slice(0, 6);
+    });
+    $('verificationCodeInput').addEventListener('keydown', event => {
+      if (event.key === 'Enter') $('verifyCodeButton').click();
     });
 
     document.querySelectorAll('input[name="retailer"]').forEach(input => input.addEventListener('change', () => {
@@ -220,28 +197,7 @@ import {
         if (all) all.checked = false;
       }
     }));
-
-    $('subscriberSignOutButton').addEventListener('click', async () => {
-      await api.signOut(auth);
-      currentUser = null;
-      currentRecord = null;
-      renderAccount(null, null);
-      status('You have signed out.', 'info');
-    });
-
-    watchAuth(async user => {
-      if (user?.emailVerified) {
-        try { await loadOwnRecord(user); } catch { /* Firestore rules keep non-owner records private. */ }
-      } else {
-        renderAccount(null, null);
-      }
-    });
-    await handleIncomingLink();
-    if (new URLSearchParams(window.location.search).get('unsubscribe') === '1') {
-      $('unsubscribeEmail').focus({ preventScroll: true });
-      $('subscriptions').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
   }
 
-  init().catch(error => status(error?.message || 'Subscription interface could not initialize.', 'error'));
+  init();
 })();

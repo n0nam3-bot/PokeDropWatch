@@ -1,66 +1,65 @@
 # PokéDrop Watch
 
-PokéDrop Watch is a Pokémon-themed product drop and restock tracker. The public website is a responsive GitHub Pages site; GitHub Actions runs the monitor on a schedule. It checks configured retailer pages and Pokémon news feeds, records changes, and emails approved subscribers when their selected categories and retailers match a new alert.
+PokéDrop Watch is a minimal Pokémon-themed product drop and restock tracker. GitHub Pages serves the public website, GitHub Actions scans configured retailers and news feeds, Firestore stores subscriber records, and approved subscribers receive individual email alerts.
 
-## What the website does
+## What it does
 
-- Displays source health, recent Pokémon alerts, and a separate **All tracked products** view with available product photos, listed prices, categories, retailer names, and direct product links.
-- Filters both views by product category, retailer, and product title; an exact-title option is available. The alert view also filters by new drops, restocks, price drops, and news.
-- Lets visitors apply for email alerts after verifying control of their email address.
-- Holds applications for administrator approval before any product alerts are sent.
-- Lets subscribers choose product categories and retailers, update their preferences, and unsubscribe through a fresh email sign-in link plus a separate confirmation.
-- Provides a private administrator page to approve, reject, suspend, reactivate, and remove subscriber records.
-- Keeps subscriber emails in private Firebase Firestore records. Email addresses are never placed in the public dashboard status file or exposed to other subscribers.
-- Uses a deterministic HTML/RSS monitor. It does not use AI-generated recommendations or paid product-data APIs.
+- Shows retailer/source health, recent drops, restocks, price changes, Pokémon news, and all tracked products.
+- Displays product photos, prices, retailer names, categories, and direct product links when the source exposes them.
+- Filters products by item type, retailer, and exact or partial title.
+- Lets visitors apply for notifications by category and retailer.
+- Verifies mailbox ownership with a six-digit code sent from `pokedropwatch.notify@gmail.com`; the visitor enters the code on the same page where it was requested.
+- Holds new applications for administrator approval.
+- Lets verified subscribers update preferences or unsubscribe using a fresh email code.
+- Provides a private administrator portal to approve, reject, suspend, reactivate, and remove subscriber records.
+- Uses deterministic HTML/RSS parsing. It does not use AI-generated picks or paid product-data APIs.
 
 ## Hosting and services
 
 | Component | Service | Purpose |
 |---|---|---|
-| Public website | GitHub Pages | Serves the files in `docs/`. |
-| Scheduled monitor | GitHub Actions | Scans sources, runs tests, and publishes dashboard status. |
-| Subscriber database | Firebase Firestore | Stores applications, preferences, statuses, and private delivery retries. |
-| Email verification | Firebase Authentication | Sends passwordless email sign-in links to prove mailbox ownership. |
-| Product alert email | Gmail SMTP | Sends each approved subscriber an individual alert email. |
+| Public website | GitHub Pages (`main` → `/docs`) | Serves the responsive website on PC and mobile. |
+| Scheduled monitor | GitHub Actions | Scans sources approximately every 15 minutes. |
+| Subscriber database | Firebase Firestore | Stores application status, email, preferences, and private delivery retries. |
+| Administrator login | Firebase Authentication Email/Password | Password login with no email-link sent on every sign-in. |
+| Email verification | Google Apps Script + Gmail MailApp | Sends branded six-digit codes from the notification Gmail account. |
+| Product alerts | Gmail SMTP | Sends individual alert emails to approved subscribers. |
 
-The intended setup uses free tiers and does not require Vercel, Google Sheets, a paid server, or Firebase Cloud Functions. Free-tier quotas and provider terms apply; this is designed for a small, low-volume community, not unlimited bulk email.
+**No Google Sheet, Vercel, Firebase Hosting, Cloud Functions, or paid server is required.** Firestore remains the database. The Apps Script project is only the email-code backend and writes directly to Firestore using a private service-account credential.
 
-## Required configuration
+Free services have quotas. The app caps verification messages at 25 per UTC day, three per email address per hour, and a 60-second resend cooldown. Google's Gmail and Apps Script quotas also apply; this is suitable for a small community, not unlimited bulk email.
 
-Follow the click-by-click [Firebase and GitHub setup guide](docs/FIREBASE_SETUP.html) (or the [Markdown version](docs/FIREBASE_SETUP.md)) for exact Console URLs, menu selections, repository links, required secret names, and values. Start with the GitHub owner/repository names and follow the guide in order. In summary, the site owner must:
+## Required setup
 
-1. Create a Firebase project on the no-cost Spark plan, create Firestore, enable Firebase Authentication email-link sign-in, and add the GitHub Pages hostname as an authorized domain.
-2. Paste the Firebase web-app values into `docs/firebase-config.js`.
-3. In the Firebase Console only, replace the administrator-email placeholder in `firebase/firestore.rules` with your lowercase admin email and publish the rules. Do not commit your real admin email into the public repository.
-   **Existing installations upgrading to v1.2.0 must also republish the updated rules** from `firebase/firestore.rules` in Firebase Console (keep your real administrator email in the deployed rules). This release adds the `accessories` preference category; the database rules do not update automatically when GitHub files change.
-4. Add GitHub Actions secrets `FIREBASE_SERVICE_ACCOUNT_JSON`, `SMTP_USERNAME`, and `SMTP_APP_PASSWORD`. `ALERT_EMAIL` is optional and sends an additional owner-only copy.
-5. Add the GitHub Actions variable `PUBLIC_SITE_URL` with the exact GitHub Pages URL.
-6. Replace `.github/workflows/pokedrop-watch.yml` with the workflow file supplied with this release so the monitor can access the private Firestore service account.
-7. Set GitHub Pages to branch `main`, folder `/docs`.
+Follow the exact, mobile-friendly [Owner Setup Guide](docs/FIREBASE_SETUP.html) or the [Markdown checklist](docs/FIREBASE_SETUP.md). It includes direct Firebase, Apps Script, Google Account, and GitHub links. In summary, the owner must:
 
-Never commit a Firebase service-account JSON file, Gmail App Password, or other private key. The Firebase web-app configuration in `docs/firebase-config.js` is public browser configuration; the service-account key is not.
+1. Publish the private Firestore rules with the administrator email entered only in the Firebase Console Rules editor.
+2. Enable Firebase Email/Password authentication and create the administrator account manually in Firebase Authentication.
+3. Copy the Firebase Web App values into `docs/firebase-config.js`.
+4. Create a Firebase service-account JSON key and keep it private.
+5. Create a standalone Apps Script project while signed in as `pokedropwatch.notify@gmail.com`, paste `backend/apps-script/Code.gs` and `backend/apps-script/Index.html`, and set the exact Script Properties shown in the setup guide.
+6. Deploy Apps Script as a web app that executes as the owner and is available to anyone; put its `/exec` URL in `docs/subscription-backend-config.js`.
+7. Add `FIREBASE_SERVICE_ACCOUNT_JSON`, `SMTP_USERNAME`, `SMTP_APP_PASSWORD`, and optional `ALERT_EMAIL` as GitHub Actions secrets.
+8. Publish GitHub Pages from branch `main`, folder `/docs`.
+
+Never commit the Firebase service-account JSON, Apps Script HMAC secret, or Gmail App Password. `docs/firebase-config.js` and the Apps Script `/exec` URL are public browser configuration; private keys are not.
+
+## Email behavior
+
+Administrator login uses a password and does not send email. Visitor verification uses a six-digit code sent from **PokéDrop Watch <pokedropwatch.notify@gmail.com>** and entered on the requesting page. Codes expire after 10 minutes, work once, allow five attempts, and a newer code invalidates the previous one. Product-alert messages also display the sender name **PokéDrop Watch**.
 
 ## Monitoring and source coverage
 
-The monitor schedule is controlled by the `schedule` cron expression in `.github/workflows/pokedrop-watch.yml` (currently every 15 minutes; GitHub may delay scheduled runs). The `check_interval_minutes` value in `config/sources.json` is descriptive and does not control GitHub's schedule.
+The schedule is set by the cron expression in `.github/workflows/pokedrop-watch.yml` (currently every 15 minutes; GitHub may delay scheduled runs). `config/sources.json` contains the source list and parsing settings.
 
-The watchlist is configured in `config/sources.json`. Supported source types are `catalog`, `product`, and `rss`. The first successful scan establishes a baseline; subsequent scans can detect newly listed products, out-of-stock to in-stock/preorder changes, listed price changes, and new news-feed entries. Each source is checked independently so a blocked retailer does not stop other scans.
+A source counts as `MATCHES` only when the monitor recognizes usable Pokémon entries. `NO MATCH` means the page responded but the parser did not recognize usable listings; it does not mean the store has no stock. `ISSUE` means the request failed. Retailer websites can block automated requests, require JavaScript, vary by location, or change their markup. A configured source is not a guarantee of coverage. Confirm final price and availability with the retailer before purchasing.
 
-Retailer websites may block automated requests, render inventory through JavaScript, vary stock by location, or change their page structure. A source counts as having matches only when the parser recognizes relevant Pokémon product/feed entries. A page that responds but yields no relevant entries is marked **NO MATCH**, not ONLINE. A configured URL is not a guarantee that every product or restock will be detected. The dashboard reports failed sources instead of claiming complete coverage. Confirm final stock and price with the retailer before purchasing.
+For current retailer gaps and scan diagnostics, see [Source Health](docs/SOURCE_HEALTH.md). The reported two-of-eight match rate is a known development gap; dedicated retailer adapters and live integration tests remain necessary.
 
 ## ZIP updates
 
-After the initial workflow and app are installed, ordinary application/documentation changes are delivered as ZIP patches. Upload a patch ZIP into the repository's `updates/` folder. GitHub Actions applies the repository-relative paths, commits the changes, and removes the uploaded ZIP after successful installation. The workflow file is a protected one-time setup file and is updated directly in GitHub.
+Ordinary application updates are supplied as small ZIP patches. Upload the patch ZIP to the repository's `updates/` folder and commit it. The existing GitHub Actions workflow applies files to their repository-relative folders, commits them, and removes the uploaded ZIP after successful installation. Workflow-file changes are a one-time direct edit under `.github/workflows/`; ordinary patches intentionally cannot replace that workflow.
 
-For source customization, tests, release rules, and future change requests, see [docs/CONFIGURATION_AND_CHANGE_GUIDE.md](docs/CONFIGURATION_AND_CHANGE_GUIDE.md).
+For future customization, testing, and release rules, see [Configuration & Change Guide](docs/CONFIGURATION_AND_CHANGE_GUIDE.md), [Roadmap](docs/ROADMAP.md), and [Changelog](docs/CHANGELOG.md).
 
 PokéDrop Watch is an unofficial fan project and is not affiliated with Nintendo, The Pokémon Company, Pokémon Center, or any listed retailer.
-
-
-## Operations reference
-
-- [Firebase setup, including API-key referrer restrictions](docs/FIREBASE_SETUP.html)
-- [Source health meanings and scan diagnostics](docs/SOURCE_HEALTH.md)
-- [Configuration and change guide](docs/CONFIGURATION_AND_CHANGE_GUIDE.md)
-- [Roadmap](docs/ROADMAP.md)
-- [Changelog](docs/CHANGELOG.md)

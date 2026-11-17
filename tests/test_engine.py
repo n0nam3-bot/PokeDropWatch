@@ -1,10 +1,12 @@
 import json
 import sys
 import unittest
+from email.header import decode_header, make_header
+from email.utils import parseaddr
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'monitor'))
-from engine import clean_product_title, extract_catalog_links, extract_structured_products, infer_category, is_pokemon_relevant, is_valid_event, normalize_availability, parse_rss, stable_url, event_record, html_email
+from engine import branded_sender_header, clean_product_title, extract_catalog_links, extract_structured_products, infer_category, is_pokemon_relevant, is_valid_event, normalize_availability, parse_rss, stable_url, event_record, html_email
 from bs4 import BeautifulSoup
 
 
@@ -38,6 +40,11 @@ class EngineTests(unittest.TestCase):
         })
         self.assertEqual(event['category'], 'tcg')
         self.assertEqual(event['retailer_key'], 'pokemon-center')
+
+    def test_alert_email_uses_branded_sender_header(self):
+        display_name, address = parseaddr(branded_sender_header('pokedropwatch.notify@gmail.com'))
+        self.assertEqual(str(make_header(decode_header(display_name))), 'PokéDrop Watch')
+        self.assertEqual(address, 'pokedropwatch.notify@gmail.com')
 
     def test_email_contains_secure_manage_link(self):
         subject, html_body, text_body = html_email(

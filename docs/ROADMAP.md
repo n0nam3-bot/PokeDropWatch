@@ -29,15 +29,17 @@ The roadmap records what is implemented in the current code and what remains pla
 **Status: Implemented; Firebase setup required**
 
 - [x] Public visitor application form with category and retailer preferences.
-- [x] Firebase email-link sign-in to verify ownership of the applying email address.
+- [x] One-time six-digit email verification codes delivered by the notification Gmail account; visitors enter the code on the same page/device.
+- [x] Verification codes expire after 10 minutes, allow up to five attempts, and are invalidated when a newer code is requested.
+- [x] Per-address cooldown, hourly rate limit, honeypot, and project-wide daily email cap.
 - [x] Pending-by-default applications; visitors cannot approve themselves.
-- [x] Private administrator sign-in restricted by Firestore rules to one configured verified email.
+- [x] Private administrator sign-in uses manually created Firebase Email/Password credentials; no email link is sent at each login.
 - [x] Admin dashboard to approve, reject, suspend, reactivate, and remove records.
-- [x] Subscribers can read their own status and update their preferences.
-- [x] Secure unsubscribe flow requiring a fresh email link and a separate confirmation.
-- [x] Firestore rules restricting subscriber records and private delivery subcollections.
-- [ ] Complete live Firebase project configuration and verify with separate admin and non-admin accounts.
-- [ ] Add stronger automated bot protection if application volume or abuse warrants it.
+- [x] Subscribers can update preferences after proving mailbox ownership with a fresh code.
+- [x] Secure unsubscribe requires a fresh email code entered on the page.
+- [x] Firestore rules restrict all subscriber documents to the administrator; Apps Script writes via a private service-account credential.
+- [ ] Complete live Firebase + Apps Script configuration and test from PC and mobile with separate admin/subscriber mailboxes.
+- [ ] Add Cloudflare Turnstile or equivalent challenge if public form abuse exceeds rate-limit protections.
 
 ## Stage 3 — Subscriber alert delivery
 
@@ -51,7 +53,7 @@ The roadmap records what is implemented in the current code and what remains pla
 - [x] Keep subscriber identifiers and addresses out of public dashboard state.
 - [ ] Configure Firebase service-account and Gmail secrets in GitHub Actions.
 - [ ] Complete end-to-end verification with an approved test subscriber and a real detected event.
-- [ ] Evaluate a free dedicated transactional email provider if Gmail limits become restrictive.
+- [ ] Evaluate a free dedicated transactional email provider with a verified sending domain if Gmail/Apps Script quotas become restrictive.
 
 ## Stage 4 — Retailer coverage and detection quality
 

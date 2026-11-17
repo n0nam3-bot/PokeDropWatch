@@ -1,5 +1,41 @@
 # Changelog
 
+## [1.3.0] — 2026-11-16
+
+### Changed
+- Replaced Firebase passwordless email-link admin sign-in with Firebase Email/Password login, avoiding per-login authentication emails and cross-device link handoff.
+- Replaced subscriber email-link verification with six-digit one-time codes delivered by a standalone Google Apps Script service using `pokedropwatch.notify@gmail.com`.
+- Verification codes are entered on the page that requested them, expire after 10 minutes, allow at most five attempts, and are invalidated when a newer code is requested.
+- Added per-address cooldown, three-per-hour limits, a 25-per-UTC-day application cap, a hidden honeypot, and Google MailApp remaining-quota checks.
+- Kept Firestore as the subscriber database; Apps Script writes through Firestore REST using a private service-account credential. No spreadsheet is created or used.
+- Existing subscriber documents are looked up by verified email before creating a new HMAC-derived document ID, avoiding duplicate entries after migration from UID-based records.
+- Product-alert email sender now displays `PokéDrop Watch <pokedropwatch.notify@gmail.com>` with the notification mailbox as Reply-To.
+- Restricted all browser-side subscriber document access to the configured administrator; public visitors cannot enumerate subscriber records.
+- Fixed the admin dashboard's category and retailer labels so it no longer imports formatter functions that the Firebase module does not export; the dashboard is shown only after the Firestore admin check succeeds.
+- Rewrote the Firebase/Apps Script setup guide with project-specific direct links and exact steps.
+- Extended ZIP patch wrapper detection to recognize `backend/` as a repository folder, so future backend-only patches install at the correct path.
+
+### Added
+- `backend/apps-script/Code.gs` — email-code issuance, rate limits, and private Firestore writes.
+- `backend/apps-script/Index.html` — same-origin-checked postMessage bridge for the GitHub Pages website.
+- `backend/apps-script/appsscript.json` — Apps Script runtime and permission manifest.
+- `docs/subscription-backend-config.js` — public Apps Script deployment URL setting.
+- `tests/test_auth_architecture.py` — regression checks for password login, OTP bridge, Firestore rules, admin label imports, and rate-limit configuration.
+
+### Important setup changes
+- Create the Apps Script project while signed in as `pokedropwatch.notify@gmail.com`, add the exact Script Properties in `docs/FIREBASE_SETUP.md`, and deploy it as a web app that executes as the owner.
+- Replace the placeholder in `docs/subscription-backend-config.js` with the deployed `/exec` URL.
+- Create the admin Email/Password user manually in Firebase Authentication and publish the updated Firestore rules with the private admin email.
+- Do not use old Firebase email-link messages; the new app no longer sends them.
+
+### Validation
+- 35/35 Python unit tests passed.
+- JavaScript syntax checks passed for the admin, subscription, Firebase client, and backend-config modules.
+- Apps Script server JavaScript syntax check passed.
+- Basic structure and browser DOM ID-reference checks passed for the public page, admin page, setup guide, and Apps Script bridge.
+- Live Gmail delivery, Apps Script deployment, Firebase Authentication, and Firestore service-account access still require the owner's credentials and one-time setup.
+
+
 All notable project changes are recorded here. Entries are ordered newest first. Dates use `YYYY-MM-DD`.
 
 ## [1.2.1] — 2026-11-17

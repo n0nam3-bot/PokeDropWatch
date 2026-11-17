@@ -23,7 +23,7 @@
       <section class="admin-hero">
         <p class="eyebrow">PRIVATE ADMINISTRATION</p>
         <h1>Subscriber management</h1>
-        <p>Review verified applications and control who receives PokéDrop Watch email alerts.</p>
+        <p>Review email-verified applications and control who receives PokéDrop Watch alerts.</p>
       </section>
 
       <section id="adminSetupNotice" class="setup-notice" role="status">
@@ -33,9 +33,11 @@
       <section id="adminLoginPanel" class="form-panel admin-login-panel">
         <form id="adminLoginForm">
           <label for="adminEmailInput">Administrator email</label>
-          <input id="adminEmailInput" type="email" autocomplete="email" required placeholder="Your verified admin email">
-          <button id="adminLoginButton" class="primary-button" type="submit">Email secure sign-in link</button>
-          <p id="adminLoginStatus" class="form-status" role="status" aria-live="polite">Enter the email address configured as administrator in the private Firestore rules. Only that verified account can view subscriber records.</p>
+          <input id="adminEmailInput" type="email" autocomplete="username" required placeholder="Your administrator email">
+          <label for="adminPasswordInput">Password</label>
+          <input id="adminPasswordInput" type="password" autocomplete="current-password" required placeholder="Your administrator password">
+          <button id="adminLoginButton" class="primary-button" type="submit">Sign in</button>
+          <p id="adminLoginStatus" class="form-status" role="status" aria-live="polite">Sign in with the administrator account created privately in Firebase Authentication. No email link is sent, so you can sign in directly on this device.</p>
         </form>
       </section>
 

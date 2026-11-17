@@ -3,17 +3,34 @@ import {
   auth,
   db,
   api,
-  requestEmailLink,
-  completeEmailLink,
-  watchAuth,
-  categoryLabel,
-  retailerLabel
+  watchAuth
 } from './firebase-client.js';
 
 (() => {
   'use strict';
   const $ = id => document.getElementById(id);
   let allSubscribers = [];
+
+  const CATEGORY_LABELS = {
+    tcg: 'Trading cards & TCG',
+    plush: 'Plush',
+    collectibles: 'Collectibles & figures',
+    games: 'Video games',
+    accessories: 'Accessories & apparel',
+    news: 'News'
+  };
+  const RETAILER_LABELS = {
+    all: 'All retailers',
+    'pokemon-center': 'Pokémon Center',
+    target: 'Target',
+    walmart: 'Walmart',
+    'best-buy': 'Best Buy',
+    gamestop: 'GameStop',
+    amazon: 'Amazon',
+    pokebeach: 'PokéBeach'
+  };
+  const categoryLabel = value => CATEGORY_LABELS[value] || String(value || 'Unknown');
+  const retailerLabel = value => RETAILER_LABELS[value] || String(value || 'Unknown');
 
   function setLoginStatus(message, kind = 'info') {
     $('adminLoginStatus').textContent = message;
@@ -23,10 +40,6 @@ import {
   function setActionStatus(message, kind = 'info') {
     $('adminActionStatus').textContent = message;
     $('adminActionStatus').className = `form-status ${kind}`;
-  }
-
-  function isVerifiedAccount(user) {
-    return Boolean(user?.emailVerified && user.email);
   }
 
   function prettyDate(value) {
@@ -101,8 +114,8 @@ import {
     const snapshot = await api.getDocs(api.collection(db, 'subscribers'));
     allSubscribers = snapshot.docs.map(record => ({ uid: record.id, ...record.data() }));
     allSubscribers.sort((a, b) => {
-      const dateA = a.createdAt?.toMillis?.() || 0;
-      const dateB = b.createdAt?.toMillis?.() || 0;
+      const dateA = a.createdAt?.toMillis?.() || Date.parse(a.createdAt || '') || 0;
+      const dateB = b.createdAt?.toMillis?.() || Date.parse(b.createdAt || '') || 0;
       return dateB - dateA;
     });
     renderStats();
@@ -148,12 +161,16 @@ import {
     $('adminLoginForm').addEventListener('submit', async event => {
       event.preventDefault();
       const email = $('adminEmailInput').value.trim().toLowerCase();
+      const password = $('adminPasswordInput').value;
       $('adminLoginButton').disabled = true;
       try {
-        await requestEmailLink(email, 'admin');
-        setLoginStatus('A secure sign-in link was sent. Open it from this browser to continue.', 'success');
+        await api.signInWithEmailAndPassword(auth, email, password);
+        setLoginStatus('Signed in. Loading subscriber records…', 'success');
       } catch (error) {
-        setLoginStatus(error?.message || 'Unable to send the sign-in link.', 'error');
+        const message = error?.code === 'auth/invalid-credential'
+          ? 'Email or password is incorrect. Confirm the admin account was created in Firebase Authentication with Email/Password enabled.'
+          : (error?.message || 'Unable to sign in.');
+        setLoginStatus(message, 'error');
       } finally {
         $('adminLoginButton').disabled = false;
       }
@@ -166,33 +183,18 @@ import {
     });
     $('subscriberFilter').addEventListener('change', renderList);
 
-    try {
-      const result = await completeEmailLink();
-      if (result && result.mode !== 'admin') {
-        setLoginStatus('This email link was created for a different page action. Return to the public website to finish it.', 'warning');
-      }
-    } catch (error) {
-      setLoginStatus(error?.message || 'The sign-in link could not be completed.', 'error');
-    }
-
     watchAuth(async user => {
       if (!user) {
         showLogin();
         return;
       }
-      if (!isVerifiedAccount(user)) {
-        await api.signOut(auth);
-        showLogin();
-        setLoginStatus('The administrator account must have a verified email address.', 'error');
-        return;
-      }
-      showAdmin(user);
       try {
         await loadSubscribers();
+        showAdmin(user);
       } catch (error) {
         await api.signOut(auth);
         showLogin();
-        setLoginStatus('This account is not authorized to administer PokéDrop Watch. Use the address configured privately in the deployed Firestore rules.', 'error');
+        setLoginStatus('This account is not authorized to administer PokéDrop Watch. Confirm its email matches the administrator address in the deployed Firestore Rules.', 'error');
       }
     });
   }

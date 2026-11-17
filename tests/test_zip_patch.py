@@ -28,6 +28,18 @@ class ZipPatchTests(unittest.TestCase):
             self.assertEqual((root / "config/sources.json").read_text(), "{}")
             self.assertFalse((root / "PokeDropWatch_Update").exists())
 
+    def test_strips_wrapper_for_backend_only_patch(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            archive = root / "backend_patch.zip"
+            with zipfile.ZipFile(archive, "w") as zf:
+                zf.writestr("PokeDropWatch_Update/backend/apps-script/Code.gs", "function doGet() {}")
+            self.assertEqual(apply_patch(archive, root), 1)
+            self.assertEqual(
+                (root / "backend/apps-script/Code.gs").read_text(),
+                "function doGet() {}"
+            )
+
     def test_rejects_parent_path(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
