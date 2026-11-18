@@ -8,6 +8,8 @@ import os
 import sys
 from pathlib import Path
 
+# Install the focused parser/date extensions before importing scanner symbols.
+import engine_patch  # noqa: F401
 from engine import (
     clean_product_title, deduplicate_products, is_valid_event, make_session,
     is_email_eligible_event, normalize_match_text, scan_source, send_email, utc_now,
@@ -29,7 +31,6 @@ def write_json(path: Path, value) -> None:
     temp = path.with_suffix(path.suffix + ".tmp")
     temp.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     temp.replace(path)
-
 
 
 def migrate_state(state: dict) -> dict:
@@ -54,8 +55,8 @@ def migrate_state(state: dict) -> dict:
         event_type = event.get("type", "")
         title_key = normalize_match_text(event.get("title", ""))
         retailer = normalize_match_text(event.get("retailer_key") or event.get("retailer") or event.get("source_name", ""))
-        price_key = "" if event_type == "first_seen" else str(event.get("price", ""))
-        previous_key = "" if event_type == "first_seen" else str(event.get("previous_price", ""))
+        price_key = "" if event_type in {"first_seen", "new_item"} else str(event.get("price", ""))
+        previous_key = "" if event_type in {"first_seen", "new_item"} else str(event.get("previous_price", ""))
         url_key = str(event.get("url", "")) if event_type == "news" else ""
         key = (event_type, retailer, title_key, price_key, previous_key, url_key)
         if key in seen_events:
@@ -65,7 +66,7 @@ def migrate_state(state: dict) -> dict:
     state["events"] = deduped_events
     state["pending_email"] = [
         event for event in state.get("pending_email", [])
-        if is_valid_event(event) and event.get("type") != "first_seen"
+        if is_valid_event(event) and event.get("type") not in {"first_seen", "new_item"}
     ]
 
     # Clean legacy baselines and collapse duplicate marketplace cards with the
@@ -90,6 +91,7 @@ def migrate_state(state: dict) -> dict:
         source_state["products"] = normalized_products
         source_state["last_item_count"] = len(normalized_products)
     return state
+
 
 def main() -> int:
     parser = argparse.ArgumentParser()
@@ -159,11 +161,10 @@ def main() -> int:
 
     state["last_checked"] = utc_now()
     state["source_status"] = source_status
-    # First-seen records remain visible in the public feed but are deliberately
-    # excluded from emails; they are not proof of a new release/drop.
+    # New-item/first-seen discoveries remain visible in the public feed and are
+    # deliberately excluded from email; only observed changes and news are mailed.
     email_events = [event for event in new_events if is_email_eligible_event(event)]
     all_events = email_events + state.get("pending_email", [])
-    # Deduplicate pending events by event ID while preserving order.
     pending = {}
     for event in all_events:
         pending[event["id"]] = event
@@ -187,8 +188,6 @@ def main() -> int:
             state["pending_email"] = pending_events[:100]
             state["email_status"] = message
     elif pending_events:
-        # Do not accumulate a personal digest backlog when no personal recipient is configured.
-        # Subscriber events are queued privately per active subscriber below.
         state["pending_email"] = []
         state["email_status"] = "Owner-only alert copy is not configured."
     else:
@@ -209,11 +208,17 @@ def main() -> int:
         "warning_sources": warnings,
         "new_alerts": len(email_events),
         "first_seen": sum(1 for event in new_events if event.get("type") == "first_seen"),
+        "new_items": sum(1 for event in new_events if event.get("type") == "new_item"),
         "tracked_products": sum(state.get("items", {}).get(source_id, {}).get("last_item_count", 0) for source_id in product_source_ids),
     }
     write_json(state_path, state)
-    print(f"Finished: {len(email_events)} alert(s), {sum(1 for event in new_events if event.get('type') == 'first_seen')} first-seen item(s), {failures} source error(s), {warnings} parser miss(es). {state['email_status']} Subscriber delivery: {state['subscriber_delivery_status']}")
-    # A partial source failure is visible in the dashboard; it should not discard successful scans.
+    print(
+        f"Finished: {len(email_events)} emailed alert(s), "
+        f"{state['summary']['new_items']} new item(s), "
+        f"{state['summary']['first_seen']} first-seen item(s), "
+        f"{failures} source error(s), {warnings} parser miss(es). {state['email_status']} "
+        f"Subscriber delivery: {state['subscriber_delivery_status']}"
+    )
     return 0
 
 

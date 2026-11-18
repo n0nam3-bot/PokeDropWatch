@@ -2,8 +2,8 @@
   'use strict';
   const $ = (id) => document.getElementById(id);
   const state = { events: [], products: [], filter: 'all', category: 'all', retailer: 'all', query: '', exact: false, view: 'alerts' };
-  const labels = { new_drop: 'FIRST SEEN', first_seen: 'FIRST SEEN', restock: 'RESTOCK', price_drop: 'PRICE DROP', price_change: 'PRICE UPDATE', news: 'POKÉMON NEWS' };
-  const icons = { new_drop: '✦', first_seen: '✦', restock: '↻', price_drop: '↓', price_change: '↕', news: '✧' };
+  const labels = { new_drop: 'FIRST SEEN', first_seen: 'FIRST SEEN', new_item: 'NEW ITEM', restock: 'RESTOCK', price_drop: 'PRICE DROP', price_change: 'PRICE UPDATE', news: 'POKÉMON NEWS' };
+  const icons = { new_drop: '✦', first_seen: '✦', new_item: '✧', restock: '↻', price_drop: '↓', price_change: '↕', news: '✧' };
   const categoryLabels = {
     tcg: 'Trading cards & TCG', plush: 'Plush', collectibles: 'Collectibles',
     games: 'Video games', accessories: 'Accessories & apparel', news: 'News'
@@ -29,8 +29,6 @@
   const inferCategory = (item) => {
     if (item.type === 'news' || item.category === 'news') return 'news';
     const title = normalize(item.title);
-    // Trust the scanner's explicit retailer classification for ambiguous set
-    // names such as Scarlet & Violet; only clear platform terms mean a game.
     if (/(nintendo switch|switch game|video game software|game cartridge|switch cartridge|nintendo ds game)/.test(title)) return 'games';
     if (/(pokemon tcg|trading card|trading cards|booster|elite trainer|trainer box|card collection|battle deck|theme deck|blister|pokemon cards| tcg |etb|surprise box|destined rivals|journey together|prismatic evolutions)/.test(` ${title} `)) return 'tcg';
     if (item.category && ['tcg', 'plush', 'collectibles', 'games', 'accessories'].includes(item.category)) return item.category;
@@ -45,9 +43,20 @@
   };
   const dateText = (value) => {
     if (!value) return 'Not scanned yet';
-    const date = new Date(value);
+    const date = /^\d{4}-\d{2}-\d{2}$/.test(String(value))
+      ? new Date(`${value}T12:00:00`)
+      : new Date(value);
     if (Number.isNaN(date.getTime())) return value;
     return new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(date);
+  };
+  const releaseDateWithinMonth = (value) => {
+    if (!value) return false;
+    const match = String(value).match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (!match) return false;
+    const releaseDay = Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+    const now = new Date();
+    const todayUtc = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+    return Number.isFinite(releaseDay) && Math.abs(releaseDay - todayUtc) <= 30 * 86400000;
   };
   const safeLink = (value) => {
     try { const url = new URL(value); return ['http:', 'https:'].includes(url.protocol) ? url.href : '#'; }
@@ -59,6 +68,28 @@
     if (className) element.className = className;
     if (text !== undefined) element.textContent = text;
     return element;
+  }
+  function configureAlertTypeFilters() {
+    const row = $('alertTypeFilters');
+    const explanation = $('feedExplanation');
+    if (explanation) {
+      explanation.textContent = 'NEW ITEMS have a published release date within 30 days before or after today. FIRST SEEN means the monitor discovered a listing but its release date is outside that window or unavailable.';
+    }
+    if (!row) return;
+    const newItems = row.querySelector('[data-filter="first_seen"]');
+    if (newItems) {
+      newItems.dataset.filter = 'new_item';
+      newItems.textContent = 'New items';
+      newItems.title = 'Products with a published release date within 30 days before or after today.';
+    }
+    if (!row.querySelector('[data-filter="first_seen"]')) {
+      const firstSeen = node('button', 'filter-chip', 'First seen');
+      firstSeen.type = 'button';
+      firstSeen.dataset.filter = 'first_seen';
+      firstSeen.title = 'Items first discovered by the monitor when the release date is not within 30 days.';
+      const restocks = row.querySelector('[data-filter="restock"]');
+      row.insertBefore(firstSeen, restocks || null);
+    }
   }
   function renderSources(sources = []) {
     const grid = $('sourceGrid');
@@ -111,6 +142,7 @@
         const previous = unique.get(key);
         const score = candidate => (candidate.image ? 4 : 0) + (candidate.price != null ? 3 : 0)
           + (candidate.availability && candidate.availability !== 'unknown' ? 2 : 0)
+          + (candidate.release_date ? 1 : 0)
           + Math.min(String(candidate.title || '').length, 240) / 240;
         if (!previous || score(item) > score(previous)) unique.set(key, item);
       }
@@ -121,18 +153,27 @@
     const select = $('retailerFilter');
     if (!select) return;
     const selected = state.retailer;
-    const items = [...state.events, ...state.products];
-    const retailers = [...new Map(items.map(item => [retailerKey(item), String(item.retailer || item.source_name || 'Other')])).entries()]
-      .sort((a, b) => a[1].localeCompare(b[1]));
-    select.replaceChildren(new Option('All retailers', 'all'));
-    retailers.forEach(([key, label]) => select.add(new Option(label, key)));
-    select.value = retailers.some(([key]) => key === selected) ? selected : 'all';
+    select.replaceChildren(
+      new Option('All retailers', 'all'),
+      new Option('Amazon', 'amazon'),
+      new Option('Walmart', 'walmart')
+    );
+    select.value = ['all', 'amazon', 'walmart'].includes(selected) ? selected : 'all';
     state.retailer = select.value;
   }
   function itemMatches(item, includeAlertType = false) {
     const category = inferCategory(item);
     const normalizedType = item.type === 'new_drop' ? 'first_seen' : item.type;
-    const typeOk = !includeAlertType || state.filter === 'all' || normalizedType === state.filter;
+    let typeOk = true;
+    if (includeAlertType && state.filter !== 'all') {
+      if (state.filter === 'new_item') {
+        typeOk = ['new_item', 'first_seen'].includes(normalizedType) && releaseDateWithinMonth(item.release_date);
+      } else if (state.filter === 'first_seen') {
+        typeOk = ['first_seen', 'new_item'].includes(normalizedType) && !releaseDateWithinMonth(item.release_date);
+      } else {
+        typeOk = normalizedType === state.filter;
+      }
+    }
     const categoryOk = state.category === 'all' || category === state.category;
     const retailerOk = state.retailer === 'all' || retailerKey(item) === state.retailer;
     const title = normalize(item.title);
@@ -182,11 +223,13 @@
     content.append(actions);
     const price = node('div', 'alert-price');
     price.append(node('strong', '', money(item.price, item.currency)));
-    let extra = displayType === 'first_seen'
-      ? 'Release date not verified · Check retailer for stock'
-      : (item.availability && item.availability !== 'unknown'
-        ? item.availability.replaceAll('_', ' ')
-        : 'Check retailer for stock');
+    let extra = displayType === 'new_item' && item.release_date
+      ? `Release date ${dateText(item.release_date)}`
+      : displayType === 'first_seen'
+        ? 'First observed by PokéDrop Watch · Release date outside the 30-day window or unavailable'
+        : (item.availability && item.availability !== 'unknown'
+          ? item.availability.replaceAll('_', ' ')
+          : 'Check retailer for stock');
     if (!isTracked && item.previous_price !== null && item.previous_price !== undefined) extra += ` · was ${money(item.previous_price, item.currency)}`;
     price.append(node('span', '', extra));
     card.append(productMedia(item), content, price);
@@ -202,7 +245,7 @@
     $('alertTypeFilters').hidden = isTracked;
     $('feedExplanation').textContent = isTracked
       ? 'Products recognized in the latest successful catalog scans. Prices and availability are only shown when the retailer page exposes them.'
-      : 'FIRST SEEN means a listing has just entered the monitor. It is not a claim that the product was newly released. Only observed restocks, price changes and Pokémon news are emailed.';
+      : 'NEW ITEMS have a published release date within 30 days before or after today. FIRST SEEN means the monitor discovered a listing but its release date is outside that window or unavailable.';
     if (!filtered.length) {
       const empty = node('div', 'empty-state large-empty');
       empty.append(node('span', 'empty-ball', '◉'));
@@ -237,7 +280,7 @@
     for (const rawEvent of (data.events || [])) {
       if (!isPokemonItem(rawEvent)) continue;
       const event = { ...rawEvent, type: rawEvent.type === 'new_drop' ? 'first_seen' : rawEvent.type };
-      const key = `${event.type}|${retailerKey(event)}|${normalize(event.title)}|${event.type === 'first_seen' ? '' : (event.price ?? '')}|${event.previous_price ?? ''}`;
+      const key = `${event.type}|${retailerKey(event)}|${normalize(event.title)}|${['first_seen', 'new_item'].includes(event.type) ? '' : (event.price ?? '')}|${event.previous_price ?? ''}`;
       if (!eventMap.has(key)) eventMap.set(key, event);
     }
     state.events = [...eventMap.values()];
@@ -270,6 +313,7 @@
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => element.classList.remove('show'), 2200);
   }
+  configureAlertTypeFilters();
   $('refreshButton').addEventListener('click', () => refresh(true));
   $('alertSearch').addEventListener('input', (event) => { state.query = event.target.value; renderEvents(); });
   $('categoryFilter').addEventListener('change', (event) => { state.category = event.target.value; renderEvents(); });
@@ -293,7 +337,6 @@
     renderEvents();
   }));
   refresh();
-  // Poll only the public status JSON; retailer checks run on the scheduled workflow.
   setInterval(() => refresh(false), 5 * 60 * 1000);
   if ('serviceWorker' in navigator && location.protocol === 'https:') {
     window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));

@@ -10,14 +10,15 @@
   "sources": [
     {
       "id": "pokemon-center-tcg",
-      "name": "Pokémon Center · Trading Card Game",
+      "name": "Pokémon Center · Trading Cards",
       "retailer": "Pokémon Center",
       "type": "catalog",
-      "url": "https://www.pokemoncenter.com/category/trading-card-game",
+      "url": "https://www.pokemoncenter.com/category/tcg-cards",
       "enabled": true,
-      "notes": "Official Pokémon Center TCG listing. Product discovery depends on the public page exposing product links or structured data.",
+      "notes": "Official Pokémon Center TCG category. Sold-out products remain useful catalog records; availability is tracked separately.",
       "category": "tcg",
-      "retailer_key": "pokemon-center"
+      "retailer_key": "pokemon-center",
+      "pokemon_scoped": true
     },
     {
       "id": "pokemon-center-plush",
@@ -26,69 +27,101 @@
       "type": "catalog",
       "url": "https://www.pokemoncenter.com/category/plush",
       "enabled": true,
-      "notes": "Official Pokémon Center plush listing.",
+      "notes": "Official Pokémon Center plush category, with the plush new-releases/available filter checked as an alternate page.",
       "category": "plush",
-      "retailer_key": "pokemon-center"
+      "retailer_key": "pokemon-center",
+      "alternate_urls": [
+        "https://www.pokemoncenter.com/category/new-releases?category=plush&availability=true"
+      ],
+      "pokemon_scoped": true
     },
     {
-      "id": "target-pokemon",
-      "name": "Target · Pokémon",
+      "id": "target-tcg",
+      "name": "Target · Pokémon TCG",
       "retailer": "Target",
       "type": "catalog",
-      "url": "https://www.target.com/s?searchTerm=pokemon",
+      "url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false&Nao=0&facetedValue=tkle6",
       "enabled": true,
-      "notes": "Search listing; retailer may limit automated access or render listings in JavaScript. The monitor also checks category-specific public search URLs and merges duplicate products; availability depends on retailer access and HTML/JSON exposure.",
-      "category": "collectibles",
+      "notes": "Target Pokémon trading-card category and New at Target facet. Retailer access and client-rendered product data can still affect parser coverage.",
+      "category": "tcg",
       "retailer_key": "target",
       "alternate_urls": [
-        "https://www.target.com/s?searchTerm=pokemon+trading+cards",
-        "https://www.target.com/s?searchTerm=pokemon+plush"
-      ]
+        "https://www.target.com/s?searchTerm=pokemon&newSearch=false&facetedValue=tkle6Z5ewil&moveTo=product-list-grid"
+      ],
+      "pokemon_scoped": true
     },
     {
-      "id": "walmart-pokemon",
-      "name": "Walmart · Pokémon",
+      "id": "target-plush",
+      "name": "Target · Pokémon Plush",
+      "retailer": "Target",
+      "type": "catalog",
+      "url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false&Nao=0&facetedValue=i5gtz",
+      "enabled": true,
+      "notes": "Target Pokémon plush category and New at Target plush facet.",
+      "category": "plush",
+      "retailer_key": "target",
+      "alternate_urls": [
+        "https://www.target.com/s?searchTerm=pokemon&newSearch=false&facetedValue=i5gtzZ5ewil&moveTo=product-list-grid"
+      ],
+      "pokemon_scoped": true
+    },
+    {
+      "id": "walmart-tcg",
+      "name": "Walmart · Pokémon TCG",
       "retailer": "Walmart",
       "type": "catalog",
-      "url": "https://www.walmart.com/search?q=pokemon",
+      "url": "https://www.walmart.com/browse/collectibles/pokemon-cards/5967908_9807313_4252400",
       "enabled": true,
-      "notes": "Search listing; marketplace sellers and availability can vary by location. The monitor also checks category-specific public search URLs and merges duplicate products; availability depends on retailer access and HTML/JSON exposure.",
-      "category": "collectibles",
+      "notes": "Walmart Pokémon card category and newest-first sort. Marketplace sellers and availability may vary by location.",
+      "category": "tcg",
       "retailer_key": "walmart",
       "alternate_urls": [
-        "https://www.walmart.com/search?q=pokemon+trading+cards",
-        "https://www.walmart.com/search?q=pokemon+plush"
-      ]
+        "https://www.walmart.com/browse/collectibles/pokemon-cards/5967908_9807313_4252400?sort=new"
+      ],
+      "pokemon_scoped": true
     },
     {
-      "id": "best-buy-pokemon",
-      "name": "Best Buy · Pokémon",
+      "id": "walmart-plush",
+      "name": "Walmart · Pokémon Plush",
+      "retailer": "Walmart",
+      "type": "catalog",
+      "url": "https://www.walmart.com/search?q=pokemon&facet=facet_product_type%3AStuffed+Animals+%26+Plush+Toys",
+      "enabled": true,
+      "notes": "Walmart Pokémon plush category and newest-first sort.",
+      "category": "plush",
+      "retailer_key": "walmart",
+      "alternate_urls": [
+        "https://www.walmart.com/search?q=pokemon&facet=facet_product_type%3AStuffed+Animals+%26+Plush+Toys&sort=new"
+      ],
+      "pokemon_scoped": true
+    },
+    {
+      "id": "best-buy-pokemon-tcg",
+      "name": "Best Buy · Pokémon TCG",
       "retailer": "Best Buy",
       "type": "catalog",
-      "url": "https://www.bestbuy.com/site/searchpage.jsp?st=pokemon",
+      "url": "https://www.bestbuy.com/site/searchpage.jsp?browsedCategory=pcmcat1604992984556&id=pcat17071&qp=brandcharacter_facet%3DFranchise%7EPok%C3%A9mon&st=categoryid%24pcmcat1604992984556",
       "enabled": true,
-      "notes": "Search listing; page structure may change. The monitor also checks category-specific public search URLs and merges duplicate products; availability depends on retailer access and HTML/JSON exposure.",
-      "category": "collectibles",
+      "notes": "Best Buy Pokémon TCG category, New Arrivals, Coming Soon and Pre-Order facets. Best Buy may restrict automated requests.",
+      "category": "tcg",
       "retailer_key": "best-buy",
       "alternate_urls": [
-        "https://www.bestbuy.com/site/searchpage.jsp?st=pokemon+trading+cards",
-        "https://www.bestbuy.com/site/searchpage.jsp?st=pokemon+games"
-      ]
+        "https://www.bestbuy.com/site/searchpage.jsp?browsedCategory=pcmcat1604992984556&id=pcat17071&qp=brandcharacter_facet%3DFranchise%7EPok%C3%A9mon%5Eupcomingnew_facet%3DUpcoming+and+New%7ENew+Arrivals&st=categoryid%24pcmcat1604992984556",
+        "https://www.bestbuy.com/site/searchpage.jsp?browsedCategory=pcmcat1604992984556&id=pcat17071&qp=upcomingnew_facet%3DUpcoming+and+New%7EComing+Soon%5Eupcomingnew_facet%3DUpcoming+and+New%7EPre-Order%5Ebrandcharacter_facet%3DFranchise%7EPok%C3%A9mon&st=categoryid%24pcmcat1604992984556"
+      ],
+      "pokemon_scoped": true
     },
     {
-      "id": "gamestop-pokemon",
-      "name": "GameStop · Pokémon",
+      "id": "gamestop-pokemon-tcg",
+      "name": "GameStop · Pokémon Trading Cards",
       "retailer": "GameStop",
       "type": "catalog",
-      "url": "https://www.gamestop.com/search/?q=pokemon",
+      "url": "https://www.gamestop.com/toys-games/trading-cards/trading-card-games?prefn1=franchise&prefv1=Pokemon&view=new&hybrid=true&srule=most-popular",
       "enabled": true,
-      "notes": "Search listing; page structure may change. The monitor also checks category-specific public search URLs and merges duplicate products; availability depends on retailer access and HTML/JSON exposure.",
-      "category": "collectibles",
+      "notes": "GameStop Pokémon trading-card-game category with the New view enabled.",
+      "category": "tcg",
       "retailer_key": "gamestop",
-      "alternate_urls": [
-        "https://www.gamestop.com/search/?q=pokemon+trading+cards",
-        "https://www.gamestop.com/search/?q=pokemon+plush"
-      ]
+      "pokemon_scoped": true
     },
     {
       "id": "amazon-pokemon-products",
@@ -97,7 +130,7 @@
       "type": "catalog",
       "url": "https://www.amazon.com/s?k=pokemon",
       "enabled": true,
-      "notes": "Broad Pokémon product search. A fresh baseline is created for this expanded search so existing results do not trigger a burst of false new-drop notifications. The monitor also checks category-specific public search URLs and merges duplicate products; availability depends on retailer access and HTML/JSON exposure.",
+      "notes": "Broad Pokémon product search. A fresh baseline is created for this expanded search so existing results do not trigger a burst of false new-drop notifications.",
       "category": "collectibles",
       "retailer_key": "amazon",
       "alternate_urls": [
@@ -113,9 +146,12 @@
       "type": "rss",
       "url": "https://www.pokebeach.com/feed",
       "enabled": true,
-      "notes": "Independent Pokémon TCG news feed; useful for product announcements and release information, not live stock confirmation.",
+      "notes": "The public /feed URL currently returns a WordPress wp_die error. The scanner rejects that error response and falls back to WordPress REST posts when available.",
       "category": "news",
-      "retailer_key": "pokebeach"
+      "retailer_key": "pokebeach",
+      "alternate_urls": [
+        "https://www.pokebeach.com/wp-json/wp/v2/posts?per_page=30&_embed"
+      ]
     }
   ]
 }
