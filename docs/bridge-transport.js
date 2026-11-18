@@ -49,14 +49,7 @@
       source: frame.contentWindow
     });
     window.dispatchEvent(relayed);
+    event.stopImmediatePropagation();
   });
 
-  // The monitor stores first discoveries internally as `first_seen` because
-  // discovery time is not a verified product release date. Give the filter a
-  // user-facing label that describes what it actually filters.
-  const newItemsFilter = document.querySelector('#alertTypeFilters [data-filter="first_seen"]');
-  if (newItemsFilter) {
-    newItemsFilter.textContent = 'New items';
-    newItemsFilter.title = 'Items first discovered by the monitor; release dates are not verified.';
-  }
 })();

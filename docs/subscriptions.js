@@ -47,19 +47,25 @@ import { subscriptionBackendUrl, isSubscriptionBackendConfigured } from './subsc
     return new Promise((resolve, reject) => {
       const timer = setTimeout(() => {
         pending.delete(requestId);
-        reject(new Error('The email verification bridge loaded but did not return a response. Please try again.'));
+        reject(new Error('Apps Script did not confirm this verification request. No email delivery was confirmed. Update the Apps Script Index.html and deploy a new version before retrying.'));
       }, 30000);
       pending.set(requestId, result => {
         clearTimeout(timer);
         if (result?.ok) resolve(result);
         else reject(new Error(result?.message || 'The verification request failed.'));
       });
-      frame.contentWindow.postMessage({
-        channel: 'pokedrop-watch-verification-v1',
-        requestId,
-        action,
-        payload
-      }, '*');
+      try {
+        frame.contentWindow.postMessage({
+          channel: 'pokedrop-watch-verification-v1',
+          requestId,
+          action,
+          payload
+        }, '*');
+      } catch (error) {
+        clearTimeout(timer);
+        pending.delete(requestId);
+        reject(error);
+      }
     });
   }
 

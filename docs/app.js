@@ -76,20 +76,26 @@
       explanation.textContent = 'NEW ITEMS have a published release date within 30 days before or after today. FIRST SEEN means the monitor discovered a listing but its release date is outside that window or unavailable.';
     }
     if (!row) return;
-    const newItems = row.querySelector('[data-filter="first_seen"]');
-    if (newItems) {
-      newItems.dataset.filter = 'new_item';
-      newItems.textContent = 'New items';
-      newItems.title = 'Products with a published release date within 30 days before or after today.';
-    }
-    if (!row.querySelector('[data-filter="first_seen"]')) {
-      const firstSeen = node('button', 'filter-chip', 'First seen');
+
+    const newItemButtons = [...row.querySelectorAll('[data-filter="new_item"], [data-filter="first_seen"]')];
+    const newItems = newItemButtons[0];
+    if (!newItems) return;
+    newItems.dataset.filter = 'new_item';
+    newItems.textContent = 'New items';
+    newItems.title = 'Products with a published release date within 30 days before or after today.';
+
+    // Remove duplicate buttons from older page builds before adding First seen.
+    newItemButtons.slice(1).forEach(button => button.remove());
+    let firstSeen = row.querySelector('[data-filter="first_seen"]');
+    if (!firstSeen) {
+      firstSeen = node('button', 'filter-chip', 'First seen');
       firstSeen.type = 'button';
       firstSeen.dataset.filter = 'first_seen';
-      firstSeen.title = 'Items first discovered by the monitor when the release date is not within 30 days.';
       const restocks = row.querySelector('[data-filter="restock"]');
       row.insertBefore(firstSeen, restocks || null);
     }
+    firstSeen.textContent = 'First seen';
+    firstSeen.title = 'Items first discovered by the monitor when the release date is outside the 30-day window or unavailable.';
   }
   function renderSources(sources = []) {
     const grid = $('sourceGrid');
@@ -216,16 +222,19 @@
     content.append(meta);
     const actions = node('div', 'alert-actions');
     const displayType = item.type === 'new_drop' ? 'first_seen' : item.type;
-    actions.append(node('span', `type-badge ${isTracked ? 'tracked' : displayType || ''}`, isTracked ? 'TRACKED ITEM' : (labels[displayType] || 'UPDATE')));
+    const displayLabelType = displayType === 'first_seen' && releaseDateWithinMonth(item.release_date)
+      ? 'new_item'
+      : displayType;
+    actions.append(node('span', `type-badge ${isTracked ? 'tracked' : displayLabelType || ''}`, isTracked ? 'TRACKED ITEM' : (labels[displayLabelType] || 'UPDATE')));
     const view = node('a', 'view-link', isTracked ? 'VIEW PRODUCT ↗' : 'VIEW ITEM ↗');
     view.href = safeLink(item.url); view.target = '_blank'; view.rel = 'noopener noreferrer';
     actions.append(view);
     content.append(actions);
     const price = node('div', 'alert-price');
     price.append(node('strong', '', money(item.price, item.currency)));
-    let extra = displayType === 'new_item' && item.release_date
+    let extra = displayLabelType === 'new_item' && item.release_date
       ? `Release date ${dateText(item.release_date)}`
-      : displayType === 'first_seen'
+      : displayLabelType === 'first_seen'
         ? 'First observed by PokéDrop Watch · Release date outside the 30-day window or unavailable'
         : (item.availability && item.availability !== 'unknown'
           ? item.availability.replaceAll('_', ' ')

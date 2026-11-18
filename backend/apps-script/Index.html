@@ -19,52 +19,94 @@
   const CHANNEL = 'pokedrop-watch-verification-v1';
 
   function postToSite(message, targetOrigin = ALLOWED_ORIGIN) {
-    // `top` avoids relying on an intermediate Google-hosted parent frame.
     window.top.postMessage(message, targetOrigin);
   }
 
-  function reply(requestId, result, targetOrigin) {
-    postToSite({ channel: CHANNEL, requestId, result }, targetOrigin);
+  function replyToCaller(requestId, result, targetOrigin, callerWindow) {
+    const message = { channel: CHANNEL, requestId, result };
+    try {
+      if (callerWindow && typeof callerWindow.postMessage === 'function') {
+        callerWindow.postMessage(message, targetOrigin);
+        return;
+      }
+    } catch (_error) {
+      // Fall through to the top-window route for nested Apps Script frames.
+    }
+    postToSite(message, targetOrigin);
+  }
+
+  function invokeServerAction(action, payload, onSuccess, onFailure) {
+    const runner = google.script.run
+      .withSuccessHandler(onSuccess)
+      .withFailureHandler(onFailure);
+
+    switch (action) {
+      case 'requestCode':
+        runner.requestVerificationCode(payload);
+        return;
+      case 'verifyCode':
+        runner.verifyVerificationCode(payload);
+        return;
+      case 'adminLogin':
+        runner.adminLogin(payload);
+        return;
+      case 'adminListSubscribers':
+        runner.adminListSubscribers(payload);
+        return;
+      case 'adminUpdateSubscriber':
+        runner.adminUpdateSubscriber(payload);
+        return;
+      case 'adminLogout':
+        runner.adminLogout(payload);
+        return;
+      case 'requestAdminPasswordReset':
+        runner.requestAdminPasswordReset(payload);
+        return;
+      case 'completeAdminPasswordReset':
+        runner.completeAdminPasswordReset(payload);
+        return;
+      default:
+        throw new Error('Unsupported backend action: ' + String(action || 'empty'));
+    }
   }
 
   window.addEventListener('message', event => {
-    // Accept only commands from the configured GitHub Pages origin and from
-    // the direct parent/top browsing context.
+    // Origin is the trust boundary. HtmlService may wrap the page in a nested
+    // Google-hosted frame, so do not assume the caller is window.parent/top.
     if (event.origin !== ALLOWED_ORIGIN) return;
-    if (event.source !== window.parent && event.source !== window.top) return;
 
     const message = event.data || {};
     if (message.channel !== CHANNEL || !message.requestId) return;
 
-    const runner = google.script.run
-      .withSuccessHandler(result => reply(message.requestId, result, event.origin))
-      .withFailureHandler(error => reply(message.requestId, {
-        ok: false,
-        message: (error && error.message) || 'Verification service is unavailable. Please try again.'
-      }, event.origin));
+    const requestId = String(message.requestId);
+    const targetOrigin = event.origin;
+    const callerWindow = event.source;
+    const reply = result => replyToCaller(requestId, result, targetOrigin, callerWindow);
 
-    const payload = message.payload || {};
-    const actions = {
-      requestCode: 'requestVerificationCode',
-      verifyCode: 'verifyVerificationCode',
-      adminLogin: 'adminLogin',
-      adminListSubscribers: 'adminListSubscribers',
-      adminUpdateSubscriber: 'adminUpdateSubscriber',
-      adminLogout: 'adminLogout',
-      requestAdminPasswordReset: 'requestAdminPasswordReset',
-      completeAdminPasswordReset: 'completeAdminPasswordReset'
-    };
-    const method = actions[message.action];
-    if (method) {
-      runner[method](payload);
-    } else {
-      reply(message.requestId, { ok: false, message: 'Unsupported backend action.' }, event.origin);
+    try {
+      invokeServerAction(
+        message.action,
+        message.payload || {},
+        result => reply(result || {
+          ok: false,
+          message: 'The Apps Script backend completed without returning a result.'
+        }),
+        error => reply({
+          ok: false,
+          message: (error && error.message) || 'Verification service is unavailable. Please try again.'
+        })
+      );
+    } catch (error) {
+      reply({
+        ok: false,
+        message: (error && error.message) || 'The verification request could not be started.'
+      });
     }
   });
 
-  // The site listens for this harmless readiness message before enabling
-  // backend requests. Address it directly to the configured site origin.
-  postToSite({ channel: CHANNEL, ready: true });
+  // Readiness only means the bridge page loaded. An actual request must still
+  // receive a correlated response from Apps Script before an email is claimed.
+  postToSite({ channel: CHANNEL, ready: true, bridgeVersion: 2 });
 </script>
 </body>
 </html>
