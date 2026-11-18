@@ -5,32 +5,36 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#c83232">
-  <title>PokéDrop Watch · Email alerts</title>
+  <title>PokéDrop Watch · Receive Notifications</title>
   <style>
     @font-face{font-family:"PKMN RBYGSC";src:url("https://n0nam3-bot.github.io/PokeDropWatch/assets/fonts/PKMN-RBYGSC.ttf") format("truetype");font-style:normal;font-weight:400;font-display:swap}
-    :root{--red:#c83232;--ink:#242424;--muted:#777875;--line:#e9e4df;--green:#28794e;--amber:#946a16;--shadow:0 12px 30px rgba(28,28,24,.05);font-family:"PKMN RBYGSC","Courier New",monospace;color:var(--ink);background:transparent;font-synthesis:none;text-rendering:optimizeLegibility}
+    :root{--red:#c83232;--ink:#242424;--muted:#777875;--line:#e9e4df;--green:#28794e;--amber:#946a16;--shadow:0 10px 24px rgba(28,28,24,.045);font-family:"PKMN RBYGSC";color:var(--ink);background:transparent;font-synthesis:none;text-rendering:optimizeLegibility}
     *{box-sizing:border-box;cursor:url("https://n0nam3-bot.github.io/PokeDropWatch/assets/icons/ultraball-8bit.svg") 8 8,auto}
-    html,body{margin:0;min-height:100%;background:transparent}body{padding:12px;font-size:12px}.portal{max-width:920px;margin:0 auto}.panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:clamp(16px,2.4vw,24px);box-shadow:var(--shadow)}
-    .eyebrow{margin:0 0 8px;color:var(--red);font-size:9px;font-weight:800;letter-spacing:1.5px}.intro{margin:0 0 15px}.intro h1{font-size:clamp(19px,2.7vw,25px);line-height:1.25;margin:0 0 8px}.intro p{font-size:10px;line-height:1.7;color:var(--muted);margin:0}
-    .group{border:0;padding:0;margin:17px 0 0}.group legend{font-size:10px;font-weight:800;margin-bottom:8px}.field{display:grid;gap:7px;margin:0 0 13px}.field label,.form-label{font-size:10px;font-weight:800}
-    .field input[type=email],.code-input{width:100%;height:42px;border:1px solid #ded8d2;border-radius:7px;padding:0 12px;font:12px "PKMN RBYGSC","Courier New",monospace;background:#fff;color:var(--ink);cursor:text}
-    input:focus{outline:2px solid #c8323233;border-color:#c97878}.choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.choice-grid label{display:flex;align-items:center;gap:8px;min-height:32px;padding:6px 8px;border:1px solid #eeece8;border-radius:6px;background:#fdfdfb;font-size:9px;line-height:1.35}.choice-grid input{width:14px;height:14px;margin:0;flex:0 0 auto;accent-color:var(--red)}
-    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.button{min-height:39px;padding:8px 13px;border:0;border-radius:7px;font:700 10px "PKMN RBYGSC","Courier New",monospace;cursor:url("https://n0nam3-bot.github.io/PokeDropWatch/assets/icons/ultraball-8bit.svg") 8 8,auto}.primary{background:var(--red);color:#fff}.secondary{background:#f0ece8;color:var(--ink)}.button:disabled{opacity:.55}
-    .status{margin:13px 0 0;padding:10px 11px;border-radius:7px;background:#f5f4f0;color:#666;font-size:9px;line-height:1.65;overflow-wrap:anywhere}.status:empty{display:none}.status.success{background:#edf7f0;color:var(--green)}.status.error{background:#fff0ed;color:#ad3831}.status.warning{background:#fff7e5;color:#875f15}
-    .divider{height:1px;background:#ece9e5;margin:18px 0}.unsubscribe-title{font-size:12px;margin:0 0 10px}.inline{display:flex;gap:8px;align-items:center}.inline .field{flex:1;min-width:0;margin:0}.inline .button{flex:0 0 auto}
-    .code-panel{margin-top:14px;padding:15px;border:1px solid #ead8d3;border-radius:9px;background:#fff9f7}.code-panel[hidden]{display:none}.code-panel h2{font-size:14px;margin:0 0 7px}.code-panel p{font-size:9px;color:var(--muted);line-height:1.6;margin:0 0 11px}.code-input{max-width:240px;font-size:18px;letter-spacing:7px;text-align:center}.code-panel .actions{margin-top:10px}.footnote{font-size:9px;line-height:1.6;color:#8a8983;margin:10px 2px 0}.honeypot{position:absolute!important;left:-10000px!important;top:auto!important;width:1px!important;height:1px!important;overflow:hidden!important}
-    @media(max-width:620px){body{padding:9px}.panel{padding:15px}.choice-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.choice-grid label{font-size:8px}.intro h1{font-size:19px}}
-    @media(max-width:420px){.inline{align-items:stretch;flex-direction:column}.inline .button{width:100%}.choice-grid{grid-template-columns:1fr 1fr}}
+    html,body{margin:0;min-height:100%;background:transparent}body{padding:8px;font-size:13px}.portal{width:100%;max-width:1240px;margin:0 auto}.panel{background:#fff;border:1px solid var(--line);border-radius:11px;padding:clamp(12px,1.5vw,18px);box-shadow:var(--shadow)}
+    .intro{margin:0 0 10px}.intro h1{font-size:22px;line-height:1.3;margin:0 0 6px}.intro p{font-size:12px;line-height:1.55;color:var(--muted);margin:0;max-width:980px}
+    .group{border:0;padding:0;margin:10px 0 0}.group legend{font-size:12px;font-weight:800;margin-bottom:6px}.field{display:grid;gap:5px;margin:0 0 8px}.field label,.form-label{font-size:11px;font-weight:800}
+    .field input[type=email],.code-input{width:100%;height:38px;border:1px solid #ded8d2;border-radius:7px;padding:0 10px;font:12px "PKMN RBYGSC";background:#fff;color:var(--ink);cursor:text}
+    input:focus{outline:2px solid #c8323233;border-color:#c97878}
+    .choice-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+    .choice-grid label{display:flex;align-items:center;gap:6px;min-height:29px;padding:5px 7px;border:1px solid #eeece8;border-radius:6px;background:#fdfdfb;font-size:10px;line-height:1.3;white-space:nowrap}
+    .choice-grid input{width:13px;height:13px;margin:0;flex:0 0 auto;accent-color:var(--red)}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.button{min-height:35px;padding:7px 12px;border:0;border-radius:7px;font:700 11px "PKMN RBYGSC";cursor:url("https://n0nam3-bot.github.io/PokeDropWatch/assets/icons/ultraball-8bit.svg") 8 8,auto}
+    .primary{background:var(--red);color:#fff}.secondary{background:#f0ece8;color:var(--ink)}.button:disabled{opacity:.55}
+    .status{margin:9px 0 0;padding:8px 10px;border-radius:7px;background:#f5f4f0;color:#666;font-size:10px;line-height:1.5;overflow-wrap:anywhere}.status:empty{display:none}.status.success{background:#edf7f0;color:var(--green)}.status.error{background:#fff0ed;color:#ad3831}.status.warning{background:#fff7e5;color:#875f15}
+    .divider{height:1px;background:#ece9e5;margin:12px 0 9px}.unsubscribe-title{font-size:13px;margin:0 0 7px}.inline{display:flex;gap:8px;align-items:end}.inline .field{flex:1;min-width:0;margin:0}.inline .button{flex:0 0 auto}
+    .code-panel{margin-top:10px;padding:10px 12px;border:1px solid #ead8d3;border-radius:8px;background:#fff9f7}.code-panel[hidden]{display:none}.code-panel h2{font-size:15px;margin:0 0 5px}.code-panel p{font-size:10px;color:var(--muted);line-height:1.5;margin:0 0 7px}.code-input{max-width:220px;font-size:16px;letter-spacing:6px;text-align:center}.code-panel .actions{margin-top:8px}.honeypot{position:absolute!important;left:-10000px!important;top:auto!important;width:1px!important;height:1px!important;overflow:hidden!important}.pd-help-guide-link{display:none}
+    @media(max-width:760px){body{padding:7px}.panel{padding:11px}.choice-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.choice-grid label{white-space:normal;font-size:9px;min-height:28px;padding:4px 5px}.group{margin-top:9px}.intro h1{font-size:19px}}
+    @media(max-width:480px){.choice-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.inline{align-items:stretch;flex-direction:column}.inline .button{width:100%}.field input[type=email]{height:38px}}
   </style>
 </head>
 <body class="page-notify">
   <main class="portal">
     <section class="panel">
       <div class="intro">
-        <p class="eyebrow">VERIFIED TRAINER ALERTS</p>
-        <h1>Apply for Pokémon drop notifications</h1>
-        <p>Enter your email and choose what you want to follow. A one-time code is sent to your mailbox; your application is saved after you verify it.</p>
+        <h1>Receive Notifications</h1>
+        <p>Enter your email and choose what you want to follow. A one-time code is sent to your mailbox, and your application is saved only after you verify it.</p>
       </div>
+      <p class="pd-help-guide-link"><a href="https://n0nam3-bot.github.io/PokeDropWatch/SOURCE_HEALTH.html" target="_top">How it works ↗</a></p>
 
       <form id="subscribeForm">
         <div class="honeypot" aria-hidden="true"><input id="websiteTrap" type="text" tabindex="-1" autocomplete="off"></div>
@@ -86,9 +90,8 @@
           </div>
         </form>
       </section>
-      <p id="status" class="status" role="status" aria-live="polite">Ready. Enter your email address and choose what to follow.</p>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
     </section>
-    <p class="footnote">PokéDrop Watch is a fan-made tracker and is not affiliated with Nintendo, The Pokémon Company, or any retailer.</p>
   </main>
 
   <script>
@@ -103,11 +106,9 @@
         box.textContent = message || '';
         box.className = 'status' + (type ? ' ' + type : '');
       }
-
       function selected(name) {
         return [...document.querySelectorAll('input[name="' + name + '"]:checked')].map(input => input.value);
       }
-
       function runServer(method, payload) {
         return new Promise((resolve, reject) => {
           const runner = google.script.run
@@ -119,13 +120,11 @@
               resolve(result);
             })
             .withFailureHandler(error => reject(new Error(error && error.message ? error.message : 'The secure email request could not be completed.')));
-
           if (method === 'request') runner.requestVerificationCode(payload);
           else if (method === 'verify') runner.verifyVerificationCode(payload);
           else reject(new Error('Unsupported verification action.'));
         });
       }
-
       function setBusy(value) {
         busy = value;
         ['subscribeButton', 'unsubscribeButton', 'verifyButton', 'resendButton', 'cancelCodeButton'].forEach(id => {
@@ -133,7 +132,6 @@
           if (button) button.disabled = value;
         });
       }
-
       function makeFlow(operation) {
         const email = (operation === 'subscribe' ? $('subscribeEmail').value : $('unsubscribeEmail').value).trim().toLowerCase();
         if (operation === 'subscribe') {
@@ -145,7 +143,6 @@
         }
         return { operation, email, categories: [], retailers: ['all'] };
       }
-
       async function requestCode(flow) {
         if (busy) return;
         setBusy(true);
@@ -162,10 +159,13 @@
           $('verificationHeading').textContent = flow.operation === 'unsubscribe' ? 'Confirm your unsubscribe' : 'Verify your email address';
           $('verificationMessage').textContent = 'Accepted the email request for ' + flow.email + '. Enter the six-digit code below. It expires in 10 minutes.';
           $('verificationCode').value = '';
-          $('verificationPanel').hidden = false;
+          const codePanel = $('verificationPanel');
+          const requestForm = flow.operation === 'unsubscribe' ? $('unsubscribeForm') : $('subscribeForm');
+          requestForm.insertAdjacentElement('afterend', codePanel);
+          codePanel.hidden = false;
           setStatus(result.message || 'Email request accepted. Check your inbox and spam folder.', 'success');
           $('verificationCode').focus({ preventScroll: true });
-          $('verificationPanel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          codePanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         } catch (error) {
           const message = error && error.message ? error.message : 'The verification email could not be sent.';
           if (/request could not be completed|try again later/i.test(message)) {
@@ -173,30 +173,20 @@
           } else {
             setStatus(message, 'error');
           }
-        } finally {
-          setBusy(false);
-        }
+        } finally { setBusy(false); }
       }
-
       $('subscribeForm').addEventListener('submit', event => {
         event.preventDefault();
-        try { requestCode(makeFlow('subscribe')); }
-        catch (error) { setStatus(error.message, 'error'); }
+        try { requestCode(makeFlow('subscribe')); } catch (error) { setStatus(error.message, 'error'); }
       });
-
       $('unsubscribeForm').addEventListener('submit', event => {
         event.preventDefault();
-        try { requestCode(makeFlow('unsubscribe')); }
-        catch (error) { setStatus(error.message, 'error'); }
+        try { requestCode(makeFlow('unsubscribe')); } catch (error) { setStatus(error.message, 'error'); }
       });
-
       $('verifyButton').addEventListener('click', async () => {
         if (!activeFlow || busy) return;
         const code = $('verificationCode').value.trim();
-        if (!/^\d{6}$/.test(code)) {
-          setStatus('Enter the six-digit code from the email.', 'error');
-          return;
-        }
+        if (!/^\d{6}$/.test(code)) { setStatus('Enter the six-digit code from the email.', 'error'); return; }
         setBusy(true);
         setStatus('Verifying your code and saving your request…');
         try {
@@ -206,15 +196,9 @@
           setStatus(result.message || 'Your email was verified successfully.', 'success');
         } catch (error) {
           setStatus(error && error.message ? error.message : 'The verification code could not be confirmed.', 'error');
-        } finally {
-          setBusy(false);
-        }
+        } finally { setBusy(false); }
       });
-
-      $('resendButton').addEventListener('click', () => {
-        if (!activeFlow || busy) return;
-        requestCode(activeFlow);
-      });
+      $('resendButton').addEventListener('click', () => { if (activeFlow && !busy) requestCode(activeFlow); });
       $('cancelCodeButton').addEventListener('click', () => {
         if (busy) return;
         activeFlow = null;
@@ -222,22 +206,46 @@
         $('verificationCode').value = '';
         setStatus('Verification cancelled. Your application has not been submitted.', 'info');
       });
-      $('verificationCode').addEventListener('input', event => {
-        event.target.value = event.target.value.replace(/\D/g, '').slice(0, 6);
-      });
-      $('verificationCode').addEventListener('keydown', event => {
-        if (event.key === 'Enter') $('verifyButton').click();
-      });
-
+      $('verificationCode').addEventListener('input', event => { event.target.value = event.target.value.replace(/\D/g, '').slice(0, 6); });
+      $('verificationCode').addEventListener('keydown', event => { if (event.key === 'Enter') $('verifyButton').click(); });
       document.querySelectorAll('input[name="retailer"]').forEach(input => input.addEventListener('change', () => {
         const all = document.querySelector('input[name="retailer"][value="all"]');
         if (input.value === 'all' && input.checked) {
           document.querySelectorAll('input[name="retailer"]').forEach(other => { if (other !== input) other.checked = false; });
-        } else if (input.checked && all) {
-          all.checked = false;
-        }
+        } else if (input.checked && all) all.checked = false;
       }));
     })();
   </script>
+  <script>
+    (() => {
+      const sprite='https://n0nam3-bot.github.io/PokeDropWatch/assets/icons/ultraball-8bit.png';
+      const reduced=matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const active=new Set();
+      function fire(x,y){if(reduced)return;const sx=Math.round(innerWidth*.5-18),sy=Math.round(innerHeight+18);const ball=document.createElement('img');ball.className='pd-throw-ball';ball.src=sprite;ball.alt='';ball.setAttribute('aria-hidden','true');ball.style.left=sx+'px';ball.style.top=sy+'px';ball.style.setProperty('--pd-dx',(Math.round(x)-sx)+'px');ball.style.setProperty('--pd-dy',(Math.round(y)-sy)+'px');document.body.append(ball);active.add(ball);requestAnimationFrame(()=>ball.classList.add('is-throwing'));setTimeout(()=>{ball.remove();active.delete(ball)},950)}
+      let press=null;const stop=()=>{if(!press)return;clearTimeout(press.hold);clearInterval(press.repeat);press=null};
+      document.addEventListener('pointerdown',e=>{e.stopImmediatePropagation();if(e.pointerType==='mouse'&&e.button!==0)return;if(e.target?.closest('input,textarea,select,option,[contenteditable="true"]'))return;stop();const p=press={x:e.clientX,y:e.clientY,long:false,hold:0,repeat:0};p.hold=setTimeout(()=>{if(press!==p)return;p.long=true;const fan=()=>{if(active.size<16)fire(Math.random()*innerWidth,Math.random()*innerHeight*.86+16)};fan();p.repeat=setInterval(fan,145)},1000)},{passive:true});
+      document.addEventListener('pointermove',e=>{if(press){press.x=e.clientX;press.y=e.clientY}},{passive:true});
+      const up=e=>{if(!press)return;const p=press;if(!p.long)fire(e.clientX??p.x,e.clientY??p.y);stop()};document.addEventListener('pointerup',up,{passive:true});document.addEventListener('pointercancel',stop,{passive:true});window.addEventListener('blur',stop);
+    })();
+  </script>
+  <style>
+    @font-face{font-family:"PKMN RBYGSC";src:url("https://n0nam3-bot.github.io/PokeDropWatch/assets/fonts/PKMN-RBYGSC.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+    html,body,body *,body *::before,body *::after,body *::placeholder{font-family:"PKMN RBYGSC" !important;font-synthesis:none !important}
+    body{font-size:12px !important;padding:7px !important}
+    .portal{width:100% !important;max-width:1240px !important}
+    .panel{padding:clamp(11px,1.4vw,17px) !important}
+    .intro h1{font-size:21px !important}.intro p{font-size:11px !important;line-height:1.5 !important}
+    .field label,.group legend{font-size:11px !important}.field{margin:0 0 7px !important}.group{margin-top:8px !important}
+    .choice-grid label{font-size:10px !important;min-height:27px !important;padding:4px 6px !important}
+    .button{font-size:10px !important;min-height:33px !important}.status{font-size:10px !important}
+    .unsubscribe-title{font-size:12px !important}.divider{margin:10px 0 7px !important}
+    .code-panel{margin-top:8px !important;padding:9px 11px !important}.code-panel h2{font-size:13px !important}.code-panel p{font-size:10px !important}
+    .pd-help-guide-link{display:none !important}
+    .pd-throw-ball{position:fixed;z-index:99999;left:0;top:0;width:36px;height:36px;object-fit:contain;image-rendering:pixelated;pointer-events:none;opacity:0;filter:drop-shadow(0 3px 0 rgba(0,0,0,.3))}
+    .pd-throw-ball.is-throwing{opacity:1;animation:pd-ball-flight .72s cubic-bezier(.16,.72,.25,1) forwards}
+    @keyframes pd-ball-flight{0%{transform:translate3d(0,0,0) rotate(0) scale(1);opacity:1}60%{transform:translate3d(var(--pd-dx),var(--pd-dy),0) rotate(440deg) scale(.92);opacity:1}84%{transform:translate3d(var(--pd-dx),var(--pd-dy),0) rotate(540deg) scale(.82);opacity:1}100%{transform:translate3d(var(--pd-dx),var(--pd-dy),0) rotate(560deg) scale(.45);opacity:0}}
+    @media(max-width:760px){.choice-grid{grid-template-columns:repeat(3,minmax(0,1fr)) !important}.choice-grid label{white-space:normal !important;font-size:9px !important}}
+    @media(max-width:480px){.choice-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important}.inline{align-items:stretch;flex-direction:column}.inline .button{width:100%}}
+  </style>
 </body>
 </html>

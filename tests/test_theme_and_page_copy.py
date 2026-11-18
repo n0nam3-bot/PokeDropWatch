@@ -29,18 +29,22 @@ class ThemeAndPageCopyTests(unittest.TestCase):
 
     def test_topbar_ball_moves_continuously_and_capture_animation_is_available(self):
         css = self.read('docs/theme-overrides.css')
+        uniform = self.read('docs/site-uniform.css')
         self.assertIn('@keyframes pd-ball-idle', css)
         self.assertIn('animation: pd-ball-idle', css)
         self.assertIn('@keyframes pd-ball-capture', css)
         self.assertIn('image-rendering:pixelated', css)
+        self.assertIn('@keyframes pd-page-ball-idle', uniform)
 
-    def test_pointer_click_throws_the_current_page_ball(self):
+    def test_pointer_click_and_hold_throws_the_current_page_ball(self):
         js = self.read('docs/page-enhancements.js')
         css = self.read('docs/theme-overrides.css')
         self.assertIn("document.addEventListener('pointerdown'", js)
-        self.assertIn('className = \'pd-throw-ball\'', js)
+        self.assertIn("ball.className = 'pd-throw-ball'", js)
         self.assertIn('pd-ball-flight', css)
         self.assertIn('--pd-dx', js)
+        self.assertIn('}, 1000);', js)
+        self.assertIn('setInterval', js)
 
     def test_first_seen_note_is_removed_and_new_discoveries_use_a_pixel_sprite(self):
         js = self.read('docs/page-enhancements.js')
@@ -50,14 +54,13 @@ class ThemeAndPageCopyTests(unittest.TestCase):
         self.assertIn("icon.src = './assets/icons/pokeball-8bit.png'", js)
         self.assertIn('capture-wiggle', js)
 
-    def test_alert_images_cannot_overflow_into_title_or_price_columns(self):
-        css = self.read('docs/theme-overrides.css')
-        self.assertIn('grid-template-columns:64px minmax(0,1fr) minmax(124px,150px)', css)
-        self.assertIn('width:64px !important', css)
-        self.assertIn('max-width:64px !important', css)
-        self.assertIn('grid-template-columns:56px minmax(0,1fr)', css)
-        self.assertIn('white-space:nowrap !important', css)
-        self.assertIn('font-variant-numeric:tabular-nums', css)
+    def test_alert_images_have_separate_wide_columns_and_are_clickable(self):
+        css = self.read('docs/site-uniform.css')
+        js = self.read('docs/page-enhancements.js')
+        self.assertIn('grid-template-columns: 108px minmax(0, 1fr) minmax(154px, 176px)', css)
+        self.assertIn('width: 108px !important', css)
+        self.assertIn("closest('.alert-product-image')", js)
+        self.assertIn("querySelector('.view-link')", js)
 
     def test_notify_verification_panel_is_below_submit_button_and_copy_is_updated(self):
         page = self.read('backend/apps-script/Subscribe.html')
@@ -67,17 +70,21 @@ class ThemeAndPageCopyTests(unittest.TestCase):
         self.assertNotIn('HOW IT WORKS', page)
         self.assertNotIn('Leave this field empty', page)
         self.assertIn('.honeypot{position:absolute', page)
+        self.assertIn('<h1>Receive Notifications</h1>', page)
 
-    def test_apps_script_runtime_transform_fixes_old_admin_and_notify_html(self):
+    def test_admin_and_notify_have_how_it_works_link_instead_of_collapsible_guide(self):
+        for name in ('Admin.html', 'Subscribe.html'):
+            page = self.read('backend/apps-script/' + name)
+            self.assertIn('pd-help-guide-link', page)
+            self.assertIn('SOURCE_HEALTH.html', page)
+            self.assertNotIn('<details', page)
+
+    def test_apps_script_runtime_transform_keeps_full_portal_logic(self):
         source = self.read('backend/apps-script/Code.gs')
-        self.assertIn("html.replace('Use the administrator credentials configured in Apps Script.', '')", source)
-        self.assertIn('html.replace(/<aside class="panel side">[\\s\\S]*?<\\/aside>/i,', source)
-        self.assertIn("html.replace('Google Apps Script accepted the email request for '", source)
-        self.assertIn('id="websiteTrap"', source)
-        self.assertIn('id="verificationPanel"', source)
-        self.assertIn("requestForm.insertAdjacentElement('afterend', codePanel)", source)
-        self.assertIn('How notifications work', source)
-        self.assertIn('How administrator tools work', source)
+        self.assertIn('function pokedropPortalOutput_', source)
+        self.assertIn('requestForm.insertAdjacentElement(\'afterend\', codePanel)', source)
+        self.assertIn('function requestVerificationCode(payload)', source)
+        self.assertIn('function adminLogin(payload)', source)
 
     def test_admin_and_notify_keep_the_shared_github_pages_shell(self):
         admin = self.read('docs/admin.html')
@@ -96,9 +103,10 @@ class ThemeAndPageCopyTests(unittest.TestCase):
 
     def test_service_worker_caches_current_pixel_assets_and_scripts(self):
         worker = self.read('docs/sw.js')
-        self.assertIn('pokedrop-shell-v15', worker)
-        self.assertIn('./theme-overrides.css', worker)
+        self.assertIn('pokedrop-shell-v16', worker)
+        self.assertIn('./site-uniform.css', worker)
         self.assertIn('./page-enhancements.js', worker)
+        self.assertIn('./assets/hero/pokeball-flight-8bit.png', worker)
         for filename in ('pokeball-8bit.png', 'ultraball-8bit.png', 'masterball-8bit.png'):
             self.assertIn(filename, worker)
 

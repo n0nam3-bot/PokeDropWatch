@@ -5,37 +5,40 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#a83232">
-  <title>PokéDrop Watch Admin</title>
+  <title>PokéDrop Watch Gym Management</title>
   <style>
     :root{color-scheme:light;--ink:#24201f;--muted:#746d69;--line:#e7dfda;--paper:#fff;--wash:#faf7f4;--red:#ad3035;--red-dark:#87262b;--green:#176b42;--amber:#8a5a10;--shadow:0 16px 46px rgba(52,31,25,.09)}
-    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top left,#f7e8e4 0,transparent 36rem),var(--wash);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}
-    .wrap{width:min(100% - 40px,1120px);margin:0 auto;padding:20px 0 24px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.01em}.ball{width:36px;height:36px;border:3px solid #292321;border-radius:50%;background:linear-gradient(to bottom,#e34c4e 0 45%,#292321 45% 55%,white 55%);position:relative}.ball:after{content:"";position:absolute;width:10px;height:10px;border:3px solid #292321;background:white;border-radius:50%;left:10px;top:10px}.tag{font-size:11px;letter-spacing:.17em;color:var(--muted);font-weight:800}.hero{margin-bottom:16px}.hero h1{font-size:clamp(28px,5vw,42px);line-height:1.08;margin:4px 0 8px}.hero p{margin:0;color:var(--muted)}.panel{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:clamp(20px,4vw,32px);box-shadow:var(--shadow);margin:18px 0}.panel h2{margin:0 0 16px;font-size:22px}.field{display:grid;gap:7px;margin:15px 0}.field label{font-size:14px;font-weight:700}.field input,.filter{width:100%;min-height:46px;padding:11px 13px;border:1px solid #d8cec8;border-radius:10px;background:#fff;color:var(--ink);font:inherit}.field input:focus,.filter:focus{outline:3px solid #ad303533;border-color:var(--red)}button{min-height:44px;border:0;border-radius:10px;padding:10px 16px;font:inherit;font-size:14px;font-weight:700;line-height:1.2;cursor:pointer}.primary{background:var(--red);color:white}.primary:hover{background:var(--red-dark)}.secondary{background:#f0e9e5;color:var(--ink)}.quiet{background:transparent;color:var(--red);padding-inline:8px}.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.row>*{flex:1}.status{min-height:22px;color:var(--muted);font-size:14px;margin:12px 0 0;overflow-wrap:anywhere}.status.error{color:#a5262b}.status.success{color:var(--green)}.status.warning{color:var(--amber)}[hidden]{display:none!important}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0}.stat{border:1px solid var(--line);border-radius:13px;padding:15px;background:#fff}.stat span{display:block;color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.12em}.stat strong{display:block;font-size:30px;margin-top:2px}.list-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:24px 0 12px}.list-head h2{margin:0;font-size:21px}.subscriber-list{display:grid;gap:10px}.subscriber{display:flex;justify-content:space-between;align-items:center;gap:18px;border:1px solid var(--line);border-radius:13px;padding:15px;background:white}.subscriber-main{min-width:0}.subscriber-main strong{display:block;overflow-wrap:anywhere}.meta{color:var(--muted);font-size:13px;margin:4px 0}.pill{display:inline-block;border-radius:30px;padding:3px 9px;background:#f0e9e5;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}.actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.actions button{min-height:36px;padding:8px 11px;font-size:12px}.empty{border:1px dashed #d8cec8;border-radius:12px;padding:24px;text-align:center;color:var(--muted);background:white}.foot{color:var(--muted);font-size:12px;text-align:center;margin-top:28px}
-    @media(max-width:600px){.wrap{width:min(100% - 24px,1120px);padding-top:14px}.top{margin-bottom:22px}.stats{gap:8px}.stat{padding:11px}.stat strong{font-size:24px}.subscriber{display:block}.actions{justify-content:flex-start;margin-top:12px}.list-head{align-items:flex-start;flex-direction:column}.list-head .filter{max-width:none}.row{display:grid}.row button{width:100%}}
+    *{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#f5f0df 0%,#f4f7ea 60%,#f8f7f0 100%);color:var(--ink);font:14px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}
+    .wrap{width:min(100% - 28px,1280px);margin:0 auto;padding:14px 0 18px}.hero{margin:0 0 14px;padding:20px 23px;border-radius:13px;background:linear-gradient(120deg,#1f573b,#387747);color:#fff;box-shadow:var(--shadow)}.tag{font-size:11px;letter-spacing:.16em;color:#ffe08b;font-weight:800}.hero h1{font-size:clamp(24px,3vw,34px);line-height:1.25;margin:5px 0 7px}.hero p{margin:0;color:#e8f1df;font-size:13px;line-height:1.6;max-width:780px}
+    .panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:clamp(16px,2vw,24px);box-shadow:var(--shadow);margin:13px 0}.panel h2{margin:0 0 13px;font-size:19px}.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:12px;font-weight:700}.field input,.filter{width:100%;min-height:42px;padding:9px 12px;border:1px solid #d8cec8;border-radius:8px;background:#fff;color:var(--ink);font:inherit}.field input:focus,.filter:focus{outline:3px solid #ad303533;border-color:var(--red)}button{min-height:40px;border:0;border-radius:8px;padding:9px 14px;font:inherit;font-size:12px;font-weight:700;line-height:1.2;cursor:pointer}.primary{background:var(--red);color:#fff}.primary:hover{background:var(--red-dark)}.secondary{background:#f0e9e5;color:var(--ink)}.quiet{background:transparent;color:var(--red);padding-inline:8px}.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.row>*{flex:1}.status{min-height:20px;color:var(--muted);font-size:12px;margin:10px 0 0;overflow-wrap:anywhere}.status:empty{display:none}.status.error{color:#a5262b}.status.success{color:var(--green)}.status.warning{color:var(--amber)}[hidden]{display:none!important}
+    .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}.stat{border:1px solid var(--line);border-radius:10px;padding:13px;background:#fff}.stat span{display:block;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.1em}.stat strong{display:block;font-size:26px;margin-top:2px}.list-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:20px 0 10px}.list-head h2{margin:0;font-size:18px}.subscriber-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr));gap:10px}.subscriber{display:flex;justify-content:space-between;align-items:center;gap:14px;border:1px solid var(--line);border-radius:11px;padding:13px;background:#fff;min-width:0}.subscriber-main{min-width:0}.subscriber-main strong{display:block;overflow-wrap:anywhere;font-size:13px}.meta{color:var(--muted);font-size:11px;line-height:1.55;margin:4px 0}.pill{display:inline-block;border-radius:30px;padding:3px 8px;background:#f0e9e5;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em}.actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;flex:0 0 auto}.actions button{min-height:33px;padding:7px 9px;font-size:11px}.empty{border:1px dashed #d8cec8;border-radius:10px;padding:18px;text-align:center;color:var(--muted);background:white;grid-column:1/-1}.pd-help-guide-link{display:none}
+    @media(max-width:620px){.wrap{width:min(100% - 20px,1280px);padding-top:10px}.hero{padding:17px}.stats{gap:7px}.stat{padding:10px}.stat strong{font-size:23px}.subscriber{display:block}.actions{justify-content:flex-start;margin-top:10px}.list-head{align-items:flex-start;flex-direction:column}.list-head .filter{max-width:none}.row{display:grid}.row button{width:100%}}
   </style>
 </head>
-<body>
+<body class="page-admin">
   <main class="wrap">
     <section class="hero">
-      <span class="tag">TRAINER ALERT MANAGEMENT</span>
-      <h1>Subscriber administration</h1>
-      <p>Sign in to review applications and manage alert subscriptions.</p>
+      <span class="tag">GYM MANAGEMENT</span>
+      <h1>Gym Management</h1>
+      <p>Sign in to allow trainer access and manage Pokémon Center notifications or subscriptions.</p>
     </section>
+    <p class="pd-help-guide-link"><a href="https://n0nam3-bot.github.io/PokeDropWatch/SOURCE_HEALTH.html" target="_top">How it works ↗</a></p>
 
     <section id="loginPanel" class="panel">
-      <h2>Administrator sign in</h2>
+      <h2>Gym Leader sign in</h2>
       <form id="loginForm" autocomplete="on">
-        <div class="field"><label for="adminEmail">Administrator email</label><input id="adminEmail" name="email" type="email" autocomplete="username" required></div>
+        <div class="field"><label for="adminEmail">Gym Leader email</label><input id="adminEmail" name="email" type="email" autocomplete="username" required></div>
         <div class="field"><label for="adminPassword">Password</label><input id="adminPassword" name="password" type="password" autocomplete="current-password" required></div>
         <div class="row"><button id="loginButton" class="primary" type="submit">Sign in</button></div>
       </form>
       <button id="forgotButton" class="quiet" type="button">Forgot password?</button>
-      <p id="loginStatus" class="status" role="status" aria-live="polite">Use the administrator credentials configured in Apps Script.</p>
+      <p id="loginStatus" class="status" role="status" aria-live="polite"></p>
     </section>
 
     <section id="resetPanel" class="panel" hidden>
-      <h2>Reset administrator password</h2>
+      <h2>Reset Gym Leader password</h2>
       <form id="resetRequestForm">
-        <div class="field"><label for="resetEmail">Administrator email</label><input id="resetEmail" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="resetEmail">Gym Leader email</label><input id="resetEmail" type="email" autocomplete="email" required></div>
         <button id="requestResetButton" class="primary" type="submit">Email reset code</button>
       </form>
       <div id="resetCodeFields" hidden>
@@ -45,24 +48,23 @@
           <button id="completeResetButton" class="primary" type="submit">Set new password</button>
         </form>
       </div>
-      <p id="resetStatus" class="status" role="status" aria-live="polite">A code is sent only when the address matches the configured administrator account.</p>
+      <p id="resetStatus" class="status" role="status" aria-live="polite">A reset code is sent only when the address matches the configured Gym Leader account.</p>
       <button id="backToLogin" class="quiet" type="button">Back to sign in</button>
     </section>
 
     <section id="dashboard" hidden>
       <div class="panel">
-        <div class="row" style="align-items:center"><div><span class="tag">ACCESS GRANTED</span><h2 style="margin:4px 0 0">Subscriber overview</h2><p class="meta" id="identity"></p></div><button id="signOutButton" class="secondary" type="button">Sign out</button></div>
+        <div class="row" style="align-items:center"><div><span class="tag" style="color:#28794e">ACCESS GRANTED</span><h2 style="margin:4px 0 0">Trainer overview</h2><p class="meta" id="identity"></p></div><button id="signOutButton" class="secondary" type="button">Sign out</button></div>
         <div class="stats">
           <div class="stat"><span>PENDING</span><strong id="pendingCount">0</strong></div>
           <div class="stat"><span>ACTIVE</span><strong id="activeCount">0</strong></div>
           <div class="stat"><span>OTHER</span><strong id="otherCount">0</strong></div>
         </div>
-        <div class="list-head"><h2>Applications and subscribers</h2><select id="subscriberFilter" class="filter" aria-label="Filter subscribers"><option value="all">All records</option><option value="pending">Pending</option><option value="active">Active</option><option value="suspended">Suspended</option><option value="rejected">Rejected</option><option value="unsubscribed">Unsubscribed</option><option value="removed">Removed</option></select></div>
-        <div id="subscriberList" class="subscriber-list"><div class="empty">Loading subscriber records…</div></div>
+        <div class="list-head"><h2>Trainer applications and subscriptions</h2><select id="subscriberFilter" class="filter" aria-label="Filter trainer subscriptions"><option value="all">All records</option><option value="pending">Pending</option><option value="active">Active</option><option value="suspended">Suspended</option><option value="rejected">Rejected</option><option value="unsubscribed">Unsubscribed</option><option value="removed">Removed</option></select></div>
+        <div id="subscriberList" class="subscriber-list"><div class="empty">Loading trainer records…</div></div>
         <p id="dataStatus" class="status" role="status" aria-live="polite"></p>
       </div>
     </section>
-    <p class="foot">Administrator sessions expire after one hour.</p>
   </main>
 
   <script>
@@ -75,7 +77,7 @@
 
       function setStatus(id, message, kind) {
         const node = $(id);
-        node.textContent = message || '';
+        node.textContent = String(message || '').replace(/administrator/gi, 'Gym Leader');
         node.className = 'status' + (kind ? ' ' + kind : '');
       }
 
@@ -96,7 +98,7 @@
           case 'adminLogout': runner.adminLogout(payload); break;
           case 'requestAdminPasswordReset': runner.requestAdminPasswordReset(payload); break;
           case 'completeAdminPasswordReset': runner.completeAdminPasswordReset(payload); break;
-          default: onFailure(new Error('Unsupported administrator operation.'));
+          default: onFailure(new Error('Unsupported Gym Leader operation.'));
         }
       }
 
@@ -124,7 +126,7 @@
         if (!rows.length) {
           const empty = document.createElement('div');
           empty.className = 'empty';
-          empty.textContent = 'No subscriber records in this category.';
+          empty.textContent = 'No trainer records in this category.';
           list.append(empty);
           return;
         }
@@ -153,17 +155,17 @@
             actions.append(button);
           };
           if (item.status === 'pending') {
-            addAction('Approve', 'active', 'Application approved', true);
-            addAction('Reject', 'rejected', 'Application rejected', false);
+            addAction('Approve', 'active', 'Application approved by Gym Leader', true);
+            addAction('Reject', 'rejected', 'Application rejected by Gym Leader', false);
           } else if (item.status === 'active') {
-            addAction('Suspend', 'suspended', 'Subscription suspended', false);
-            addAction('Remove', 'removed', 'Subscription removed by administrator', false);
+            addAction('Suspend', 'suspended', 'Subscription suspended by Gym Leader', false);
+            addAction('Remove', 'removed', 'Subscription removed by Gym Leader', false);
           } else if (item.status === 'suspended') {
-            addAction('Reactivate', 'active', 'Subscription reactivated', true);
-            addAction('Remove', 'removed', 'Subscription removed by administrator', false);
+            addAction('Reactivate', 'active', 'Subscription reactivated by Gym Leader', true);
+            addAction('Remove', 'removed', 'Subscription removed by Gym Leader', false);
           } else if (item.status === 'rejected' || item.status === 'unsubscribed') {
-            addAction('Approve', 'active', 'Previously closed application approved', true);
-            addAction('Remove', 'removed', 'Application removed by administrator', false);
+            addAction('Approve', 'active', 'Previously closed application approved by Gym Leader', true);
+            addAction('Remove', 'removed', 'Application removed by Gym Leader', false);
           }
           card.append(main, actions);
           list.append(card);
@@ -171,24 +173,24 @@
       }
 
       function loadSubscribers() {
-        setStatus('dataStatus', 'Loading subscriber records…', '');
+        setStatus('dataStatus', 'Loading trainer records…', '');
         invoke('adminListSubscribers', { sessionToken }, result => {
           subscribers = Array.isArray(result.subscribers) ? result.subscribers : [];
           subscribers.sort((a, b) => Date.parse(b.createdAt || '') - Date.parse(a.createdAt || ''));
           $('identity').textContent = result.email || '';
           renderSubscribers();
-          setStatus('dataStatus', 'Subscriber records loaded.', 'success');
+          setStatus('dataStatus', 'Trainer records loaded.', 'success');
         }, error => {
           subscribers = [];
           renderSubscribers();
-          setStatus('dataStatus', 'You are signed in, but Firestore subscriber records could not be loaded: ' + error.message + ' Check FIREBASE_SERVICE_ACCOUNT_JSON, Cloud Datastore User IAM permission, and the Firestore API.', 'warning');
+          setStatus('dataStatus', 'You are signed in, but trainer records could not be loaded: ' + error.message + ' Check FIREBASE_SERVICE_ACCOUNT_JSON, Cloud Datastore User IAM permission, and the Firestore API.', 'warning');
         });
       }
 
       function updateSubscriber(uid, status, note, button) {
         button.disabled = true;
         invoke('adminUpdateSubscriber', { sessionToken, uid, status, note }, result => {
-          setStatus('dataStatus', result.message || 'Subscriber updated.', 'success');
+          setStatus('dataStatus', result.message || 'Trainer record updated.', 'success');
           loadSubscribers();
         }, error => {
           setStatus('dataStatus', error.message, 'error');
@@ -201,7 +203,7 @@
         event.preventDefault();
         const button = $('loginButton');
         button.disabled = true;
-        setStatus('loginStatus', 'Checking administrator credentials…', '');
+        setStatus('loginStatus', 'Checking Gym Leader credentials…', '');
         invoke('adminLogin', {
           email: $('adminEmail').value.trim().toLowerCase(),
           password: $('adminPassword').value
@@ -223,7 +225,7 @@
         $('loginPanel').hidden = true;
         $('resetPanel').hidden = false;
         $('resetCodeFields').hidden = true;
-        setStatus('resetStatus', 'A reset code will only be sent if this email matches the configured administrator account.', '');
+        setStatus('resetStatus', 'A reset code is sent only if this email matches the configured Gym Leader account.', '');
       });
 
       $('resetRequestForm').addEventListener('submit', event => {
@@ -275,7 +277,7 @@
       $('subscriberFilter').addEventListener('change', renderSubscribers);
       $('signOutButton').addEventListener('click', signOut);
       $('resetCode').addEventListener('input', event => {
-        event.target.value = event.target.value.replace(/\\D/g, '').slice(0, 6);
+        event.target.value = event.target.value.replace(/\D/g, '').slice(0, 6);
       });
 
       function signOut() {
@@ -290,5 +292,56 @@
       }
     })();
   </script>
+  <script>
+    // The portal is inside an iframe; capture its own pointer gestures here.
+    (() => {
+      const sprite = 'https://n0nam3-bot.github.io/PokeDropWatch/assets/icons/masterball-8bit.png';
+      const reduced = matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const active = new Set();
+      function fire(x,y) {
+        if (reduced) return;
+        const sx = Math.round(innerWidth * .5 - 18), sy = Math.round(innerHeight + 18);
+        const ball = document.createElement('img');
+        ball.className='pd-throw-ball'; ball.src=sprite; ball.alt=''; ball.setAttribute('aria-hidden','true');
+        ball.style.left=sx+'px'; ball.style.top=sy+'px';
+        ball.style.setProperty('--pd-dx',(Math.round(x)-sx)+'px'); ball.style.setProperty('--pd-dy',(Math.round(y)-sy)+'px');
+        document.body.append(ball); active.add(ball); requestAnimationFrame(()=>ball.classList.add('is-throwing'));
+        setTimeout(()=>{ball.remove();active.delete(ball)},950);
+      }
+      let press=null;
+      const stop=()=>{if(!press)return;clearTimeout(press.hold);clearInterval(press.repeat);press=null};
+      document.addEventListener('pointerdown',e=>{
+        e.stopImmediatePropagation();
+        if(e.pointerType==='mouse'&&e.button!==0)return;
+        if(e.target?.closest('input,textarea,select,option,[contenteditable="true"]'))return;
+        stop(); const p=press={x:e.clientX,y:e.clientY,long:false,hold:0,repeat:0};
+        p.hold=setTimeout(()=>{if(press!==p)return;p.long=true;const fan=()=>{if(active.size<16)fire(Math.random()*innerWidth,Math.random()*innerHeight*.86+16)};fan();p.repeat=setInterval(fan,145)},1000);
+      },{passive:true});
+      document.addEventListener('pointermove',e=>{if(press){press.x=e.clientX;press.y=e.clientY}},{passive:true});
+      const up=e=>{if(!press)return;const p=press;if(!p.long)fire(e.clientX??p.x,e.clientY??p.y);stop()};
+      document.addEventListener('pointerup',up,{passive:true});
+      document.addEventListener('pointercancel',stop,{passive:true});
+      window.addEventListener('blur',stop);
+    })();
+  </script>
+  <style>
+    @font-face{font-family:"PKMN RBYGSC";src:url("https://n0nam3-bot.github.io/PokeDropWatch/assets/fonts/PKMN-RBYGSC.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+    html,body,body *,body *::before,body *::after,body *::placeholder{font-family:"PKMN RBYGSC" !important;font-synthesis:none !important}
+    body{font-size:13px !important;padding:10px !important;background:linear-gradient(135deg,#f4f0df,#f4f8ec 65%,#fbf8ef) !important}
+    .wrap{width:min(100% - 24px,1280px) !important;max-width:1280px !important;padding:10px 0 12px !important}
+    .hero{margin-bottom:10px !important;padding:17px 20px !important}
+    .hero h1{font-size:25px !important}.hero p{font-size:12px !important}
+    .panel{padding:16px !important;margin:10px 0 !important;border-radius:11px !important}
+    .panel h2{font-size:17px !important}.field{margin:10px 0 !important}.field label{font-size:11px !important}
+    .field input,.filter{min-height:39px !important;font-size:12px !important}
+    button{min-height:36px !important;font-size:11px !important}
+    .status{font-size:11px !important}.stat strong{font-size:24px !important}
+    .stat span{font-size:9px !important}.meta{font-size:10px !important}.subscriber-main strong{font-size:12px !important}
+    .actions button{font-size:10px !important}.pd-help-guide-link{display:none !important}
+    .pd-throw-ball{position:fixed;z-index:99999;left:0;top:0;width:36px;height:36px;object-fit:contain;image-rendering:pixelated;pointer-events:none;opacity:0;filter:drop-shadow(0 3px 0 rgba(0,0,0,.3))}
+    .pd-throw-ball.is-throwing{opacity:1;animation:pd-ball-flight .72s cubic-bezier(.16,.72,.25,1) forwards}
+    @keyframes pd-ball-flight{0%{transform:translate3d(0,0,0) rotate(0) scale(1);opacity:1}60%{transform:translate3d(var(--pd-dx),var(--pd-dy),0) rotate(440deg) scale(.92);opacity:1}84%{transform:translate3d(var(--pd-dx),var(--pd-dy),0) rotate(540deg) scale(.82);opacity:1}100%{transform:translate3d(var(--pd-dx),var(--pd-dy),0) rotate(560deg) scale(.45);opacity:0}}
+    @media(max-width:620px){.wrap{width:100% !important}.subscriber{display:block}.actions{justify-content:flex-start;margin-top:9px}.list-head{align-items:flex-start;flex-direction:column}.list-head .filter{width:100%}}
+  </style>
 </body>
 </html>
