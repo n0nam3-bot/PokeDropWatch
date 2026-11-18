@@ -1,4 +1,4 @@
-const CACHE = 'pokedrop-shell-v12';
+const CACHE = 'pokedrop-shell-v13';
 const SHELL = [
   './', './index.html', './admin.html', './notify.html', './styles.css', './app.js',
   './subscriptions.js', './admin.js', './bridge-transport.js', './subscription-backend-config.js',
@@ -16,13 +16,13 @@ self.addEventListener('activate', event => event.waitUntil(
   )).then(() => self.clients.claim())
 ));
 
-// Network-first: pages and code refresh from GitHub Pages. Only the app shell
-// is cached for offline use; public state JSON is always requested from network.
+// Always request current HTML and scripts from GitHub Pages first. This avoids
+// keeping an older redirect-only admin/notify shell in the regular browser profile.
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   if (url.origin !== self.location.origin || url.pathname.endsWith('/data/state.json')) return;
   if (event.request.method !== 'GET') return;
-  event.respondWith(fetch(event.request).then(response => {
+  event.respondWith(fetch(new Request(event.request, { cache: 'no-store' })).then(response => {
     if (response && response.ok) {
       const copy = response.clone();
       caches.open(CACHE).then(cache => cache.put(event.request, copy));

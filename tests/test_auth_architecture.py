@@ -24,14 +24,13 @@ class AuthArchitectureTests(unittest.TestCase):
         self.assertNotIn('categoryLabel,', admin.split("from './firebase-client.js'")[0])
         self.assertNotIn('retailerLabel', client)
 
-    def test_subscriptions_use_a_top_level_apps_script_portal_from_notify_page(self):
+    def test_subscriptions_use_direct_apps_script_portal_on_notify_page(self):
         home = (ROOT / 'docs' / 'index.html').read_text(encoding='utf-8')
         notify = (ROOT / 'docs' / 'notify.html').read_text(encoding='utf-8')
         portal = (ROOT / 'backend' / 'apps-script' / 'Subscribe.html').read_text(encoding='utf-8')
         self.assertIn('href="./notify.html"', home)
-        self.assertNotIn('<iframe', notify)
-        self.assertIn('window.location.replace(portalUrl)', notify)
         self.assertIn('exec?page=subscribe', notify)
+        self.assertNotIn('subscriptionBackendFrame', home + notify)
         self.assertIn('google.script.run', portal)
         self.assertIn('runner.requestVerificationCode(payload)', portal)
         self.assertIn('runner.verifyVerificationCode(payload)', portal)
@@ -42,14 +41,15 @@ class AuthArchitectureTests(unittest.TestCase):
         self.assertIn('allow read, write: if false;', rules)
         self.assertNotIn('replace-with-your-admin-email@example.com', rules)
 
-    def test_public_subscription_form_no_longer_loads_any_hidden_or_embedded_bridge(self):
-        home = (ROOT / 'docs' / 'index.html').read_text(encoding='utf-8')
-        notify = (ROOT / 'docs' / 'notify.html').read_text(encoding='utf-8')
-        self.assertNotIn('subscriptionBackendFrame', home)
-        self.assertNotIn('subscriptionPortalFrame', home)
-        self.assertNotIn('src="./subscriptions.js"', home)
-        self.assertNotIn('<iframe', notify)
-        self.assertIn('window.location.replace(portalUrl)', notify)
+    def test_admin_message_listener_is_registered_before_iframe_navigation(self):
+        admin = (ROOT / 'docs' / 'admin.js').read_text(encoding='utf-8')
+        self.assertLess(admin.index("window.addEventListener('message'"), admin.index('frame.src = subscriptionBackendUrl'))
+
+    def test_public_subscription_form_is_on_dedicated_notify_page(self):
+        page = (ROOT / 'docs' / 'index.html').read_text(encoding='utf-8')
+        self.assertNotIn('subscriptionBackendFrame', page)
+        self.assertNotIn('src="./subscriptions.js"', page)
+        self.assertIn('href="./notify.html"', page)
 
     def test_verification_and_reset_codes_keep_the_original_expiry(self):
         source = (ROOT / 'backend' / 'apps-script' / 'Code.gs').read_text(encoding='utf-8')
@@ -57,29 +57,29 @@ class AuthArchitectureTests(unittest.TestCase):
         self.assertGreaterEqual(source.count('const remainingSeconds = Math.ceil((Number(session.expiresAt || 0) - Date.now()) / 1000);'), 2)
         self.assertIn('admin_reset_latest_', source)
 
-    def test_service_worker_cache_version_is_bumped_for_portal_navigation_change(self):
+    def test_old_public_firebase_setup_page_is_not_in_service_worker_shell(self):
         worker = (ROOT / 'docs' / 'sw.js').read_text(encoding='utf-8')
-        self.assertIn('pokedrop-shell-v12', worker)
+        self.assertIn('pokedrop-shell-v13', worker)
         self.assertIn("'./bridge-transport.js'", worker)
         self.assertNotIn("'./FIREBASE_SETUP.html'", worker)
 
-    def test_admin_portal_is_routed_and_opened_as_a_top_level_page(self):
+    def test_standalone_admin_portal_is_routed_by_apps_script(self):
         source = (ROOT / 'backend' / 'apps-script' / 'doGet_REPLACEMENT.txt').read_text(encoding='utf-8')
+        admin = (ROOT / 'backend' / 'apps-script' / 'Admin.html').read_text(encoding='utf-8')
         landing = (ROOT / 'docs' / 'admin.html').read_text(encoding='utf-8')
         self.assertIn("page === 'admin'", source)
-        self.assertIn("pokedropPortalOutput_('Admin'", source)
+        self.assertIn("createHtmlOutputFromFile('Admin')", source)
+        self.assertIn('google.script.run', admin)
         self.assertIn('exec?page=admin', landing)
-        self.assertIn('window.location.replace(portalUrl)', landing)
-        self.assertNotIn('<iframe', landing)
-        self.assertIn('google.script.run', (ROOT / 'backend' / 'apps-script' / 'Admin.html').read_text(encoding='utf-8'))
 
-    def test_admin_shell_opens_apps_script_instead_of_embedding_it(self):
+    def test_admin_stays_on_github_pages_and_embeds_apps_script(self):
         landing = (ROOT / 'docs' / 'admin.html').read_text(encoding='utf-8')
-        self.assertNotIn('<iframe', landing)
-        self.assertIn('href="https://script.google.com/macros/s/', landing)
-        self.assertIn('window.location.replace(portalUrl)', landing)
+        source = (ROOT / 'backend' / 'apps-script' / 'doGet_REPLACEMENT.txt').read_text(encoding='utf-8')
+        self.assertIn('<iframe', landing)
         self.assertIn('href="./#top"', landing)
-        self.assertIn('href="./#alerts"', landing)
+        self.assertNotIn('window.location.replace', landing)
+        self.assertNotIn('http-equiv="refresh"', landing)
+        self.assertIn('setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)', source)
 
     def test_admin_uses_same_pokemon_font_as_public_site(self):
         source = (ROOT / 'backend' / 'apps-script' / 'doGet_REPLACEMENT.txt').read_text(encoding='utf-8')
@@ -91,15 +91,23 @@ class AuthArchitectureTests(unittest.TestCase):
         self.assertIn('data-filter="first_seen"', page)
         self.assertIn('>New items</button>', page)
 
-    def test_portal_navigation_matches_the_public_site_and_has_one_brand_header(self):
+    def test_admin_shell_matches_public_site_navigation(self):
+        landing = (ROOT / 'docs' / 'admin.html').read_text(encoding='utf-8')
+        self.assertIn('<small>WATCH</small>', landing)
+        self.assertIn('AUTOMATED WATCH', landing)
+        self.assertIn('class="bottom-bar"', landing)
+        for href in ('./#top', './#alerts', './notify.html', './admin.html', 'https://github.com/n0nam3-bot/PokeDropWatch'):
+            self.assertIn(href, landing)
+        self.assertIn('aria-current="page"', landing)
+
+    def test_embedded_admin_removes_duplicate_site_branding(self):
         source = (ROOT / 'backend' / 'apps-script' / 'doGet_REPLACEMENT.txt').read_text(encoding='utf-8')
         admin = (ROOT / 'backend' / 'apps-script' / 'Admin.html').read_text(encoding='utf-8')
-        for label in ('PokéDrop', 'WATCH', 'AUTOMATED WATCH', 'Home', 'Alerts', 'Notify', 'Admin', 'GitHub'):
-            self.assertIn(label, source)
-        self.assertIn('class="pd-site-topbar"', source)
-        self.assertIn('class="pd-bottom-bar"', source)
+        self.assertIn("page === 'admin'", source)
+        self.assertIn("pokedropEmbeddedOutput_(HtmlService.createHtmlOutputFromFile('Admin')", source)
         self.assertNotIn('<header class="top">', admin)
         self.assertNotIn('PokéDrop Watch · Administrator sessions expire after one hour.', admin)
+        self.assertIn('Administrator sessions expire after one hour.', admin)
 
     def test_apps_script_email_uses_notification_mailbox_display_name(self):
         source = (ROOT / 'backend' / 'apps-script' / 'Code.gs').read_text(encoding='utf-8')
