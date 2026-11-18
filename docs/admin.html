@@ -19,30 +19,39 @@
       -webkit-backdrop-filter: blur(12px);
       box-shadow: 0 1px 0 rgba(30,30,25,.07);
     }
-    .admin-embed-main { max-width: 1280px; margin: 0 auto; padding: 0 0 12px; }
+    .admin-embed-main { max-width: 1280px; margin: 0 auto; padding: 0; }
     #adminPortalFrame {
       display: block;
       width: 100%;
-      height: calc(100vh - 79px);
-      height: calc(100dvh - 79px);
-      min-height: 520px;
+      height: calc(100vh - var(--topbar-height) - var(--bottom-bar-height) - env(safe-area-inset-bottom));
+      height: calc(100dvh - var(--topbar-height) - var(--bottom-bar-height) - env(safe-area-inset-bottom));
+      min-height: 420px;
       border: 0;
       background: #f7f7f4;
     }
-    @media (max-width: 600px) {
+    .bottom-bar a[aria-current="page"] {
+      background: #fff2ee;
+      color: var(--red-dark);
+    }
+    @media (max-width: 700px) {
       .admin-embed-main { padding-bottom: env(safe-area-inset-bottom); }
-      #adminPortalFrame { height: calc(100vh - 65px); height: calc(100dvh - 65px); min-height: 500px; }
+      #adminPortalFrame { min-height: 420px; }
     }
   </style>
 </head>
 <body>
   <div class="site-shell admin-embed-shell">
-    <header class="topbar admin-embed-topbar">
-      <a class="brand" href="./" aria-label="PokéDrop Watch main page">
+    <header class="topbar admin-embed-topbar" id="pageTop">
+      <a class="brand" href="./" aria-label="PokéDrop Watch home">
         <span class="pokeball" aria-hidden="true"><i></i></span>
-        <span><strong>PokéDrop</strong><small>ADMIN</small></span>
+        <span><strong>PokéDrop</strong><small>WATCH</small></span>
       </a>
-      <a class="text-link" href="./" aria-label="Return to the main PokéDrop Watch page">← Main website</a>
+      <div class="topbar-right">
+        <span class="live-pill"><span class="live-dot"></span> AUTOMATED WATCH</span>
+        <button id="refreshAdminButton" class="icon-button" type="button" aria-label="Refresh admin portal" title="Refresh admin portal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M5.6 9a7 7 0 0 1 11.8-2L20 12M4 12l2.6 5a7 7 0 0 0 11.8-2"/></svg>
+        </button>
+      </div>
     </header>
     <main class="admin-embed-main">
       <iframe
@@ -55,5 +64,17 @@
       ></iframe>
     </main>
   </div>
+  <nav class="bottom-bar" aria-label="Quick navigation">
+    <div class="bottom-bar-inner">
+      <a href="./#pageTop"><span aria-hidden="true">⌂</span><small>Home</small></a>
+      <a href="./#alerts"><span aria-hidden="true">▤</span><small>Alerts</small></a>
+      <a href="./#subscriptions"><span aria-hidden="true">✉</span><small>Notify</small></a>
+      <a href="./admin.html" aria-current="page"><span aria-hidden="true">⚙</span><small>Admin</small></a>
+      <a href="https://github.com/n0nam3-bot/PokeDropWatch" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">↗</span><small>GitHub</small></a>
+    </div>
+  </nav>
+  <script>
+    document.getElementById('refreshAdminButton').addEventListener('click', () => window.location.reload());
+  </script>
 </body>
 </html>

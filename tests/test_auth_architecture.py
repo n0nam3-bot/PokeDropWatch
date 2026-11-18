@@ -86,6 +86,20 @@ class AuthArchitectureTests(unittest.TestCase):
         self.assertIn('data-filter="first_seen"', page)
         self.assertIn('>New items</button>', page)
 
+    def test_admin_shell_matches_public_site_navigation(self):
+        landing = (ROOT / 'docs' / 'admin.html').read_text(encoding='utf-8')
+        self.assertIn('<small>WATCH</small>', landing)
+        self.assertIn('AUTOMATED WATCH', landing)
+        self.assertIn('class="bottom-bar"', landing)
+        for href in ('./#pageTop', './#alerts', './#subscriptions', './admin.html', 'https://github.com/n0nam3-bot/PokeDropWatch'):
+            self.assertIn(href, landing)
+        self.assertIn('aria-current="page"', landing)
+
+    def test_embedded_admin_removes_duplicate_site_branding(self):
+        source = (ROOT / 'backend' / 'apps-script' / 'doGet_REPLACEMENT.txt').read_text(encoding='utf-8')
+        self.assertIn('replace(/<header class="top">[\\s\\S]*?<\\/header>/', source)
+        self.assertIn('Administrator sessions expire after one hour.', source)
+
     def test_apps_script_email_uses_notification_mailbox_display_name(self):
         source = (ROOT / 'backend' / 'apps-script' / 'Code.gs').read_text(encoding='utf-8')
         self.assertIn('EMAIL_FROM_NAME', source)

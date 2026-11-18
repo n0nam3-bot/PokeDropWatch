@@ -1,5 +1,5 @@
 Replace the existing doGet() function in Code.gs with this complete function.
-Keep the rest of Code.gs unchanged.
+Keep the rest of Code.gs unchanged. Keep the existing Admin.html file unchanged.
 
 function doGet(e) {
   const page = String(e && e.parameter && e.parameter.page || '').trim().toLowerCase();
@@ -21,7 +21,16 @@ function doGet(e) {
         }
       </style>
     `;
-    const themedContent = adminFile.getContent().replace('</head>', fontCss + '</head>');
+
+    // The GitHub Pages shell owns the one shared site header and bottom navigation.
+    // Remove the duplicate branding header/footer from the embedded Admin document.
+    const cleanedContent = adminFile.getContent()
+      .replace(/<header class="top">[\s\S]*?<\/header>/, '')
+      .replace(
+        /<p class="foot">PokéDrop Watch · Administrator sessions expire after one hour\.<\/p>/,
+        '<p class="foot">Administrator sessions expire after one hour.</p>'
+      );
+    const themedContent = cleanedContent.replace('</head>', fontCss + '</head>');
     return HtmlService.createHtmlOutput(themedContent)
       .setTitle('PokéDrop Watch Admin')
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
