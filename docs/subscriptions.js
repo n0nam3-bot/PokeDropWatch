@@ -1,3 +1,4 @@
+import './bridge-transport.js';
 import { subscriptionBackendUrl, isSubscriptionBackendConfigured } from './subscription-backend-config.js';
 
 (() => {
@@ -36,17 +37,17 @@ import { subscriptionBackendUrl, isSubscriptionBackendConfigured } from './subsc
     if (bridgeReady) return Promise.resolve();
     return Promise.race([
       readyPromise,
-      new Promise((_, reject) => setTimeout(() => reject(new Error('The email verification service has not loaded. Check the Apps Script deployment URL in docs/subscription-backend-config.js.')), 20000))
+      new Promise((_, reject) => setTimeout(() => reject(new Error('The email verification bridge did not announce that it loaded. Confirm that Index.html is updated in the deployed Apps Script version and that SITE_ORIGIN is https://n0nam3-bot.github.io.')), 20000))
     ]);
   }
 
   async function callBackend(action, payload) {
     await waitForBridge();
-    const requestId = (globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`);
+    const requestId = globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`;
     return new Promise((resolve, reject) => {
       const timer = setTimeout(() => {
         pending.delete(requestId);
-        reject(new Error('The verification service did not respond. Please try again.'));
+        reject(new Error('The email verification bridge loaded but did not return a response. Please try again.'));
       }, 30000);
       pending.set(requestId, result => {
         clearTimeout(timer);
@@ -107,10 +108,9 @@ import { subscriptionBackendUrl, isSubscriptionBackendConfigured } from './subsc
         resolve(message.result || { ok: false, message: 'The verification service returned an empty response.' });
       }
     });
-    // Register the message listener before navigating the iframe. Apps Script
-    // can post its ready signal immediately after the document loads.
     frame.addEventListener('load', () => {
-      // The child also sends a ready message; this is only a diagnostic fallback.
+      // Readiness is confirmed by the Apps Script postMessage, not by an iframe
+      // load event (Google can also load an error document with HTTP 200).
     });
     frame.src = subscriptionBackendUrl;
 

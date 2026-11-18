@@ -1,3 +1,4 @@
+import './bridge-transport.js';
 import { subscriptionBackendUrl, isSubscriptionBackendConfigured } from './subscription-backend-config.js';
 
 (() => {
@@ -44,7 +45,7 @@ import { subscriptionBackendUrl, isSubscriptionBackendConfigured } from './subsc
     if (bridgeReady) return Promise.resolve();
     return Promise.race([
       bridgeReadyPromise,
-      new Promise((_, reject) => setTimeout(() => reject(new Error('The admin service has not loaded. Check the Apps Script /exec URL in docs/subscription-backend-config.js and redeploy Apps Script.')), 20000))
+      new Promise((_, reject) => setTimeout(() => reject(new Error('The Apps Script bridge did not announce that it loaded. Confirm that Index.html is updated in the deployed Apps Script version and that SITE_ORIGIN is https://n0nam3-bot.github.io.'), 20000))
     ]);
   }
 
@@ -54,7 +55,7 @@ import { subscriptionBackendUrl, isSubscriptionBackendConfigured } from './subsc
     return new Promise((resolve, reject) => {
       const timer = setTimeout(() => {
         pending.delete(requestId);
-        reject(new Error('The admin service did not respond. Check Apps Script → Executions.'));
+        reject(new Error('The admin bridge loaded but did not return a response. Check Apps Script → Executions.'));
       }, 30000);
       pending.set(requestId, result => {
         clearTimeout(timer);
@@ -134,7 +135,19 @@ import { subscriptionBackendUrl, isSubscriptionBackendConfigured } from './subsc
     allSubscribers.sort((a, b) => Date.parse(b.createdAt || '') - Date.parse(a.createdAt || ''));
     renderStats();
     renderList();
-    $('adminIdentity').textContent = result.email || '';
+    $('adminIdentity').textContent = result.email || $('adminIdentity').textContent;
+  }
+
+  function showSubscriberLoadFailure(error) {
+    allSubscribers = [];
+    renderStats();
+    const target = $('subscriberList');
+    target.replaceChildren();
+    const note = document.createElement('div');
+    note.className = 'empty-state';
+    note.textContent = 'You are signed in, but subscriber records could not be loaded. Check the Firestore service-account key, Cloud Datastore User IAM role, and Firestore API.';
+    target.append(note);
+    setActionStatus(`Administrator authentication succeeded. Subscriber database access failed: ${error?.message || 'Unknown database error'}`, 'warning');
   }
 
   async function changeStatus(uid, nextStatus, note, button) {
@@ -230,8 +243,8 @@ import { subscriptionBackendUrl, isSubscriptionBackendConfigured } from './subsc
       $('adminSetupNotice').hidden = false;
       return;
     }
-    // Register the listener before navigating the iframe. Apps Script can emit
-    // its ready message immediately after load; assigning src first can race it.
+
+    // Register the listener before navigating the iframe.
     window.addEventListener('message', event => {
       if (event.source !== frame.contentWindow || event.data?.channel !== CHANNEL) return;
       const message = event.data;
@@ -251,15 +264,22 @@ import { subscriptionBackendUrl, isSubscriptionBackendConfigured } from './subsc
       const button = $('adminLoginButton');
       button.disabled = true;
       try {
+        // Authentication and Firestore access are separate operations. Do not
+        // report a database read failure as an invalid administrator password.
         const result = await callBackend('adminLogin', {
           email: $('adminEmailInput').value.trim().toLowerCase(),
           password: $('adminPasswordInput').value
         });
         sessionToken = result.sessionToken;
         sessionStorage.setItem(SESSION_KEY, sessionToken);
-        await loadSubscribers();
+        $('adminIdentity').textContent = result.email || $('adminEmailInput').value.trim();
         showAdmin();
-        setActionStatus('Administrator session active. It expires one hour after sign-in.', 'success');
+        try {
+          await loadSubscribers();
+          setActionStatus('Administrator session active. It expires one hour after sign-in.', 'success');
+        } catch (databaseError) {
+          showSubscriberLoadFailure(databaseError);
+        }
       } catch (error) {
         setLoginStatus(error?.message || 'Unable to sign in.', 'error');
       } finally {
@@ -272,13 +292,17 @@ import { subscriptionBackendUrl, isSubscriptionBackendConfigured } from './subsc
     setupResetFlow();
 
     if (sessionToken) {
+      showAdmin();
       try {
         await loadSubscribers();
-        showAdmin();
-      } catch (_error) {
-        sessionToken = '';
-        sessionStorage.removeItem(SESSION_KEY);
-        showLogin();
+      } catch (error) {
+        if (/session expired/i.test(error?.message || '')) {
+          sessionToken = '';
+          sessionStorage.removeItem(SESSION_KEY);
+          showLogin();
+        } else {
+          showSubscriberLoadFailure(error);
+        }
       }
     } else {
       showLogin();

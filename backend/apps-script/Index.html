@@ -18,13 +18,21 @@
   })();
   const CHANNEL = 'pokedrop-watch-verification-v1';
 
+  function postToSite(message, targetOrigin = ALLOWED_ORIGIN) {
+    // `top` avoids relying on an intermediate Google-hosted parent frame.
+    window.top.postMessage(message, targetOrigin);
+  }
+
   function reply(requestId, result, targetOrigin) {
-    window.parent.postMessage({ channel: CHANNEL, requestId: requestId, result: result }, targetOrigin);
+    postToSite({ channel: CHANNEL, requestId, result }, targetOrigin);
   }
 
   window.addEventListener('message', event => {
-    // Accept commands only from the intended public site and from our direct parent.
-    if (event.source !== window.parent || event.origin !== ALLOWED_ORIGIN) return;
+    // Accept only commands from the configured GitHub Pages origin and from
+    // the direct parent/top browsing context.
+    if (event.origin !== ALLOWED_ORIGIN) return;
+    if (event.source !== window.parent && event.source !== window.top) return;
+
     const message = event.data || {};
     if (message.channel !== CHANNEL || !message.requestId) return;
 
@@ -54,11 +62,9 @@
     }
   });
 
-  // The ready message carries no credentials. Use '*' here so a stale or
-  // path-qualified SITE_ORIGIN property cannot prevent the parent from
-  // discovering that the bridge has loaded. All later requests/replies are
-  // origin-checked and sent to the validated event.origin above.
-  window.parent.postMessage({ channel: CHANNEL, ready: true }, '*');
+  // The site listens for this harmless readiness message before enabling
+  // backend requests. Address it directly to the configured site origin.
+  postToSite({ channel: CHANNEL, ready: true });
 </script>
 </body>
 </html>
