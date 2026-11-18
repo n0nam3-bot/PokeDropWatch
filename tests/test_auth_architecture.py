@@ -24,14 +24,15 @@ class AuthArchitectureTests(unittest.TestCase):
         self.assertNotIn('categoryLabel,', admin.split("from './firebase-client.js'")[0])
         self.assertNotIn('retailerLabel', client)
 
-    def test_subscriptions_use_same_page_code_bridge(self):
-        script = (ROOT / 'docs' / 'subscriptions.js').read_text(encoding='utf-8')
-        app_config = (ROOT / 'docs' / 'subscription-backend-config.js').read_text(encoding='utf-8')
-        self.assertIn("callBackend('requestCode'", script)
-        self.assertIn("callBackend('verifyCode'", script)
-        self.assertIn('subscriptionBackendUrl', app_config)
-        self.assertNotIn('sendSignInLinkToEmail', script)
-        self.assertNotIn('FIREBASE_SETUP.html', script)
+    def test_subscriptions_use_direct_apps_script_portal(self):
+        page = (ROOT / 'docs' / 'index.html').read_text(encoding='utf-8')
+        portal = (ROOT / 'backend' / 'apps-script' / 'Subscribe.html').read_text(encoding='utf-8')
+        self.assertIn('exec?page=subscribe', page)
+        self.assertNotIn('subscriptionBackendFrame', page)
+        self.assertIn('google.script.run', portal)
+        self.assertIn('runner.requestVerificationCode(payload)', portal)
+        self.assertIn('runner.verifyVerificationCode(payload)', portal)
+        self.assertNotIn('postMessage(', portal)
 
     def test_firestore_rules_deny_all_browser_access(self):
         rules = (ROOT / 'firebase' / 'firestore.rules').read_text(encoding='utf-8')
@@ -42,9 +43,11 @@ class AuthArchitectureTests(unittest.TestCase):
         admin = (ROOT / 'docs' / 'admin.js').read_text(encoding='utf-8')
         self.assertLess(admin.index("window.addEventListener('message'"), admin.index('frame.src = subscriptionBackendUrl'))
 
-    def test_subscription_message_listener_is_registered_before_iframe_navigation(self):
-        script = (ROOT / 'docs' / 'subscriptions.js').read_text(encoding='utf-8')
-        self.assertLess(script.index("window.addEventListener('message'"), script.index('frame.src = subscriptionBackendUrl'))
+    def test_public_subscription_form_no_longer_loads_hidden_message_bridge(self):
+        page = (ROOT / 'docs' / 'index.html').read_text(encoding='utf-8')
+        self.assertNotIn('subscriptionBackendFrame', page)
+        self.assertNotIn('src="./subscriptions.js"', page)
+        self.assertIn('id="subscriptionPortalFrame"', page)
 
     def test_verification_and_reset_codes_keep_the_original_expiry(self):
         source = (ROOT / 'backend' / 'apps-script' / 'Code.gs').read_text(encoding='utf-8')
@@ -97,8 +100,12 @@ class AuthArchitectureTests(unittest.TestCase):
 
     def test_embedded_admin_removes_duplicate_site_branding(self):
         source = (ROOT / 'backend' / 'apps-script' / 'doGet_REPLACEMENT.txt').read_text(encoding='utf-8')
-        self.assertIn('replace(/<header class="top">[\\s\\S]*?<\\/header>/', source)
-        self.assertIn('Administrator sessions expire after one hour.', source)
+        admin = (ROOT / 'backend' / 'apps-script' / 'Admin.html').read_text(encoding='utf-8')
+        self.assertIn("page === 'admin'", source)
+        self.assertIn("pokedropEmbeddedOutput_(HtmlService.createHtmlOutputFromFile('Admin')", source)
+        self.assertNotIn('<header class="top">', admin)
+        self.assertNotIn('PokéDrop Watch · Administrator sessions expire after one hour.', admin)
+        self.assertIn('Administrator sessions expire after one hour.', admin)
 
     def test_apps_script_email_uses_notification_mailbox_display_name(self):
         source = (ROOT / 'backend' / 'apps-script' / 'Code.gs').read_text(encoding='utf-8')

@@ -162,9 +162,13 @@
     select.replaceChildren(
       new Option('All retailers', 'all'),
       new Option('Amazon', 'amazon'),
-      new Option('Walmart', 'walmart')
+      new Option('Walmart', 'walmart'),
+      new Option('Best Buy', 'best-buy'),
+      new Option('Target', 'target'),
+      new Option('Pokémon Center', 'pokemon-center'),
+      new Option('GameStop', 'gamestop')
     );
-    select.value = ['all', 'amazon', 'walmart'].includes(selected) ? selected : 'all';
+    select.value = ['all', 'amazon', 'walmart', 'best-buy', 'target', 'pokemon-center', 'gamestop'].includes(selected) ? selected : 'all';
     state.retailer = select.value;
   }
   function itemMatches(item, includeAlertType = false) {

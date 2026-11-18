@@ -1,39 +1,17 @@
-Replace the existing doGet() function in Code.gs with this complete function.
-Keep the rest of Code.gs unchanged. Keep the existing Admin.html file unchanged.
+Replace only the existing doGet(e) function in Code.gs with this function.
+Keep all other server functions, Script Properties, and project settings unchanged.
+Create an Apps Script HTML file named Subscribe and paste backend/apps-script/Subscribe.html into it.
+Replace the contents of the existing Apps Script HTML file named Admin with backend/apps-script/Admin.html.
 
 function doGet(e) {
   const page = String(e && e.parameter && e.parameter.page || '').trim().toLowerCase();
-  if (page === 'admin') {
-    // Admin.html calls google.script.run directly. ALLOWALL lets the GitHub Pages
-    // admin shell embed this page, keeping the browser address on GitHub Pages.
-    const adminFile = HtmlService.createHtmlOutputFromFile('Admin');
-    const fontCss = `
-      <style>
-        @font-face {
-          font-family: "PKMN RBYGSC";
-          src: url("https://n0nam3-bot.github.io/PokeDropWatch/assets/fonts/PKMN-RBYGSC.ttf") format("truetype");
-          font-style: normal;
-          font-weight: 400;
-          font-display: swap;
-        }
-        html, body, body *, body *::before, body *::after, body *::placeholder {
-          font-family: "PKMN RBYGSC", "Courier New", monospace !important;
-        }
-      </style>
-    `;
 
-    // The GitHub Pages shell owns the one shared site header and bottom navigation.
-    // Remove the duplicate branding header/footer from the embedded Admin document.
-    const cleanedContent = adminFile.getContent()
-      .replace(/<header class="top">[\s\S]*?<\/header>/, '')
-      .replace(
-        /<p class="foot">PokéDrop Watch · Administrator sessions expire after one hour\.<\/p>/,
-        '<p class="foot">Administrator sessions expire after one hour.</p>'
-      );
-    const themedContent = cleanedContent.replace('</head>', fontCss + '</head>');
-    return HtmlService.createHtmlOutput(themedContent)
-      .setTitle('PokéDrop Watch Admin')
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  if (page === 'admin') {
+    return pokedropEmbeddedOutput_(HtmlService.createHtmlOutputFromFile('Admin'), 'PokéDrop Watch Admin');
+  }
+
+  if (page === 'subscribe') {
+    return pokedropEmbeddedOutput_(HtmlService.createHtmlOutputFromFile('Subscribe'), 'PokéDrop Watch Email Alerts');
   }
 
   const props = PropertiesService.getScriptProperties();
@@ -41,5 +19,27 @@ function doGet(e) {
   template.siteOrigin = props.getProperty('SITE_ORIGIN') || 'https://n0nam3-bot.github.io';
   return template.evaluate()
     .setTitle('PokéDrop Watch Verification')
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+}
+
+function pokedropEmbeddedOutput_(sourceOutput, title) {
+  const fontCss = `
+    <style>
+      @font-face {
+        font-family: "PKMN RBYGSC";
+        src: url("https://n0nam3-bot.github.io/PokeDropWatch/assets/fonts/PKMN-RBYGSC.ttf") format("truetype");
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+      }
+      html, body, body *, body *::before, body *::after, body *::placeholder {
+        font-family: "PKMN RBYGSC", "Courier New", monospace !important;
+      }
+    </style>
+  `;
+  const source = sourceOutput.getContent();
+  const html = source.replace('</head>', fontCss + '</head>');
+  return HtmlService.createHtmlOutput(html)
+    .setTitle(title)
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }

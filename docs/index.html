@@ -9,6 +9,29 @@
   <link rel="icon" href="./pokeball.svg" type="image/svg+xml">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="stylesheet" href="./styles.css">
+  <style>
+    .subscription-portal-wrap {
+      width: 100%;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+    }
+    #subscriptionPortalFrame {
+      display: block;
+      width: 100%;
+      height: 900px;
+      border: 0;
+      background: #fff;
+    }
+    .subscription-portal-note { margin-top: 10px; }
+    @media (max-width: 720px) {
+      #subscriptionPortalFrame { height: 1160px; }
+    }
+    @media (max-width: 420px) {
+      #subscriptionPortalFrame { height: 1240px; }
+    }
+  </style>
 </head>
 <body>
   <div class="site-shell public-shell" id="top">
@@ -103,68 +126,19 @@
 
       <section class="section-block subscription-section" id="subscriptions">
         <div class="section-heading">
-          <div><p class="eyebrow">TRAINER ALERTS</p><h2>Get Pokémon drop notifications</h2></div>
-          <span class="section-note">Email verification required</span>
+          <div><p class="eyebrow">TRAINER ALERTS</p><h2 id="subscriptionHeading">Get Pokémon drop notifications</h2></div>
+          <span class="section-note">Secure email verification</span>
         </div>
-        <div class="subscription-grid">
-          <section class="form-panel">
-            <div class="form-intro"><span class="form-icon">✉</span><div><h3>Apply for alerts</h3><p>We send a six-digit code from PokéDrop Watch. Enter it here on the same device. New applications are reviewed before alerts begin.</p></div></div>
-            <form id="subscribeForm">
-              <label for="subscribeEmail">Email address</label>
-              <input id="subscribeEmail" type="email" autocomplete="email" required placeholder="you@example.com">
-              <label class="bot-trap" aria-hidden="true">Leave this field empty<input id="subscribeWebsite" type="text" tabindex="-1" autocomplete="off"></label>
-              <fieldset class="choice-group">
-                <legend>What would you like to follow?</legend>
-                <div class="choice-grid">
-                  <label><input type="checkbox" name="category" value="tcg" checked> Pokémon TCG</label>
-                  <label><input type="checkbox" name="category" value="plush" checked> Plush</label>
-                  <label><input type="checkbox" name="category" value="collectibles" checked> Collectibles</label>
-                  <label><input type="checkbox" name="category" value="games" checked> Games</label>
-                  <label><input type="checkbox" name="category" value="accessories" checked> Accessories &amp; apparel</label>
-                  <label><input type="checkbox" name="category" value="news" checked> News</label>
-                </div>
-              </fieldset>
-              <fieldset class="choice-group">
-                <legend>Retailers and sources</legend>
-                <div class="choice-grid retailer-choices">
-                  <label><input type="checkbox" name="retailer" value="all" checked> All retailers</label>
-                  <label><input type="checkbox" name="retailer" value="pokemon-center"> Pokémon Center</label>
-                  <label><input type="checkbox" name="retailer" value="target"> Target</label>
-                  <label><input type="checkbox" name="retailer" value="walmart"> Walmart</label>
-                  <label><input type="checkbox" name="retailer" value="best-buy"> Best Buy</label>
-                  <label><input type="checkbox" name="retailer" value="gamestop"> GameStop</label>
-                  <label><input type="checkbox" name="retailer" value="amazon"> Amazon</label>
-                  <label><input type="checkbox" name="retailer" value="pokebeach"> PokéBeach</label>
-                </div>
-              </fieldset>
-              <button id="subscribeButton" class="primary-button" type="submit">Email me a verification code</button>
-            </form>
-            <div class="form-divider"><span>Already subscribed?</span></div>
-            <form id="unsubscribeForm" class="unsubscribe-form">
-              <label for="unsubscribeEmail">Email address for secure unsubscribe</label>
-              <div class="inline-form"><input id="unsubscribeEmail" type="email" autocomplete="email" required placeholder="you@example.com"><button id="unsubscribeButton" class="secondary-button" type="submit">Email me a code</button></div>
-              <p class="field-note">A one-time code is sent to that mailbox. You must enter it here to confirm the unsubscribe.</p>
-            </form>
-            <section id="verificationCodePanel" class="verification-code-panel" hidden>
-              <strong id="verificationCodeHeading">Check your email</strong>
-              <p id="verificationCodeMessage">Enter the six-digit code sent to your email address.</p>
-              <label for="verificationCodeInput">Six-digit verification code</label>
-              <input id="verificationCodeInput" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" placeholder="000000">
-              <div class="verification-actions">
-                <button id="verifyCodeButton" class="primary-button" type="button">Verify code</button>
-                <button id="resendCodeButton" class="quiet-button" type="button">Send another code</button>
-              </div>
-            </section>
-            <p id="subscriptionStatus" class="form-status" role="status" aria-live="polite">Email verification is not configured yet. Follow the owner setup guide to connect the Gmail verification service.</p>
-          </section>
-          <aside class="subscription-aside">
-            <div class="aside-mark">◉</div>
-            <h3>Verified. Reviewed. In control.</h3>
-            <p>Applications are approved by the site administrator. Email ownership is verified before an application is stored.</p>
-            <p>Unsubscribing requires a one-time code delivered to that mailbox. The code is entered on this page, so opening email on another device will not move your session.</p>
-            <a href="./SOURCE_HEALTH.html">How monitoring status works ↗</a>
-          </aside>
+        <div class="subscription-portal-wrap">
+          <iframe
+            id="subscriptionPortalFrame"
+            src="https://script.google.com/macros/s/AKfycbwGfc1E_t1nj-HG5Sf5V1Y-J_cwY_PmwLIUAfbPPBVtl7mbxOhCkz5Q6BNosWmEUmVm/exec?page=subscribe"
+            title="PokéDrop Watch email subscription and verification"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+          ></iframe>
         </div>
+        <p class="field-note subscription-portal-note">Email verification is handled securely by the PokéDrop Watch service. A successful request is confirmed by Google Apps Script before the site asks you to enter a code.</p>
       </section>
 
       <footer class="public-footer-note">
@@ -183,8 +157,6 @@
     </div>
   </nav>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <iframe id="subscriptionBackendFrame" class="backend-bridge" title="Secure email verification service" aria-hidden="true" tabindex="-1"></iframe>
   <script src="./app.js" defer></script>
-  <script type="module" src="./subscriptions.js"></script>
 </body>
 </html>
