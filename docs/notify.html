@@ -8,32 +8,32 @@
   <title>Notify · PokéDrop Watch</title>
   <link rel="icon" href="./pokeball.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./theme-overrides.css">
   <style>
     .notify-shell { max-width:1320px; padding:0 24px; }
     .notify-topbar { position:sticky; top:0; z-index:300; background:rgba(247,247,244,.97); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); box-shadow:0 1px 0 rgba(30,30,25,.07); }
-    .notify-main { max-width:1280px; margin:0 auto; padding:20px 0 12px; }
-    .notify-heading { margin:10px 0 16px; }
+    .notify-main { max-width:1280px; margin:0 auto; padding:18px 0 12px; }
+    .notify-heading { margin:8px 0 14px; }
     .notify-heading .eyebrow { margin-bottom:6px; }
     .notify-heading h1 { font:700 clamp(25px,4vw,36px)/1.1 system-ui,sans-serif; letter-spacing:-1.1px; margin:0 0 8px; }
     .notify-heading p:last-child { margin:0; color:#85867f; font-size:11px; line-height:1.6; }
     .notify-frame-wrap { overflow:hidden; border:1px solid var(--line); border-radius:13px; background:#fbf8f5; box-shadow:var(--shadow); }
-    #notifyPortalFrame { display:block; width:100%; height:790px; border:0; background:#fbf8f5; }
+    #notifyPortalFrame { display:block; width:100%; height:760px; border:0; background:#fbf8f5; }
     .portal-fallback { display:flex; justify-content:center; align-items:center; gap:8px; flex-wrap:wrap; padding:10px 0 12px; color:#85867f; font-size:10px; text-align:center; }
     .portal-fallback a { color:var(--red-dark); font-weight:800; text-decoration:underline; text-underline-offset:3px; }
     .bottom-bar a[aria-current="page"] { background:#fff2ee; color:var(--red-dark); }
-    @media(max-width:760px) { .notify-shell { padding:0 12px; } .notify-main { padding-top:12px; } #notifyPortalFrame { height:1220px; } }
-    @media(max-width:420px) { #notifyPortalFrame { height:1370px; } }
+    @media(max-width:760px) { .notify-shell { padding:0 12px; } .notify-main { padding-top:12px; } #notifyPortalFrame { height:1080px; } }
+    @media(max-width:420px) { #notifyPortalFrame { height:1120px; } }
   </style>
 </head>
-<body>
+<body class="page-notify">
   <div class="site-shell notify-shell" id="top">
     <header class="topbar notify-topbar" id="pageTop">
       <a class="brand" href="./#top" aria-label="PokéDrop Watch home">
-        <span class="pokeball" aria-hidden="true"><i></i></span>
-        <span><strong>PokéDrop</strong><small>WATCH</small></span>
+        <img class="page-ball" src="./assets/icons/ultraball-8bit.svg" alt="">
+        <span><strong>PokéDrop</strong><small>POKÉMON CENTER</small></span>
       </a>
       <div class="topbar-right">
-        <span class="live-pill"><span class="live-dot"></span> AUTOMATED WATCH</span>
         <button id="refreshNotifyButton" class="icon-button" type="button" aria-label="Refresh notification portal" title="Refresh notification portal">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M5.6 9a7 7 0 0 1 11.8-2L20 12M4 12l2.6 5a7 7 0 0 0 11.8-2"/></svg>
         </button>
@@ -45,6 +45,20 @@
         <h1>Notification center</h1>
         <p>Choose the Pokémon categories and retailers you want to follow. Verify your email with a one-time code; applications remain pending until approved by the administrator.</p>
       </section>
+      <details class="info-guide">
+        <summary>How email notifications work</summary>
+        <div class="info-guide-content">
+          <h2>1. Choose your preferences</h2>
+          <p>Select the product categories and retailers or news sources you want to follow. These preferences are saved with your application.</p>
+          <h2>2. Verify your email</h2>
+          <p>Request a six-digit code and enter it in the form on this page. The code expires after 10 minutes and can only be used once. Verification confirms that you control the mailbox.</p>
+          <h2>3. Wait for approval</h2>
+          <p>After verification, the application is saved as Pending. An administrator must approve it before alert emails begin. Approved Active subscribers receive alerts matching their selected preferences.</p>
+          <h2>Unsubscribing</h2>
+          <p>Use the secure unsubscribe form and verify the mailbox with a one-time code before the subscription is marked unsubscribed.</p>
+          <p><a href="./SOURCE_HEALTH.html">Learn how the monitor finds products and creates alerts ↗</a></p>
+        </div>
+      </details>
       <div class="notify-frame-wrap">
         <iframe id="notifyPortalFrame" src="https://script.google.com/macros/s/AKfycbwGfc1E_t1nj-HG5Sf5V1Y-J_cwY_PmwLIUAfbPPBVtl7mbxOhCkz5Q6BNosWmEUmVm/exec?page=subscribe" title="PokéDrop Watch email notification application" loading="eager" referrerpolicy="strict-origin-when-cross-origin"></iframe>
       </div>

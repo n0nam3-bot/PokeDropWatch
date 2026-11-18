@@ -1,20 +1,20 @@
-Replace only the existing doGet() function in Code.gs with the function below,
-then add the pokedropEmbeddedOutput_ helper below it. Keep all other server
-functions, Script Properties, and project settings unchanged.
+Replace only the existing doGet(e) function in Code.gs with this function and add
+pokedropEmbeddedOutput_ below it. Keep all email, verification, authentication,
+Firestore, Script Properties, and rate-limit functions unchanged.
 
-The Admin and Subscribe HTML pages are embedded inside the GitHub Pages site.
-The outer browser address therefore remains on n0nam3-bot.github.io. ALLOWALL
-is required for these two Apps Script pages to render inside the site iframes.
+Also replace the Apps Script HTML file named Subscribe with the supplied
+backend/apps-script/Subscribe.html file. The Admin HTML file does not need to be
+replaced for the small login-hint removal below; it is removed at render time.
 
 function doGet(e) {
   const page = String(e && e.parameter && e.parameter.page || '').trim().toLowerCase();
 
   if (page === 'admin') {
-    return pokedropEmbeddedOutput_(HtmlService.createHtmlOutputFromFile('Admin'), 'PokéDrop Watch Admin');
+    return pokedropEmbeddedOutput_(HtmlService.createHtmlOutputFromFile('Admin'), 'PokéDrop Watch Admin', 'admin');
   }
 
   if (page === 'subscribe' || page === 'notify') {
-    return pokedropEmbeddedOutput_(HtmlService.createHtmlOutputFromFile('Subscribe'), 'PokéDrop Watch Email Alerts');
+    return pokedropEmbeddedOutput_(HtmlService.createHtmlOutputFromFile('Subscribe'), 'PokéDrop Watch Email Alerts', 'notify');
   }
 
   const props = PropertiesService.getScriptProperties();
@@ -25,8 +25,9 @@ function doGet(e) {
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
 
-function pokedropEmbeddedOutput_(sourceOutput, title) {
-  const fontCss = `
+function pokedropEmbeddedOutput_(sourceOutput, title, page) {
+  const cursorFile = page === 'admin' ? 'masterball-8bit.svg' : 'ultraball-8bit.svg';
+  const cursorCss = `
     <style>
       @font-face {
         font-family: "PKMN RBYGSC";
@@ -38,15 +39,25 @@ function pokedropEmbeddedOutput_(sourceOutput, title) {
       html, body, body *, body *::before, body *::after, body *::placeholder {
         font-family: "PKMN RBYGSC", "Courier New", monospace !important;
       }
+      html, body, body * {
+        cursor: url("https://n0nam3-bot.github.io/PokeDropWatch/assets/icons/${cursorFile}") 8 8, auto !important;
+      }
+      input, textarea, [contenteditable="true"] { cursor: text !important; }
     </style>
   `;
 
   let html = sourceOutput.getContent();
-  // Protect against older Admin.html copies that still contain their own shell.
+  // Avoid duplicate branding when an older Apps Script Admin.html is deployed.
   html = html.replace(/<header class="top">[\s\S]*?<\/header>/i, '');
-  html = html.replace('<p class="foot">PokéDrop Watch · Administrator sessions expire after one hour.</p>',
-                      '<p class="foot">Administrator sessions expire after one hour.</p>');
-  html = html.replace('</head>', fontCss + '</head>');
+  html = html.replace(
+    '<p class="foot">PokéDrop Watch · Administrator sessions expire after one hour.</p>',
+    '<p class="foot">Administrator sessions expire after one hour.</p>'
+  );
+  html = html.replace(
+    'Use the administrator credentials configured in Apps Script.',
+    ''
+  );
+  html = html.replace('</head>', cursorCss + '</head>');
 
   return HtmlService.createHtmlOutput(html)
     .setTitle(title)
@@ -54,6 +65,7 @@ function pokedropEmbeddedOutput_(sourceOutput, title) {
 }
 
 After saving, deploy the existing web app as a New version. Keep the existing
-web app URL and its execution identity/access setting. For an iframe used by a
-public GitHub Pages site, the web app must execute as the owner and be available
-to Anyone; do not choose an access option that forces visitors to sign in.
+web app URL and its execution identity/access setting. The public GitHub Pages
+Admin and Notify pages embed these routes, so the web app must execute as the
+owner and be available to Anyone; do not choose an access option that forces
+visitors to sign in.

@@ -59,7 +59,7 @@ class AuthArchitectureTests(unittest.TestCase):
 
     def test_old_public_firebase_setup_page_is_not_in_service_worker_shell(self):
         worker = (ROOT / 'docs' / 'sw.js').read_text(encoding='utf-8')
-        self.assertIn('pokedrop-shell-v13', worker)
+        self.assertIn('pokedrop-shell-v14', worker)
         self.assertIn("'./bridge-transport.js'", worker)
         self.assertNotIn("'./FIREBASE_SETUP.html'", worker)
 
@@ -91,10 +91,11 @@ class AuthArchitectureTests(unittest.TestCase):
         self.assertIn('data-filter="first_seen"', page)
         self.assertIn('>New items</button>', page)
 
-    def test_admin_shell_matches_public_site_navigation(self):
+    def test_admin_shell_matches_page_specific_site_navigation(self):
         landing = (ROOT / 'docs' / 'admin.html').read_text(encoding='utf-8')
-        self.assertIn('<small>WATCH</small>', landing)
-        self.assertIn('AUTOMATED WATCH', landing)
+        self.assertIn('<small>GYM LEADER</small>', landing)
+        self.assertIn('masterball-8bit.svg', landing)
+        self.assertNotIn('AUTOMATED WATCH', landing)
         self.assertIn('class="bottom-bar"', landing)
         for href in ('./#top', './#alerts', './notify.html', './admin.html', 'https://github.com/n0nam3-bot/PokeDropWatch'):
             self.assertIn(href, landing)
@@ -105,6 +106,7 @@ class AuthArchitectureTests(unittest.TestCase):
         admin = (ROOT / 'backend' / 'apps-script' / 'Admin.html').read_text(encoding='utf-8')
         self.assertIn("page === 'admin'", source)
         self.assertIn("pokedropEmbeddedOutput_(HtmlService.createHtmlOutputFromFile('Admin')", source)
+        self.assertIn('Use the administrator credentials configured in Apps Script.', source)
         self.assertNotIn('<header class="top">', admin)
         self.assertNotIn('PokéDrop Watch · Administrator sessions expire after one hour.', admin)
         self.assertIn('Administrator sessions expire after one hour.', admin)

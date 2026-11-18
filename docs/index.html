@@ -9,16 +9,16 @@
   <link rel="icon" href="./pokeball.svg" type="image/svg+xml">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./theme-overrides.css">
 </head>
-<body>
+<body class="page-home">
   <div class="site-shell public-shell" id="top">
     <header class="topbar" id="pageTop">
       <a class="brand" href="./#top" aria-label="PokéDrop Watch home">
-        <span class="pokeball" aria-hidden="true"><i></i></span>
-        <span><strong>PokéDrop</strong><small>WATCH</small></span>
+        <img class="page-ball" src="./assets/icons/pokeball-8bit.svg" alt="">
+        <span><strong>PokéDrop</strong><small id="pageLocation">PALLET TOWN</small></span>
       </a>
       <div class="topbar-right">
-        <span class="live-pill"><span class="live-dot"></span> AUTOMATED WATCH</span>
         <button id="refreshButton" class="icon-button" type="button" aria-label="Refresh status" title="Refresh status">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M5.6 9a7 7 0 0 1 11.8-2L20 12M4 12l2.6 5a7 7 0 0 0 11.8-2"/></svg>
         </button>
@@ -31,7 +31,6 @@
           <p class="eyebrow">THE TRAINER'S RESTOCK RADAR</p>
           <h1>Catch the drop.<br><span>Not the disappointment.</span></h1>
           <p class="hero-sub">A quiet watch over Pokémon cards, collectibles, plush and more. Get an email when a monitored source changes.</p>
-          <div class="hero-foot"><span class="shield-icon">✓</span> No AI-generated picks · Verified email alerts · Admin-approved subscribers</div>
         </div>
         <div class="hero-emblem" aria-hidden="true">
           <div class="emblem-ring"><div class="emblem-ball"><span></span></div></div>
@@ -58,7 +57,7 @@
         <div id="sourceGrid" class="source-grid">
           <div class="empty-state">Source status will appear after the first scan.</div>
         </div>
-        <p class="fine-print">MATCHES means the parser recognized Pokémon entries. NO MATCH means the page responded but its product markup was not recognized; it does not mean the retailer has no stock. ISSUE means the request failed. <a href="./SOURCE_HEALTH.html">How to read source status ↗</a></p>
+        <p class="fine-print">MATCHES means the parser recognized Pokémon entries. NO MATCH means the page responded but its product markup was not recognized; it does not mean the retailer has no stock. ISSUE means the request failed. <a href="./SOURCE_HEALTH.html">How it works ↗</a></p>
       </section>
 
       <section class="section-block alerts-section" id="alerts">
@@ -96,7 +95,7 @@
             </label>
             <label class="exact-match-control"><input id="exactMatch" type="checkbox"> Exact title</label>
           </div>
-          <p id="feedExplanation" class="feed-explanation">New items are first discoveries by the monitor, not verified release dates. Restocks require an observed out-of-stock to in-stock transition.</p>
+          <p id="feedExplanation" class="feed-explanation">New items have a published release date within 30 days. First seen means the monitor discovered a listing but its release date is outside that window or unavailable.</p>
         </div>
         <div id="alertList" class="alert-list"><div class="empty-state large-empty"><span class="empty-ball">◉</span><strong>No alerts yet</strong><span>After the next scan, verified stock and price changes will appear here.</span></div></div>
       </section>
@@ -109,9 +108,8 @@
         <div class="setup-panel notify-launch-panel">
           <div class="setup-icon" aria-hidden="true">✉</div>
           <div class="setup-copy">
-            <p class="eyebrow">SEPARATE NOTIFICATION CENTER</p>
+            <p class="eyebrow">NOTIFICATION CENTER</p>
             <h2>Choose what you want to follow</h2>
-            <p>Manage your email application, product categories, retailer preferences, and verification code on the dedicated Notify page. Keeping this form separate also makes the main watchlist load faster.</p>
           </div>
           <a class="setup-badge" href="./notify.html">OPEN NOTIFY ↗</a>
         </div>
@@ -134,5 +132,6 @@
   </nav>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="./app.js" defer></script>
+  <script src="./page-enhancements.js" defer></script>
 </body>
 </html>

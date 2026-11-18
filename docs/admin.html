@@ -8,10 +8,11 @@
   <title>Admin · PokéDrop Watch</title>
   <link rel="icon" href="./pokeball.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./theme-overrides.css">
   <style>
-    .admin-embed-shell { max-width: 1320px; padding: 0 24px; }
-    .admin-embed-topbar { position: sticky; top: 0; z-index: 300; background: rgba(247,247,244,.97); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 1px 0 rgba(30,30,25,.07); }
-    .admin-embed-main { max-width: 1280px; margin: 0 auto; padding: 0 0 10px; }
+    .admin-embed-shell { max-width:1320px; padding:0 24px; }
+    .admin-embed-topbar { position:sticky; top:0; z-index:300; background:rgba(247,247,244,.97); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); box-shadow:0 1px 0 rgba(30,30,25,.07); }
+    .admin-embed-main { max-width:1280px; margin:0 auto; padding:0 0 10px; }
     #adminPortalFrame { display:block; width:100%; height:calc(100vh - var(--topbar-height) - var(--bottom-bar-height) - 22px - env(safe-area-inset-bottom)); height:calc(100dvh - var(--topbar-height) - var(--bottom-bar-height) - 22px - env(safe-area-inset-bottom)); min-height:560px; border:0; background:#fbf8f5; }
     .portal-fallback { display:flex; justify-content:center; align-items:center; gap:8px; flex-wrap:wrap; padding:8px 0 12px; color:#85867f; font-size:10px; text-align:center; }
     .portal-fallback a { color:var(--red-dark); font-weight:800; text-decoration:underline; text-underline-offset:3px; }
@@ -19,21 +20,38 @@
     @media(max-width:700px) { .admin-embed-shell { padding:0 12px; } #adminPortalFrame { min-height:620px; } }
   </style>
 </head>
-<body>
+<body class="page-admin">
   <div class="site-shell admin-embed-shell" id="top">
     <header class="topbar admin-embed-topbar" id="pageTop">
       <a class="brand" href="./#top" aria-label="PokéDrop Watch home">
-        <span class="pokeball" aria-hidden="true"><i></i></span>
-        <span><strong>PokéDrop</strong><small>WATCH</small></span>
+        <img class="page-ball" src="./assets/icons/masterball-8bit.svg" alt="">
+        <span><strong>PokéDrop</strong><small>GYM LEADER</small></span>
       </a>
       <div class="topbar-right">
-        <span class="live-pill"><span class="live-dot"></span> AUTOMATED WATCH</span>
         <button id="refreshAdminButton" class="icon-button" type="button" aria-label="Refresh admin portal" title="Refresh admin portal">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M5.6 9a7 7 0 0 1 11.8-2L20 12M4 12l2.6 5a7 7 0 0 0 11.8-2"/></svg>
         </button>
       </div>
     </header>
     <main class="admin-embed-main">
+      <details class="info-guide">
+        <summary>How administrator tools work</summary>
+        <div class="info-guide-content">
+          <h2>Reviewing applications</h2>
+          <p>Only applications with a verified email reach the subscriber list. New applications begin as <strong>Pending</strong> and do not receive alert emails until approved.</p>
+          <ul>
+            <li><strong>Approve</strong> changes a pending application to Active.</li>
+            <li><strong>Reject</strong> closes a pending application without enabling alerts.</li>
+            <li><strong>Suspend</strong> pauses an active subscription; Reactivate restores it.</li>
+            <li><strong>Remove</strong> marks a record as removed from the notification list.</li>
+          </ul>
+          <h2>Subscriber preferences</h2>
+          <p>Each record stores the product categories and retailer/source preferences selected during signup. Active subscribers receive only the alert types that match those preferences.</p>
+          <h2>Security and session</h2>
+          <p>Administrator sign-in and subscriber changes are handled by the private Apps Script backend. Browser code does not receive the Firestore service-account credentials. Administrator sessions expire after one hour.</p>
+          <p><a href="./SOURCE_HEALTH.html">Read how scans and alert types work ↗</a></p>
+        </div>
+      </details>
       <iframe id="adminPortalFrame" src="https://script.google.com/macros/s/AKfycbwGfc1E_t1nj-HG5Sf5V1Y-J_cwY_PmwLIUAfbPPBVtl7mbxOhCkz5Q6BNosWmEUmVm/exec?page=admin" title="PokéDrop Watch private administrator portal" loading="eager" referrerpolicy="strict-origin-when-cross-origin" allow="clipboard-read; clipboard-write"></iframe>
       <p class="portal-fallback">Having trouble with the embedded Google page? <a href="https://script.google.com/macros/s/AKfycbwGfc1E_t1nj-HG5Sf5V1Y-J_cwY_PmwLIUAfbPPBVtl7mbxOhCkz5Q6BNosWmEUmVm/exec?page=admin" target="_blank" rel="noopener noreferrer">Open Admin directly ↗</a></p>
     </main>

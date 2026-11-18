@@ -8,87 +8,86 @@
   <title>PokéDrop Watch · Email alerts</title>
   <style>
     @font-face{font-family:"PKMN RBYGSC";src:url("https://n0nam3-bot.github.io/PokeDropWatch/assets/fonts/PKMN-RBYGSC.ttf") format("truetype");font-style:normal;font-weight:400;font-display:swap}
-    :root{--red:#c83232;--ink:#242424;--muted:#777875;--line:#e9e4df;--paper:#fff;--wash:#fbf8f5;--green:#28794e;--amber:#946a16;--shadow:0 12px 30px rgba(28,28,24,.05);font-family:"PKMN RBYGSC","Courier New",monospace;color:var(--ink);background:transparent;font-synthesis:none;text-rendering:optimizeLegibility}
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:transparent}body{padding:12px;font-size:12px}.portal{max-width:1120px;margin:0 auto}.layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(230px,.8fr);gap:14px;align-items:start}.panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:clamp(16px,2.4vw,24px);box-shadow:var(--shadow)}.eyebrow{margin:0 0 8px;color:var(--red);font-size:9px;font-weight:800;letter-spacing:1.5px}.intro{margin:0 0 15px}.intro h1{font-size:clamp(19px,2.7vw,25px);line-height:1.25;margin:0 0 8px}.intro p,.side p{font-size:10px;line-height:1.7;color:var(--muted);margin:0}.group{border:0;padding:0;margin:17px 0 0}.group legend{font-size:10px;font-weight:800;margin-bottom:8px}.field{display:grid;gap:7px;margin:0 0 13px}.field label,.form-label{font-size:10px;font-weight:800}.field input[type=email],.code-input{width:100%;height:42px;border:1px solid #ded8d2;border-radius:7px;padding:0 12px;font:12px "PKMN RBYGSC","Courier New",monospace;background:#fff;color:var(--ink)}input:focus{outline:2px solid #c8323233;border-color:#c97878}.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.choice-grid label{display:flex;align-items:center;gap:8px;min-height:32px;padding:6px 8px;border:1px solid #eeece8;border-radius:6px;background:#fdfdfb;font-size:9px;line-height:1.35}.choice-grid input{width:14px;height:14px;margin:0;flex:0 0 auto;accent-color:var(--red)}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.button{min-height:39px;padding:8px 13px;border:0;border-radius:7px;font:700 10px "PKMN RBYGSC","Courier New",monospace;cursor:pointer}.primary{background:var(--red);color:#fff}.secondary{background:#f0ece8;color:var(--ink)}.button:disabled{opacity:.55;cursor:wait}.status{margin:13px 0 0;padding:10px 11px;border-radius:7px;background:#f5f4f0;color:#666;font-size:9px;line-height:1.65;overflow-wrap:anywhere}.status:empty{display:none}.status.success{background:#edf7f0;color:var(--green)}.status.error{background:#fff0ed;color:#ad3831}.status.warning{background:#fff7e5;color:#875f15}.side{background:#2b2d2b;color:#fff;border-color:#2b2d2b;min-height:100%}.side .eyebrow{color:#edc75a}.side h2{font-size:16px;line-height:1.4;margin:0 0 9px}.side p{color:#d1d1ca}.side p+p{margin-top:10px}.divider{height:1px;background:#ece9e5;margin:18px 0}.unsubscribe-title{font-size:12px;margin:0 0 10px}.inline{display:flex;gap:8px;align-items:center}.inline .field{flex:1;min-width:0;margin:0}.inline .button{flex:0 0 auto}.code-panel{margin-top:15px;padding:15px;border:1px solid #ead8d3;border-radius:9px;background:#fff9f7}.code-panel[hidden]{display:none}.code-panel h2{font-size:14px;margin:0 0 7px}.code-panel p{font-size:9px;color:var(--muted);line-height:1.6;margin:0 0 11px}.code-input{max-width:240px;font-size:18px;letter-spacing:7px;text-align:center}.code-panel .actions{margin-top:10px}.footnote{font-size:9px;line-height:1.6;color:#8a8983;margin:10px 2px 0}
-    @media(max-width:760px){body{padding:9px}.layout{grid-template-columns:1fr}.side{min-height:0}.panel{padding:15px}.choice-grid{gap:6px}.choice-grid label{font-size:8px}.intro h1{font-size:19px}}
+    :root{--red:#c83232;--ink:#242424;--muted:#777875;--line:#e9e4df;--green:#28794e;--amber:#946a16;--shadow:0 12px 30px rgba(28,28,24,.05);font-family:"PKMN RBYGSC","Courier New",monospace;color:var(--ink);background:transparent;font-synthesis:none;text-rendering:optimizeLegibility}
+    *{box-sizing:border-box;cursor:url("https://n0nam3-bot.github.io/PokeDropWatch/assets/icons/ultraball-8bit.svg") 8 8,auto}
+    html,body{margin:0;min-height:100%;background:transparent}body{padding:12px;font-size:12px}.portal{max-width:920px;margin:0 auto}.panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:clamp(16px,2.4vw,24px);box-shadow:var(--shadow)}
+    .eyebrow{margin:0 0 8px;color:var(--red);font-size:9px;font-weight:800;letter-spacing:1.5px}.intro{margin:0 0 15px}.intro h1{font-size:clamp(19px,2.7vw,25px);line-height:1.25;margin:0 0 8px}.intro p{font-size:10px;line-height:1.7;color:var(--muted);margin:0}
+    .group{border:0;padding:0;margin:17px 0 0}.group legend{font-size:10px;font-weight:800;margin-bottom:8px}.field{display:grid;gap:7px;margin:0 0 13px}.field label,.form-label{font-size:10px;font-weight:800}
+    .field input[type=email],.code-input{width:100%;height:42px;border:1px solid #ded8d2;border-radius:7px;padding:0 12px;font:12px "PKMN RBYGSC","Courier New",monospace;background:#fff;color:var(--ink);cursor:text}
+    input:focus{outline:2px solid #c8323233;border-color:#c97878}.choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.choice-grid label{display:flex;align-items:center;gap:8px;min-height:32px;padding:6px 8px;border:1px solid #eeece8;border-radius:6px;background:#fdfdfb;font-size:9px;line-height:1.35}.choice-grid input{width:14px;height:14px;margin:0;flex:0 0 auto;accent-color:var(--red)}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.button{min-height:39px;padding:8px 13px;border:0;border-radius:7px;font:700 10px "PKMN RBYGSC","Courier New",monospace;cursor:url("https://n0nam3-bot.github.io/PokeDropWatch/assets/icons/ultraball-8bit.svg") 8 8,auto}.primary{background:var(--red);color:#fff}.secondary{background:#f0ece8;color:var(--ink)}.button:disabled{opacity:.55}
+    .status{margin:13px 0 0;padding:10px 11px;border-radius:7px;background:#f5f4f0;color:#666;font-size:9px;line-height:1.65;overflow-wrap:anywhere}.status:empty{display:none}.status.success{background:#edf7f0;color:var(--green)}.status.error{background:#fff0ed;color:#ad3831}.status.warning{background:#fff7e5;color:#875f15}
+    .divider{height:1px;background:#ece9e5;margin:18px 0}.unsubscribe-title{font-size:12px;margin:0 0 10px}.inline{display:flex;gap:8px;align-items:center}.inline .field{flex:1;min-width:0;margin:0}.inline .button{flex:0 0 auto}
+    .code-panel{margin-top:14px;padding:15px;border:1px solid #ead8d3;border-radius:9px;background:#fff9f7}.code-panel[hidden]{display:none}.code-panel h2{font-size:14px;margin:0 0 7px}.code-panel p{font-size:9px;color:var(--muted);line-height:1.6;margin:0 0 11px}.code-input{max-width:240px;font-size:18px;letter-spacing:7px;text-align:center}.code-panel .actions{margin-top:10px}.footnote{font-size:9px;line-height:1.6;color:#8a8983;margin:10px 2px 0}.honeypot{position:absolute!important;left:-10000px!important;top:auto!important;width:1px!important;height:1px!important;overflow:hidden!important}
+    @media(max-width:620px){body{padding:9px}.panel{padding:15px}.choice-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.choice-grid label{font-size:8px}.intro h1{font-size:19px}}
     @media(max-width:420px){.inline{align-items:stretch;flex-direction:column}.inline .button{width:100%}.choice-grid{grid-template-columns:1fr 1fr}}
   </style>
 </head>
-<body>
+<body class="page-notify">
   <main class="portal">
-    <div class="layout">
-      <section class="panel">
-        <div class="intro">
-          <p class="eyebrow">VERIFIED TRAINER ALERTS</p>
-          <h1>Apply for Pokémon drop notifications</h1>
-          <p>Enter your email and choose what you want to follow. Google Apps Script sends a one-time code, and your application is saved only after you enter it.</p>
+    <section class="panel">
+      <div class="intro">
+        <p class="eyebrow">VERIFIED TRAINER ALERTS</p>
+        <h1>Apply for Pokémon drop notifications</h1>
+        <p>Enter your email and choose what you want to follow. A one-time code is sent to your mailbox; your application is saved after you verify it.</p>
+      </div>
+
+      <form id="subscribeForm">
+        <div class="honeypot" aria-hidden="true"><input id="websiteTrap" type="text" tabindex="-1" autocomplete="off"></div>
+        <div class="field">
+          <label for="subscribeEmail">Email address</label>
+          <input id="subscribeEmail" type="email" autocomplete="email" required placeholder="you@example.com">
         </div>
-
-        <form id="subscribeForm">
-          <label class="honeypot" aria-hidden="true">Leave this field empty<input id="websiteTrap" type="text" tabindex="-1" autocomplete="off"></label>
-          <div class="field">
-            <label for="subscribeEmail">Email address</label>
-            <input id="subscribeEmail" type="email" autocomplete="email" required placeholder="you@example.com">
+        <fieldset class="group">
+          <legend>What would you like to follow?</legend>
+          <div class="choice-grid">
+            <label><input type="checkbox" name="category" value="tcg" checked> Pokémon TCG</label>
+            <label><input type="checkbox" name="category" value="plush" checked> Plush</label>
+            <label><input type="checkbox" name="category" value="collectibles" checked> Collectibles</label>
+            <label><input type="checkbox" name="category" value="games" checked> Games</label>
+            <label><input type="checkbox" name="category" value="accessories" checked> Accessories &amp; apparel</label>
+            <label><input type="checkbox" name="category" value="news" checked> News</label>
           </div>
-          <fieldset class="group">
-            <legend>What would you like to follow?</legend>
-            <div class="choice-grid">
-              <label><input type="checkbox" name="category" value="tcg" checked> Pokémon TCG</label>
-              <label><input type="checkbox" name="category" value="plush" checked> Plush</label>
-              <label><input type="checkbox" name="category" value="collectibles" checked> Collectibles</label>
-              <label><input type="checkbox" name="category" value="games" checked> Games</label>
-              <label><input type="checkbox" name="category" value="accessories" checked> Accessories &amp; apparel</label>
-              <label><input type="checkbox" name="category" value="news" checked> News</label>
-            </div>
-          </fieldset>
-          <fieldset class="group">
-            <legend>Retailers and sources</legend>
-            <div class="choice-grid" id="retailerChoices">
-              <label><input type="checkbox" name="retailer" value="all" checked> All retailers</label>
-              <label><input type="checkbox" name="retailer" value="pokemon-center"> Pokémon Center</label>
-              <label><input type="checkbox" name="retailer" value="target"> Target</label>
-              <label><input type="checkbox" name="retailer" value="walmart"> Walmart</label>
-              <label><input type="checkbox" name="retailer" value="best-buy"> Best Buy</label>
-              <label><input type="checkbox" name="retailer" value="gamestop"> GameStop</label>
-              <label><input type="checkbox" name="retailer" value="amazon"> Amazon</label>
-              <label><input type="checkbox" name="retailer" value="pokebeach"> PokéBeach news</label>
-            </div>
-          </fieldset>
-          <div class="actions"><button id="subscribeButton" class="button primary" type="submit">Email me a verification code</button></div>
-        </form>
-
-        <div class="divider"></div>
-        <section>
-          <h2 class="unsubscribe-title">Already subscribed?</h2>
-          <form id="unsubscribeForm">
-            <div class="inline">
-              <div class="field"><label for="unsubscribeEmail">Email address for secure unsubscribe</label><input id="unsubscribeEmail" type="email" autocomplete="email" required placeholder="you@example.com"></div>
-              <button id="unsubscribeButton" class="button secondary" type="submit">Email me a code</button>
-            </div>
-          </form>
-        </section>
-
-        <section id="verificationPanel" class="code-panel" hidden>
-          <h2 id="verificationHeading">Check your email</h2>
-          <p id="verificationMessage">Enter the six-digit code sent to your email address.</p>
-          <div class="field"><label for="verificationCode">Six-digit verification code</label><input id="verificationCode" class="code-input" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" placeholder="000000"></div>
-          <div class="actions">
-            <button id="verifyButton" class="button primary" type="button">Verify code</button>
-            <button id="resendButton" class="button secondary" type="button">Send another code</button>
-            <button id="cancelCodeButton" class="button secondary" type="button">Cancel</button>
+        </fieldset>
+        <fieldset class="group">
+          <legend>Retailers and sources</legend>
+          <div class="choice-grid" id="retailerChoices">
+            <label><input type="checkbox" name="retailer" value="all" checked> All retailers</label>
+            <label><input type="checkbox" name="retailer" value="pokemon-center"> Pokémon Center</label>
+            <label><input type="checkbox" name="retailer" value="target"> Target</label>
+            <label><input type="checkbox" name="retailer" value="walmart"> Walmart</label>
+            <label><input type="checkbox" name="retailer" value="best-buy"> Best Buy</label>
+            <label><input type="checkbox" name="retailer" value="gamestop"> GameStop</label>
+            <label><input type="checkbox" name="retailer" value="amazon"> Amazon</label>
+            <label><input type="checkbox" name="retailer" value="pokebeach"> PokéBeach news</label>
           </div>
-        </section>
-        <p id="status" class="status" role="status" aria-live="polite">Connecting to the secure email service…</p>
+        </fieldset>
+        <div class="actions"><button id="subscribeButton" class="button primary" type="submit">Email me a verification code</button></div>
+      </form>
+
+      <section id="verificationPanel" class="code-panel" hidden>
+        <h2 id="verificationHeading">Verify your email address</h2>
+        <p id="verificationMessage">Enter the six-digit code sent to your email address.</p>
+        <div class="field"><label for="verificationCode">Six-digit verification code</label><input id="verificationCode" class="code-input" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" placeholder="000000"></div>
+        <div class="actions">
+          <button id="verifyButton" class="button primary" type="button">Verify code</button>
+          <button id="resendButton" class="button secondary" type="button">Send another code</button>
+          <button id="cancelCodeButton" class="button secondary" type="button">Cancel</button>
+        </div>
       </section>
 
-      <aside class="panel side">
-        <p class="eyebrow">HOW IT WORKS</p>
-        <h2>Verified. Reviewed. In control.</h2>
-        <p>Google Apps Script sends the code directly from the notification mailbox. This panel communicates with Apps Script itself; it does not use the website's cross-frame message bridge.</p>
-        <p>Your email is added to the private subscriber database only after the code is verified. New applications remain pending until the administrator approves them.</p>
-        <p>Codes expire after 10 minutes and can only be used once.</p>
-      </aside>
-    </div>
+      <div class="divider"></div>
+      <section>
+        <h2 class="unsubscribe-title">Already subscribed?</h2>
+        <form id="unsubscribeForm">
+          <div class="inline">
+            <div class="field"><label for="unsubscribeEmail">Email address for secure unsubscribe</label><input id="unsubscribeEmail" type="email" autocomplete="email" required placeholder="you@example.com"></div>
+            <button id="unsubscribeButton" class="button secondary" type="submit">Email me a code</button>
+          </div>
+        </form>
+      </section>
+      <p id="status" class="status" role="status" aria-live="polite">Ready. Enter your email address and choose what to follow.</p>
+    </section>
     <p class="footnote">PokéDrop Watch is a fan-made tracker and is not affiliated with Nintendo, The Pokémon Company, or any retailer.</p>
   </main>
 
@@ -114,12 +113,12 @@
           const runner = google.script.run
             .withSuccessHandler(result => {
               if (!result || result.ok !== true) {
-                reject(new Error(result && result.message ? result.message : 'Apps Script did not return a successful result.'));
+                reject(new Error(result && result.message ? result.message : 'The request did not return a successful result.'));
                 return;
               }
               resolve(result);
             })
-            .withFailureHandler(error => reject(new Error(error && error.message ? error.message : 'Google Apps Script could not complete the request.')));
+            .withFailureHandler(error => reject(new Error(error && error.message ? error.message : 'The secure email request could not be completed.')));
 
           if (method === 'request') runner.requestVerificationCode(payload);
           else if (method === 'verify') runner.verifyVerificationCode(payload);
@@ -150,7 +149,7 @@
       async function requestCode(flow) {
         if (busy) return;
         setBusy(true);
-        setStatus('Sending the verification request directly to Google Apps Script…');
+        setStatus('Sending your verification email…');
         try {
           const result = await runServer('request', {
             email: flow.email,
@@ -161,15 +160,16 @@
           });
           activeFlow = { ...flow, sessionToken: result.sessionToken };
           $('verificationHeading').textContent = flow.operation === 'unsubscribe' ? 'Confirm your unsubscribe' : 'Verify your email address';
-          $('verificationMessage').textContent = 'Google Apps Script accepted the email request for ' + flow.email + '. Enter the six-digit code below. It expires in 10 minutes.';
+          $('verificationMessage').textContent = 'Accepted the email request for ' + flow.email + '. Enter the six-digit code below. It expires in 10 minutes.';
           $('verificationCode').value = '';
           $('verificationPanel').hidden = false;
-          setStatus(result.message || 'Google Apps Script accepted the verification email request. Check your inbox and spam folder.', 'success');
+          setStatus(result.message || 'Email request accepted. Check your inbox and spam folder.', 'success');
           $('verificationCode').focus({ preventScroll: true });
+          $('verificationPanel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         } catch (error) {
-          const message = error && error.message ? error.message : 'Google Apps Script could not send the verification email.';
+          const message = error && error.message ? error.message : 'The verification email could not be sent.';
           if (/request could not be completed|try again later/i.test(message)) {
-            setStatus('Apps Script received the request but did not confirm that it sent the code. Open Apps Script → Executions and inspect the latest request. Also run authorizeOwnerAccess() once and check the notification mailbox daily quota.', 'error');
+            setStatus('The email request was not confirmed. Check the Apps Script execution log, notification mailbox authorization, and daily email quota before retrying.', 'error');
           } else {
             setStatus(message, 'error');
           }
@@ -237,9 +237,6 @@
           all.checked = false;
         }
       }));
-
-      // This is not a bridge-ready signal: the portal is the Apps Script page itself.
-      setStatus('Ready. Submitting this form sends the request directly to Google Apps Script.');
     })();
   </script>
 </body>

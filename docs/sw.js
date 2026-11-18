@@ -1,8 +1,9 @@
-const CACHE = 'pokedrop-shell-v13';
+const CACHE = 'pokedrop-shell-v14';
 const SHELL = [
-  './', './index.html', './admin.html', './notify.html', './styles.css', './app.js',
-  './subscriptions.js', './admin.js', './bridge-transport.js', './subscription-backend-config.js',
-  './SOURCE_HEALTH.html', './pokeball.svg', './manifest.webmanifest'
+  './', './index.html', './admin.html', './notify.html', './styles.css', './theme-overrides.css',
+  './app.js', './page-enhancements.js', './subscriptions.js', './admin.js', './bridge-transport.js',
+  './subscription-backend-config.js', './SOURCE_HEALTH.html', './pokeball.svg', './manifest.webmanifest',
+  './assets/icons/pokeball-8bit.svg', './assets/icons/ultraball-8bit.svg', './assets/icons/masterball-8bit.svg'
 ];
 
 self.addEventListener('install', event => {
@@ -16,8 +17,8 @@ self.addEventListener('activate', event => event.waitUntil(
   )).then(() => self.clients.claim())
 ));
 
-// Always request current HTML and scripts from GitHub Pages first. This avoids
-// keeping an older redirect-only admin/notify shell in the regular browser profile.
+// Always request current HTML and scripts from GitHub Pages first; cache only
+// successful responses for offline use. State JSON always comes directly from network.
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   if (url.origin !== self.location.origin || url.pathname.endsWith('/data/state.json')) return;
