@@ -1,71 +1,7 @@
-Replace only the existing doGet(e) function in Code.gs with this function and add
-pokedropEmbeddedOutput_ below it. Keep all email, verification, authentication,
-Firestore, Script Properties, and rate-limit functions unchanged.
+Do not copy a doGet snippet or partial helper into Apps Script.
 
-Also replace the Apps Script HTML file named Subscribe with the supplied
-backend/apps-script/Subscribe.html file. The Admin HTML file does not need to be
-replaced for the small login-hint removal below; it is removed at render time.
+Use the complete file at backend/apps-script/Code.gs. In the Google Apps Script editor, open Code.gs, select all existing contents, and replace them with the complete contents of that file. It includes the existing verification, email, admin authentication, Firestore, and rate-limit functions plus the page routing and UI transformations.
 
-function doGet(e) {
-  const page = String(e && e.parameter && e.parameter.page || '').trim().toLowerCase();
+Leave the existing Admin.html, Subscribe.html, and Index.html files in the Apps Script project in place. The new doGet(e) transforms the Admin and Subscribe HTML at render time, so the old hidden helper text and extra side panel are removed without copying partial HTML fragments.
 
-  if (page === 'admin') {
-    return pokedropEmbeddedOutput_(HtmlService.createHtmlOutputFromFile('Admin'), 'PokéDrop Watch Admin', 'admin');
-  }
-
-  if (page === 'subscribe' || page === 'notify') {
-    return pokedropEmbeddedOutput_(HtmlService.createHtmlOutputFromFile('Subscribe'), 'PokéDrop Watch Email Alerts', 'notify');
-  }
-
-  const props = PropertiesService.getScriptProperties();
-  const template = HtmlService.createTemplateFromFile('Index');
-  template.siteOrigin = props.getProperty('SITE_ORIGIN') || 'https://n0nam3-bot.github.io';
-  return template.evaluate()
-    .setTitle('PokéDrop Watch Verification')
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-}
-
-function pokedropEmbeddedOutput_(sourceOutput, title, page) {
-  const cursorFile = page === 'admin' ? 'masterball-8bit.svg' : 'ultraball-8bit.svg';
-  const cursorCss = `
-    <style>
-      @font-face {
-        font-family: "PKMN RBYGSC";
-        src: url("https://n0nam3-bot.github.io/PokeDropWatch/assets/fonts/PKMN-RBYGSC.ttf") format("truetype");
-        font-style: normal;
-        font-weight: 400;
-        font-display: swap;
-      }
-      html, body, body *, body *::before, body *::after, body *::placeholder {
-        font-family: "PKMN RBYGSC", "Courier New", monospace !important;
-      }
-      html, body, body * {
-        cursor: url("https://n0nam3-bot.github.io/PokeDropWatch/assets/icons/${cursorFile}") 8 8, auto !important;
-      }
-      input, textarea, [contenteditable="true"] { cursor: text !important; }
-    </style>
-  `;
-
-  let html = sourceOutput.getContent();
-  // Avoid duplicate branding when an older Apps Script Admin.html is deployed.
-  html = html.replace(/<header class="top">[\s\S]*?<\/header>/i, '');
-  html = html.replace(
-    '<p class="foot">PokéDrop Watch · Administrator sessions expire after one hour.</p>',
-    '<p class="foot">Administrator sessions expire after one hour.</p>'
-  );
-  html = html.replace(
-    'Use the administrator credentials configured in Apps Script.',
-    ''
-  );
-  html = html.replace('</head>', cursorCss + '</head>');
-
-  return HtmlService.createHtmlOutput(html)
-    .setTitle(title)
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-}
-
-After saving, deploy the existing web app as a New version. Keep the existing
-web app URL and its execution identity/access setting. The public GitHub Pages
-Admin and Notify pages embed these routes, so the web app must execute as the
-owner and be available to Anyone; do not choose an access option that forces
-visitors to sign in.
+Then save and deploy the existing web app as a New version. Keep the existing deployment URL, execute-as identity, and Anyone access setting.

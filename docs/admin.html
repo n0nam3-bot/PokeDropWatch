@@ -24,7 +24,7 @@
   <div class="site-shell admin-embed-shell" id="top">
     <header class="topbar admin-embed-topbar" id="pageTop">
       <a class="brand" href="./#top" aria-label="PokéDrop Watch home">
-        <img class="page-ball" src="./assets/icons/masterball-8bit.svg" alt="">
+        <img class="page-ball" src="./assets/icons/masterball-8bit.png" alt="">
         <span><strong>PokéDrop</strong><small>GYM LEADER</small></span>
       </a>
       <div class="topbar-right">
@@ -34,25 +34,7 @@
       </div>
     </header>
     <main class="admin-embed-main">
-      <details class="info-guide">
-        <summary>How administrator tools work</summary>
-        <div class="info-guide-content">
-          <h2>Reviewing applications</h2>
-          <p>Only applications with a verified email reach the subscriber list. New applications begin as <strong>Pending</strong> and do not receive alert emails until approved.</p>
-          <ul>
-            <li><strong>Approve</strong> changes a pending application to Active.</li>
-            <li><strong>Reject</strong> closes a pending application without enabling alerts.</li>
-            <li><strong>Suspend</strong> pauses an active subscription; Reactivate restores it.</li>
-            <li><strong>Remove</strong> marks a record as removed from the notification list.</li>
-          </ul>
-          <h2>Subscriber preferences</h2>
-          <p>Each record stores the product categories and retailer/source preferences selected during signup. Active subscribers receive only the alert types that match those preferences.</p>
-          <h2>Security and session</h2>
-          <p>Administrator sign-in and subscriber changes are handled by the private Apps Script backend. Browser code does not receive the Firestore service-account credentials. Administrator sessions expire after one hour.</p>
-          <p><a href="./SOURCE_HEALTH.html">Read how scans and alert types work ↗</a></p>
-        </div>
-      </details>
-      <iframe id="adminPortalFrame" src="https://script.google.com/macros/s/AKfycbwGfc1E_t1nj-HG5Sf5V1Y-J_cwY_PmwLIUAfbPPBVtl7mbxOhCkz5Q6BNosWmEUmVm/exec?page=admin" title="PokéDrop Watch private administrator portal" loading="eager" referrerpolicy="strict-origin-when-cross-origin" allow="clipboard-read; clipboard-write"></iframe>
+<iframe id="adminPortalFrame" src="https://script.google.com/macros/s/AKfycbwGfc1E_t1nj-HG5Sf5V1Y-J_cwY_PmwLIUAfbPPBVtl7mbxOhCkz5Q6BNosWmEUmVm/exec?page=admin" title="PokéDrop Watch private administrator portal" loading="eager" referrerpolicy="strict-origin-when-cross-origin" allow="clipboard-read; clipboard-write"></iframe>
       <p class="portal-fallback">Having trouble with the embedded Google page? <a href="https://script.google.com/macros/s/AKfycbwGfc1E_t1nj-HG5Sf5V1Y-J_cwY_PmwLIUAfbPPBVtl7mbxOhCkz5Q6BNosWmEUmVm/exec?page=admin" target="_blank" rel="noopener noreferrer">Open Admin directly ↗</a></p>
     </main>
   </div>
@@ -66,5 +48,6 @@
     </div>
   </nav>
   <script>document.getElementById('refreshAdminButton').addEventListener('click', () => window.location.reload());</script>
+  <script src="./page-enhancements.js" defer></script>
 </body>
 </html>

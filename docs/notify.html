@@ -18,19 +18,19 @@
     .notify-heading h1 { font:700 clamp(25px,4vw,36px)/1.1 system-ui,sans-serif; letter-spacing:-1.1px; margin:0 0 8px; }
     .notify-heading p:last-child { margin:0; color:#85867f; font-size:11px; line-height:1.6; }
     .notify-frame-wrap { overflow:hidden; border:1px solid var(--line); border-radius:13px; background:#fbf8f5; box-shadow:var(--shadow); }
-    #notifyPortalFrame { display:block; width:100%; height:760px; border:0; background:#fbf8f5; }
+    #notifyPortalFrame { display:block; width:100%; height:940px; border:0; background:#fbf8f5; }
     .portal-fallback { display:flex; justify-content:center; align-items:center; gap:8px; flex-wrap:wrap; padding:10px 0 12px; color:#85867f; font-size:10px; text-align:center; }
     .portal-fallback a { color:var(--red-dark); font-weight:800; text-decoration:underline; text-underline-offset:3px; }
     .bottom-bar a[aria-current="page"] { background:#fff2ee; color:var(--red-dark); }
-    @media(max-width:760px) { .notify-shell { padding:0 12px; } .notify-main { padding-top:12px; } #notifyPortalFrame { height:1080px; } }
-    @media(max-width:420px) { #notifyPortalFrame { height:1120px; } }
+    @media(max-width:760px) { .notify-shell { padding:0 12px; } .notify-main { padding-top:12px; } #notifyPortalFrame { height:1280px; } }
+    @media(max-width:420px) { #notifyPortalFrame { height:1380px; } }
   </style>
 </head>
 <body class="page-notify">
   <div class="site-shell notify-shell" id="top">
     <header class="topbar notify-topbar" id="pageTop">
       <a class="brand" href="./#top" aria-label="PokéDrop Watch home">
-        <img class="page-ball" src="./assets/icons/ultraball-8bit.svg" alt="">
+        <img class="page-ball" src="./assets/icons/ultraball-8bit.png" alt="">
         <span><strong>PokéDrop</strong><small>POKÉMON CENTER</small></span>
       </a>
       <div class="topbar-right">
@@ -45,21 +45,7 @@
         <h1>Notification center</h1>
         <p>Choose the Pokémon categories and retailers you want to follow. Verify your email with a one-time code; applications remain pending until approved by the administrator.</p>
       </section>
-      <details class="info-guide">
-        <summary>How email notifications work</summary>
-        <div class="info-guide-content">
-          <h2>1. Choose your preferences</h2>
-          <p>Select the product categories and retailers or news sources you want to follow. These preferences are saved with your application.</p>
-          <h2>2. Verify your email</h2>
-          <p>Request a six-digit code and enter it in the form on this page. The code expires after 10 minutes and can only be used once. Verification confirms that you control the mailbox.</p>
-          <h2>3. Wait for approval</h2>
-          <p>After verification, the application is saved as Pending. An administrator must approve it before alert emails begin. Approved Active subscribers receive alerts matching their selected preferences.</p>
-          <h2>Unsubscribing</h2>
-          <p>Use the secure unsubscribe form and verify the mailbox with a one-time code before the subscription is marked unsubscribed.</p>
-          <p><a href="./SOURCE_HEALTH.html">Learn how the monitor finds products and creates alerts ↗</a></p>
-        </div>
-      </details>
-      <div class="notify-frame-wrap">
+<div class="notify-frame-wrap">
         <iframe id="notifyPortalFrame" src="https://script.google.com/macros/s/AKfycbwGfc1E_t1nj-HG5Sf5V1Y-J_cwY_PmwLIUAfbPPBVtl7mbxOhCkz5Q6BNosWmEUmVm/exec?page=subscribe" title="PokéDrop Watch email notification application" loading="eager" referrerpolicy="strict-origin-when-cross-origin"></iframe>
       </div>
       <p class="portal-fallback">If the Google form does not load here, <a href="https://script.google.com/macros/s/AKfycbwGfc1E_t1nj-HG5Sf5V1Y-J_cwY_PmwLIUAfbPPBVtl7mbxOhCkz5Q6BNosWmEUmVm/exec?page=subscribe" target="_blank" rel="noopener noreferrer">open Notify directly in a new tab ↗</a>.</p>
@@ -75,5 +61,6 @@
     </div>
   </nav>
   <script>document.getElementById('refreshNotifyButton').addEventListener('click', () => window.location.reload());</script>
+  <script src="./page-enhancements.js" defer></script>
 </body>
 </html>

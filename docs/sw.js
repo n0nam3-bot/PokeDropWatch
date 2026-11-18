@@ -1,9 +1,9 @@
-const CACHE = 'pokedrop-shell-v14';
+const CACHE = 'pokedrop-shell-v15';
 const SHELL = [
   './', './index.html', './admin.html', './notify.html', './styles.css', './theme-overrides.css',
   './app.js', './page-enhancements.js', './subscriptions.js', './admin.js', './bridge-transport.js',
   './subscription-backend-config.js', './SOURCE_HEALTH.html', './pokeball.svg', './manifest.webmanifest',
-  './assets/icons/pokeball-8bit.svg', './assets/icons/ultraball-8bit.svg', './assets/icons/masterball-8bit.svg'
+  './assets/icons/pokeball-8bit.png', './assets/icons/ultraball-8bit.png', './assets/icons/masterball-8bit.png'
 ];
 
 self.addEventListener('install', event => {
