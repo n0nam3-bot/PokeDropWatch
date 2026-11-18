@@ -1,10 +1,30 @@
-Replace the existing doGet() function in Code.gs with this complete function:
+Replace the existing doGet() function in Code.gs with this complete function.
+Keep the rest of Code.gs unchanged.
 
 function doGet(e) {
   const page = String(e && e.parameter && e.parameter.page || '').trim().toLowerCase();
   if (page === 'admin') {
-    return HtmlService.createHtmlOutputFromFile('Admin')
-      .setTitle('PokéDrop Watch Admin');
+    // Admin.html calls google.script.run directly. ALLOWALL lets the GitHub Pages
+    // admin shell embed this page, keeping the browser address on GitHub Pages.
+    const adminFile = HtmlService.createHtmlOutputFromFile('Admin');
+    const fontCss = `
+      <style>
+        @font-face {
+          font-family: "PKMN RBYGSC";
+          src: url("https://n0nam3-bot.github.io/PokeDropWatch/assets/fonts/PKMN-RBYGSC.ttf") format("truetype");
+          font-style: normal;
+          font-weight: 400;
+          font-display: swap;
+        }
+        html, body, body *, body *::before, body *::after, body *::placeholder {
+          font-family: "PKMN RBYGSC", "Courier New", monospace !important;
+        }
+      </style>
+    `;
+    const themedContent = adminFile.getContent().replace('</head>', fontCss + '</head>');
+    return HtmlService.createHtmlOutput(themedContent)
+      .setTitle('PokéDrop Watch Admin')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
   }
 
   const props = PropertiesService.getScriptProperties();
@@ -14,5 +34,3 @@ function doGet(e) {
     .setTitle('PokéDrop Watch Verification')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
-
-Do not replace the rest of Code.gs. The Index.html page remains the public email-verification bridge; Admin.html is the standalone administrator portal.

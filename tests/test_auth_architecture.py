@@ -54,7 +54,7 @@ class AuthArchitectureTests(unittest.TestCase):
 
     def test_old_public_firebase_setup_page_is_not_in_service_worker_shell(self):
         worker = (ROOT / 'docs' / 'sw.js').read_text(encoding='utf-8')
-        self.assertIn('pokedrop-shell-v10', worker)
+        self.assertIn('pokedrop-shell-v11', worker)
         self.assertIn("'./bridge-transport.js'", worker)
         self.assertNotIn("'./FIREBASE_SETUP.html'", worker)
 
@@ -66,6 +66,20 @@ class AuthArchitectureTests(unittest.TestCase):
         self.assertIn("createHtmlOutputFromFile('Admin')", source)
         self.assertIn('google.script.run', admin)
         self.assertIn('exec?page=admin', landing)
+
+    def test_admin_stays_on_github_pages_and_embeds_apps_script(self):
+        landing = (ROOT / 'docs' / 'admin.html').read_text(encoding='utf-8')
+        source = (ROOT / 'backend' / 'apps-script' / 'doGet_REPLACEMENT.txt').read_text(encoding='utf-8')
+        self.assertIn('<iframe', landing)
+        self.assertIn('href="./"', landing)
+        self.assertNotIn('window.location.replace', landing)
+        self.assertNotIn('http-equiv="refresh"', landing)
+        self.assertIn('setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)', source)
+
+    def test_admin_uses_same_pokemon_font_as_public_site(self):
+        source = (ROOT / 'backend' / 'apps-script' / 'doGet_REPLACEMENT.txt').read_text(encoding='utf-8')
+        self.assertIn('assets/fonts/PKMN-RBYGSC.ttf', source)
+        self.assertIn('font-family: "PKMN RBYGSC"', source)
 
     def test_new_items_filter_is_present_in_html_without_javascript_relabeling(self):
         page = (ROOT / 'docs' / 'index.html').read_text(encoding='utf-8')

@@ -1,27 +1,32 @@
-# PokéDrop Watch — standalone administrator portal recovery
+# PokéDrop Watch — embedded administrator portal
 
-This change removes the administrator login/reset page from the nested cross-origin iframe message bridge. The public subscription form continues to use `Index.html`; the admin portal now runs directly inside Apps Script and calls the existing server functions with `google.script.run`.
+The public admin URL remains `https://n0nam3-bot.github.io/PokeDropWatch/admin.html`. The GitHub Pages page embeds the Apps Script admin page in an iframe. Administrator actions still execute inside Apps Script through `google.script.run`, but the browser's top-level address remains on the PokéDrop Watch website.
 
-## 1. Install the Apps Script HTML file
+## 1. Keep the existing Admin.html
 
-In the existing **PokéDrop Watch Backend** project, create a new HTML file named exactly `Admin` (Apps Script displays it as `Admin.html`). Copy the complete contents of `backend/apps-script/Admin.html` into it and save.
+Do not delete or rename the existing `Admin.html` file in the Apps Script project. It contains the standalone administrator interface and direct `google.script.run` calls.
 
-## 2. Update `doGet` in `Code.gs`
+## 2. Update doGet in the existing Code.gs project
 
-Replace only the existing `doGet()` function with the contents of `backend/apps-script/doGet_REPLACEMENT.txt`. Leave the rest of `Code.gs` unchanged. The default `/exec` page remains the public verification bridge; `/exec?page=admin` serves the standalone admin page.
+Open the existing **PokéDrop Watch Backend** Apps Script project. Replace only the `doGet()` function in `Code.gs` with the complete contents of `backend/apps-script/doGet_REPLACEMENT.txt` from this patch. Keep the rest of `Code.gs` unchanged.
 
-## 3. Deploy
+The updated handler:
 
-Choose **Deploy → Manage deployments → Edit → New version → Deploy**. Keep the existing deployment. It must execute as the Apps Script owner and be available to Anyone.
+- continues serving `Index.html` at the ordinary `/exec` endpoint for email verification;
+- serves `Admin.html` at `/exec?page=admin`;
+- applies the existing PKMN RBYGSC font from the public GitHub Pages asset URL;
+- sets `XFrameOptionsMode.ALLOWALL` on the Admin output so GitHub Pages can embed it.
 
-## 4. Use the admin portal
+## 3. Deploy a new version
 
-Open `https://n0nam3-bot.github.io/PokeDropWatch/admin.html`. It redirects to the standalone Apps Script admin page. The portal reports administrator authentication separately from Firestore subscriber loading, so a database permission error no longer looks like a bad password.
+Choose **Deploy → Manage deployments → Edit → New version → Deploy**. Keep the existing deployment ID, execute as the Apps Script owner, and retain access for Anyone.
 
-The existing Script Properties are still required. The admin page does not use Firebase Authentication. It calls `adminLogin`, `requestAdminPasswordReset`, `completeAdminPasswordReset`, `adminListSubscribers`, `adminUpdateSubscriber`, and `adminLogout` already defined in `Code.gs`.
+## 4. Open the admin portal
 
-## 5. Workflow test repair
+Use `https://n0nam3-bot.github.io/PokeDropWatch/admin.html`. The page shows a PokéDrop Watch header with a **Main website** link and embeds the Apps Script admin UI below it. Signing in and signing out happen inside the embedded frame, so the browser address stays on the GitHub Pages URL. The Google Apps Script URL is only the iframe's internal source.
 
-The previous `run-monitor` workflow failure was caused by `tests/test_auth_architecture.py` still asserting that the service worker cache name must be `pokedrop-shell-v8`, while the installed worker was already `pokedrop-shell-v9`. This patch advances it to `pokedrop-shell-v10` and updates the test to match. The monitor step is skipped after a failed test step, which explains why no new scan ran in that job.
+The admin theme now loads `PKMN-RBYGSC.ttf` from `docs/assets/fonts/PKMN-RBYGSC.ttf`, the same font used by the main site. No new font upload is required.
 
-No Firebase data, Firestore rules, service-account key, or IAM role is modified by this patch.
+## 5. Data and security
+
+The admin portal still uses the custom Apps Script password hash and reset-code functions. It does not use Firebase Authentication. Firestore remains private; do not enable public browser read/write rules. If the password is accepted but the subscriber list cannot load, check the service-account JSON, Cloud Datastore User IAM role, and Firestore API independently.
