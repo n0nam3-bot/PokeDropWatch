@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-11-18T03:04:32Z",
+  "last_checked": "2026-11-18T03:22:41Z",
   "items": {
     "pokemon-center-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-18T03:00:23Z",
+      "last_success": "2026-11-18T03:18:35Z",
       "source_url": "https://www.pokemoncenter.com/category/trading-card-game",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -15,7 +15,7 @@
     "pokemon-center-plush": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-18T03:00:23Z",
+      "last_success": "2026-11-18T03:18:35Z",
       "source_url": "https://www.pokemoncenter.com/category/plush",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -25,7 +25,7 @@
     "target-pokemon": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-18T03:00:25Z",
+      "last_success": "2026-11-18T03:18:36Z",
       "source_url": "https://www.target.com/s?searchTerm=pokemon",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -48,7 +48,7 @@
           "category": "collectibles",
           "retailer_key": "walmart",
           "first_seen_at": null,
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Card-Games-Scarlett-Violet-8-5-Prismatic-Evolutions-Surprise-Box/14148473268": {
@@ -63,7 +63,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": null,
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-TCG-Mega-Evolution-Delta-Reign-Elite-Trainer-Box-ETB/21142702057": {
@@ -78,7 +78,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": null,
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-TCG-30th-Celebration-Booster-Bundle/20638470762": {
@@ -93,7 +93,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": null,
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/POKEMON-CHARIZARD-EX-SPECIAL-COLLECTION/15424553284": {
@@ -108,7 +108,7 @@
           "category": "collectibles",
           "retailer_key": "walmart",
           "first_seen_at": null,
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-TCG-30th-Celebration-Elite-Trainer-Box-ETB/20754418655": {
@@ -123,7 +123,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": null,
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Ultra-PRO-9-Pocket-Zippered-PRO-Binder-Pokemon-Elite-Series-Charizard/5228007605": {
@@ -138,7 +138,7 @@
           "category": "accessories",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T11:29:58Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Ultra-Rare-Battle-Bundle-100-Pokemon-Cards-1x-Ultra-Rare-Guaranteed-Walmart-Exclusive/16348611021": {
@@ -153,7 +153,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Umbreon-Select-Vinyl-Figure-4-Inch-Figure-Made-from-High-Quality-Vinyl/18668713578": {
@@ -183,7 +183,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Top-Class-Cards-Mega-Pack-2-Factory-Sealed-Booster-Packs-1-Guaranteed-Mega-ex-Pokemon/20226855448": {
@@ -228,7 +228,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-TCG-Mega-Evolution-Perfect-Order-Booster-Bundle-6-Packs/19380764160": {
@@ -243,7 +243,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Scarlet-and-Violet-8-5-Prismatic-Evolutions-Elite-Trainer-Box/13816151308": {
@@ -258,7 +258,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Card-Game-Scarlet-Violet-10-Destined-Rivals-Elite-Trainer-Box/15718673510": {
@@ -273,7 +273,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pok-mon-Trading-Card-Game-Mega-Evolution-Ascended-Heroes-Elite-Trainer-Box/18710966734": {
@@ -288,7 +288,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-18-Plush-Sleeping-Pikachu-Cuddly-Must-Have-for-Pok-mon-Fans-Plush-for-Traveling-Car-Rides/5105871205": {
@@ -303,7 +303,7 @@
           "category": "plush",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Espeon-Sleeping-Plush-18-inch-Premium-Plush-in-Sleeping-Pose/17440555997": {
@@ -318,7 +318,7 @@
           "category": "plush",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/2025-Slab-Kings-Plus-Pokemon-Edition-1-Graded-Card-1-Sealed-Pack-1-Bonus-Card/18097869978": {
@@ -333,7 +333,7 @@
           "category": "collectibles",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Battle-Disc-Showdown-Game-Pikachu-1-and-Larvitar-with-Electric-Base-and-Rock-Base-Electric-and-Rock-discs-Battle-Arena/19298317119": {
@@ -348,7 +348,7 @@
           "category": "collectibles",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-TCG-Mega-Evolution-Chaos-Rising-Elite-Trainer-Box/19988614228": {
@@ -378,7 +378,7 @@
           "category": "collectibles",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-TCG-Scarlet-Violet-10-5-Unova-Poster-Collection-Box-4-Packs/16517213276": {
@@ -393,7 +393,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pok-mon-TCG-Scarlet-Violet-8-5-Prismatic-Evolutions-Super-Premium-Collection/15494520186": {
@@ -408,7 +408,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Card-Games-Pokemon-Day-2026-Collection/18981958891": {
@@ -423,7 +423,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-TCG-Mega-Evolution-Chaos-Rising-Bundle/19986002628": {
@@ -438,7 +438,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Card-Games-Mega-Evolution-5-Pitch-Black-3-Pack-Blister/20195672958": {
@@ -453,7 +453,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-TCG-Scarlet-Violet-Prismatic-Evolutions-Booster-Bundle/14803962651": {
@@ -468,7 +468,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Card-Games-Scarlet-Violet-9-Journey-Together-Booster-Bundle/15042474261": {
@@ -483,7 +483,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-TCG-Scarlet-Violet-Destined-Rivals-Booster-Bundle-6-Packs/16019713971": {
@@ -498,7 +498,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Umbreon-Sleeping-Plush-18-inch-Premium-Plush-in-Sleeping-Pose/17441256066": {
@@ -513,7 +513,7 @@
           "category": "plush",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-TCG-Mega-Greninja-ex-League-Battle-Deck/20997113851": {
@@ -543,7 +543,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-TCG-Mega-Evolution-Delta-Reign-Booster-Display-Box-36-Packs/21025306402": {
@@ -558,7 +558,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Card-Games-Mega-Evolution-Ascended-Heroes-First-Partners-Deluxe-Pin-Collection/19012610850": {
@@ -573,7 +573,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/POKEMON-Deluxe-Feature-Figure-Electro-Ball-Pikachu/18876470654": {
@@ -588,7 +588,7 @@
           "category": "collectibles",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Card-Games-Mega-Evolutions-3-Perfect-Order-3Pk-Blister/19385368696": {
@@ -603,7 +603,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Squishmallows-Pokemon-10-inch-Teddiursa-Child-s-Ultra-Soft-Stuffed-Plush-Toy/5074060081": {
@@ -618,7 +618,7 @@
           "category": "plush",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-TCG-Mega-Greninja-ex-Premium-Collection/20110774429": {
@@ -633,7 +633,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Card-Games-Scarlet-Violet-8-Surging-Sparks-Booster-Bundle/10692754252": {
@@ -648,7 +648,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-TCG-Mega-Evolution-Delta-Reign-Booster-Bundle-ME06/21154118459": {
@@ -663,7 +663,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Card-Scarlet-Violet-SV10-Destined-Rivals-English-Case-10-Boxes/20739161171": {
@@ -693,7 +693,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-30th-Celebration-Poster-Collection/21000300041": {
@@ -708,7 +708,7 @@
           "category": "collectibles",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-TCG-30th-Celebration-Ditto-Premium-Collection/20679905827": {
@@ -723,7 +723,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Card-Game-30th-Celebration-Tin-Sylveon-or-Greninja-Styles-May-Vary/21070250041": {
@@ -738,7 +738,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-30th-Anniversary-Celebration-Sylveon-ex-ex-Box-4-Booster-Packs-1-Promo-Card-1-Oversize-Promo/21024763314": {
@@ -753,7 +753,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Mega-Bloks-Pokemon-Holiday-Calendar-202-Piece-Building-Toy-Set/663108970": {
@@ -813,7 +813,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/100-Assorted-Pokemon-Trading-Cards-with-7-Bonus-Free-Holo-Foils/185037542": {
@@ -828,7 +828,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-TCG-Mega-Zygarde-ex-Premium-Collection/19607974314": {
@@ -843,7 +843,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/POKEMON-CHARIZARD-X-EX-ULTRA-PREMIUM-COLLECTION/17823811037": {
@@ -858,7 +858,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pok-mon-TCG-Mega-Evolution-Ascended-Heroes-Booster-Bundle-6-Packs/18728422476": {
@@ -873,7 +873,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Card-Games-Scarlet-Violet-9-Journey-Together-3Pk-Blister-Styles-May-Vary/15118973121": {
@@ -888,7 +888,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Card-Games-Chaos-Rising-3-Pack-Blister/19939024730": {
@@ -903,7 +903,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Card-Games-Scarlet-Violet-3-5-151-Booster-Bundle-with-6-Booster-Card-Packs/1160437186": {
@@ -918,7 +918,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/POKEMON-ME2-PHANTASMAL-FLAMES-BOOSTER-BUNDLE/17785924366": {
@@ -948,7 +948,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Card-Games-Mega-Evolutions-3Pk-Blister-Randomly-Selected/17816122516": {
@@ -963,7 +963,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Card-Games-Scarlet-Violet-Destined-Rivals-Elite-Trainer-Box/19965460207": {
@@ -978,7 +978,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Cards-50-Card-Assorted-Lot-with-Guaranteed-V-Pokemon/1394086640": {
@@ -993,7 +993,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-TCG-Mega-Evolution-Perfect-Order-Elite-Trainer-Box/19402160990": {
@@ -1023,7 +1023,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Card-Game-Mega-Evolutions-Booster-Bundle/17344505131": {
@@ -1038,7 +1038,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Card-Game-Scarlet-Violet-10-Destined-Rivals-3Pk-Blister/16060605120": {
@@ -1053,7 +1053,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Card-Games-Scarlet-Violet-10-5-Black-Bolt-Elite-Trainer-Box/16498668973": {
@@ -1068,7 +1068,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Card-Games-Scarlet-Violet-3-5-151-Poster-Collection-Box-3-Pokemon-TCG-Scarlet-Violet-151-booster-packs/2121361619": {
@@ -1083,7 +1083,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Card-Game-Mega-Evolution-Elite-Trainer-Box/17328862239": {
@@ -1098,7 +1098,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-TCG-Scarlet-Violet-Shrouded-Fable-Booster-Bundle-6-Packs/17467550073": {
@@ -1113,7 +1113,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Card-Games-Scarlet-Violet-10-5-White-Flare-Booster-Bundle/16516160047": {
@@ -1128,7 +1128,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Card-Game-30th-Anniversary-Celebration-Ultra-Premium-Collection-Combo-Day-and-Night/21403070560": {
@@ -1143,7 +1143,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Pokemon-Trading-Cards-Scarlet-Violet-10-5-White-Flare-Elite-Trainer-Box/16446322202": {
@@ -1173,7 +1173,7 @@
           "category": "tcg",
           "retailer_key": "walmart",
           "first_seen_at": "2026-11-17T11:29:58Z",
-          "last_seen": "2026-11-17T13:24:16Z",
+          "last_seen": "2026-11-18T03:18:43Z",
           "availability_checked": true
         },
         "https://www.walmart.com/ip/Top-Class-Cards-Rare-Box-25-Rare-Pokemon-Cards-Black-Star-Rare-Cards-Guaranteed-Compatible-with-Pokemon-Cards/2439471826": {
@@ -1235,12 +1235,252 @@
           "first_seen_at": "2026-11-17T13:24:16Z",
           "last_seen": "2026-11-17T13:24:16Z",
           "availability_checked": true
+        },
+        "https://www.walmart.com/ip/Pokemon-Pikachu-Eevee-Boys-Boxer-Briefs-for-Kids-6/20370801068": {
+          "title": "Pokemon Pikachu & Eevee Boys Boxer Briefs for Kids-6",
+          "url": "https://www.walmart.com/ip/Pokemon-Pikachu-Eevee-Boys-Boxer-Briefs-for-Kids-6/20370801068",
+          "price": null,
+          "currency": "USD",
+          "availability": "in_stock",
+          "image": "https://i5.walmartimages.com/seo/Pokemon-Pikachu-Eevee-Boys-Boxer-Briefs-for-Kids-6_c136e7d4-f2c9-4207-90b3-045907a54920.c67cc174b2d8b08dba91f7831984d5e3.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+          "sku": "7BP4M9ODEPDY",
+          "retailer": "Walmart",
+          "category": "collectibles",
+          "retailer_key": "walmart",
+          "first_seen_at": "2026-11-18T03:18:43Z",
+          "last_seen": "2026-11-18T03:18:43Z",
+          "availability_checked": true
+        },
+        "https://www.walmart.com/ip/Pokemon-Light-And-Sweet-Twin-Bed-in-a-Bag-Bedding-Set/5377059141": {
+          "title": "Pokemon Light And Sweet Twin Bed in a Bag Bedding Set",
+          "url": "https://www.walmart.com/ip/Pokemon-Light-And-Sweet-Twin-Bed-in-a-Bag-Bedding-Set/5377059141",
+          "price": null,
+          "currency": "USD",
+          "availability": "in_stock",
+          "image": "https://i5.walmartimages.com/seo/Pokemon-Light-And-Sweet-Twin-Bed-in-a-Bag-Bedding-Set_dbd5bdb2-6411-47b4-9bfc-fef0697a4510.87b7714dfc7c7fb0a98ceeb166a0afc6.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+          "sku": "3KN3MJWQ96W1",
+          "retailer": "Walmart",
+          "category": "collectibles",
+          "retailer_key": "walmart",
+          "first_seen_at": "2026-11-18T03:18:43Z",
+          "last_seen": "2026-11-18T03:18:43Z",
+          "availability_checked": true
+        },
+        "https://www.walmart.com/ip/POKEMON-MEGA-VENUSAUR-EX-PREMIUM-BOX/17921600867": {
+          "title": "POKEMON MEGA VENUSAUR EX PREMIUM BOX",
+          "url": "https://www.walmart.com/ip/POKEMON-MEGA-VENUSAUR-EX-PREMIUM-BOX/17921600867",
+          "price": null,
+          "currency": "USD",
+          "availability": "in_stock",
+          "image": "https://i5.walmartimages.com/asr/1b074469-f84b-497f-b25d-a66fd565fb74.4136870a1fd4ad5e15ac6a17fccc91ea.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+          "sku": "43R50M2PM9MW",
+          "retailer": "Walmart",
+          "category": "collectibles",
+          "retailer_key": "walmart",
+          "first_seen_at": "2026-11-18T03:18:43Z",
+          "last_seen": "2026-11-18T03:18:43Z",
+          "availability_checked": true
+        },
+        "https://www.walmart.com/ip/Pokemon-8-Plush-Pikachu-Winking/797887724": {
+          "title": "Winking Pikachu",
+          "url": "https://www.walmart.com/ip/Pokemon-8-Plush-Pikachu-Winking/797887724",
+          "price": null,
+          "currency": "USD",
+          "availability": "unknown",
+          "image": "https://i5.walmartimages.com/asr/638ce0fc-97a3-4d61-b814-df0e8ea524d9.d3c75420d24936e9a2e4f516ddbf0eb0.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+          "sku": "24JOLLGAHUNZ",
+          "retailer": "Walmart",
+          "category": "collectibles",
+          "retailer_key": "walmart",
+          "first_seen_at": "2026-11-18T03:18:43Z",
+          "last_seen": "2026-11-18T03:18:43Z",
+          "availability_checked": false
+        },
+        "https://www.walmart.com/ip/Pok-mon-Charmander-8-inch-Plush-Authentic-Details-Toys-for-Kids/199937384": {
+          "title": "Charmander",
+          "url": "https://www.walmart.com/ip/Pok-mon-Charmander-8-inch-Plush-Authentic-Details-Toys-for-Kids/199937384",
+          "price": null,
+          "currency": "USD",
+          "availability": "unknown",
+          "image": "https://i5.walmartimages.com/asr/da92128b-7e08-477f-88da-52d996d4e481.9a18b8fe451fa78daf94b6ebf07a4b97.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+          "sku": "3TK5TOV02BG1",
+          "retailer": "Walmart",
+          "category": "collectibles",
+          "retailer_key": "walmart",
+          "first_seen_at": "2026-11-18T03:18:43Z",
+          "last_seen": "2026-11-18T03:18:43Z",
+          "availability_checked": false
+        },
+        "https://www.walmart.com/ip/Pokemon-Sprigatito-Plush/10280111778": {
+          "title": "Sprigatito",
+          "url": "https://www.walmart.com/ip/Pokemon-Sprigatito-Plush/10280111778",
+          "price": null,
+          "currency": "USD",
+          "availability": "unknown",
+          "image": "https://i5.walmartimages.com/asr/c9528a8a-bc2d-41a7-96a6-3b274dc8913c.8aafb462063fd48e9c72265716096b36.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+          "sku": "2H55BRUYXAQ1",
+          "retailer": "Walmart",
+          "category": "collectibles",
+          "retailer_key": "walmart",
+          "first_seen_at": "2026-11-18T03:18:43Z",
+          "last_seen": "2026-11-18T03:18:43Z",
+          "availability_checked": false
+        },
+        "https://www.walmart.com/ip/Pokemon-Scarlet-Violet-3-Obsidian-Flames-Build-Battle-Box/3365347628": {
+          "title": "Pokemon TCG: Scarlet Violet 03 Obsidian Flames- Build Battle Box Display (1 Box)",
+          "url": "https://www.walmart.com/ip/Pokemon-Scarlet-Violet-3-Obsidian-Flames-Build-Battle-Box/3365347628",
+          "price": null,
+          "currency": "USD",
+          "availability": "in_stock",
+          "image": "https://i5.walmartimages.com/asr/1200c7f6-c2d6-4b36-9591-e666362a4cea.7a128b5e178f152fe956f2be20540913.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+          "sku": "2ND9H169F98E",
+          "retailer": "Walmart",
+          "category": "tcg",
+          "retailer_key": "walmart",
+          "first_seen_at": "2026-11-18T03:18:43Z",
+          "last_seen": "2026-11-18T03:18:43Z",
+          "availability_checked": true
+        },
+        "https://www.walmart.com/ip/Pokemon-Legendary-Warriors-Premium-Collection/13190955834": {
+          "title": "POKEMON D82 LEGENDARY WARRIORS PREMIUM COLLECTION",
+          "url": "https://www.walmart.com/ip/Pokemon-Legendary-Warriors-Premium-Collection/13190955834",
+          "price": null,
+          "currency": "USD",
+          "availability": "in_stock",
+          "image": "https://i5.walmartimages.com/asr/65340a96-e16e-4459-a8ba-5413ec99884a.6a147b165152002f34dc3264308f9b31.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+          "sku": "29B6CAAKP1F5",
+          "retailer": "Walmart",
+          "category": "collectibles",
+          "retailer_key": "walmart",
+          "first_seen_at": "2026-11-18T03:18:43Z",
+          "last_seen": "2026-11-18T03:18:43Z",
+          "availability_checked": true
+        },
+        "https://www.walmart.com/ip/Pokemon-Holiday-Calendar-2026/21020917472": {
+          "title": "Pokemon Holiday Calendar - 2026",
+          "url": "https://www.walmart.com/ip/Pokemon-Holiday-Calendar-2026/21020917472",
+          "price": null,
+          "currency": "USD",
+          "availability": "in_stock",
+          "image": "https://i5.walmartimages.com/seo/Pokemon-Holiday-Calendar-2026_6c7aa3a1-ec58-4503-9a41-d3fdcafe7f87.b2c994e946ba5e24ce64779da233b620.png",
+          "sku": "2MC63QZ5MG55",
+          "retailer": "Walmart",
+          "category": "collectibles",
+          "retailer_key": "walmart",
+          "first_seen_at": "2026-11-18T03:18:43Z",
+          "last_seen": "2026-11-18T03:18:43Z",
+          "availability_checked": true
+        },
+        "https://www.walmart.com/ip/Pokemon-Trading-Card-Game-Pawmot-Checklane-BLISTER-Pack-2-Booster-Packs-Promo-Card-Coin/5346814700": {
+          "title": "Pokemon Trading Card Game Pawmot Checklane BLISTER Pack (2 Booster Packs, Promo Card & Coin)",
+          "url": "https://www.walmart.com/ip/Pokemon-Trading-Card-Game-Pawmot-Checklane-BLISTER-Pack-2-Booster-Packs-Promo-Card-Coin/5346814700",
+          "price": null,
+          "currency": "USD",
+          "availability": "in_stock",
+          "image": "https://i5.walmartimages.com/asr/c27bb652-2834-4bb2-b653-99c77c6b4385.c78f62b0c8cbbc98a297db40b1265e47.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+          "sku": "6ULCLWSZSMDK",
+          "retailer": "Walmart",
+          "category": "tcg",
+          "retailer_key": "walmart",
+          "first_seen_at": "2026-11-18T03:18:43Z",
+          "last_seen": "2026-11-18T03:18:43Z",
+          "availability_checked": true
+        },
+        "https://www.walmart.com/ip/Pokemon-Trading-Card-Games-SV6-Twilight-Masquerade-3Pk-Blister-Snorlax/5676427231": {
+          "title": "Pokemon Trading Card Games SV6 Twilight Masquerade 3Pk Blister - Snorlax",
+          "url": "https://www.walmart.com/ip/Pokemon-Trading-Card-Games-SV6-Twilight-Masquerade-3Pk-Blister-Snorlax/5676427231",
+          "price": null,
+          "currency": "USD",
+          "availability": "in_stock",
+          "image": "https://i5.walmartimages.com/asr/98b2bcd6-879f-455e-b202-27d93c5b4140.21446960eecc31f23eb8d1c65aaddbf8.png?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+          "sku": "2ZLCK2ON7M29",
+          "retailer": "Walmart",
+          "category": "tcg",
+          "retailer_key": "walmart",
+          "first_seen_at": "2026-11-18T03:18:43Z",
+          "last_seen": "2026-11-18T03:18:43Z",
+          "availability_checked": true
+        },
+        "https://www.walmart.com/ip/2025-Pokemon-Trading-Card-Games-Holiday-Calendar/17558653385": {
+          "title": "2025 Pokemon Trading Card Games Holiday Calendar",
+          "url": "https://www.walmart.com/ip/2025-Pokemon-Trading-Card-Games-Holiday-Calendar/17558653385",
+          "price": null,
+          "currency": "USD",
+          "availability": "in_stock",
+          "image": "https://i5.walmartimages.com/asr/061014c4-6e56-47a1-9aea-724678b40fbf.59935604cdb2fe007b7dbf9cd88c5b75.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+          "sku": "2ITPG039XTCV",
+          "retailer": "Walmart",
+          "category": "tcg",
+          "retailer_key": "walmart",
+          "first_seen_at": "2026-11-18T03:18:43Z",
+          "last_seen": "2026-11-18T03:18:43Z",
+          "availability_checked": true
+        },
+        "https://www.walmart.com/ip/POKEMON-ME2-PHANTASMAL-FLAMES-ELITE-TRAINER-BOX/17780209250": {
+          "title": "Pokemon Trading Card Game Phantasmal Flames Elite Trainer Box",
+          "url": "https://www.walmart.com/ip/POKEMON-ME2-PHANTASMAL-FLAMES-ELITE-TRAINER-BOX/17780209250",
+          "price": null,
+          "currency": "USD",
+          "availability": "in_stock",
+          "image": "https://i5.walmartimages.com/asr/a884d0b0-43fb-4164-acaa-7b084324d7d8.22048154bf869761b6ba5aa8c6c89710.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+          "sku": "3WYVW8839287",
+          "retailer": "Walmart",
+          "category": "tcg",
+          "retailer_key": "walmart",
+          "first_seen_at": "2026-11-18T03:18:43Z",
+          "last_seen": "2026-11-18T03:18:43Z",
+          "availability_checked": true
+        },
+        "https://www.walmart.com/ip/Pok-mon-Trading-Card-Game-Mega-Gengar-Battle-Deck/18338561682": {
+          "title": "Pokmon - Trading Card Game: Mega Gengar Battle Deck",
+          "url": "https://www.walmart.com/ip/Pok-mon-Trading-Card-Game-Mega-Gengar-Battle-Deck/18338561682",
+          "price": null,
+          "currency": "USD",
+          "availability": "in_stock",
+          "image": "https://i5.walmartimages.com/asr/2bd66a73-d783-4d4d-8a31-3a73ea130c92.34a3047d3ce3c1202c0fcc17deaa56c0.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+          "sku": "6LIILH1BMBUV",
+          "retailer": "Walmart",
+          "category": "tcg",
+          "retailer_key": "walmart",
+          "first_seen_at": "2026-11-18T03:18:43Z",
+          "last_seen": "2026-11-18T03:18:43Z",
+          "availability_checked": true
+        },
+        "https://www.walmart.com/ip/Pokemon-Large-12-Raboot-Plush-Officially-Licensed-Sword-Shield-Scorbunny-Cinderace-Evolution-Quality-Soft-Stuffed-Animal-Toy-Great-Gift-Kids-Boys-Gir/1900371648": {
+          "title": "Pokémon Large 12\" Raboot Plush - Sword & Shield Scorbunny & Cinderace Evolution - Quality Soft Stuffed Animal Toy - Christmas Gift for Kids, Boys",
+          "url": "https://www.walmart.com/ip/Pokemon-Large-12-Raboot-Plush-Officially-Licensed-Sword-Shield-Scorbunny-Cinderace-Evolution-Quality-Soft-Stuffed-Animal-Toy-Great-Gift-Kids-Boys-Gir/1900371648",
+          "price": null,
+          "currency": "USD",
+          "availability": "in_stock",
+          "image": "https://i5.walmartimages.com/seo/Pokemon-Large-12-Raboot-Plush-Officially-Licensed-Sword-Shield-Scorbunny-Cinderace-Evolution-Quality-Soft-Stuffed-Animal-Toy-Great-Gift-Kids-Boys-Gir_aba1a798-1cdd-4e88-8c7d-a598a5508f07.6f946459550270153ac28f58210e0861.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+          "sku": "0U3WDEXPIH2G",
+          "retailer": "Walmart",
+          "category": "plush",
+          "retailer_key": "walmart",
+          "first_seen_at": "2026-11-18T03:18:43Z",
+          "last_seen": "2026-11-18T03:18:43Z",
+          "availability_checked": true
+        },
+        "https://www.walmart.com/ip/Squishmallows-Official-10-Inch-Pokemon-Pikachu-Plush-Toy/18007906615": {
+          "title": "Squishmallows Official 10 Inch Pokemon Pikachu Plush Toy",
+          "url": "https://www.walmart.com/ip/Squishmallows-Official-10-Inch-Pokemon-Pikachu-Plush-Toy/18007906615",
+          "price": null,
+          "currency": "USD",
+          "availability": "in_stock",
+          "image": "https://i5.walmartimages.com/seo/Squishmallows-Official-10-Inch-Pokemon-Pikachu-Plush-Toy_257b6475-940f-4959-8fe5-2914208635bf.bb7746b497a300bb9b087978ed952c18.jpeg",
+          "sku": "5TDRWJ1HHGX3",
+          "retailer": "Walmart",
+          "category": "plush",
+          "retailer_key": "walmart",
+          "first_seen_at": "2026-11-18T03:18:43Z",
+          "last_seen": "2026-11-18T03:18:43Z",
+          "availability_checked": true
         }
       },
       "initialized": true,
-      "last_success": "2026-11-18T03:00:25Z",
+      "last_success": "2026-11-18T03:18:43Z",
       "source_url": "https://www.walmart.com/search?q=pokemon",
-      "last_item_count": 0,
+      "last_item_count": 80,
       "last_successful_urls": [
         "https://www.walmart.com/search?q=pokemon",
         "https://www.walmart.com/search?q=pokemon+trading+cards",
@@ -1250,7 +1490,7 @@
     "gamestop-pokemon": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-18T03:04:20Z",
+      "last_success": "2026-11-18T03:22:37Z",
       "source_url": "https://www.gamestop.com/search/?q=pokemon",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -3490,11 +3730,14 @@
         }
       },
       "initialized": true,
-      "last_success": "2026-11-18T01:23:56Z",
+      "last_success": "2026-11-18T03:22:38Z",
       "source_url": "https://www.amazon.com/s?k=pokemon",
-      "last_item_count": 152,
+      "last_item_count": 0,
       "last_successful_urls": [
-        "https://www.amazon.com/s?k=pokemon"
+        "https://www.amazon.com/s?k=pokemon",
+        "https://www.amazon.com/s?k=pokemon+trading+cards",
+        "https://www.amazon.com/s?k=pokemon+plush",
+        "https://www.amazon.com/s?k=pokemon+figures"
       ]
     }
   },
@@ -3507,10 +3750,10 @@
       "url": "https://www.pokemoncenter.com/category/trading-card-game",
       "response_url": "https://www.pokemoncenter.com/category/trading-card-game",
       "status": "warning",
-      "last_checked": "2026-11-18T03:00:23Z",
+      "last_checked": "2026-11-18T03:18:35Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 136,
+      "duration_ms": 201,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan.",
       "notes": "Official Pokémon Center TCG listing. Product discovery depends on the public page exposing product links or structured data.",
       "successful_urls": 1,
@@ -3524,10 +3767,10 @@
       "url": "https://www.pokemoncenter.com/category/plush",
       "response_url": "https://www.pokemoncenter.com/category/plush",
       "status": "warning",
-      "last_checked": "2026-11-18T03:00:23Z",
+      "last_checked": "2026-11-18T03:18:35Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 65,
+      "duration_ms": 157,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan.",
       "notes": "Official Pokémon Center plush listing.",
       "successful_urls": 1,
@@ -3541,10 +3784,10 @@
       "url": "https://www.target.com/s?searchTerm=pokemon",
       "response_url": "https://www.target.com/s?searchTerm=pokemon",
       "status": "warning",
-      "last_checked": "2026-11-18T03:00:25Z",
+      "last_checked": "2026-11-18T03:18:36Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 1518,
+      "duration_ms": 1328,
       "message": "Fetched 3/3 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan.",
       "notes": "Search listing; retailer may limit automated access or render listings in JavaScript. The monitor also checks category-specific public search URLs and merges duplicate products; availability depends on retailer access and HTML/JSON exposure.",
       "successful_urls": 3,
@@ -3556,13 +3799,13 @@
       "retailer": "Walmart",
       "type": "catalog",
       "url": "https://www.walmart.com/search?q=pokemon",
-      "response_url": "https://www.walmart.com/search?q=pokemon",
-      "status": "warning",
-      "last_checked": "2026-11-18T03:00:25Z",
-      "items_found": 0,
-      "new_alerts": 0,
-      "duration_ms": 804,
-      "message": "Fetched 3/3 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan.",
+      "response_url": "https://www.walmart.com/search?q=pokemon+plush",
+      "status": "ok",
+      "last_checked": "2026-11-18T03:18:43Z",
+      "items_found": 80,
+      "new_alerts": 16,
+      "duration_ms": 6831,
+      "message": "Fetched 3/3 configured URL(s). 80 relevant Pokémon listing(s) recognized.",
       "notes": "Search listing; marketplace sellers and availability can vary by location. The monitor also checks category-specific public search URLs and merges duplicate products; availability depends on retailer access and HTML/JSON exposure.",
       "successful_urls": 3,
       "configured_urls": 3
@@ -3574,7 +3817,7 @@
       "type": "catalog",
       "url": "https://www.bestbuy.com/site/searchpage.jsp?st=pokemon",
       "status": "error",
-      "last_checked": "2026-11-18T03:04:17Z",
+      "last_checked": "2026-11-18T03:22:35Z",
       "items_found": 0,
       "new_alerts": 0,
       "successful_urls": 0,
@@ -3590,10 +3833,10 @@
       "url": "https://www.gamestop.com/search/?q=pokemon",
       "response_url": "https://www.gamestop.com/search/?q=pokemon",
       "status": "warning",
-      "last_checked": "2026-11-18T03:04:20Z",
+      "last_checked": "2026-11-18T03:22:37Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 2593,
+      "duration_ms": 2314,
       "message": "Fetched 3/3 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan.",
       "notes": "Search listing; page structure may change. The monitor also checks category-specific public search URLs and merges duplicate products; availability depends on retailer access and HTML/JSON exposure.",
       "successful_urls": 3,
@@ -3605,14 +3848,16 @@
       "retailer": "Amazon",
       "type": "catalog",
       "url": "https://www.amazon.com/s?k=pokemon",
-      "status": "error",
-      "last_checked": "2026-11-18T03:04:29Z",
-      "items_found": 152,
+      "response_url": "https://www.amazon.com/s?k=pokemon",
+      "status": "warning",
+      "last_checked": "2026-11-18T03:22:38Z",
+      "items_found": 0,
       "new_alerts": 0,
-      "successful_urls": 0,
-      "configured_urls": 4,
-      "message": "All configured URLs failed: All configured source URLs failed. https://www.amazon.com/s?k=pokemon: RetryError: HTTPSConnectionPool(host='www.amazon.com', port=443): Max retries exceeded with url: /s?k=pokemon (Caused by ResponseErr | http",
-      "notes": "Broad Pokémon product search. A fresh baseline is created for this expanded search so existing results do not trigger a burst of false new-drop notifications. The monitor also checks category-specific public search URLs and merges duplicate products; availability depends on retailer access and HTML/JSON exposure."
+      "duration_ms": 760,
+      "message": "Fetched 4/4 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan.",
+      "notes": "Broad Pokémon product search. A fresh baseline is created for this expanded search so existing results do not trigger a burst of false new-drop notifications. The monitor also checks category-specific public search URLs and merges duplicate products; availability depends on retailer access and HTML/JSON exposure.",
+      "successful_urls": 4,
+      "configured_urls": 4
     },
     {
       "id": "pokebeach-news",
@@ -3621,7 +3866,7 @@
       "type": "rss",
       "url": "https://www.pokebeach.com/feed",
       "status": "error",
-      "last_checked": "2026-11-18T03:04:32Z",
+      "last_checked": "2026-11-18T03:22:41Z",
       "items_found": 0,
       "new_alerts": 0,
       "successful_urls": 0,
@@ -3631,6 +3876,326 @@
     }
   ],
   "events": [
+    {
+      "id": "adf3cb636c90101b08",
+      "type": "first_seen",
+      "title": "Pokemon Pikachu & Eevee Boys Boxer Briefs for Kids-6",
+      "url": "https://www.walmart.com/ip/Pokemon-Pikachu-Eevee-Boys-Boxer-Briefs-for-Kids-6/20370801068",
+      "retailer": "Walmart",
+      "retailer_key": "walmart",
+      "category": "collectibles",
+      "source_name": "Walmart · Pokémon",
+      "source_id": "walmart-pokemon",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "in_stock",
+      "image": "https://i5.walmartimages.com/seo/Pokemon-Pikachu-Eevee-Boys-Boxer-Briefs-for-Kids-6_c136e7d4-f2c9-4207-90b3-045907a54920.c67cc174b2d8b08dba91f7831984d5e3.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+      "release_date": "",
+      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
+      "detected_at": "2026-11-18T03:18:43Z",
+      "email_sent": false
+    },
+    {
+      "id": "38543113baf7c9eb1d",
+      "type": "first_seen",
+      "title": "Pokemon Light And Sweet Twin Bed in a Bag Bedding Set",
+      "url": "https://www.walmart.com/ip/Pokemon-Light-And-Sweet-Twin-Bed-in-a-Bag-Bedding-Set/5377059141",
+      "retailer": "Walmart",
+      "retailer_key": "walmart",
+      "category": "collectibles",
+      "source_name": "Walmart · Pokémon",
+      "source_id": "walmart-pokemon",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "in_stock",
+      "image": "https://i5.walmartimages.com/seo/Pokemon-Light-And-Sweet-Twin-Bed-in-a-Bag-Bedding-Set_dbd5bdb2-6411-47b4-9bfc-fef0697a4510.87b7714dfc7c7fb0a98ceeb166a0afc6.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+      "release_date": "",
+      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
+      "detected_at": "2026-11-18T03:18:43Z",
+      "email_sent": false
+    },
+    {
+      "id": "60b959bc382f6dcb94",
+      "type": "first_seen",
+      "title": "POKEMON MEGA VENUSAUR EX PREMIUM BOX",
+      "url": "https://www.walmart.com/ip/POKEMON-MEGA-VENUSAUR-EX-PREMIUM-BOX/17921600867",
+      "retailer": "Walmart",
+      "retailer_key": "walmart",
+      "category": "collectibles",
+      "source_name": "Walmart · Pokémon",
+      "source_id": "walmart-pokemon",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "in_stock",
+      "image": "https://i5.walmartimages.com/asr/1b074469-f84b-497f-b25d-a66fd565fb74.4136870a1fd4ad5e15ac6a17fccc91ea.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+      "release_date": "",
+      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
+      "detected_at": "2026-11-18T03:18:43Z",
+      "email_sent": false
+    },
+    {
+      "id": "537416f1dc0aa6fc99",
+      "type": "first_seen",
+      "title": "Winking Pikachu",
+      "url": "https://www.walmart.com/ip/Pokemon-8-Plush-Pikachu-Winking/797887724",
+      "retailer": "Walmart",
+      "retailer_key": "walmart",
+      "category": "collectibles",
+      "source_name": "Walmart · Pokémon",
+      "source_id": "walmart-pokemon",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "unknown",
+      "image": "https://i5.walmartimages.com/asr/638ce0fc-97a3-4d61-b814-df0e8ea524d9.d3c75420d24936e9a2e4f516ddbf0eb0.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+      "release_date": "",
+      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
+      "detected_at": "2026-11-18T03:18:43Z",
+      "email_sent": false
+    },
+    {
+      "id": "39d9bb044db4afaa53",
+      "type": "first_seen",
+      "title": "Charmander",
+      "url": "https://www.walmart.com/ip/Pok-mon-Charmander-8-inch-Plush-Authentic-Details-Toys-for-Kids/199937384",
+      "retailer": "Walmart",
+      "retailer_key": "walmart",
+      "category": "collectibles",
+      "source_name": "Walmart · Pokémon",
+      "source_id": "walmart-pokemon",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "unknown",
+      "image": "https://i5.walmartimages.com/asr/da92128b-7e08-477f-88da-52d996d4e481.9a18b8fe451fa78daf94b6ebf07a4b97.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+      "release_date": "",
+      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
+      "detected_at": "2026-11-18T03:18:43Z",
+      "email_sent": false
+    },
+    {
+      "id": "503e22520d9bdab1de",
+      "type": "first_seen",
+      "title": "Sprigatito",
+      "url": "https://www.walmart.com/ip/Pokemon-Sprigatito-Plush/10280111778",
+      "retailer": "Walmart",
+      "retailer_key": "walmart",
+      "category": "collectibles",
+      "source_name": "Walmart · Pokémon",
+      "source_id": "walmart-pokemon",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "unknown",
+      "image": "https://i5.walmartimages.com/asr/c9528a8a-bc2d-41a7-96a6-3b274dc8913c.8aafb462063fd48e9c72265716096b36.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+      "release_date": "",
+      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
+      "detected_at": "2026-11-18T03:18:43Z",
+      "email_sent": false
+    },
+    {
+      "id": "808281de4f64110939",
+      "type": "first_seen",
+      "title": "Pokemon TCG: Scarlet Violet 03 Obsidian Flames- Build Battle Box Display (1 Box)",
+      "url": "https://www.walmart.com/ip/Pokemon-Scarlet-Violet-3-Obsidian-Flames-Build-Battle-Box/3365347628",
+      "retailer": "Walmart",
+      "retailer_key": "walmart",
+      "category": "tcg",
+      "source_name": "Walmart · Pokémon",
+      "source_id": "walmart-pokemon",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "in_stock",
+      "image": "https://i5.walmartimages.com/asr/1200c7f6-c2d6-4b36-9591-e666362a4cea.7a128b5e178f152fe956f2be20540913.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+      "release_date": "",
+      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
+      "detected_at": "2026-11-18T03:18:43Z",
+      "email_sent": false
+    },
+    {
+      "id": "dc8b1b8053871c8149",
+      "type": "first_seen",
+      "title": "POKEMON D82 LEGENDARY WARRIORS PREMIUM COLLECTION",
+      "url": "https://www.walmart.com/ip/Pokemon-Legendary-Warriors-Premium-Collection/13190955834",
+      "retailer": "Walmart",
+      "retailer_key": "walmart",
+      "category": "collectibles",
+      "source_name": "Walmart · Pokémon",
+      "source_id": "walmart-pokemon",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "in_stock",
+      "image": "https://i5.walmartimages.com/asr/65340a96-e16e-4459-a8ba-5413ec99884a.6a147b165152002f34dc3264308f9b31.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+      "release_date": "",
+      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
+      "detected_at": "2026-11-18T03:18:43Z",
+      "email_sent": false
+    },
+    {
+      "id": "2026738106842e1bea",
+      "type": "first_seen",
+      "title": "Pokemon Holiday Calendar - 2026",
+      "url": "https://www.walmart.com/ip/Pokemon-Holiday-Calendar-2026/21020917472",
+      "retailer": "Walmart",
+      "retailer_key": "walmart",
+      "category": "collectibles",
+      "source_name": "Walmart · Pokémon",
+      "source_id": "walmart-pokemon",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "in_stock",
+      "image": "https://i5.walmartimages.com/seo/Pokemon-Holiday-Calendar-2026_6c7aa3a1-ec58-4503-9a41-d3fdcafe7f87.b2c994e946ba5e24ce64779da233b620.png",
+      "release_date": "",
+      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
+      "detected_at": "2026-11-18T03:18:43Z",
+      "email_sent": false
+    },
+    {
+      "id": "de1fa4db4fd4aad6cb",
+      "type": "first_seen",
+      "title": "Pokemon Trading Card Game Pawmot Checklane BLISTER Pack (2 Booster Packs, Promo Card & Coin)",
+      "url": "https://www.walmart.com/ip/Pokemon-Trading-Card-Game-Pawmot-Checklane-BLISTER-Pack-2-Booster-Packs-Promo-Card-Coin/5346814700",
+      "retailer": "Walmart",
+      "retailer_key": "walmart",
+      "category": "tcg",
+      "source_name": "Walmart · Pokémon",
+      "source_id": "walmart-pokemon",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "in_stock",
+      "image": "https://i5.walmartimages.com/asr/c27bb652-2834-4bb2-b653-99c77c6b4385.c78f62b0c8cbbc98a297db40b1265e47.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+      "release_date": "",
+      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
+      "detected_at": "2026-11-18T03:18:43Z",
+      "email_sent": false
+    },
+    {
+      "id": "f7fab21d1b753aed92",
+      "type": "first_seen",
+      "title": "Pokemon Trading Card Games SV6 Twilight Masquerade 3Pk Blister - Snorlax",
+      "url": "https://www.walmart.com/ip/Pokemon-Trading-Card-Games-SV6-Twilight-Masquerade-3Pk-Blister-Snorlax/5676427231",
+      "retailer": "Walmart",
+      "retailer_key": "walmart",
+      "category": "tcg",
+      "source_name": "Walmart · Pokémon",
+      "source_id": "walmart-pokemon",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "in_stock",
+      "image": "https://i5.walmartimages.com/asr/98b2bcd6-879f-455e-b202-27d93c5b4140.21446960eecc31f23eb8d1c65aaddbf8.png?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+      "release_date": "",
+      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
+      "detected_at": "2026-11-18T03:18:43Z",
+      "email_sent": false
+    },
+    {
+      "id": "017d54659bb5baea4c",
+      "type": "first_seen",
+      "title": "2025 Pokemon Trading Card Games Holiday Calendar",
+      "url": "https://www.walmart.com/ip/2025-Pokemon-Trading-Card-Games-Holiday-Calendar/17558653385",
+      "retailer": "Walmart",
+      "retailer_key": "walmart",
+      "category": "tcg",
+      "source_name": "Walmart · Pokémon",
+      "source_id": "walmart-pokemon",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "in_stock",
+      "image": "https://i5.walmartimages.com/asr/061014c4-6e56-47a1-9aea-724678b40fbf.59935604cdb2fe007b7dbf9cd88c5b75.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+      "release_date": "",
+      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
+      "detected_at": "2026-11-18T03:18:43Z",
+      "email_sent": false
+    },
+    {
+      "id": "cf13555c5c21b57fef",
+      "type": "first_seen",
+      "title": "Pokemon Trading Card Game Phantasmal Flames Elite Trainer Box",
+      "url": "https://www.walmart.com/ip/POKEMON-ME2-PHANTASMAL-FLAMES-ELITE-TRAINER-BOX/17780209250",
+      "retailer": "Walmart",
+      "retailer_key": "walmart",
+      "category": "tcg",
+      "source_name": "Walmart · Pokémon",
+      "source_id": "walmart-pokemon",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "in_stock",
+      "image": "https://i5.walmartimages.com/asr/a884d0b0-43fb-4164-acaa-7b084324d7d8.22048154bf869761b6ba5aa8c6c89710.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+      "release_date": "",
+      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
+      "detected_at": "2026-11-18T03:18:43Z",
+      "email_sent": false
+    },
+    {
+      "id": "dfe4ba4a50575da749",
+      "type": "first_seen",
+      "title": "Pokmon - Trading Card Game: Mega Gengar Battle Deck",
+      "url": "https://www.walmart.com/ip/Pok-mon-Trading-Card-Game-Mega-Gengar-Battle-Deck/18338561682",
+      "retailer": "Walmart",
+      "retailer_key": "walmart",
+      "category": "tcg",
+      "source_name": "Walmart · Pokémon",
+      "source_id": "walmart-pokemon",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "in_stock",
+      "image": "https://i5.walmartimages.com/asr/2bd66a73-d783-4d4d-8a31-3a73ea130c92.34a3047d3ce3c1202c0fcc17deaa56c0.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+      "release_date": "",
+      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
+      "detected_at": "2026-11-18T03:18:43Z",
+      "email_sent": false
+    },
+    {
+      "id": "75e6140768c35d9ce9",
+      "type": "first_seen",
+      "title": "Pokémon Large 12\" Raboot Plush - Sword & Shield Scorbunny & Cinderace Evolution - Quality Soft Stuffed Animal Toy - Christmas Gift for Kids, Boys",
+      "url": "https://www.walmart.com/ip/Pokemon-Large-12-Raboot-Plush-Officially-Licensed-Sword-Shield-Scorbunny-Cinderace-Evolution-Quality-Soft-Stuffed-Animal-Toy-Great-Gift-Kids-Boys-Gir/1900371648",
+      "retailer": "Walmart",
+      "retailer_key": "walmart",
+      "category": "plush",
+      "source_name": "Walmart · Pokémon",
+      "source_id": "walmart-pokemon",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "in_stock",
+      "image": "https://i5.walmartimages.com/seo/Pokemon-Large-12-Raboot-Plush-Officially-Licensed-Sword-Shield-Scorbunny-Cinderace-Evolution-Quality-Soft-Stuffed-Animal-Toy-Great-Gift-Kids-Boys-Gir_aba1a798-1cdd-4e88-8c7d-a598a5508f07.6f946459550270153ac28f58210e0861.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+      "release_date": "",
+      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
+      "detected_at": "2026-11-18T03:18:43Z",
+      "email_sent": false
+    },
+    {
+      "id": "b10898b428612b63d0",
+      "type": "first_seen",
+      "title": "Squishmallows Official 10 Inch Pokemon Pikachu Plush Toy",
+      "url": "https://www.walmart.com/ip/Squishmallows-Official-10-Inch-Pokemon-Pikachu-Plush-Toy/18007906615",
+      "retailer": "Walmart",
+      "retailer_key": "walmart",
+      "category": "plush",
+      "source_name": "Walmart · Pokémon",
+      "source_id": "walmart-pokemon",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "in_stock",
+      "image": "https://i5.walmartimages.com/seo/Squishmallows-Official-10-Inch-Pokemon-Pikachu-Plush-Toy_257b6475-940f-4959-8fe5-2914208635bf.bb7746b497a300bb9b087978ed952c18.jpeg",
+      "release_date": "",
+      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
+      "detected_at": "2026-11-18T03:18:43Z",
+      "email_sent": false
+    },
     {
       "id": "adc6f5b26393d6cf28",
       "type": "first_seen",
@@ -4796,12 +5361,12 @@
   "email_status": "No new personal alerts in this scan.",
   "summary": {
     "enabled_sources": 8,
-    "successful_sources": 0,
-    "failed_sources": 3,
+    "successful_sources": 1,
+    "failed_sources": 2,
     "warning_sources": 5,
     "new_alerts": 0,
-    "first_seen": 0,
-    "tracked_products": 152
+    "first_seen": 16,
+    "tracked_products": 80
   },
   "subscriber_delivery_status": "0 active subscriber(s); 0 digest(s) sent; 0 queued for retry."
 }
