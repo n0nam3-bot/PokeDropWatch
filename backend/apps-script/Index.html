@@ -9,23 +9,31 @@
 <body>
 <script>
   const SITE_ORIGIN = <?!= JSON.stringify(siteOrigin) ?>;
+  const ALLOWED_ORIGIN = (() => {
+    try {
+      return new URL(SITE_ORIGIN).origin;
+    } catch (_error) {
+      return 'https://n0nam3-bot.github.io';
+    }
+  })();
   const CHANNEL = 'pokedrop-watch-verification-v1';
 
-  function reply(requestId, result) {
-    window.parent.postMessage({ channel: CHANNEL, requestId: requestId, result: result }, SITE_ORIGIN);
+  function reply(requestId, result, targetOrigin) {
+    window.parent.postMessage({ channel: CHANNEL, requestId: requestId, result: result }, targetOrigin);
   }
 
   window.addEventListener('message', event => {
-    if (event.source !== window.parent || event.origin !== SITE_ORIGIN) return;
+    // Accept commands only from the intended public site and from our direct parent.
+    if (event.source !== window.parent || event.origin !== ALLOWED_ORIGIN) return;
     const message = event.data || {};
     if (message.channel !== CHANNEL || !message.requestId) return;
 
     const runner = google.script.run
-      .withSuccessHandler(result => reply(message.requestId, result))
+      .withSuccessHandler(result => reply(message.requestId, result, event.origin))
       .withFailureHandler(error => reply(message.requestId, {
         ok: false,
         message: (error && error.message) || 'Verification service is unavailable. Please try again.'
-      }));
+      }, event.origin));
 
     const payload = message.payload || {};
     const actions = {
@@ -39,9 +47,18 @@
       completeAdminPasswordReset: 'completeAdminPasswordReset'
     };
     const method = actions[message.action];
-    if (method) runner[method](payload);
+    if (method) {
+      runner[method](payload);
+    } else {
+      reply(message.requestId, { ok: false, message: 'Unsupported backend action.' }, event.origin);
+    }
   });
-  window.parent.postMessage({ channel: CHANNEL, ready: true }, SITE_ORIGIN);
+
+  // The ready message carries no credentials. Use '*' here so a stale or
+  // path-qualified SITE_ORIGIN property cannot prevent the parent from
+  // discovering that the bridge has loaded. All later requests/replies are
+  // origin-checked and sent to the validated event.origin above.
+  window.parent.postMessage({ channel: CHANNEL, ready: true }, '*');
 </script>
 </body>
 </html>
