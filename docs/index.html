@@ -74,7 +74,7 @@
           </div>
           <div id="alertTypeFilters" class="filter-row" role="group" aria-label="Filter alert type">
             <button class="filter-chip active" data-filter="all" type="button">All activity</button>
-            <button class="filter-chip" data-filter="first_seen" type="button">First seen</button>
+            <button class="filter-chip" data-filter="first_seen" type="button" title="Items first discovered by the monitor; release dates are not verified.">New items</button>
             <button class="filter-chip" data-filter="restock" type="button">Restocks</button>
             <button class="filter-chip" data-filter="price_drop" type="button">Price drops</button>
             <button class="filter-chip" data-filter="news" type="button">News</button>
@@ -96,7 +96,7 @@
             </label>
             <label class="exact-match-control"><input id="exactMatch" type="checkbox"> Exact title</label>
           </div>
-          <p id="feedExplanation" class="feed-explanation">First-seen means the monitor discovered a listing; it does not claim the product is newly released. Restocks require an observed out-of-stock to in-stock transition.</p>
+          <p id="feedExplanation" class="feed-explanation">New items are first discoveries by the monitor, not verified release dates. Restocks require an observed out-of-stock to in-stock transition.</p>
         </div>
         <div id="alertList" class="alert-list"><div class="empty-state large-empty"><span class="empty-ball">◉</span><strong>No alerts yet</strong><span>After the next scan, verified stock and price changes will appear here.</span></div></div>
       </section>

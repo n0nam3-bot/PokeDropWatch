@@ -54,8 +54,23 @@ class AuthArchitectureTests(unittest.TestCase):
 
     def test_old_public_firebase_setup_page_is_not_in_service_worker_shell(self):
         worker = (ROOT / 'docs' / 'sw.js').read_text(encoding='utf-8')
-        self.assertIn('pokedrop-shell-v8', worker)
+        self.assertIn('pokedrop-shell-v10', worker)
+        self.assertIn("'./bridge-transport.js'", worker)
         self.assertNotIn("'./FIREBASE_SETUP.html'", worker)
+
+    def test_standalone_admin_portal_is_routed_by_apps_script(self):
+        source = (ROOT / 'backend' / 'apps-script' / 'doGet_REPLACEMENT.txt').read_text(encoding='utf-8')
+        admin = (ROOT / 'backend' / 'apps-script' / 'Admin.html').read_text(encoding='utf-8')
+        landing = (ROOT / 'docs' / 'admin.html').read_text(encoding='utf-8')
+        self.assertIn("page === 'admin'", source)
+        self.assertIn("createHtmlOutputFromFile('Admin')", source)
+        self.assertIn('google.script.run', admin)
+        self.assertIn('exec?page=admin', landing)
+
+    def test_new_items_filter_is_present_in_html_without_javascript_relabeling(self):
+        page = (ROOT / 'docs' / 'index.html').read_text(encoding='utf-8')
+        self.assertIn('data-filter="first_seen"', page)
+        self.assertIn('>New items</button>', page)
 
     def test_apps_script_email_uses_notification_mailbox_display_name(self):
         source = (ROOT / 'backend' / 'apps-script' / 'Code.gs').read_text(encoding='utf-8')

@@ -1,0 +1,4 @@
+Standalone admin route after the Apps Script update:
+https://script.google.com/macros/s/AKfycbwGfc1E_t1nj-HG5Sf5V1Y-J_cwY_PmwLIUAfbPPBVtl7mbxOhCkz5Q6BNosWmEUmVm/exec?page=admin
+
+The GitHub Pages admin.html redirects to this route.

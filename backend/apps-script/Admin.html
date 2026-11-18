@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#a83232">
+  <title>PokéDrop Watch Admin</title>
+  <style>
+    :root{color-scheme:light;--ink:#24201f;--muted:#746d69;--line:#e7dfda;--paper:#fff;--wash:#faf7f4;--red:#ad3035;--red-dark:#87262b;--green:#176b42;--amber:#8a5a10;--shadow:0 16px 46px rgba(52,31,25,.09)}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top left,#f7e8e4 0,transparent 36rem),var(--wash);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}
+    .wrap{width:min(100% - 32px,920px);margin:0 auto;padding:32px 0 56px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.01em}.ball{width:36px;height:36px;border:3px solid #292321;border-radius:50%;background:linear-gradient(to bottom,#e34c4e 0 45%,#292321 45% 55%,white 55%);position:relative}.ball:after{content:"";position:absolute;width:10px;height:10px;border:3px solid #292321;background:white;border-radius:50%;left:10px;top:10px}.tag{font-size:11px;letter-spacing:.17em;color:var(--muted);font-weight:800}.hero{margin-bottom:22px}.hero h1{font-size:clamp(28px,5vw,42px);line-height:1.08;margin:4px 0 8px}.hero p{margin:0;color:var(--muted)}.panel{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:clamp(20px,4vw,32px);box-shadow:var(--shadow);margin:18px 0}.panel h2{margin:0 0 16px;font-size:22px}.field{display:grid;gap:7px;margin:15px 0}.field label{font-size:14px;font-weight:700}.field input,.filter{width:100%;min-height:46px;padding:11px 13px;border:1px solid #d8cec8;border-radius:10px;background:#fff;color:var(--ink);font:inherit}.field input:focus,.filter:focus{outline:3px solid #ad303533;border-color:var(--red)}button{min-height:44px;border:0;border-radius:10px;padding:10px 16px;font:inherit;font-size:14px;font-weight:700;line-height:1.2;cursor:pointer}.primary{background:var(--red);color:white}.primary:hover{background:var(--red-dark)}.secondary{background:#f0e9e5;color:var(--ink)}.quiet{background:transparent;color:var(--red);padding-inline:8px}.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.row>*{flex:1}.status{min-height:22px;color:var(--muted);font-size:14px;margin:12px 0 0;overflow-wrap:anywhere}.status.error{color:#a5262b}.status.success{color:var(--green)}.status.warning{color:var(--amber)}[hidden]{display:none!important}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0}.stat{border:1px solid var(--line);border-radius:13px;padding:15px;background:#fff}.stat span{display:block;color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.12em}.stat strong{display:block;font-size:30px;margin-top:2px}.list-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:24px 0 12px}.list-head h2{margin:0;font-size:21px}.subscriber-list{display:grid;gap:10px}.subscriber{display:flex;justify-content:space-between;align-items:center;gap:18px;border:1px solid var(--line);border-radius:13px;padding:15px;background:white}.subscriber-main{min-width:0}.subscriber-main strong{display:block;overflow-wrap:anywhere}.meta{color:var(--muted);font-size:13px;margin:4px 0}.pill{display:inline-block;border-radius:30px;padding:3px 9px;background:#f0e9e5;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}.actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.actions button{min-height:36px;padding:8px 11px;font-size:12px}.empty{border:1px dashed #d8cec8;border-radius:12px;padding:24px;text-align:center;color:var(--muted);background:white}.foot{color:var(--muted);font-size:12px;text-align:center;margin-top:28px}
+    @media(max-width:600px){.wrap{width:min(100% - 22px,920px);padding-top:20px}.top{margin-bottom:22px}.stats{gap:8px}.stat{padding:11px}.stat strong{font-size:24px}.subscriber{display:block}.actions{justify-content:flex-start;margin-top:12px}.list-head{align-items:flex-start;flex-direction:column}.list-head .filter{max-width:none}.row{display:grid}.row button{width:100%}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="top">
+      <div class="brand"><span class="ball" aria-hidden="true"></span><span>PokéDrop Watch</span></div>
+      <span class="tag">PRIVATE ADMIN</span>
+    </header>
+    <section class="hero">
+      <span class="tag">TRAINER ALERT MANAGEMENT</span>
+      <h1>Subscriber administration</h1>
+      <p>Sign in to review applications and manage alert subscriptions.</p>
+    </section>
+
+    <section id="loginPanel" class="panel">
+      <h2>Administrator sign in</h2>
+      <form id="loginForm" autocomplete="on">
+        <div class="field"><label for="adminEmail">Administrator email</label><input id="adminEmail" name="email" type="email" autocomplete="username" required></div>
+        <div class="field"><label for="adminPassword">Password</label><input id="adminPassword" name="password" type="password" autocomplete="current-password" required></div>
+        <div class="row"><button id="loginButton" class="primary" type="submit">Sign in</button></div>
+      </form>
+      <button id="forgotButton" class="quiet" type="button">Forgot password?</button>
+      <p id="loginStatus" class="status" role="status" aria-live="polite">Use the administrator credentials configured in Apps Script.</p>
+    </section>
+
+    <section id="resetPanel" class="panel" hidden>
+      <h2>Reset administrator password</h2>
+      <form id="resetRequestForm">
+        <div class="field"><label for="resetEmail">Administrator email</label><input id="resetEmail" type="email" autocomplete="email" required></div>
+        <button id="requestResetButton" class="primary" type="submit">Email reset code</button>
+      </form>
+      <div id="resetCodeFields" hidden>
+        <form id="completeResetForm">
+          <div class="field"><label for="resetCode">Six-digit reset code</label><input id="resetCode" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" required></div>
+          <div class="field"><label for="newPassword">New password (12–128 characters)</label><input id="newPassword" type="password" autocomplete="new-password" minlength="12" maxlength="128" required></div>
+          <button id="completeResetButton" class="primary" type="submit">Set new password</button>
+        </form>
+      </div>
+      <p id="resetStatus" class="status" role="status" aria-live="polite">A code is sent only when the address matches the configured administrator account.</p>
+      <button id="backToLogin" class="quiet" type="button">Back to sign in</button>
+    </section>
+
+    <section id="dashboard" hidden>
+      <div class="panel">
+        <div class="row" style="align-items:center"><div><span class="tag">ACCESS GRANTED</span><h2 style="margin:4px 0 0">Subscriber overview</h2><p class="meta" id="identity"></p></div><button id="signOutButton" class="secondary" type="button">Sign out</button></div>
+        <div class="stats">
+          <div class="stat"><span>PENDING</span><strong id="pendingCount">0</strong></div>
+          <div class="stat"><span>ACTIVE</span><strong id="activeCount">0</strong></div>
+          <div class="stat"><span>OTHER</span><strong id="otherCount">0</strong></div>
+        </div>
+        <div class="list-head"><h2>Applications and subscribers</h2><select id="subscriberFilter" class="filter" aria-label="Filter subscribers"><option value="all">All records</option><option value="pending">Pending</option><option value="active">Active</option><option value="suspended">Suspended</option><option value="rejected">Rejected</option><option value="unsubscribed">Unsubscribed</option><option value="removed">Removed</option></select></div>
+        <div id="subscriberList" class="subscriber-list"><div class="empty">Loading subscriber records…</div></div>
+        <p id="dataStatus" class="status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+    <p class="foot">PokéDrop Watch · Administrator sessions expire after one hour.</p>
+  </main>
+
+  <script>
+    (() => {
+      'use strict';
+      const $ = id => document.getElementById(id);
+      let sessionToken = '';
+      let resetSessionToken = '';
+      let subscribers = [];
+
+      function setStatus(id, message, kind) {
+        const node = $(id);
+        node.textContent = message || '';
+        node.className = 'status' + (kind ? ' ' + kind : '');
+      }
+
+      function invoke(method, payload, onSuccess, onFailure) {
+        const runner = google.script.run
+          .withSuccessHandler(result => {
+            if (!result || result.ok !== true) {
+              onFailure(new Error(result && result.message ? result.message : 'The request could not be completed.'));
+              return;
+            }
+            onSuccess(result);
+          })
+          .withFailureHandler(error => onFailure(new Error(error && error.message ? error.message : 'The Apps Script request failed.')));
+        switch (method) {
+          case 'adminLogin': runner.adminLogin(payload); break;
+          case 'adminListSubscribers': runner.adminListSubscribers(payload); break;
+          case 'adminUpdateSubscriber': runner.adminUpdateSubscriber(payload); break;
+          case 'adminLogout': runner.adminLogout(payload); break;
+          case 'requestAdminPasswordReset': runner.requestAdminPasswordReset(payload); break;
+          case 'completeAdminPasswordReset': runner.completeAdminPasswordReset(payload); break;
+          default: onFailure(new Error('Unsupported administrator operation.'));
+        }
+      }
+
+      function formatDate(value) {
+        if (!value) return 'Date unavailable';
+        const date = new Date(value);
+        return Number.isNaN(date.getTime()) ? 'Date unavailable' : date.toLocaleString();
+      }
+
+      function showDashboard() {
+        $('loginPanel').hidden = true;
+        $('resetPanel').hidden = true;
+        $('dashboard').hidden = false;
+      }
+
+      function renderSubscribers() {
+        const counts = status => subscribers.filter(item => item.status === status).length;
+        $('pendingCount').textContent = counts('pending');
+        $('activeCount').textContent = counts('active');
+        $('otherCount').textContent = subscribers.length - counts('pending') - counts('active');
+        const filter = $('subscriberFilter').value;
+        const rows = subscribers.filter(item => filter === 'all' || item.status === filter);
+        const list = $('subscriberList');
+        list.replaceChildren();
+        if (!rows.length) {
+          const empty = document.createElement('div');
+          empty.className = 'empty';
+          empty.textContent = 'No subscriber records in this category.';
+          list.append(empty);
+          return;
+        }
+        rows.forEach(item => {
+          const card = document.createElement('article');
+          card.className = 'subscriber';
+          const main = document.createElement('div');
+          main.className = 'subscriber-main';
+          const email = document.createElement('strong');
+          email.textContent = item.email || 'Email unavailable';
+          const meta = document.createElement('p');
+          meta.className = 'meta';
+          meta.textContent = 'Applied: ' + formatDate(item.createdAt) + ' · Categories: ' + (Array.isArray(item.categories) ? item.categories.join(', ') : 'None') + ' · Retailers: ' + (Array.isArray(item.retailers) ? item.retailers.join(', ') : 'None');
+          const status = document.createElement('span');
+          status.className = 'pill';
+          status.textContent = String(item.status || 'unknown').replaceAll('_', ' ');
+          main.append(email, meta, status);
+          const actions = document.createElement('div');
+          actions.className = 'actions';
+          const addAction = (label, nextStatus, note, primary) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = primary ? 'primary' : 'secondary';
+            button.textContent = label;
+            button.addEventListener('click', () => updateSubscriber(item.uid, nextStatus, note, button));
+            actions.append(button);
+          };
+          if (item.status === 'pending') {
+            addAction('Approve', 'active', 'Application approved', true);
+            addAction('Reject', 'rejected', 'Application rejected', false);
+          } else if (item.status === 'active') {
+            addAction('Suspend', 'suspended', 'Subscription suspended', false);
+            addAction('Remove', 'removed', 'Subscription removed by administrator', false);
+          } else if (item.status === 'suspended') {
+            addAction('Reactivate', 'active', 'Subscription reactivated', true);
+            addAction('Remove', 'removed', 'Subscription removed by administrator', false);
+          } else if (item.status === 'rejected' || item.status === 'unsubscribed') {
+            addAction('Approve', 'active', 'Previously closed application approved', true);
+            addAction('Remove', 'removed', 'Application removed by administrator', false);
+          }
+          card.append(main, actions);
+          list.append(card);
+        });
+      }
+
+      function loadSubscribers() {
+        setStatus('dataStatus', 'Loading subscriber records…', '');
+        invoke('adminListSubscribers', { sessionToken }, result => {
+          subscribers = Array.isArray(result.subscribers) ? result.subscribers : [];
+          subscribers.sort((a, b) => Date.parse(b.createdAt || '') - Date.parse(a.createdAt || ''));
+          $('identity').textContent = result.email || '';
+          renderSubscribers();
+          setStatus('dataStatus', 'Subscriber records loaded.', 'success');
+        }, error => {
+          subscribers = [];
+          renderSubscribers();
+          setStatus('dataStatus', 'You are signed in, but Firestore subscriber records could not be loaded: ' + error.message + ' Check FIREBASE_SERVICE_ACCOUNT_JSON, Cloud Datastore User IAM permission, and the Firestore API.', 'warning');
+        });
+      }
+
+      function updateSubscriber(uid, status, note, button) {
+        button.disabled = true;
+        invoke('adminUpdateSubscriber', { sessionToken, uid, status, note }, result => {
+          setStatus('dataStatus', result.message || 'Subscriber updated.', 'success');
+          loadSubscribers();
+        }, error => {
+          setStatus('dataStatus', error.message, 'error');
+          button.disabled = false;
+          if (/session expired/i.test(error.message)) signOut();
+        });
+      }
+
+      $('loginForm').addEventListener('submit', event => {
+        event.preventDefault();
+        const button = $('loginButton');
+        button.disabled = true;
+        setStatus('loginStatus', 'Checking administrator credentials…', '');
+        invoke('adminLogin', {
+          email: $('adminEmail').value.trim().toLowerCase(),
+          password: $('adminPassword').value
+        }, result => {
+          sessionToken = result.sessionToken;
+          $('identity').textContent = result.email || $('adminEmail').value.trim();
+          $('adminPassword').value = '';
+          showDashboard();
+          loadSubscribers();
+          button.disabled = false;
+        }, error => {
+          setStatus('loginStatus', error.message, 'error');
+          button.disabled = false;
+        });
+      });
+
+      $('forgotButton').addEventListener('click', () => {
+        $('resetEmail').value = $('adminEmail').value.trim();
+        $('loginPanel').hidden = true;
+        $('resetPanel').hidden = false;
+        $('resetCodeFields').hidden = true;
+        setStatus('resetStatus', 'A reset code will only be sent if this email matches the configured administrator account.', '');
+      });
+
+      $('resetRequestForm').addEventListener('submit', event => {
+        event.preventDefault();
+        const button = $('requestResetButton');
+        button.disabled = true;
+        setStatus('resetStatus', 'Requesting reset code…', '');
+        invoke('requestAdminPasswordReset', { email: $('resetEmail').value.trim().toLowerCase() }, result => {
+          resetSessionToken = result.sessionToken;
+          $('resetCodeFields').hidden = false;
+          setStatus('resetStatus', result.message, 'success');
+          $('resetCode').focus();
+          button.disabled = false;
+        }, error => {
+          setStatus('resetStatus', error.message, 'error');
+          button.disabled = false;
+        });
+      });
+
+      $('completeResetForm').addEventListener('submit', event => {
+        event.preventDefault();
+        const button = $('completeResetButton');
+        button.disabled = true;
+        invoke('completeAdminPasswordReset', {
+          sessionToken: resetSessionToken,
+          code: $('resetCode').value.trim(),
+          newPassword: $('newPassword').value
+        }, result => {
+          setStatus('loginStatus', result.message, 'success');
+          $('adminEmail').value = $('resetEmail').value.trim();
+          $('adminPassword').value = '';
+          $('newPassword').value = '';
+          $('resetCode').value = '';
+          resetSessionToken = '';
+          $('resetPanel').hidden = true;
+          $('loginPanel').hidden = false;
+          button.disabled = false;
+        }, error => {
+          setStatus('resetStatus', error.message, 'error');
+          button.disabled = false;
+        });
+      });
+
+      $('backToLogin').addEventListener('click', () => {
+        $('resetPanel').hidden = true;
+        $('loginPanel').hidden = false;
+        resetSessionToken = '';
+      });
+      $('subscriberFilter').addEventListener('change', renderSubscribers);
+      $('signOutButton').addEventListener('click', signOut);
+      $('resetCode').addEventListener('input', event => {
+        event.target.value = event.target.value.replace(/\\D/g, '').slice(0, 6);
+      });
+
+      function signOut() {
+        const token = sessionToken;
+        sessionToken = '';
+        subscribers = [];
+        $('dashboard').hidden = true;
+        $('loginPanel').hidden = false;
+        $('adminPassword').value = '';
+        if (token) invoke('adminLogout', { sessionToken: token }, () => {}, () => {});
+        setStatus('loginStatus', 'You have signed out.', 'success');
+      }
+    })();
+  </script>
+</body>
+</html>
