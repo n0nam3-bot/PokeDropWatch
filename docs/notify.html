@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#c83232">
+  <meta name="description" content="Manage PokéDrop Watch email notifications and retailer preferences.">
+  <title>Notify · PokéDrop Watch</title>
+  <link rel="icon" href="./pokeball.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <style>
+    .notify-shell { max-width:1320px; padding:0 24px; }
+    .notify-topbar { position:sticky; top:0; z-index:300; background:rgba(247,247,244,.97); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); box-shadow:0 1px 0 rgba(30,30,25,.07); }
+    .notify-main { max-width:1280px; margin:0 auto; padding:20px 0 12px; }
+    .notify-heading { margin:10px 0 16px; }
+    .notify-heading .eyebrow { margin-bottom:6px; }
+    .notify-heading h1 { font:700 clamp(25px,4vw,36px)/1.1 system-ui,sans-serif; letter-spacing:-1.1px; margin:0 0 8px; }
+    .notify-heading p:last-child { margin:0; color:#85867f; font-size:11px; line-height:1.6; }
+    .notify-frame-wrap { overflow:hidden; border:1px solid var(--line); border-radius:13px; background:#fbf8f5; box-shadow:var(--shadow); }
+    #notifyPortalFrame { display:block; width:100%; height:790px; border:0; background:#fbf8f5; }
+    .portal-fallback { display:flex; justify-content:center; align-items:center; gap:8px; flex-wrap:wrap; padding:10px 0 12px; color:#85867f; font-size:10px; text-align:center; }
+    .portal-fallback a { color:var(--red-dark); font-weight:800; text-decoration:underline; text-underline-offset:3px; }
+    .bottom-bar a[aria-current="page"] { background:#fff2ee; color:var(--red-dark); }
+    @media(max-width:760px) { .notify-shell { padding:0 12px; } .notify-main { padding-top:12px; } #notifyPortalFrame { height:1220px; } }
+    @media(max-width:420px) { #notifyPortalFrame { height:1370px; } }
+  </style>
+</head>
+<body>
+  <div class="site-shell notify-shell" id="top">
+    <header class="topbar notify-topbar" id="pageTop">
+      <a class="brand" href="./#top" aria-label="PokéDrop Watch home">
+        <span class="pokeball" aria-hidden="true"><i></i></span>
+        <span><strong>PokéDrop</strong><small>WATCH</small></span>
+      </a>
+      <div class="topbar-right">
+        <span class="live-pill"><span class="live-dot"></span> AUTOMATED WATCH</span>
+        <button id="refreshNotifyButton" class="icon-button" type="button" aria-label="Refresh notification portal" title="Refresh notification portal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M5.6 9a7 7 0 0 1 11.8-2L20 12M4 12l2.6 5a7 7 0 0 0 11.8-2"/></svg>
+        </button>
+      </div>
+    </header>
+    <main class="notify-main">
+      <section class="notify-heading">
+        <p class="eyebrow">TRAINER ALERTS</p>
+        <h1>Notification center</h1>
+        <p>Choose the Pokémon categories and retailers you want to follow. Verify your email with a one-time code; applications remain pending until approved by the administrator.</p>
+      </section>
+      <div class="notify-frame-wrap">
+        <iframe id="notifyPortalFrame" src="https://script.google.com/macros/s/AKfycbwGfc1E_t1nj-HG5Sf5V1Y-J_cwY_PmwLIUAfbPPBVtl7mbxOhCkz5Q6BNosWmEUmVm/exec?page=subscribe" title="PokéDrop Watch email notification application" loading="eager" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+      <p class="portal-fallback">If the Google form does not load here, <a href="https://script.google.com/macros/s/AKfycbwGfc1E_t1nj-HG5Sf5V1Y-J_cwY_PmwLIUAfbPPBVtl7mbxOhCkz5Q6BNosWmEUmVm/exec?page=subscribe" target="_blank" rel="noopener noreferrer">open Notify directly in a new tab ↗</a>.</p>
+    </main>
+  </div>
+  <nav class="bottom-bar" aria-label="Quick navigation">
+    <div class="bottom-bar-inner">
+      <a href="./#top"><span aria-hidden="true">⌂</span><small>Home</small></a>
+      <a href="./#alerts"><span aria-hidden="true">▤</span><small>Alerts</small></a>
+      <a href="./notify.html" aria-current="page"><span aria-hidden="true">✉</span><small>Notify</small></a>
+      <a href="./admin.html"><span aria-hidden="true">⚙</span><small>Admin</small></a>
+      <a href="https://github.com/n0nam3-bot/PokeDropWatch" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">↗</span><small>GitHub</small></a>
+    </div>
+  </nav>
+  <script>document.getElementById('refreshNotifyButton').addEventListener('click', () => window.location.reload());</script>
+</body>
+</html>

@@ -9,40 +9,20 @@
   <link rel="icon" href="./pokeball.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./styles.css">
   <style>
-    html, body { min-height: 100%; margin: 0; }
-    .admin-embed-topbar {
-      position: sticky;
-      top: 0;
-      z-index: 300;
-      background: rgba(247,247,244,.97);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 1px 0 rgba(30,30,25,.07);
-    }
-    .admin-embed-main { max-width: 1280px; margin: 0 auto; padding: 0; }
-    #adminPortalFrame {
-      display: block;
-      width: 100%;
-      height: calc(100vh - var(--topbar-height) - var(--bottom-bar-height) - env(safe-area-inset-bottom));
-      height: calc(100dvh - var(--topbar-height) - var(--bottom-bar-height) - env(safe-area-inset-bottom));
-      min-height: 420px;
-      border: 0;
-      background: #f7f7f4;
-    }
-    .bottom-bar a[aria-current="page"] {
-      background: #fff2ee;
-      color: var(--red-dark);
-    }
-    @media (max-width: 700px) {
-      .admin-embed-main { padding-bottom: env(safe-area-inset-bottom); }
-      #adminPortalFrame { min-height: 420px; }
-    }
+    .admin-embed-shell { max-width: 1320px; padding: 0 24px; }
+    .admin-embed-topbar { position: sticky; top: 0; z-index: 300; background: rgba(247,247,244,.97); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 1px 0 rgba(30,30,25,.07); }
+    .admin-embed-main { max-width: 1280px; margin: 0 auto; padding: 0 0 10px; }
+    #adminPortalFrame { display:block; width:100%; height:calc(100vh - var(--topbar-height) - var(--bottom-bar-height) - 22px - env(safe-area-inset-bottom)); height:calc(100dvh - var(--topbar-height) - var(--bottom-bar-height) - 22px - env(safe-area-inset-bottom)); min-height:560px; border:0; background:#fbf8f5; }
+    .portal-fallback { display:flex; justify-content:center; align-items:center; gap:8px; flex-wrap:wrap; padding:8px 0 12px; color:#85867f; font-size:10px; text-align:center; }
+    .portal-fallback a { color:var(--red-dark); font-weight:800; text-decoration:underline; text-underline-offset:3px; }
+    .bottom-bar a[aria-current="page"] { background:#fff2ee; color:var(--red-dark); }
+    @media(max-width:700px) { .admin-embed-shell { padding:0 12px; } #adminPortalFrame { min-height:620px; } }
   </style>
 </head>
 <body>
-  <div class="site-shell admin-embed-shell">
+  <div class="site-shell admin-embed-shell" id="top">
     <header class="topbar admin-embed-topbar" id="pageTop">
-      <a class="brand" href="./" aria-label="PokéDrop Watch home">
+      <a class="brand" href="./#top" aria-label="PokéDrop Watch home">
         <span class="pokeball" aria-hidden="true"><i></i></span>
         <span><strong>PokéDrop</strong><small>WATCH</small></span>
       </a>
@@ -54,27 +34,19 @@
       </div>
     </header>
     <main class="admin-embed-main">
-      <iframe
-        id="adminPortalFrame"
-        src="https://script.google.com/macros/s/AKfycbwGfc1E_t1nj-HG5Sf5V1Y-J_cwY_PmwLIUAfbPPBVtl7mbxOhCkz5Q6BNosWmEUmVm/exec?page=admin"
-        title="PokéDrop Watch private administrator portal"
-        loading="eager"
-        referrerpolicy="strict-origin-when-cross-origin"
-        allow="clipboard-read; clipboard-write"
-      ></iframe>
+      <iframe id="adminPortalFrame" src="https://script.google.com/macros/s/AKfycbwGfc1E_t1nj-HG5Sf5V1Y-J_cwY_PmwLIUAfbPPBVtl7mbxOhCkz5Q6BNosWmEUmVm/exec?page=admin" title="PokéDrop Watch private administrator portal" loading="eager" referrerpolicy="strict-origin-when-cross-origin" allow="clipboard-read; clipboard-write"></iframe>
+      <p class="portal-fallback">Having trouble with the embedded Google page? <a href="https://script.google.com/macros/s/AKfycbwGfc1E_t1nj-HG5Sf5V1Y-J_cwY_PmwLIUAfbPPBVtl7mbxOhCkz5Q6BNosWmEUmVm/exec?page=admin" target="_blank" rel="noopener noreferrer">Open Admin directly ↗</a></p>
     </main>
   </div>
   <nav class="bottom-bar" aria-label="Quick navigation">
     <div class="bottom-bar-inner">
-      <a href="./#pageTop"><span aria-hidden="true">⌂</span><small>Home</small></a>
+      <a href="./#top"><span aria-hidden="true">⌂</span><small>Home</small></a>
       <a href="./#alerts"><span aria-hidden="true">▤</span><small>Alerts</small></a>
-      <a href="./#subscriptions"><span aria-hidden="true">✉</span><small>Notify</small></a>
+      <a href="./notify.html"><span aria-hidden="true">✉</span><small>Notify</small></a>
       <a href="./admin.html" aria-current="page"><span aria-hidden="true">⚙</span><small>Admin</small></a>
       <a href="https://github.com/n0nam3-bot/PokeDropWatch" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">↗</span><small>GitHub</small></a>
     </div>
   </nav>
-  <script>
-    document.getElementById('refreshAdminButton').addEventListener('click', () => window.location.reload());
-  </script>
+  <script>document.getElementById('refreshAdminButton').addEventListener('click', () => window.location.reload());</script>
 </body>
 </html>

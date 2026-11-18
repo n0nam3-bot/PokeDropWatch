@@ -5,12 +5,18 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class SubscriptionPortalDirectTests(unittest.TestCase):
-    def test_public_page_embeds_subscribe_route_and_not_hidden_message_bridge(self):
+    def test_home_page_links_to_dedicated_notify_page_without_loading_portal(self):
         page = (ROOT / 'docs' / 'index.html').read_text(encoding='utf-8')
-        self.assertIn('id="subscriptionPortalFrame"', page)
+        self.assertIn('href="./notify.html"', page)
+        self.assertNotIn('subscriptionPortalFrame', page)
+        self.assertNotIn('exec?page=subscribe', page)
+
+    def test_notify_page_embeds_direct_apps_script_portal_and_has_open_link(self):
+        page = (ROOT / 'docs' / 'notify.html').read_text(encoding='utf-8')
+        self.assertIn('id="notifyPortalFrame"', page)
         self.assertIn('exec?page=subscribe', page)
-        self.assertNotIn('subscriptionBackendFrame', page)
-        self.assertNotIn('src="./subscriptions.js"', page)
+        self.assertIn('open Notify directly in a new tab', page)
+        self.assertIn('aria-current="page"', page)
 
     def test_subscribe_page_calls_apps_script_server_functions_directly(self):
         page = (ROOT / 'backend' / 'apps-script' / 'Subscribe.html').read_text(encoding='utf-8')
@@ -34,13 +40,14 @@ class SubscriptionPortalDirectTests(unittest.TestCase):
         self.assertNotIn('PokéDrop Watch · Administrator sessions expire after one hour.', page)
         self.assertIn('width:min(100% - 40px,1120px)', page)
 
-    def test_item_filter_has_all_six_requested_retailers(self):
-        source = (ROOT / 'docs' / 'app.js').read_text(encoding='utf-8')
-        for value, label in (
-            ('amazon', 'Amazon'), ('walmart', 'Walmart'), ('best-buy', 'Best Buy'),
-            ('target', 'Target'), ('pokemon-center', 'Pokémon Center'), ('gamestop', 'GameStop')
-        ):
-            self.assertIn(f"new Option('{label}', '{value}')", source)
+    def test_home_navigation_returns_to_the_document_top(self):
+        index = (ROOT / 'docs' / 'index.html').read_text(encoding='utf-8')
+        admin = (ROOT / 'docs' / 'admin.html').read_text(encoding='utf-8')
+        notify = (ROOT / 'docs' / 'notify.html').read_text(encoding='utf-8')
+        self.assertIn('id="top"', index)
+        self.assertIn('href="#top"', index)
+        self.assertIn('href="./#top"', admin)
+        self.assertIn('href="./#top"', notify)
 
 
 if __name__ == '__main__':

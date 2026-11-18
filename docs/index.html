@@ -9,34 +9,11 @@
   <link rel="icon" href="./pokeball.svg" type="image/svg+xml">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="stylesheet" href="./styles.css">
-  <style>
-    .subscription-portal-wrap {
-      width: 100%;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: #fff;
-    }
-    #subscriptionPortalFrame {
-      display: block;
-      width: 100%;
-      height: 900px;
-      border: 0;
-      background: #fff;
-    }
-    .subscription-portal-note { margin-top: 10px; }
-    @media (max-width: 720px) {
-      #subscriptionPortalFrame { height: 1160px; }
-    }
-    @media (max-width: 420px) {
-      #subscriptionPortalFrame { height: 1240px; }
-    }
-  </style>
 </head>
 <body>
   <div class="site-shell public-shell" id="top">
     <header class="topbar" id="pageTop">
-      <a class="brand" href="./" aria-label="PokéDrop Watch home">
+      <a class="brand" href="./#top" aria-label="PokéDrop Watch home">
         <span class="pokeball" aria-hidden="true"><i></i></span>
         <span><strong>PokéDrop</strong><small>WATCH</small></span>
       </a>
@@ -126,19 +103,18 @@
 
       <section class="section-block subscription-section" id="subscriptions">
         <div class="section-heading">
-          <div><p class="eyebrow">TRAINER ALERTS</p><h2 id="subscriptionHeading">Get Pokémon drop notifications</h2></div>
+          <div><p class="eyebrow">TRAINER ALERTS</p><h2>Get Pokémon drop notifications</h2></div>
           <span class="section-note">Secure email verification</span>
         </div>
-        <div class="subscription-portal-wrap">
-          <iframe
-            id="subscriptionPortalFrame"
-            src="https://script.google.com/macros/s/AKfycbwGfc1E_t1nj-HG5Sf5V1Y-J_cwY_PmwLIUAfbPPBVtl7mbxOhCkz5Q6BNosWmEUmVm/exec?page=subscribe"
-            title="PokéDrop Watch email subscription and verification"
-            loading="lazy"
-            referrerpolicy="strict-origin-when-cross-origin"
-          ></iframe>
+        <div class="setup-panel notify-launch-panel">
+          <div class="setup-icon" aria-hidden="true">✉</div>
+          <div class="setup-copy">
+            <p class="eyebrow">SEPARATE NOTIFICATION CENTER</p>
+            <h2>Choose what you want to follow</h2>
+            <p>Manage your email application, product categories, retailer preferences, and verification code on the dedicated Notify page. Keeping this form separate also makes the main watchlist load faster.</p>
+          </div>
+          <a class="setup-badge" href="./notify.html">OPEN NOTIFY ↗</a>
         </div>
-        <p class="field-note subscription-portal-note">Email verification is handled securely by the PokéDrop Watch service. A successful request is confirmed by Google Apps Script before the site asks you to enter a code.</p>
       </section>
 
       <footer class="public-footer-note">
@@ -149,9 +125,9 @@
   </div>
   <nav class="bottom-bar" aria-label="Quick navigation">
     <div class="bottom-bar-inner">
-      <a href="#pageTop"><span aria-hidden="true">⌂</span><small>Home</small></a>
+      <a href="#top"><span aria-hidden="true">⌂</span><small>Home</small></a>
       <a href="#alerts"><span aria-hidden="true">▤</span><small>Alerts</small></a>
-      <a href="#subscriptions"><span aria-hidden="true">✉</span><small>Notify</small></a>
+      <a href="./notify.html"><span aria-hidden="true">✉</span><small>Notify</small></a>
       <a href="./admin.html"><span aria-hidden="true">⚙</span><small>Admin</small></a>
       <a href="https://github.com/n0nam3-bot/PokeDropWatch" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">↗</span><small>GitHub</small></a>
     </div>

@@ -13,12 +13,16 @@ class DashboardFilterConfigTests(unittest.TestCase):
         self.assertIn("releaseDateWithinMonth(item.release_date)", app)
         self.assertIn("new_item: 'NEW ITEM'", app)
 
-    def test_retailer_filter_is_limited_to_all_amazon_and_walmart(self):
+    def test_retailer_filter_has_all_six_requested_retailers(self):
         app = (ROOT / "docs" / "app.js").read_text(encoding="utf-8")
-        self.assertIn("new Option('All retailers', 'all')", app)
-        self.assertIn("new Option('Amazon', 'amazon')", app)
-        self.assertIn("new Option('Walmart', 'walmart')", app)
-        self.assertIn("['all', 'amazon', 'walmart'].includes(selected)", app)
+        expected = {
+            'all': 'All retailers', 'amazon': 'Amazon', 'walmart': 'Walmart',
+            'best-buy': 'Best Buy', 'target': 'Target',
+            'pokemon-center': 'Pokémon Center', 'gamestop': 'GameStop',
+        }
+        for value, label in expected.items():
+            self.assertIn(f"new Option('{label}', '{value}')", app)
+        self.assertIn("'all', 'amazon', 'walmart', 'best-buy', 'target', 'pokemon-center', 'gamestop'", app)
 
     def test_only_filtered_retailer_pages_use_scoped_product_acceptance(self):
         config = json.loads((ROOT / "config" / "sources.json").read_text(encoding="utf-8"))
