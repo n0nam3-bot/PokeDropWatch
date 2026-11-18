@@ -11,11 +11,12 @@ class SubscriptionPortalDirectTests(unittest.TestCase):
         self.assertNotIn('subscriptionPortalFrame', page)
         self.assertNotIn('exec?page=subscribe', page)
 
-    def test_notify_page_embeds_direct_apps_script_portal_and_has_open_link(self):
+    def test_notify_page_opens_apps_script_as_a_top_level_page(self):
         page = (ROOT / 'docs' / 'notify.html').read_text(encoding='utf-8')
-        self.assertIn('id="notifyPortalFrame"', page)
+        self.assertNotIn('<iframe', page)
+        self.assertIn('window.location.replace(portalUrl)', page)
         self.assertIn('exec?page=subscribe', page)
-        self.assertIn('open Notify directly in a new tab', page)
+        self.assertIn('Open Notify directly', page)
         self.assertIn('aria-current="page"', page)
 
     def test_subscribe_page_calls_apps_script_server_functions_directly(self):
@@ -26,15 +27,25 @@ class SubscriptionPortalDirectTests(unittest.TestCase):
         self.assertNotIn('postMessage(', page)
         self.assertNotIn("addEventListener('message'", page)
 
-    def test_do_get_routes_to_admin_and_subscribe_pages(self):
+    def test_do_get_routes_to_admin_and_subscribe_pages_with_shared_navigation(self):
         source = (ROOT / 'backend' / 'apps-script' / 'doGet_REPLACEMENT.txt').read_text(encoding='utf-8')
         self.assertIn("page === 'admin'", source)
         self.assertIn("page === 'subscribe'", source)
-        self.assertIn("createHtmlOutputFromFile('Subscribe')", source)
-        self.assertIn("createHtmlOutputFromFile('Admin')", source)
-        self.assertIn('setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)', source)
+        self.assertIn("pokedropPortalOutput_('Subscribe'", source)
+        self.assertIn("pokedropPortalOutput_('Admin'", source)
+        self.assertIn('ScriptApp.getService().getUrl()', source)
+        self.assertIn('class="pd-site-topbar"', source)
+        self.assertIn('class="pd-bottom-bar"', source)
+        self.assertNotIn('XFrameOptionsMode.ALLOWALL', source)
 
-    def test_admin_inner_brand_and_footer_are_removed(self):
+    def test_admin_page_opens_top_level_apps_script_page(self):
+        page = (ROOT / 'docs' / 'admin.html').read_text(encoding='utf-8')
+        self.assertNotIn('<iframe', page)
+        self.assertIn('window.location.replace(portalUrl)', page)
+        self.assertIn('exec?page=admin', page)
+        self.assertIn('aria-current="page"', page)
+
+    def test_admin_inner_brand_and_footer_are_not_duplicated(self):
         page = (ROOT / 'backend' / 'apps-script' / 'Admin.html').read_text(encoding='utf-8')
         self.assertNotIn('<header class="top">', page)
         self.assertNotIn('PokéDrop Watch · Administrator sessions expire after one hour.', page)

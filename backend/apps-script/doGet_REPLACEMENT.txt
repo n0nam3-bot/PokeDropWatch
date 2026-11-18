@@ -1,29 +1,64 @@
-Replace only the existing doGet(e) function in Code.gs with this function.
-Keep all other server functions, Script Properties, and project settings unchanged.
-Create an Apps Script HTML file named Subscribe and paste backend/apps-script/Subscribe.html into it.
-Replace the contents of the existing Apps Script HTML file named Admin with backend/apps-script/Admin.html.
+PokéDrop Watch Apps Script routing replacement
+
+In the existing Apps Script project, replace the current doGet() function with
+both functions below. Keep all other server functions, Script Properties,
+HTML files (Index, Admin, Subscribe), and project settings unchanged.
+
+This version opens Admin and Notify as top-level Apps Script pages, not as
+cross-site iframes. It injects one shared PokéDrop Watch header and bottom nav
+into the portal pages. The pages use google.script.run directly, so their
+server calls remain inside the Apps Script origin.
 
 function doGet(e) {
   const page = String(e && e.parameter && e.parameter.page || '').trim().toLowerCase();
 
   if (page === 'admin') {
-    return pokedropEmbeddedOutput_(HtmlService.createHtmlOutputFromFile('Admin'), 'PokéDrop Watch Admin');
+    return pokedropPortalOutput_('Admin', 'PokéDrop Watch Admin', 'admin');
   }
 
-  if (page === 'subscribe') {
-    return pokedropEmbeddedOutput_(HtmlService.createHtmlOutputFromFile('Subscribe'), 'PokéDrop Watch Email Alerts');
+  if (page === 'subscribe' || page === 'notify') {
+    return pokedropPortalOutput_('Subscribe', 'PokéDrop Watch Email Alerts', 'notify');
   }
 
   const props = PropertiesService.getScriptProperties();
   const template = HtmlService.createTemplateFromFile('Index');
   template.siteOrigin = props.getProperty('SITE_ORIGIN') || 'https://n0nam3-bot.github.io';
-  return template.evaluate()
-    .setTitle('PokéDrop Watch Verification')
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  return template.evaluate().setTitle('PokéDrop Watch Verification');
 }
 
-function pokedropEmbeddedOutput_(sourceOutput, title) {
-  const fontCss = `
+function pokedropPortalOutput_(fileName, title, activePage) {
+  const appUrl = ScriptApp.getService().getUrl();
+  const homeUrl = 'https://n0nam3-bot.github.io/PokeDropWatch/';
+  const adminUrl = appUrl + '?page=admin';
+  const notifyUrl = appUrl + '?page=subscribe';
+
+  const header = `
+    <header class="pd-site-topbar">
+      <a class="pd-brand" href="${homeUrl}#top" aria-label="PokéDrop Watch home">
+        <span class="pd-ball" aria-hidden="true"><i></i></span>
+        <span class="pd-brand-name"><strong>PokéDrop</strong><small>WATCH</small></span>
+      </a>
+      <div class="pd-topbar-right"><span class="pd-live"><i></i>AUTOMATED WATCH</span>
+        <button type="button" class="pd-refresh" onclick="window.location.reload()" aria-label="Refresh page" title="Refresh">↻</button>
+      </div>
+    </header>`;
+
+  const homeActive = '';
+  const alertsActive = '';
+  const notifyActive = activePage === 'notify' ? ' aria-current="page"' : '';
+  const adminActive = activePage === 'admin' ? ' aria-current="page"' : '';
+  const footer = `
+    <nav class="pd-bottom-bar" aria-label="Quick navigation">
+      <div class="pd-bottom-inner">
+        <a href="${homeUrl}#top"${homeActive}><span>⌂</span><small>Home</small></a>
+        <a href="${homeUrl}#alerts"${alertsActive}><span>▤</span><small>Alerts</small></a>
+        <a href="${notifyUrl}"${notifyActive}><span>✉</span><small>Notify</small></a>
+        <a href="${adminUrl}"${adminActive}><span>⚙</span><small>Admin</small></a>
+        <a href="https://github.com/n0nam3-bot/PokeDropWatch" target="_blank" rel="noopener noreferrer"><span>↗</span><small>GitHub</small></a>
+      </div>
+    </nav>`;
+
+  const sharedCss = `
     <style>
       @font-face {
         font-family: "PKMN RBYGSC";
@@ -32,14 +67,41 @@ function pokedropEmbeddedOutput_(sourceOutput, title) {
         font-weight: 400;
         font-display: swap;
       }
+      html { scroll-padding-top: 72px; }
       html, body, body *, body *::before, body *::after, body *::placeholder {
         font-family: "PKMN RBYGSC", "Courier New", monospace !important;
       }
-    </style>
-  `;
-  const source = sourceOutput.getContent();
-  const html = source.replace('</head>', fontCss + '</head>');
-  return HtmlService.createHtmlOutput(html)
-    .setTitle(title)
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+      body { padding: 0 0 76px !important; }
+      .pd-site-topbar { position: sticky; top: 0; z-index: 500; display:flex; align-items:center; justify-content:space-between; gap:14px; min-height:62px; padding:8px max(16px,calc((100vw - 1120px)/2)); border-bottom:1px solid #e9e4df; background:rgba(250,248,245,.97); color:#242424; box-shadow:0 1px 0 rgba(30,30,25,.05); }
+      .pd-brand { display:flex; align-items:center; gap:10px; color:inherit; text-decoration:none; font-weight:800; }
+      .pd-ball { position:relative; display:inline-block; width:32px; height:32px; flex:0 0 32px; border:3px solid #292321; border-radius:50%; background:linear-gradient(to bottom,#e34c4e 0 45%,#292321 45% 55%,#fff 55%); }
+      .pd-ball:after { content:""; position:absolute; left:8px; top:8px; width:9px; height:9px; border:2px solid #292321; border-radius:50%; background:#fff; }
+      .pd-brand-name { display:grid; line-height:1; gap:4px; }
+      .pd-brand-name strong { font-size:13px; }
+      .pd-brand-name small { font-size:9px; letter-spacing:.18em; }
+      .pd-topbar-right { display:flex; align-items:center; gap:10px; }
+      .pd-live { display:flex; align-items:center; gap:7px; color:#62655e; font:800 9px/1.2 system-ui,sans-serif; letter-spacing:.13em; }
+      .pd-live i { width:7px; height:7px; border-radius:50%; background:#3c9b6a; box-shadow:0 0 0 3px #3c9b6a20; }
+      .pd-refresh { width:34px; min-height:34px; padding:0; border:1px solid #e5ded8; border-radius:8px; background:#fff; color:#5b5752; font:20px/1 system-ui,sans-serif; cursor:pointer; }
+      .pd-bottom-bar { position:fixed; inset:auto 0 0; z-index:600; padding:7px 10px max(7px,env(safe-area-inset-bottom)); border-top:1px solid #e9e4df; background:rgba(255,255,255,.97); box-shadow:0 -5px 24px rgba(34,29,24,.06); }
+      .pd-bottom-inner { display:flex; justify-content:space-around; align-items:center; gap:4px; width:min(100%,620px); margin:auto; }
+      .pd-bottom-inner a { display:flex; flex:1 1 0; flex-direction:column; align-items:center; justify-content:center; gap:3px; min-height:45px; border-radius:8px; color:#777875; text-decoration:none; }
+      .pd-bottom-inner a span { font:18px/1 system-ui,sans-serif; }
+      .pd-bottom-inner a small { font:700 9px/1.2 system-ui,sans-serif; }
+      .pd-bottom-inner a[aria-current="page"] { background:#fff2ee; color:#87262b; }
+      .wrap { padding-top:20px !important; }
+      .portal { padding-top:18px !important; }
+      @media(max-width:600px) { .pd-site-topbar { min-height:56px; padding:7px 12px; } .pd-brand-name strong { font-size:12px; } .pd-live { font-size:8px; } .pd-bottom-inner a small { font-size:8px; } }
+    </style>`;
+
+  let html = HtmlService.createHtmlOutputFromFile(fileName).getContent();
+  html = html.replace('</head>', sharedCss + '</head>');
+  html = html.replace(/<body([^>]*)>/i, function(match) { return match + header; });
+  html = html.replace(/<\/body>/i, footer + '</body>');
+  return HtmlService.createHtmlOutput(html).setTitle(title);
 }
+
+After saving, deploy the existing web app as a New version. Keep its current
+execution identity, access setting, Script Properties, and deployment URL.
+Do not create a second deployment. The public site now opens the Apps Script
+portal as a top-level page, so permissive cross-frame embedding is no longer needed.

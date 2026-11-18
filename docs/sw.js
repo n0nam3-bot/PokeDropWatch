@@ -1,4 +1,4 @@
-const CACHE = 'pokedrop-shell-v11';
+const CACHE = 'pokedrop-shell-v12';
 const SHELL = [
   './', './index.html', './admin.html', './notify.html', './styles.css', './app.js',
   './subscriptions.js', './admin.js', './bridge-transport.js', './subscription-backend-config.js',
