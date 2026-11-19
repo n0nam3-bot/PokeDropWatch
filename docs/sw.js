@@ -1,8 +1,8 @@
-const CACHE = 'pokedrop-shell-v20';
+const CACHE = 'pokedrop-shell-v21';
 const SHELL = [
   './', './index.html', './admin.html', './notify.html', './styles.css', './theme-overrides.css', './site-uniform.css',
   './source-groups.css', './app.js', './page-enhancements.js', './source-groups.js', './subscriptions.js', './admin.js', './bridge-transport.js',
-  './subscription-backend-config.js', './SOURCE_HEALTH.html', './RETAILER_SCAN_HEALTH.html', './pokeball.svg', './manifest.webmanifest',
+  './subscription-backend-config.js', './SOURCE_HEALTH.html', './pokeball.svg', './manifest.webmanifest',
   './assets/icons/pokeball-8bit.png', './assets/icons/ultraball-8bit.png', './assets/icons/masterball-8bit.png'
 ];
 

@@ -27,10 +27,10 @@ class SourceStatusAndPageFixesTests(unittest.TestCase):
         self.assertNotIn("location.hash === '#alerts' ||", js)
         self.assertIn("window.addEventListener('scroll', schedule", js)
 
-    def test_source_guide_explains_mixed_match_parser_miss_and_request_error_counts(self):
-        guide = self.read("docs/SOURCE_HEALTH.html")
-        self.assertIn("3 source matches · 5 parser misses · 2 request errors", guide)
-        self.assertIn("not a guarantee they are in stock", guide)
+    def test_source_guide_explains_broad_search_and_current_scan_policy(self):
+        guide = self.read("docs/SOURCE_HEALTH.md")
+        self.assertIn("Broad retailer searches are used where available", guide)
+        self.assertIn("Every configured primary retailer route is checked on every scan", guide)
 
     def test_source_guide_explains_gym_leader_review_states_and_session_security(self):
         guide = self.read("docs/SOURCE_HEALTH.html")
@@ -43,7 +43,7 @@ class SourceStatusAndPageFixesTests(unittest.TestCase):
 
     def test_service_worker_drops_the_generated_scene_and_bumps_cache(self):
         worker = self.read("docs/sw.js")
-        self.assertIn("pokedrop-shell-v20", worker)
+        self.assertIn("pokedrop-shell-v21", worker)
         self.assertNotIn("pokeball-flight-8bit.png", worker)
         self.assertIn("./assets/icons/pokeball-8bit.png", worker)
 

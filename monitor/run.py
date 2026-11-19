@@ -8,14 +8,14 @@ import os
 import sys
 from pathlib import Path
 
-# Install retailer/date recovery and conditional route selection before binding
-# scanner functions. Category routes keep separate product histories.
+# Install retailer/date recovery and primary-first conditional fallback before
+# binding the scanner function. Every configured primary is checked each run.
 import engine_patch  # noqa: F401
 import engine_recovery_patch  # noqa: F401
-import engine_retailer_group_patch as retailer_route_policy  # noqa: F401
+import broad_source_patch  # noqa: F401
 import trainer_preferences_patch  # noqa: F401
 from engine import (
-    clean_product_title, deduplicate_products, is_valid_event, make_session,
+    clean_product_title, deduplicate_products, infer_category, is_valid_event, make_session,
     is_email_eligible_event, normalize_match_text, scan_source, send_email, utc_now,
 )
 from subscribers import dispatch_subscriber_notifications
@@ -122,6 +122,64 @@ def migrate_state(state: dict) -> dict:
     return state
 
 
+
+# Histories from the earlier category-split setup are folded into the one broad
+# retailer catalog where possible. This preserves product history while removing
+# the old scheduled routes from the active scan list.
+LEGACY_SOURCE_MERGES = {
+    "pokemon-center-plush": ["pokemon-center-plush-new-releases"],
+    "target-tcg": ["target-tcg-new-arrivals", "target-plush", "target-plush-new-arrivals"],
+    "walmart-tcg": ["walmart-tcg-newest", "walmart-plush", "walmart-plush-newest"],
+    "best-buy-pokemon-tcg": ["best-buy-pokemon-tcg-new-arrivals", "best-buy-pokemon-tcg-coming-soon"],
+    "amazon-pokemon-products": ["amazon-pokemon-tcg", "amazon-pokemon-plush", "amazon-pokemon-figures"],
+}
+LEGACY_CATEGORIES = {
+    "pokemon-center-plush-new-releases": "plush",
+    "target-tcg-new-arrivals": "tcg", "target-plush": "plush", "target-plush-new-arrivals": "plush",
+    "walmart-tcg-newest": "tcg", "walmart-plush": "plush", "walmart-plush-newest": "plush",
+    "best-buy-pokemon-tcg-new-arrivals": "tcg", "best-buy-pokemon-tcg-coming-soon": "tcg",
+    "amazon-pokemon-tcg": "tcg", "amazon-pokemon-plush": "plush", "amazon-pokemon-figures": "collectibles",
+}
+
+
+def merge_legacy_source_histories(state: dict, sources: list[dict]) -> None:
+    items = state.setdefault("items", {})
+    source_by_id = {source["id"]: source for source in sources}
+    for target_id, legacy_ids in LEGACY_SOURCE_MERGES.items():
+        target_source = source_by_id.get(target_id)
+        if not target_source:
+            continue
+        target = items.setdefault(target_id, {})
+        products = target.get("products") if isinstance(target.get("products"), dict) else {}
+        products = dict(products)
+        initialized = bool(target.get("initialized"))
+        last_success_values = [str(target.get("last_success") or "")]
+        for legacy_id in legacy_ids:
+            legacy = items.get(legacy_id)
+            if not isinstance(legacy, dict):
+                continue
+            initialized = initialized or bool(legacy.get("initialized"))
+            last_success_values.append(str(legacy.get("last_success") or ""))
+            old_products = legacy.get("products") if isinstance(legacy.get("products"), dict) else {}
+            for old_key, raw_item in old_products.items():
+                if not isinstance(raw_item, dict):
+                    continue
+                item = dict(raw_item)
+                fallback_category = LEGACY_CATEGORIES.get(legacy_id, target_source.get("category", "collectibles"))
+                item["category"] = item.get("category") or infer_category(item.get("title", ""), fallback_category)
+                item["retailer_key"] = target_source.get("retailer_key") or target_id
+                product_key = item.get("url") or item.get("sku") or old_key or normalize_match_text(item.get("title", ""))
+                if not product_key:
+                    continue
+                previous = products.get(product_key)
+                if not previous or str(item.get("last_seen", "")) >= str(previous.get("last_seen", "")):
+                    products[product_key] = item
+        target["products"] = products
+        target["initialized"] = initialized
+        target["source_url"] = target_source.get("url", target.get("source_url", ""))
+        target["last_item_count"] = len(products)
+        target["last_success"] = max(last_success_values, default="")
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", default="config/sources.json")
@@ -140,8 +198,9 @@ def main() -> int:
         "subscriber_delivery_status": "Not configured",
     })
     settings = config.get("settings", {})
-    state = migrate_state(state)
     sources = [s for s in config.get("sources", []) if s.get("enabled", True)]
+    merge_legacy_source_histories(state, sources)
+    state = migrate_state(state)
     if not sources:
         raise SystemExit("No enabled sources found in config/sources.json")
     active_source_ids = {source["id"] for source in sources}
@@ -155,18 +214,7 @@ def main() -> int:
     new_events = []
     failures = 0
     warnings = 0
-    selected_route_ids = retailer_route_policy.select_routes_for_interval(sources, state, settings)
-    previous_source_status = {
-        item.get("id"): item for item in state.get("source_status", []) if isinstance(item, dict)
-    }
     for source in sources:
-        if source["id"] not in selected_route_ids:
-            scheduled = retailer_route_policy.scheduled_route_status(
-                source, state, previous_source_status.get(source["id"], {})
-            )
-            source_status.append(scheduled)
-            print(f"SCHEDULED {source['id']}: no request this interval")
-            continue
         try:
             events, result = scan_source(session, source, settings, state)
             state.setdefault("items", {})[source["id"]] = result["state"]
@@ -181,10 +229,7 @@ def main() -> int:
             failures += 1
             prior = next((x for x in state.get("source_status", []) if x.get("id") == source["id"]), {})
             last_known_items = state.get("items", {}).get(source["id"], {}).get("last_item_count", prior.get("items_found", 0))
-            failure_message = f"All available route checks failed: {str(exc)[:210]}"
-            if last_known_items:
-                retained_label = "article(s)" if source.get("type") == "rss" else "listing(s)"
-                failure_message += f" {last_known_items} last-known {retained_label} retained; current entries were not confirmed."
+            failure_message = f"Request failed: {str(exc)[:210]}"
             source_status.append({
                 "id": source["id"],
                 "name": source.get("name", source["id"]),
@@ -200,15 +245,15 @@ def main() -> int:
                 "last_known_items": last_known_items,
                 "new_alerts": 0,
                 "successful_urls": 0,
-                "configured_urls": len(retailer_route_policy._candidate_urls(source)),
-                "available_urls": len(retailer_route_policy._candidate_urls(source)),
+                "configured_urls": 1 + len(source.get("alternate_urls", [])) + (1 if source.get("id") == "pokebeach-news" else 0),
+                "available_urls": 1 + len(source.get("alternate_urls", [])) + (1 if source.get("id") == "pokebeach-news" else 0),
+                "attempted_urls": 0,
                 "message": failure_message,
                 "notes": source.get("notes", ""),
             })
             print(f"ERROR {source['id']}: {exc}", file=sys.stderr)
 
-    # A product may be returned by multiple filtered searches at the same
-    # retailer. Generate only one alert per product/event across those routes.
+    # Collapse duplicate product/event alerts if a broad page repeats a listing.
     new_events = deduplicate_events(new_events)
     state["last_checked"] = utc_now()
     state["source_status"] = source_status

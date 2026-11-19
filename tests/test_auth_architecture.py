@@ -36,7 +36,7 @@ class AuthArchitectureTests(unittest.TestCase):
 
     def test_service_worker_cache_is_bumped_for_current_shell(self):
         worker = (ROOT / 'docs' / 'sw.js').read_text(encoding='utf-8')
-        self.assertIn('pokedrop-shell-v20', worker)
+        self.assertIn('pokedrop-shell-v21', worker)
         self.assertIn("'./site-uniform.css'", worker)
         self.assertIn("'./assets/icons/pokeball-8bit.png'", worker)
         self.assertIn("'./source-groups.js'", worker)

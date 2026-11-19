@@ -103,7 +103,7 @@ class ThemeAndPageCopyTests(unittest.TestCase):
 
     def test_service_worker_caches_current_pixel_assets_and_scripts(self):
         worker = self.read('docs/sw.js')
-        self.assertIn('pokedrop-shell-v20', worker)
+        self.assertIn('pokedrop-shell-v21', worker)
         self.assertIn('./site-uniform.css', worker)
         self.assertIn('./page-enhancements.js', worker)
         self.assertIn('./source-groups.js', worker)

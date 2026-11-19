@@ -2,13 +2,10 @@
   "settings": {
     "check_interval_minutes": 15,
     "request_timeout_seconds": 25,
-    "max_items_per_catalog": 80,
+    "max_items_per_catalog": 100,
     "history_limit": 100,
     "email_digest_subject_prefix": "PokéDrop Watch",
-    "user_agent": "PokeDropWatch/1.0 (+https://github.com; public product availability monitor)",
-    "retailer_block_cooldown_minutes": 45,
-    "retailer_request_cooldown_minutes": 15,
-    "retailer_routes_per_scan": 1
+    "user_agent": "PokeDropWatch/1.0 (+https://github.com; public product availability monitor)"
   },
   "sources": [
     {
@@ -18,10 +15,11 @@
       "type": "catalog",
       "url": "https://www.pokemoncenter.com/category/tcg-cards",
       "enabled": true,
-      "notes": "Official Pokémon Center TCG category. Sold-out products remain useful catalog records; availability is tracked separately.",
+      "notes": "Pokémon Center trading-card catalog.",
       "category": "tcg",
       "retailer_key": "pokemon-center",
-      "pokemon_scoped": true
+      "pokemon_scoped": true,
+      "alternate_urls": []
     },
     {
       "id": "pokemon-center-plush",
@@ -30,118 +28,37 @@
       "type": "catalog",
       "url": "https://www.pokemoncenter.com/category/plush",
       "enabled": true,
-      "notes": "Official Pokémon Center plush category. The separate plush new-releases page is monitored as its own route below.",
+      "notes": "Pokémon Center plush catalog.",
       "category": "plush",
       "retailer_key": "pokemon-center",
-      "pokemon_scoped": true
-    },
-    {
-      "id": "pokemon-center-plush-new-releases",
-      "name": "Pokémon Center · Plush New Releases",
-      "retailer": "Pokémon Center",
-      "type": "catalog",
-      "url": "https://www.pokemoncenter.com/category/new-releases?category=plush&availability=true",
-      "enabled": true,
-      "notes": "Separate official Pokémon Center new-release and available-plush collection. Kept as its own route so the main plush category does not hide new arrivals.",
-      "category": "plush",
-      "retailer_key": "pokemon-center",
-      "pokemon_scoped": true
+      "pokemon_scoped": true,
+      "alternate_urls": []
     },
     {
       "id": "target-tcg",
-      "name": "Target · Pokémon TCG",
+      "name": "Target · Pokémon Products",
       "retailer": "Target",
       "type": "catalog",
-      "url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false&Nao=0&facetedValue=tkle6",
+      "url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "enabled": true,
-      "notes": "Target Pokémon trading-card category. The New at Target facet is monitored as a separate category route.",
-      "category": "tcg",
+      "notes": "Broad Pokémon search. Product categories are inferred from each listing.",
+      "category": "collectibles",
       "retailer_key": "target",
-      "pokemon_scoped": true
-    },
-    {
-      "id": "target-tcg-new-arrivals",
-      "name": "Target · Pokémon TCG New Arrivals",
-      "retailer": "Target",
-      "type": "catalog",
-      "url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false&facetedValue=tkle6Z5ewil&moveTo=product-list-grid",
-      "enabled": true,
-      "notes": "Target Pokémon TCG New at Target facet. Separate route to preserve products surfaced only by the new-arrivals view.",
-      "category": "tcg",
-      "retailer_key": "target",
-      "pokemon_scoped": true
-    },
-    {
-      "id": "target-plush",
-      "name": "Target · Pokémon Plush",
-      "retailer": "Target",
-      "type": "catalog",
-      "url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false&Nao=0&facetedValue=i5gtz",
-      "enabled": true,
-      "notes": "Target Pokémon plush category. The New at Target plush facet is monitored as a separate route.",
-      "category": "plush",
-      "retailer_key": "target",
-      "pokemon_scoped": true
-    },
-    {
-      "id": "target-plush-new-arrivals",
-      "name": "Target · Pokémon Plush New Arrivals",
-      "retailer": "Target",
-      "type": "catalog",
-      "url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false&facetedValue=i5gtzZ5ewil&moveTo=product-list-grid",
-      "enabled": true,
-      "notes": "Target Pokémon plush New at Target facet. Separate route so the main plush search cannot mask new-arrival results.",
-      "category": "plush",
-      "retailer_key": "target",
-      "pokemon_scoped": true
+      "pokemon_scoped": true,
+      "alternate_urls": []
     },
     {
       "id": "walmart-tcg",
-      "name": "Walmart · Pokémon TCG",
+      "name": "Walmart · Pokémon Products",
       "retailer": "Walmart",
       "type": "catalog",
-      "url": "https://www.walmart.com/browse/collectibles/pokemon-cards/5967908_9807313_4252400",
+      "url": "https://www.walmart.com/search?q=pokemon",
       "enabled": true,
-      "notes": "Walmart Pokémon card category. The newest-first view is monitored as a separate route so it can surface listings outside the default sort order.",
-      "category": "tcg",
+      "notes": "Broad Pokémon search. Product categories are inferred from each listing.",
+      "category": "collectibles",
       "retailer_key": "walmart",
-      "pokemon_scoped": true
-    },
-    {
-      "id": "walmart-tcg-newest",
-      "name": "Walmart · Pokémon TCG Newest",
-      "retailer": "Walmart",
-      "type": "catalog",
-      "url": "https://www.walmart.com/browse/collectibles/pokemon-cards/5967908_9807313_4252400?sort=new",
-      "enabled": true,
-      "notes": "Walmart Pokémon card category sorted newest-first. Separate route because sort order exposes a different portion of the catalog.",
-      "category": "tcg",
-      "retailer_key": "walmart",
-      "pokemon_scoped": true
-    },
-    {
-      "id": "walmart-plush",
-      "name": "Walmart · Pokémon Plush",
-      "retailer": "Walmart",
-      "type": "catalog",
-      "url": "https://www.walmart.com/search?q=pokemon&facet=facet_product_type%3AStuffed+Animals+%26+Plush+Toys",
-      "enabled": true,
-      "notes": "Walmart Pokémon plush search. The newest-first sort is monitored as a separate route.",
-      "category": "plush",
-      "retailer_key": "walmart",
-      "pokemon_scoped": true
-    },
-    {
-      "id": "walmart-plush-newest",
-      "name": "Walmart · Pokémon Plush Newest",
-      "retailer": "Walmart",
-      "type": "catalog",
-      "url": "https://www.walmart.com/search?q=pokemon&facet=facet_product_type%3AStuffed+Animals+%26+Plush+Toys&sort=new",
-      "enabled": true,
-      "notes": "Walmart Pokémon plush search sorted newest-first. Separate route because it may expose items not present in the default sort order.",
-      "category": "plush",
-      "retailer_key": "walmart",
-      "pokemon_scoped": true
+      "pokemon_scoped": true,
+      "alternate_urls": []
     },
     {
       "id": "best-buy-pokemon-tcg",
@@ -150,46 +67,24 @@
       "type": "catalog",
       "url": "https://www.bestbuy.com/site/searchpage.jsp?browsedCategory=pcmcat1604992984556&id=pcat17071&qp=brandcharacter_facet%3DFranchise%7EPok%C3%A9mon&st=categoryid%24pcmcat1604992984556",
       "enabled": true,
-      "notes": "Best Buy Pokémon TCG category. New Arrivals and Coming Soon/Pre-Order are monitored as separate routes.",
+      "notes": "Current configured Best Buy Pokémon TCG catalog route.",
       "category": "tcg",
       "retailer_key": "best-buy",
-      "pokemon_scoped": true
-    },
-    {
-      "id": "best-buy-pokemon-tcg-new-arrivals",
-      "name": "Best Buy · Pokémon TCG New Arrivals",
-      "retailer": "Best Buy",
-      "type": "catalog",
-      "url": "https://www.bestbuy.com/site/searchpage.jsp?browsedCategory=pcmcat1604992984556&id=pcat17071&qp=brandcharacter_facet%3DFranchise%7EPok%C3%A9mon%5Eupcomingnew_facet%3DUpcoming+and+New%7ENew+Arrivals&st=categoryid%24pcmcat1604992984556",
-      "enabled": true,
-      "notes": "Best Buy Pokémon TCG New Arrivals facet. Kept separate from the general TCG category and pre-order route.",
-      "category": "tcg",
-      "retailer_key": "best-buy",
-      "pokemon_scoped": true
-    },
-    {
-      "id": "best-buy-pokemon-tcg-coming-soon",
-      "name": "Best Buy · Pokémon TCG Coming Soon / Preorders",
-      "retailer": "Best Buy",
-      "type": "catalog",
-      "url": "https://www.bestbuy.com/site/searchpage.jsp?browsedCategory=pcmcat1604992984556&id=pcat17071&qp=upcomingnew_facet%3DUpcoming+and+New%7EComing+Soon%5Eupcomingnew_facet%3DUpcoming+and+New%7EPre-Order%5Ebrandcharacter_facet%3DFranchise%7EPok%C3%A9mon&st=categoryid%24pcmcat1604992984556",
-      "enabled": true,
-      "notes": "Best Buy Pokémon TCG Coming Soon and Pre-Order facets. Kept separate so pre-release listings are not skipped after the main TCG route matches.",
-      "category": "tcg",
-      "retailer_key": "best-buy",
-      "pokemon_scoped": true
+      "pokemon_scoped": true,
+      "alternate_urls": []
     },
     {
       "id": "gamestop-pokemon-tcg",
-      "name": "GameStop · Pokémon Trading Cards",
+      "name": "GameStop · Pokémon TCG",
       "type": "catalog",
       "url": "https://www.gamestop.com/toys-games/trading-cards/trading-card-games?prefn1=franchise&prefv1=Pokemon&view=new&hybrid=true&srule=most-popular",
       "enabled": true,
-      "notes": "GameStop Pokémon trading-card-game category with the New view enabled.",
+      "notes": "Current configured GameStop Pokémon TCG catalog route.",
       "category": "tcg",
       "retailer_key": "gamestop",
       "pokemon_scoped": true,
-      "retailer": "GameStop"
+      "retailer": "GameStop",
+      "alternate_urls": []
     },
     {
       "id": "amazon-pokemon-products",
@@ -198,51 +93,19 @@
       "type": "catalog",
       "url": "https://www.amazon.com/s?k=pokemon",
       "enabled": true,
-      "notes": "Broad Amazon Pokémon product search. Category-specific TCG, plush, and figure searches are monitored as separate routes under the same retailer.",
+      "notes": "One broad Pokémon search for cards, plush, figures, and other products. Product categories are inferred from each listing.",
       "category": "collectibles",
-      "retailer_key": "amazon"
-    },
-    {
-      "id": "amazon-pokemon-tcg",
-      "name": "Amazon · Pokémon TCG",
-      "retailer": "Amazon",
-      "type": "catalog",
-      "url": "https://www.amazon.com/s?k=pokemon+trading+cards",
-      "enabled": true,
-      "notes": "Amazon Pokémon trading-card search. Separate category route alongside the broad Pokémon products search.",
-      "category": "tcg",
-      "retailer_key": "amazon"
-    },
-    {
-      "id": "amazon-pokemon-plush",
-      "name": "Amazon · Pokémon Plush",
-      "retailer": "Amazon",
-      "type": "catalog",
-      "url": "https://www.amazon.com/s?k=pokemon+plush",
-      "enabled": true,
-      "notes": "Amazon Pokémon plush search. Separate category route alongside the broad Pokémon products search.",
-      "category": "plush",
-      "retailer_key": "amazon"
-    },
-    {
-      "id": "amazon-pokemon-figures",
-      "name": "Amazon · Pokémon Figures",
-      "retailer": "Amazon",
-      "type": "catalog",
-      "url": "https://www.amazon.com/s?k=pokemon+figures",
-      "enabled": true,
-      "notes": "Amazon Pokémon figure search. Separate route so the broad product search cannot hide figures from the category-specific route.",
-      "category": "collectibles",
-      "retailer_key": "amazon"
+      "retailer_key": "amazon",
+      "alternate_urls": []
     },
     {
       "id": "pokebeach-news",
-      "name": "PokéBeach · Pokémon TCG News",
+      "name": "PokéBeach · News",
       "retailer": "PokéBeach",
       "type": "rss",
       "url": "https://www.pokebeach.com/feed",
       "enabled": true,
-      "notes": "The public /feed URL currently returns a WordPress wp_die error. The scanner rejects that error response and falls back to WordPress REST posts when available.",
+      "notes": "PokéBeach news feed. The WordPress REST endpoint and homepage are tried only when the primary feed does not yield articles.",
       "category": "news",
       "retailer_key": "pokebeach",
       "alternate_urls": [
