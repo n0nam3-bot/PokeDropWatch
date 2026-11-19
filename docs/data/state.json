@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-11-19T18:14:14Z",
+  "last_checked": "2026-11-19T19:00:17Z",
   "items": {
     "pokemon-center-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T18:12:50Z",
+      "last_success": "2026-11-19T18:58:52Z",
       "source_url": "https://www.pokemoncenter.com/category/new-releases",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -15,7 +15,7 @@
     "pokemon-center-plush": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T18:12:50Z",
+      "last_success": "2026-11-19T18:58:52Z",
       "source_url": "https://www.pokemoncenter.com/category/back-in-stock",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -2593,7 +2593,7 @@
     "target-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T18:12:51Z",
+      "last_success": "2026-11-19T18:58:53Z",
       "source_url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -4858,7 +4858,7 @@
         }
       },
       "initialized": true,
-      "last_success": "2026-11-19T18:12:51Z",
+      "last_success": "2026-11-19T18:58:53Z",
       "source_url": "https://www.walmart.com/search?q=pokemon",
       "last_item_count": 146,
       "last_successful_urls": [
@@ -4868,7 +4868,7 @@
     "gamestop-pokemon-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T18:14:11Z",
+      "last_success": "2026-11-19T19:00:15Z",
       "source_url": "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -5224,7 +5224,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "7fc2cdd7c160bc60d092",
@@ -5276,7 +5276,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "d40c32a5fb7ed43bf0f2",
@@ -5289,7 +5289,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "3ad7b178f7824d773664",
@@ -5302,7 +5302,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "46b0722c9e56819841dc",
@@ -5315,7 +5315,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "9830768a0363b9239d61",
@@ -5328,7 +5328,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "1e4fc7daea4985100a3c",
@@ -5341,7 +5341,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "9e74385a89ae8a1065ec",
@@ -5354,7 +5354,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "df09e680c5bcfc9730e2",
@@ -5367,7 +5367,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "c5f9379a6c6f609969ff",
@@ -5380,7 +5380,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "20f5e86a58645fbe7865",
@@ -5393,7 +5393,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "dca4366152bf813a7098",
@@ -5406,7 +5406,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "458902c4cd1b1fe738e0",
@@ -5419,7 +5419,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "52668e1ae07ec706bd4d",
@@ -5432,7 +5432,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "1c2f05d53238aab79f62",
@@ -5445,7 +5445,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "f1a14cae59e90ea77886",
@@ -5458,7 +5458,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "12e3cc980cb9f82bbbc5",
@@ -5471,7 +5471,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "cf85cfb67f4f049f2f4d",
@@ -5484,7 +5484,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T16:48:46Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "92c40ce498b557700c4b",
@@ -5497,7 +5497,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "0ea89d0faddfb24645b5",
@@ -5523,7 +5523,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "28dbd441530a20212ecf",
@@ -5536,7 +5536,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "e3ec98c5cd4e4c71371b",
@@ -5549,7 +5549,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "94151c89e69fbc1aa631",
@@ -5562,7 +5562,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "82d90bba1eab2b45270b",
@@ -5575,7 +5575,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "a16b9077f4f3600a325c",
@@ -5588,7 +5588,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "59d370a81b560a4f7824",
@@ -5601,7 +5601,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "c7424d0723ff696a0fa6",
@@ -5614,7 +5614,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "996ddce1172ac4c8a3bf",
@@ -5627,7 +5627,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "056e439d8816b30ad031",
@@ -5640,7 +5640,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "7ac2ba60a1f5152713b4",
@@ -5653,7 +5653,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "d9468e2e7a979fa37592",
@@ -5666,7 +5666,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "795194e9f90ed529139f",
@@ -5679,7 +5679,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "6d680a6b1a0815135876",
@@ -5692,7 +5692,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "f61639ed0864478405d3",
@@ -5705,7 +5705,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "af54a8f1fc5b27e8815f",
@@ -5718,7 +5718,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "4a02937972f8f71b0653",
@@ -5731,7 +5731,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "364622aa6ac9bc273e3c",
@@ -5744,7 +5744,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "b5f5512ec865b25cee11",
@@ -5757,7 +5757,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "4660888f7cda85e729cb",
@@ -5770,7 +5770,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "c873d42f36a0fc292c61",
@@ -5783,7 +5783,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "9a41cb6f5959c3d09448",
@@ -5796,7 +5796,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "a9549fac7da412035d54",
@@ -5809,7 +5809,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "f2bb4d1c5d26ba6b3445",
@@ -5822,7 +5822,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "83b8f505d8f2511b338d",
@@ -5835,7 +5835,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T16:48:46Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "e4a0f9c69d8c4b9a5624",
@@ -5848,7 +5848,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "6fa27987f55dc8de13d4",
@@ -5861,7 +5861,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "571f8821a0d68bdf7ed8",
@@ -5874,7 +5874,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "7979f979730a7613239d",
@@ -5887,7 +5887,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "f64f2ad1385cec44d2a1",
@@ -5900,7 +5900,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         },
         {
           "key": "1efa7885f3c710cf8b98",
@@ -5926,12 +5926,12 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-19T18:14:14Z"
+          "detected_at": "2026-11-19T19:00:17Z"
         }
       ],
       "initialized": true,
       "source_url": "https://news.google.com/rss/search?q=%28Pokemon+TCG+OR+Pokemon+Center%29&hl=en-US&gl=US&ceid=US%3Aen",
-      "last_success": "2026-11-19T18:14:14Z",
+      "last_success": "2026-11-19T19:00:17Z",
       "last_item_count": 50,
       "archive_count": 55,
       "last_successful_urls": [
@@ -5948,10 +5948,10 @@
       "url": "https://www.pokemoncenter.com/category/new-releases",
       "response_url": "https://www.pokemoncenter.com/category/new-releases",
       "status": "warning",
-      "last_checked": "2026-11-19T18:12:50Z",
+      "last_checked": "2026-11-19T18:58:52Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 168,
+      "duration_ms": 244,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 1 KB, title=product markers=0, data-pid=0, product-like links=0, JSON blocks=0 The response was a very small page shell with no product links or JSON payload; this is not evidence of an empty catalog.",
       "notes": "Broad Pokémon Center new-release catalog. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -5977,10 +5977,10 @@
       "url": "https://www.pokemoncenter.com/category/back-in-stock",
       "response_url": "https://www.pokemoncenter.com/category/back-in-stock",
       "status": "warning",
-      "last_checked": "2026-11-19T18:12:50Z",
+      "last_checked": "2026-11-19T18:58:52Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 63,
+      "duration_ms": 66,
       "message": "BLOCKED: the returned page is an access-protection challenge, so current inventory could not be checked. Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 6 KB, title=Pardon Our Interruption; product markers=0, d, product-like links=0, JSON blocks=0, access-challenge marker detected",
       "notes": "Broad Pokémon Center back-in-stock catalog. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -6005,10 +6005,10 @@
       "url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "response_url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "status": "warning",
-      "last_checked": "2026-11-19T18:12:51Z",
+      "last_checked": "2026-11-19T18:58:53Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 809,
+      "duration_ms": 408,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 137 KB, title=\"pokemon\" : Target; product markers=0, data-p, product-like links=0, JSON blocks=1",
       "notes": "Broad Pokémon search. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -6033,10 +6033,10 @@
       "url": "https://www.walmart.com/search?q=pokemon",
       "response_url": "https://www.walmart.com/search?q=pokemon",
       "status": "warning",
-      "last_checked": "2026-11-19T18:12:51Z",
+      "last_checked": "2026-11-19T18:58:53Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 434,
+      "duration_ms": 269,
       "message": "BLOCKED: the returned page is an access-protection challenge, so current inventory could not be checked. 146 last-known listing(s) are retained; they are not fresh stock confirmation. Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Last-known catalog retained: 146 listing(s); this scan did not confirm current inventory. Response diagnostics: 15 KB, title=Robot or human?; product markers=0, data-pid=, product-like links=0, JSON blocks=0, access-challenge marker detected",
       "notes": "Broad Pokémon search. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -6061,7 +6061,7 @@
       "type": "catalog",
       "url": "https://www.bestbuy.com/site/searchpage.jsp?browsedCategory=pcmcat1604992984556&id=pcat17071&qp=brandcharacter_facet%3DFranchise%7EPok%C3%A9mon&st=categoryid%24pcmcat1604992984556",
       "status": "error",
-      "last_checked": "2026-11-19T18:14:08Z",
+      "last_checked": "2026-11-19T19:00:10Z",
       "items_found": 0,
       "new_alerts": 0,
       "successful_urls": 0,
@@ -6077,10 +6077,10 @@
       "url": "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending",
       "response_url": "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending",
       "status": "warning",
-      "last_checked": "2026-11-19T18:14:11Z",
+      "last_checked": "2026-11-19T19:00:15Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 3042,
+      "duration_ms": 4515,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 629 KB, title=pokemon | Search Results | GameStop; product , product-like links=0, JSON blocks=1",
       "notes": "Broad Pokémon search sorted from newest release to oldest. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -6104,7 +6104,7 @@
       "type": "catalog",
       "url": "https://www.amazon.com/s?k=pokemon",
       "status": "error",
-      "last_checked": "2026-11-19T18:14:14Z",
+      "last_checked": "2026-11-19T19:00:17Z",
       "items_found": 174,
       "new_alerts": 0,
       "successful_urls": 0,
@@ -6119,15 +6119,15 @@
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=%28Pokemon+TCG+OR+Pokemon+Center%29&hl=en-US&gl=US&ceid=US%3Aen",
       "status": "ok",
-      "last_checked": "2026-11-19T18:14:14Z",
+      "last_checked": "2026-11-19T19:00:17Z",
       "items_found": 50,
       "archive_count": 55,
-      "new_alerts": 2,
+      "new_alerts": 0,
       "successful_urls": 1,
       "configured_urls": 1,
       "message": "50 recent Pokémon news article(s) loaded; 55 article(s) retained in the archive.",
       "notes": "News articles matching Pokémon TCG or Pokémon Center. The official Pokémon media portal is linked on the homepage.",
-      "elapsed_ms": 414,
+      "elapsed_ms": 451,
       "response_health": {
         "successful": 1,
         "configured": 1,
@@ -8141,13 +8141,13 @@
     }
   ],
   "pending_email": [],
-  "email_status": "Email digest sent successfully.",
+  "email_status": "No new personal alerts in this scan.",
   "summary": {
     "enabled_sources": 8,
     "successful_sources": 1,
     "failed_sources": 2,
     "warning_sources": 5,
-    "new_alerts": 2,
+    "new_alerts": 0,
     "first_seen": 0,
     "new_items": 0,
     "tracked_products": 320
@@ -8185,5 +8185,5 @@
       "message": "All available source routes failed at the request layer."
     }
   },
-  "last_trigger": "push"
+  "last_trigger": "schedule"
 }
