@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-11-19T13:10:55Z",
+  "last_checked": "2026-11-19T15:21:16Z",
   "items": {
     "pokemon-center-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T13:09:29Z",
+      "last_success": "2026-11-19T15:19:52Z",
       "source_url": "https://www.pokemoncenter.com/category/new-releases",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -15,7 +15,7 @@
     "pokemon-center-plush": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T13:09:29Z",
+      "last_success": "2026-11-19T15:19:52Z",
       "source_url": "https://www.pokemoncenter.com/category/back-in-stock",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -2594,7 +2594,7 @@
     "target-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T13:09:29Z",
+      "last_success": "2026-11-19T15:19:53Z",
       "source_url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -4859,7 +4859,7 @@
         }
       },
       "initialized": true,
-      "last_success": "2026-11-19T13:09:30Z",
+      "last_success": "2026-11-19T15:19:53Z",
       "source_url": "https://www.walmart.com/search?q=pokemon",
       "last_item_count": 146,
       "last_successful_urls": [
@@ -4869,7 +4869,7 @@
     "gamestop-pokemon-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T13:10:52Z",
+      "last_success": "2026-11-19T15:21:14Z",
       "source_url": "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -5049,9 +5049,25 @@
           "title": "Check Out the New Pokémon TCG Pocket Cards Announced at PokémonXP - Pokemon.com",
           "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQR2txVW04Z0gzTngtazRqU2NHT0lOeTBSTzZoMlNCeWxSOGxGa1FXY3VseTE3V2NSbXJPQWpGcUlZTEczSDV0QTNiampjU3JxYmtBeDVBY3owMHlDZWxRNksxSkVaNTkzWW5TOXN3SWdfRHg3eldHeXhPaDJLU0dzT1VNVFYzMS1weEQtZi1ydmliUVh4SXZ0OWR3Wll1dw?oc=5",
           "first_seen": "2026-11-19T13:10:55Z"
+        },
+        "ab1687f730a8f25b5c9f": {
+          "title": "The Pokémon TCG: Mega Evolution—Flowing Fists Expansion Arrives February 6, 2027 - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQbzhrSHZCelR1MUN6RkxoRHMyNXZsWXh4c2pyVHdxVjQwR2VFUmxqejJYNFZYS3NScmtmcmg3djFTN2YyZ0RRSzlNRmZfVjdBbzlhMVc3Z3RrWGZHZm1UMWY5N1FBTVlra1BXLTIzdGZTMHJJdldmOUp6VmlRMkR6M1N0dWdrdnJ5eG9HSzBlMmdBR2h6eng1MWd2STdpXzVEM01JSHNEdFZOQWFVdENj?oc=5",
+          "first_seen": "2026-11-19T15:21:16Z"
         }
       },
       "articles": [
+        {
+          "key": "ab1687f730a8f25b5c9f",
+          "title": "The Pokémon TCG: Mega Evolution—Flowing Fists Expansion Arrives February 6, 2027 - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQbzhrSHZCelR1MUN6RkxoRHMyNXZsWXh4c2pyVHdxVjQwR2VFUmxqejJYNFZYS3NScmtmcmg3djFTN2YyZ0RRSzlNRmZfVjdBbzlhMVc3Z3RrWGZHZm1UMWY5N1FBTVlra1BXLTIzdGZTMHJJdldmOUp6VmlRMkR6M1N0dWdrdnJ5eG9HSzBlMmdBR2h6eng1MWd2STdpXzVEM01JSHNEdFZOQWFVdENj?oc=5",
+          "summary": "The Pokémon TCG: Mega Evolution—Flowing Fists Expansion Arrives February 6, 2027 Pokemon.com",
+          "published": "Thu, 19 Nov 2026 14:05:30 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
         {
           "key": "3907bb979e5c5f0bfd96",
           "title": "Pokémon just dropped glass Evolution Stone replicas: Where to buy Fire, Water, and Thunder Stones - Mashable",
@@ -5135,17 +5151,6 @@
           "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPR25PMUU5MGF5YlBwYkVqc3J6N2t6dWI3NEx6V0hra2M5MGNYNmdoQTQtS3ZqX3dsLXpZU3JWTlRKaTZ1NjFOMlBNNloyOHpMZ09FU0hYcFMzTXVuaGFRaWNLa0VROVk4UXowTE9ZQkNjMTFQaGZpRGF6VTdOd1hfN1VtMjZyS2tTVW9rekIzZXR4TC04aklSbEhWMUFhWVI0?oc=5",
           "summary": "Discover the Perfect Present in the 2026 Pokémon Holiday Gift Guide Pokemon.com",
           "published": "Fri, 13 Nov 2026 16:09:22 GMT",
-          "publisher": "Pokemon.com",
-          "retailer": "Pokemon.com",
-          "image": "",
-          "category": "news"
-        },
-        {
-          "key": "7fc2cdd7c160bc60d092",
-          "title": "Savor Summer Days with Wartortle in a New POKÉTOON Short on YouTube - Pokemon.com",
-          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPeUNaOHowT0lDd2hIQ2dqeWNmNWZZMElzMFR6TzBOMXkwTklldXZEemo2Wjd4eWNmZTJ6d1FNUmhwRHRKQkFFeWZkMVpTWGF0TF81dnZFWDBiOXdTUExGN0xRMW5rV184RHRFZzBiWEp6QnVMZ1FNUjQ1Zmd0VU5HOXlTQnd4WXlYcExMNDhEOVdMTHBHZFhIdHQ3WFhHRksz?oc=5",
-          "summary": "Savor Summer Days with Wartortle in a New POKÉTOON Short on YouTube Pokemon.com",
-          "published": "Fri, 13 Nov 2026 16:08:25 GMT",
           "publisher": "Pokemon.com",
           "retailer": "Pokemon.com",
           "image": "",
@@ -5385,7 +5390,7 @@
       ],
       "initialized": true,
       "source_url": "https://news.google.com/rss/search?q=%28Pokemon+TCG+OR+Pokemon+Center%29&hl=en-US&gl=US&ceid=US%3Aen",
-      "last_success": "2026-11-19T13:10:55Z",
+      "last_success": "2026-11-19T15:21:16Z",
       "last_item_count": 30,
       "last_successful_urls": [
         "https://news.google.com/rss/search?q=%28Pokemon+TCG+OR+Pokemon+Center%29&hl=en-US&gl=US&ceid=US%3Aen"
@@ -5401,11 +5406,11 @@
       "url": "https://www.pokemoncenter.com/category/new-releases",
       "response_url": "https://www.pokemoncenter.com/category/new-releases",
       "status": "warning",
-      "last_checked": "2026-11-19T13:09:29Z",
+      "last_checked": "2026-11-19T15:19:52Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 296,
-      "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 1 KB, title=product markers=0, data-pid=0, product-like links=0, JSON blocks=0",
+      "duration_ms": 171,
+      "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 1 KB, title=product markers=0, data-pid=0, product-like links=0, JSON blocks=0 The response was a very small page shell with no product links or JSON payload; this is not evidence of an empty catalog.",
       "notes": "Broad Pokémon Center new-release catalog. Product categories are inferred from each listing.",
       "successful_urls": 1,
       "configured_urls": 1,
@@ -5416,8 +5421,11 @@
         "partial": false
       },
       "parser_diagnostics": [
-        "1 KB, title=product markers=0, data-pid=0, product-like links=0, JSON blocks=0"
-      ]
+        "1 KB, title=product markers=0, data-pid=0, product-like links=0, JSON blocks=0",
+        "The response was a very small page shell with no product links or JSON payload; this is not evidence of an empty catalog."
+      ],
+      "access_blocked": false,
+      "parse_state": "small_or_client_rendered_shell"
     },
     {
       "id": "pokemon-center-plush",
@@ -5427,11 +5435,11 @@
       "url": "https://www.pokemoncenter.com/category/back-in-stock",
       "response_url": "https://www.pokemoncenter.com/category/back-in-stock",
       "status": "warning",
-      "last_checked": "2026-11-19T13:09:29Z",
+      "last_checked": "2026-11-19T15:19:52Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 86,
-      "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 6 KB, title=Pardon Our Interruption; product markers=0, d, product-like links=0, JSON blocks=0, access-challenge marker detected",
+      "duration_ms": 70,
+      "message": "BLOCKED: the returned page is an access-protection challenge, so current inventory could not be checked. Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 6 KB, title=Pardon Our Interruption; product markers=0, d, product-like links=0, JSON blocks=0, access-challenge marker detected",
       "notes": "Broad Pokémon Center back-in-stock catalog. Product categories are inferred from each listing.",
       "successful_urls": 1,
       "configured_urls": 1,
@@ -5443,7 +5451,9 @@
       },
       "parser_diagnostics": [
         "6 KB, title=Pardon Our Interruption; product markers=0, d, product-like links=0, JSON blocks=0, access-challenge marker detected"
-      ]
+      ],
+      "access_blocked": true,
+      "parse_state": "access_blocked"
     },
     {
       "id": "target-tcg",
@@ -5453,11 +5463,11 @@
       "url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "response_url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "status": "warning",
-      "last_checked": "2026-11-19T13:09:29Z",
+      "last_checked": "2026-11-19T15:19:53Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 521,
-      "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 137 KB, title=\"pokemon\" : Target; product markers=0, data-p, product-like links=0, JSON blocks=1, access-challenge marker detected",
+      "duration_ms": 593,
+      "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 137 KB, title=\"pokemon\" : Target; product markers=0, data-p, product-like links=0, JSON blocks=1",
       "notes": "Broad Pokémon search. Product categories are inferred from each listing.",
       "successful_urls": 1,
       "configured_urls": 1,
@@ -5468,8 +5478,10 @@
         "partial": false
       },
       "parser_diagnostics": [
-        "137 KB, title=\"pokemon\" : Target; product markers=0, data-p, product-like links=0, JSON blocks=1, access-challenge marker detected"
-      ]
+        "137 KB, title=\"pokemon\" : Target; product markers=0, data-p, product-like links=0, JSON blocks=1"
+      ],
+      "access_blocked": false,
+      "parse_state": "response_not_recognized"
     },
     {
       "id": "walmart-tcg",
@@ -5479,11 +5491,11 @@
       "url": "https://www.walmart.com/search?q=pokemon",
       "response_url": "https://www.walmart.com/search?q=pokemon",
       "status": "warning",
-      "last_checked": "2026-11-19T13:09:30Z",
+      "last_checked": "2026-11-19T15:19:53Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 551,
-      "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Last-known catalog retained: 146 listing(s); this scan did not confirm current inventory. Response diagnostics: 15 KB, title=Robot or human?; product markers=0, data-pid=, product-like links=0, JSON blocks=0, access-challenge marker detected",
+      "duration_ms": 430,
+      "message": "BLOCKED: the returned page is an access-protection challenge, so current inventory could not be checked. 146 last-known listing(s) are retained; they are not fresh stock confirmation. Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Last-known catalog retained: 146 listing(s); this scan did not confirm current inventory. Response diagnostics: 15 KB, title=Robot or human?; product markers=0, data-pid=, product-like links=0, JSON blocks=0, access-challenge marker detected",
       "notes": "Broad Pokémon search. Product categories are inferred from each listing.",
       "successful_urls": 1,
       "configured_urls": 1,
@@ -5496,7 +5508,9 @@
       },
       "parser_diagnostics": [
         "15 KB, title=Robot or human?; product markers=0, data-pid=, product-like links=0, JSON blocks=0, access-challenge marker detected"
-      ]
+      ],
+      "access_blocked": true,
+      "parse_state": "access_blocked"
     },
     {
       "id": "best-buy-pokemon-tcg",
@@ -5505,7 +5519,7 @@
       "type": "catalog",
       "url": "https://www.bestbuy.com/site/searchpage.jsp?browsedCategory=pcmcat1604992984556&id=pcat17071&qp=brandcharacter_facet%3DFranchise%7EPok%C3%A9mon&st=categoryid%24pcmcat1604992984556",
       "status": "error",
-      "last_checked": "2026-11-19T13:10:47Z",
+      "last_checked": "2026-11-19T15:21:11Z",
       "items_found": 0,
       "new_alerts": 0,
       "successful_urls": 0,
@@ -5521,10 +5535,10 @@
       "url": "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending",
       "response_url": "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending",
       "status": "warning",
-      "last_checked": "2026-11-19T13:10:52Z",
+      "last_checked": "2026-11-19T15:21:14Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 4631,
+      "duration_ms": 3050,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 629 KB, title=pokemon | Search Results | GameStop; product , product-like links=0, JSON blocks=1",
       "notes": "Broad Pokémon search sorted from newest release to oldest. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -5537,7 +5551,9 @@
       },
       "parser_diagnostics": [
         "629 KB, title=pokemon | Search Results | GameStop; product , product-like links=0, JSON blocks=1"
-      ]
+      ],
+      "access_blocked": false,
+      "parse_state": "response_not_recognized"
     },
     {
       "id": "amazon-pokemon-products",
@@ -5546,7 +5562,7 @@
       "type": "catalog",
       "url": "https://www.amazon.com/s?k=pokemon",
       "status": "error",
-      "last_checked": "2026-11-19T13:10:54Z",
+      "last_checked": "2026-11-19T15:21:16Z",
       "items_found": 174,
       "new_alerts": 0,
       "successful_urls": 0,
@@ -5561,14 +5577,14 @@
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=%28Pokemon+TCG+OR+Pokemon+Center%29&hl=en-US&gl=US&ceid=US%3Aen",
       "status": "ok",
-      "last_checked": "2026-11-19T13:10:55Z",
+      "last_checked": "2026-11-19T15:21:16Z",
       "items_found": 30,
-      "new_alerts": 3,
+      "new_alerts": 1,
       "successful_urls": 1,
       "configured_urls": 1,
       "message": "30 recent Pokémon news article(s) loaded.",
       "notes": "News articles matching Pokémon TCG or Pokémon Center. The official Pokémon media portal is linked on the homepage.",
-      "elapsed_ms": 640,
+      "elapsed_ms": 460,
       "response_health": {
         "successful": 1,
         "configured": 1,
@@ -5578,6 +5594,26 @@
     }
   ],
   "events": [
+    {
+      "id": "eed73072b9229ac692",
+      "type": "news",
+      "title": "The Pokémon TCG: Mega Evolution—Flowing Fists Expansion Arrives February 6, 2027 - Pokemon.com",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQbzhrSHZCelR1MUN6RkxoRHMyNXZsWXh4c2pyVHdxVjQwR2VFUmxqejJYNFZYS3NScmtmcmg3djFTN2YyZ0RRSzlNRmZfVjdBbzlhMVc3Z3RrWGZHZm1UMWY5N1FBTVlra1BXLTIzdGZTMHJJdldmOUp6VmlRMkR6M1N0dWdrdnJ5eG9HSzBlMmdBR2h6eng1MWd2STdpXzVEM01JSHNEdFZOQWFVdENj?oc=5",
+      "retailer": "Pokemon.com",
+      "retailer_key": "pokemon-news",
+      "category": "news",
+      "source_name": "Pokémon News · TCG & Pokémon Center",
+      "source_id": "pokemon-news-google",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "unknown",
+      "image": "",
+      "release_date": "",
+      "summary": "The Pokémon TCG: Mega Evolution—Flowing Fists Expansion Arrives February 6, 2027 Pokemon.com",
+      "detected_at": "2026-11-19T15:21:16Z",
+      "email_sent": true
+    },
     {
       "id": "a94e8356bcfecbca43",
       "type": "news",
@@ -7148,7 +7184,7 @@
     "successful_sources": 1,
     "failed_sources": 2,
     "warning_sources": 5,
-    "new_alerts": 3,
+    "new_alerts": 1,
     "first_seen": 0,
     "new_items": 0,
     "tracked_products": 320

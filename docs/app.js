@@ -23,6 +23,8 @@
   const normalize = (value) => String(value || '').toLowerCase().replace(/é/g, 'e').replace(/[^a-z0-9]+/g, ' ').trim();
   const isPokemonItem = (item) => {
     if (item.category === 'news' || item.type === 'news') return true;
+    // Source pages explicitly scoped to Pokémon can omit the franchise name in a product title.
+    if (item.pokemon_scoped === true) return true;
     const title = ` ${normalize(item.title)} `;
     return pokemonTerms.some(term => title.includes(` ${term} `));
   };
@@ -115,18 +117,21 @@
       const succeeded = Number(source.successful_urls ?? (status === 'error' ? 0 : 1));
       const configured = Number(source.configured_urls ?? 1);
       const routeStatus = `${succeeded}/${configured} pages responded`;
-      const partial = Boolean((source.response_health && source.response_health.partial) || (configured > 0 && succeeded < configured));
-      const stateLabel = partial ? 'PARTIAL' : status === 'ok' ? 'MATCHES' : status === 'warning' ? 'NO MATCH' : 'ISSUE';
-      const stateClass = partial || status === 'warning' ? 'warn' : status === 'ok' ? 'ok' : 'error';
+      const partial = Boolean((source.response_health && source.response_health.partial) || (configured > 0 && succeeded > 0 && succeeded < configured));
+      const diagnosticText = `${source.message || ''} ${(source.parser_diagnostics || []).join(' ')}`.toLowerCase();
+      const blocked = Boolean(source.access_blocked) || /pardon our interruption|robot or human|access denied|verify you are human|captcha challenge|request blocked|unusual traffic|access-challenge/.test(diagnosticText);
+      const stateLabel = blocked ? 'BLOCKED' : partial ? 'PARTIAL' : status === 'ok' ? 'MATCHES' : status === 'warning' ? 'NO MATCH' : 'ISSUE';
+      const stateClass = blocked || status === 'error' ? 'error' : partial || status === 'warning' ? 'warn' : 'ok';
       const badge = node('span', `source-state ${stateClass}`, stateLabel);
       badge.title = [source.message || stateLabel, source.notes || ''].filter(Boolean).join(' · ');
       top.append(left, badge);
       const bottom = node('div', 'source-bottom');
       let description;
-      if (partial) description = `Partial results · ${Number(source.items_found || 0)} item(s) recognized · ${routeStatus}`;
+      if (blocked) description = `Access protection · ${Number(source.last_known_items || source.items_found || 0)} last-known listing(s) · current stock not confirmed`;
+      else if (partial) description = `Partial results · ${Number(source.items_found || 0)} current item(s) recognized · ${routeStatus}`;
       else if (status === 'ok') description = `${source.items_found || 0} Pokémon listings · ${routeStatus}`;
-      else if (status === 'warning') description = `No recognized items · ${routeStatus}`;
-      else description = 'All configured pages failed · inspect scan log';
+      else if (status === 'warning') description = source.parse_state === 'small_or_client_rendered_shell' ? `Page shell returned · products not exposed · ${routeStatus}` : `No recognized items · ${routeStatus}`;
+      else description = Number(source.last_known_items || source.items_found || 0) > 0 ? `Last known only · ${Number(source.last_known_items || source.items_found)} saved listing(s) · latest request failed` : 'All configured pages failed · inspect scan log';
       const detail = node('span', '', description);
       detail.title = source.message || description;
       bottom.append(detail);
@@ -138,21 +143,54 @@
       grid.append(card);
     }
   }
-  function flattenProducts(items = {}) {
+  // POKEDROP_TRACKED_ACTIVITY_FILTERS_V2
+  function flattenProducts(items = {}, events = []) {
+    const activities = new Map();
+    for (const event of events || []) {
+      if (!event || event.type === 'news') continue;
+      const key = `${retailerKey(event)}|${normalize(event.title)}`;
+      if (!key || key.endsWith('|')) continue;
+      const rawType = event.type === 'new_drop' ? 'first_seen' : event.type;
+      const activityType = ['first_seen', 'new_item'].includes(rawType)
+        ? (releaseDateWithinMonth(event.release_date) ? 'new_item' : 'first_seen')
+        : rawType;
+      if (!['new_item', 'first_seen', 'restock', 'price_drop'].includes(activityType)) continue;
+      if (!activities.has(key)) activities.set(key, []);
+      activities.get(key).push({ ...event, activity_type: activityType });
+    }
+
     const unique = new Map();
     for (const [sourceId, sourceState] of Object.entries(items || {})) {
-      const products = sourceState && sourceState.products;
-      if (!products || typeof products !== 'object') continue;
-      for (const product of Object.values(products)) {
+      const saved = sourceState && sourceState.products;
+      if (!saved || typeof saved !== 'object') continue;
+      for (const product of Object.values(saved)) {
         if (!product || !isPokemonItem(product)) continue;
-        const item = { ...product, source_id: sourceId, retailer_key: retailerKey(product) };
+        const item = { ...product, source_id: sourceId, retailer_key: retailerKey(product), is_tracked_product: true };
         const key = `${item.retailer_key}|${normalize(item.title)}`;
+        const matching = activities.get(key) || [];
+        item.activity_types = [...new Set(matching.map(event => event.activity_type))];
+        const newestActivity = [...matching].sort((a, b) => String(b.detected_at || '').localeCompare(String(a.detected_at || '')))[0];
+        if (newestActivity) {
+          item.last_activity_at = newestActivity.detected_at || '';
+          item.last_activity_type = newestActivity.activity_type;
+          item.release_date = item.release_date || newestActivity.release_date || '';
+        }
         const previous = unique.get(key);
         const score = candidate => (candidate.image ? 4 : 0) + (candidate.price != null ? 3 : 0)
           + (candidate.availability && candidate.availability !== 'unknown' ? 2 : 0)
           + (candidate.release_date ? 1 : 0)
           + Math.min(String(candidate.title || '').length, 240) / 240;
-        if (!previous || score(item) > score(previous)) unique.set(key, item);
+        if (!previous) {
+          unique.set(key, item);
+        } else {
+          previous.activity_types = [...new Set([...(previous.activity_types || []), ...item.activity_types])];
+          if (score(item) > score(previous)) {
+            item.activity_types = previous.activity_types;
+            item.last_activity_at = previous.last_activity_at || item.last_activity_at;
+            item.last_activity_type = previous.last_activity_type || item.last_activity_type;
+            unique.set(key, item);
+          }
+        }
       }
     }
     return [...unique.values()].sort((a, b) => String(b.last_seen || '').localeCompare(String(a.last_seen || '')));
@@ -173,12 +211,15 @@
     select.value = ['all', 'amazon', 'walmart', 'best-buy', 'target', 'pokemon-center', 'gamestop'].includes(selected) ? selected : 'all';
     state.retailer = select.value;
   }
-  function itemMatches(item, includeAlertType = false) {
+  function itemMatches(item, includeActivityType = false) {
     const category = inferCategory(item);
     const normalizedType = item.type === 'new_drop' ? 'first_seen' : item.type;
     let typeOk = true;
-    if (includeAlertType && state.filter !== 'all') {
-      if (state.filter === 'new_item') {
+    if (includeActivityType && state.filter !== 'all') {
+      if (item.is_tracked_product) {
+        const types = Array.isArray(item.activity_types) ? item.activity_types : [];
+        typeOk = types.includes(state.filter);
+      } else if (state.filter === 'new_item') {
         typeOk = ['new_item', 'first_seen'].includes(normalizedType) && releaseDateWithinMonth(item.release_date);
       } else if (state.filter === 'first_seen') {
         typeOk = ['first_seen', 'new_item'].includes(normalizedType) && !releaseDateWithinMonth(item.release_date);
@@ -255,22 +296,25 @@
     list.replaceChildren();
     const isTracked = state.view === 'products';
     const sourceItems = isTracked ? state.products : state.events;
-    const filtered = sourceItems.filter(item => itemMatches(item, !isTracked));
+    const filtered = sourceItems.filter(item => itemMatches(item, true));
     $('feedHeading').textContent = isTracked ? 'All tracked products' : 'Latest alerts';
-    $('alertTypeFilters').hidden = isTracked;
+    // Keep the same activity, item-type, and retailer controls active in both views.
+    $('alertTypeFilters').hidden = false;
     $('feedExplanation').textContent = isTracked
-      ? 'Products recognized in the latest successful catalog scans. Prices and availability are only shown when the retailer page exposes them.'
+      ? 'Activity filters also work here: New items, First seen, Restocks and Price drops show saved products that have matching events in the alert history. All activity shows every saved product.'
       : 'NEW ITEMS have a published release date within 30 days before or after today. FIRST SEEN means the monitor discovered a listing but its release date is outside that window or unavailable.';
     if (!filtered.length) {
       const empty = node('div', 'empty-state large-empty');
       empty.append(node('span', 'empty-ball', '◉'));
       const heading = isTracked
-        ? (state.products.length ? 'No tracked products match' : 'No tracked products yet')
+        ? (state.products.length ? 'No tracked products match these filters' : 'No tracked products yet')
         : (state.events.length ? 'No matching Pokémon alerts' : 'No verified Pokémon alerts yet');
       empty.append(node('strong', '', heading));
-      empty.append(node('span', '', state.query
-        ? 'Check the spelling, clear Exact title match, or choose a different item type or retailer.'
-        : 'A retailer may have loaded without exposing product cards. Check the source status above for MATCHES, NO MATCH, or ISSUE.'));
+      empty.append(node('span', '', state.filter !== 'all' && isTracked
+        ? 'A saved product appears in an activity filter only when that product has a matching event in the retained alert history. Choose All activity to see every saved product.'
+        : (state.query
+          ? 'Check the spelling, clear Exact title match, or choose a different item type or retailer.'
+          : 'A retailer may have loaded without exposing product cards. Check the source status above for MATCHES, BLOCKED, NO MATCH, or ISSUE.')));
       list.append(empty);
       return;
     }
@@ -299,7 +343,7 @@
       if (!eventMap.has(key)) eventMap.set(key, event);
     }
     state.events = [...eventMap.values()];
-    state.products = flattenProducts(data.items || {});
+    state.products = flattenProducts(data.items || {}, state.events);
     populateRetailerFilter();
     renderEvents();
   }
@@ -331,7 +375,15 @@
   configureAlertTypeFilters();
   $('refreshButton').addEventListener('click', () => refresh(true));
   $('alertSearch').addEventListener('input', (event) => { state.query = event.target.value; renderEvents(); });
-  $('categoryFilter').addEventListener('change', (event) => { state.category = event.target.value; renderEvents(); });
+  $('categoryFilter').addEventListener('change', (event) => {
+    state.category = event.target.value;
+    if (state.view === 'products' && state.category === 'news') {
+      state.view = 'alerts';
+      $('alertsViewButton').classList.add('active');
+      $('productsViewButton').classList.remove('active');
+    }
+    renderEvents();
+  });
   $('retailerFilter').addEventListener('change', (event) => { state.retailer = event.target.value; renderEvents(); });
   $('exactMatch').addEventListener('change', (event) => { state.exact = event.target.checked; renderEvents(); });
   $('alertsViewButton').addEventListener('click', () => {
@@ -349,6 +401,11 @@
   document.querySelectorAll('.filter-chip').forEach(button => button.addEventListener('click', () => {
     document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.toggle('active', chip === button));
     state.filter = button.dataset.filter;
+    if (state.view === 'products' && state.filter === 'news') {
+      state.view = 'alerts';
+      $('alertsViewButton').classList.add('active');
+      $('productsViewButton').classList.remove('active');
+    }
     renderEvents();
   }));
   refresh();
