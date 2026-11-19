@@ -11,6 +11,7 @@ from pathlib import Path
 # Install retailer/date recovery extensions before importing scanner symbols.
 import engine_patch  # noqa: F401
 import engine_recovery_patch  # noqa: F401
+import source_diagnostics_patch  # noqa: F401 - improve GameStop PDP detection and label access blocks
 import trainer_preferences_patch  # noqa: F401
 import baseline_patch  # noqa: F401 - suppress stale first-seen bursts on changed catalog scopes
 import news_source_patch  # noqa: F401 - persist current RSS articles for the homepage
@@ -108,6 +109,7 @@ OBSOLETE_EXPERIMENT_FILES = (
     "docs/RETAILER_SCAN_DESIGN.md",
     "docs/RETAILER_SCAN_HEALTH.html",
     "tests/test_conditional_retailer_routes.py",
+    "docs/news.css",
 )
 
 def cleanup_obsolete_experiment_files(repo_root: Path) -> None:
@@ -234,7 +236,11 @@ def main() -> int:
         "new_alerts": len(email_events),
         "first_seen": sum(1 for event in new_events if event.get("type") == "first_seen"),
         "new_items": sum(1 for event in new_events if event.get("type") == "new_item"),
-        "tracked_products": sum(state.get("items", {}).get(source_id, {}).get("last_item_count", 0) for source_id in product_source_ids),
+        "tracked_products": sum(
+            int(item.get("current_items_found", item.get("items_found", 0)) or 0)
+            for item in source_status
+            if item.get("id") in product_source_ids and item.get("status") != "error"
+        ),
     }
     write_json(state_path, state)
     print(

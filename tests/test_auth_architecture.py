@@ -36,11 +36,11 @@ class AuthArchitectureTests(unittest.TestCase):
 
     def test_service_worker_caches_current_news_shell_without_experimental_route_ui(self):
         worker = (ROOT / 'docs' / 'sw.js').read_text(encoding='utf-8')
-        self.assertIn('pokedrop-shell-v18', worker)
+        self.assertIn('pokedrop-shell-v19', worker)
         self.assertIn("'./site-uniform.css'", worker)
         self.assertIn("'./assets/icons/pokeball-8bit.png'", worker)
         self.assertIn("'./news.js'", worker)
-        self.assertIn("'./news.css'", worker)
+        self.assertNotIn("'./news.css'", worker)
         self.assertNotIn("'./source-groups.js'", worker)
         self.assertNotIn("'./source-groups.css'", worker)
         self.assertNotIn('pokeball-flight-8bit.png', worker)

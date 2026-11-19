@@ -11,7 +11,7 @@ A fan-made Pokémon product discovery and restock monitor. The public site shows
 - Checks all 8 configured source entries on every 15-minute scan. No retailer route is rotated or postponed to a later scan.
 - Uses broad Pokémon Center New Releases and Back in Stock routes, a broad GameStop search sorted newest first, and broad searches for Target, Walmart, and Amazon. Product categories are inferred from listings.
 - Keeps Best Buy limited to Pokémon TCG because it does not expose a unified Pokémon catalog route.
-- Shows recent Pokémon TCG and Pokémon Center news on the homepage, separate from retailer stock alerts.
+- Shows recent Pokémon news inside the existing Latest alerts feed through the News activity filter or Item type = News.
 - Offers search, exact-title, item-category, retailer and alert-type filters.
 - Sends email notifications for verified stock transitions, price drops/changes and newly published Pokémon news to approved subscribers.
 - Provides a private administrator portal to approve, reject, suspend and remove subscriber records.

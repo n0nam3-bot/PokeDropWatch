@@ -2,7 +2,7 @@
 
 Broad retailer searches are used where available. The monitor assigns product categories from titles and structured data, and the website filters the results into TCG, plush, figures, games, and accessories. Pokémon Center uses separate broad New Releases and Back in Stock pages; Best Buy remains limited to Pokémon TCG; GameStop uses its broad Pokémon search sorted newest first.
 
-The news feed is scanned separately from retailer inventory. The homepage shows its recent articles and links to the official Pokémon media portal.
+The news feed is scanned separately from retailer inventory. Its current articles appear inside the existing Latest alerts list when the News activity filter is selected, or when Item type is set to News with All activity selected.
 
 ## Statuses
 

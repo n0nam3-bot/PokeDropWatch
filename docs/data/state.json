@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-11-19T11:10:41Z",
+  "last_checked": "2026-11-19T11:52:08Z",
   "items": {
     "pokemon-center-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T11:09:16Z",
+      "last_success": "2026-11-19T11:50:44Z",
       "source_url": "https://www.pokemoncenter.com/category/new-releases",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -15,7 +15,7 @@
     "pokemon-center-plush": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T11:09:16Z",
+      "last_success": "2026-11-19T11:50:44Z",
       "source_url": "https://www.pokemoncenter.com/category/back-in-stock",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -2594,7 +2594,7 @@
     "target-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T11:09:16Z",
+      "last_success": "2026-11-19T11:50:44Z",
       "source_url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -4859,7 +4859,7 @@
         }
       },
       "initialized": true,
-      "last_success": "2026-11-19T11:09:17Z",
+      "last_success": "2026-11-19T11:50:45Z",
       "source_url": "https://www.walmart.com/search?q=pokemon",
       "last_item_count": 146,
       "last_successful_urls": [
@@ -4869,7 +4869,7 @@
     "gamestop-pokemon-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T11:10:38Z",
+      "last_success": "2026-11-19T11:52:05Z",
       "source_url": "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -5104,22 +5104,22 @@
           "category": "news"
         },
         {
-          "key": "20f5e86a58645fbe7865",
-          "title": "Evolution Stone Replicas Are Available Now at Pokémon Center - Pokemon.com",
-          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQMl9INXQ3dnBjV1IwdWp5eWZjbF9BZDIxNFV1U19rcDFaVEpVTzN0WGJxMGJhWExlMDJXOG5VaFlDbDZKUGMxVEhTTVgyUEJtRHdiLW52Wm5GOExrM3dhdDdLbWdFN1k3Q3R4eXgzblcxY1ZRWk80U2FRbHJCMGpkUFRoN2V4akdEeS1sT3E0c1FSR2Z0bWo4?oc=5",
-          "summary": "Evolution Stone Replicas Are Available Now at Pokémon Center Pokemon.com",
-          "published": "Thu, 12 Nov 2026 18:13:07 GMT",
+          "key": "3ad7b178f7824d773664",
+          "title": "Get All the Details About the Pokémon × Duolingo Collaboration - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQMUFST2hYOWkyMDNsSDNEbUNXTmtrZDlVUGduc0hPSkQzQzBFZDRFVHBRd3F3aGd0cHJoRjFxdnZjVEhONFR4YUdfdmtzaHNhTmF3WFFFMDNzNEpqTGdlUjBJRExzZ01zMU5GRF9vcUZKUS1FM0tyMkdUZmlxT09RaV9CcXkybDU1amU4emlMWm1sbEhNanZj?oc=5",
+          "summary": "Get All the Details About the Pokémon × Duolingo Collaboration Pokemon.com",
+          "published": "Tue, 17 Nov 2026 01:04:16 GMT",
           "publisher": "Pokemon.com",
           "retailer": "Pokemon.com",
           "image": "",
           "category": "news"
         },
         {
-          "key": "3ad7b178f7824d773664",
-          "title": "Get All the Details About the Pokémon × Duolingo Collaboration - Pokemon.com",
-          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQMUFST2hYOWkyMDNsSDNEbUNXTmtrZDlVUGduc0hPSkQzQzBFZDRFVHBRd3F3aGd0cHJoRjFxdnZjVEhONFR4YUdfdmtzaHNhTmF3WFFFMDNzNEpqTGdlUjBJRExzZ01zMU5GRF9vcUZKUS1FM0tyMkdUZmlxT09RaV9CcXkybDU1amU4emlMWm1sbEhNanZj?oc=5",
-          "summary": "Get All the Details About the Pokémon × Duolingo Collaboration Pokemon.com",
-          "published": "Tue, 17 Nov 2026 01:04:16 GMT",
+          "key": "20f5e86a58645fbe7865",
+          "title": "Evolution Stone Replicas Are Available Now at Pokémon Center - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQMl9INXQ3dnBjV1IwdWp5eWZjbF9BZDIxNFV1U19rcDFaVEpVTzN0WGJxMGJhWExlMDJXOG5VaFlDbDZKUGMxVEhTTVgyUEJtRHdiLW52Wm5GOExrM3dhdDdLbWdFN1k3Q3R4eXgzblcxY1ZRWk80U2FRbHJCMGpkUFRoN2V4akdEeS1sT3E0c1FSR2Z0bWo4?oc=5",
+          "summary": "Evolution Stone Replicas Are Available Now at Pokémon Center Pokemon.com",
+          "published": "Thu, 12 Nov 2026 18:13:07 GMT",
           "publisher": "Pokemon.com",
           "retailer": "Pokemon.com",
           "image": "",
@@ -5192,22 +5192,22 @@
           "category": "news"
         },
         {
-          "key": "c5f9379a6c6f609969ff",
-          "title": "Get Shiny Xerneas in Pokémon Legends: Z‑A via Mystery Gift - Pokemon.com",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNMVlVdDZUNDlJOWkyemh2Z0lqX2lINTNnVTZNSjdQdnJFUExtajl5RGN0MXdfUTZ3NkFlVEdja05qai13ZlRSUlhTOXRqSHZEZzM2aGVvQUo2aHFDQU45NUowRzQtU3BqNmRQOVNZN1pNeTluenM2XzZldUdhdXFwUmpteUFrVDQ4d0w3bjExaXdKNWs?oc=5",
-          "summary": "Get Shiny Xerneas in Pokémon Legends: Z‑A via Mystery Gift Pokemon.com",
-          "published": "Thu, 12 Nov 2026 20:16:46 GMT",
+          "key": "f1a14cae59e90ea77886",
+          "title": "Pokémon Happy Meals Are Coming to McDonald’s in an Exciting New Way - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNSURsbW5GYVI0cDR0WDIxRXVGMHNRQkFFY3Z3WlV2OEp5ckFpX2FOeU5sampFUHVFUjZidUFYeXRGZzVfaUx6Z2dia2loUzB0T1dBUzVPcFJIbG1PUnRETHU2cUVzeWRJRHgzMlZvUzUwQWpPUnp4WS0zRWUxdk55UmVFc0M2UkNlN2xyRTJiUHVxM0NhOEJ5bkhXaHJnclcw?oc=5",
+          "summary": "Pokémon Happy Meals Are Coming to McDonald’s in an Exciting New Way Pokemon.com",
+          "published": "Thu, 29 Oct 2026 07:00:00 GMT",
           "publisher": "Pokemon.com",
           "retailer": "Pokemon.com",
           "image": "",
           "category": "news"
         },
         {
-          "key": "f1a14cae59e90ea77886",
-          "title": "Pokémon Happy Meals Are Coming to McDonald’s in an Exciting New Way - Pokemon.com",
-          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNSURsbW5GYVI0cDR0WDIxRXVGMHNRQkFFY3Z3WlV2OEp5ckFpX2FOeU5sampFUHVFUjZidUFYeXRGZzVfaUx6Z2dia2loUzB0T1dBUzVPcFJIbG1PUnRETHU2cUVzeWRJRHgzMlZvUzUwQWpPUnp4WS0zRWUxdk55UmVFc0M2UkNlN2xyRTJiUHVxM0NhOEJ5bkhXaHJnclcw?oc=5",
-          "summary": "Pokémon Happy Meals Are Coming to McDonald’s in an Exciting New Way Pokemon.com",
-          "published": "Thu, 29 Oct 2026 07:00:00 GMT",
+          "key": "c5f9379a6c6f609969ff",
+          "title": "Get Shiny Xerneas in Pokémon Legends: Z‑A via Mystery Gift - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNMVlVdDZUNDlJOWkyemh2Z0lqX2lINTNnVTZNSjdQdnJFUExtajl5RGN0MXdfUTZ3NkFlVEdja05qai13ZlRSUlhTOXRqSHZEZzM2aGVvQUo2aHFDQU45NUowRzQtU3BqNmRQOVNZN1pNeTluenM2XzZldUdhdXFwUmpteUFrVDQ4d0w3bjExaXdKNWs?oc=5",
+          "summary": "Get Shiny Xerneas in Pokémon Legends: Z‑A via Mystery Gift Pokemon.com",
+          "published": "Thu, 12 Nov 2026 20:16:46 GMT",
           "publisher": "Pokemon.com",
           "retailer": "Pokemon.com",
           "image": "",
@@ -5370,7 +5370,7 @@
       ],
       "initialized": true,
       "source_url": "https://news.google.com/rss/search?q=%28Pokemon+TCG+OR+Pokemon+Center%29&hl=en-US&gl=US&ceid=US%3Aen",
-      "last_success": "2026-11-19T11:10:41Z",
+      "last_success": "2026-11-19T11:52:08Z",
       "last_item_count": 30,
       "last_successful_urls": [
         "https://news.google.com/rss/search?q=%28Pokemon+TCG+OR+Pokemon+Center%29&hl=en-US&gl=US&ceid=US%3Aen"
@@ -5386,11 +5386,11 @@
       "url": "https://www.pokemoncenter.com/category/new-releases",
       "response_url": "https://www.pokemoncenter.com/category/new-releases",
       "status": "warning",
-      "last_checked": "2026-11-19T11:09:16Z",
+      "last_checked": "2026-11-19T11:50:44Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 243,
-      "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 1 KB, product-like links=0, JSON blocks=0",
+      "duration_ms": 244,
+      "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 1 KB, title=product markers=0, data-pid=0, product-like links=0, JSON blocks=0",
       "notes": "Broad Pokémon Center new-release catalog. Product categories are inferred from each listing.",
       "successful_urls": 1,
       "configured_urls": 1,
@@ -5401,7 +5401,7 @@
         "partial": false
       },
       "parser_diagnostics": [
-        "1 KB, product-like links=0, JSON blocks=0"
+        "1 KB, title=product markers=0, data-pid=0, product-like links=0, JSON blocks=0"
       ]
     },
     {
@@ -5412,11 +5412,11 @@
       "url": "https://www.pokemoncenter.com/category/back-in-stock",
       "response_url": "https://www.pokemoncenter.com/category/back-in-stock",
       "status": "warning",
-      "last_checked": "2026-11-19T11:09:16Z",
+      "last_checked": "2026-11-19T11:50:44Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 61,
-      "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 6 KB, title=Pardon Our Interruption, product-like links=0, JSON blocks=0",
+      "duration_ms": 68,
+      "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 6 KB, title=Pardon Our Interruption; product markers=0, d, product-like links=0, JSON blocks=0, access-challenge marker detected",
       "notes": "Broad Pokémon Center back-in-stock catalog. Product categories are inferred from each listing.",
       "successful_urls": 1,
       "configured_urls": 1,
@@ -5427,7 +5427,7 @@
         "partial": false
       },
       "parser_diagnostics": [
-        "6 KB, title=Pardon Our Interruption, product-like links=0, JSON blocks=0"
+        "6 KB, title=Pardon Our Interruption; product markers=0, d, product-like links=0, JSON blocks=0, access-challenge marker detected"
       ]
     },
     {
@@ -5438,11 +5438,11 @@
       "url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "response_url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "status": "warning",
-      "last_checked": "2026-11-19T11:09:16Z",
+      "last_checked": "2026-11-19T11:50:44Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 387,
-      "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 137 KB, title=\"pokemon\" : Target, product-like links=0, JSON blocks=1, access-challenge marker detected",
+      "duration_ms": 574,
+      "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 137 KB, title=\"pokemon\" : Target; product markers=0, data-p, product-like links=0, JSON blocks=1, access-challenge marker detected",
       "notes": "Broad Pokémon search. Product categories are inferred from each listing.",
       "successful_urls": 1,
       "configured_urls": 1,
@@ -5453,7 +5453,7 @@
         "partial": false
       },
       "parser_diagnostics": [
-        "137 KB, title=\"pokemon\" : Target, product-like links=0, JSON blocks=1, access-challenge marker detected"
+        "137 KB, title=\"pokemon\" : Target; product markers=0, data-p, product-like links=0, JSON blocks=1, access-challenge marker detected"
       ]
     },
     {
@@ -5464,11 +5464,11 @@
       "url": "https://www.walmart.com/search?q=pokemon",
       "response_url": "https://www.walmart.com/search?q=pokemon",
       "status": "warning",
-      "last_checked": "2026-11-19T11:09:17Z",
+      "last_checked": "2026-11-19T11:50:45Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 381,
-      "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Last-known catalog retained: 146 listing(s); this scan did not confirm current inventory. Response diagnostics: 15 KB, title=Robot or human?, product-like links=0, JSON blocks=0, access-challenge marker detected",
+      "duration_ms": 315,
+      "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Last-known catalog retained: 146 listing(s); this scan did not confirm current inventory. Response diagnostics: 15 KB, title=Robot or human?; product markers=0, data-pid=, product-like links=0, JSON blocks=0, access-challenge marker detected",
       "notes": "Broad Pokémon search. Product categories are inferred from each listing.",
       "successful_urls": 1,
       "configured_urls": 1,
@@ -5480,7 +5480,7 @@
         "partial": false
       },
       "parser_diagnostics": [
-        "15 KB, title=Robot or human?, product-like links=0, JSON blocks=0, access-challenge marker detected"
+        "15 KB, title=Robot or human?; product markers=0, data-pid=, product-like links=0, JSON blocks=0, access-challenge marker detected"
       ]
     },
     {
@@ -5490,7 +5490,7 @@
       "type": "catalog",
       "url": "https://www.bestbuy.com/site/searchpage.jsp?browsedCategory=pcmcat1604992984556&id=pcat17071&qp=brandcharacter_facet%3DFranchise%7EPok%C3%A9mon&st=categoryid%24pcmcat1604992984556",
       "status": "error",
-      "last_checked": "2026-11-19T11:10:34Z",
+      "last_checked": "2026-11-19T11:52:02Z",
       "items_found": 0,
       "new_alerts": 0,
       "successful_urls": 0,
@@ -5506,11 +5506,11 @@
       "url": "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending",
       "response_url": "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending",
       "status": "warning",
-      "last_checked": "2026-11-19T11:10:38Z",
+      "last_checked": "2026-11-19T11:52:05Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 4024,
-      "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 629 KB, title=pokemon | Search Results | GameStop, product-like links=0, JSON blocks=1",
+      "duration_ms": 3321,
+      "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 629 KB, title=pokemon | Search Results | GameStop; product , product-like links=0, JSON blocks=1",
       "notes": "Broad Pokémon search sorted from newest release to oldest. Product categories are inferred from each listing.",
       "successful_urls": 1,
       "configured_urls": 1,
@@ -5521,7 +5521,7 @@
         "partial": false
       },
       "parser_diagnostics": [
-        "629 KB, title=pokemon | Search Results | GameStop, product-like links=0, JSON blocks=1"
+        "629 KB, title=pokemon | Search Results | GameStop; product , product-like links=0, JSON blocks=1"
       ]
     },
     {
@@ -5531,7 +5531,7 @@
       "type": "catalog",
       "url": "https://www.amazon.com/s?k=pokemon",
       "status": "error",
-      "last_checked": "2026-11-19T11:10:40Z",
+      "last_checked": "2026-11-19T11:52:08Z",
       "items_found": 174,
       "new_alerts": 0,
       "successful_urls": 0,
@@ -5546,14 +5546,14 @@
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=%28Pokemon+TCG+OR+Pokemon+Center%29&hl=en-US&gl=US&ceid=US%3Aen",
       "status": "ok",
-      "last_checked": "2026-11-19T11:10:41Z",
+      "last_checked": "2026-11-19T11:52:08Z",
       "items_found": 30,
       "new_alerts": 0,
       "successful_urls": 1,
       "configured_urls": 1,
       "message": "30 recent Pokémon news article(s) loaded.",
       "notes": "News articles matching Pokémon TCG or Pokémon Center. The official Pokémon media portal is linked on the homepage.",
-      "elapsed_ms": 446,
+      "elapsed_ms": 573,
       "response_health": {
         "successful": 1,
         "configured": 1,
@@ -7076,7 +7076,7 @@
     "new_alerts": 0,
     "first_seen": 0,
     "new_items": 0,
-    "tracked_products": 320
+    "tracked_products": 0
   },
   "subscriber_delivery_status": "1 active subscriber(s); 0 digest(s) sent; 0 queued for retry.",
   "retailer_route_rotation": {

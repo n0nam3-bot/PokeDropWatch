@@ -38,7 +38,7 @@ class SourceStatusAndPageFixesTests(unittest.TestCase):
 
     def test_service_worker_drops_the_generated_scene_and_bumps_cache(self):
         worker = self.read("docs/sw.js")
-        self.assertIn("pokedrop-shell-v18", worker)
+        self.assertIn("pokedrop-shell-v19", worker)
         self.assertNotIn("pokeball-flight-8bit.png", worker)
         self.assertIn("./assets/icons/pokeball-8bit.png", worker)
 
