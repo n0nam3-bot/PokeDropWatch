@@ -7,6 +7,8 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "monitor"))
 import engine_patch
+import engine_recovery_patch  # noqa: F401
+import trainer_preferences_patch  # noqa: F401
 import engine
 
 
@@ -64,7 +66,7 @@ class EnginePatchTests(unittest.TestCase):
         self.assertEqual(items[0]["category"], "news")
         self.assertEqual(items[0]["url"], payload[0]["link"])
 
-    def test_scan_falls_back_from_pokebeach_feed_error_to_wordpress_posts_api(self):
+    def test_scan_marks_feed_with_working_fallback_as_partial(self):
         source = {
             "id": "pokebeach-news", "name": "PokéBeach", "retailer": "PokéBeach",
             "type": "rss", "url": "https://www.pokebeach.com/feed",
@@ -77,12 +79,15 @@ class EnginePatchTests(unittest.TestCase):
             {"items": {}},
         )
         self.assertEqual(events, [])  # Initial scan establishes a feed baseline.
-        self.assertEqual(result["status"]["status"], "ok")
+        self.assertEqual(result["status"]["status"], "warning")
         self.assertEqual(result["status"]["items_found"], 1)
         self.assertEqual(result["status"]["successful_urls"], 1)
+        self.assertEqual(result["status"]["configured_urls"], 2)
+        self.assertTrue(result["status"]["response_health"]["partial"])
 
-    def test_new_item_is_not_mistaken_for_a_restock_or_price_email(self):
-        self.assertFalse(engine.is_email_eligible_event({"type": "new_item", "title": "Pokémon TCG Release"}))
+    def test_verified_new_release_is_email_eligible_but_first_seen_is_not(self):
+        self.assertTrue(engine.is_email_eligible_event({"type": "new_item", "title": "Pokémon TCG Release"}))
+        self.assertFalse(engine.is_email_eligible_event({"type": "first_seen", "title": "Pokémon TCG Release"}))
 
     def test_release_date_window_is_thirty_days_in_either_direction(self):
         today = date.today()
@@ -168,6 +173,7 @@ class EnginePatchTests(unittest.TestCase):
         product = next(iter(result["state"]["products"].values()))
         self.assertEqual(product["category"], "tcg")
         self.assertEqual(product["availability"], "out_of_stock")
+        self.assertTrue(product.get("pokemon_scoped"))
 
     def test_source_config_uses_the_supplied_category_pages(self):
         config = json.loads((Path(__file__).resolve().parents[1] / "config" / "sources.json").read_text(encoding="utf-8"))

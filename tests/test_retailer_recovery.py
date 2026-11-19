@@ -115,5 +115,82 @@ class RetailerRecoveryTests(unittest.TestCase):
         self.assertIn('not confirm current inventory', result['status']['message'])
 
 
+    def test_product_title_data_attributes_are_recognized_without_heading_or_alt(self):
+        html = '''<html><body><div class="productCard" data-product-title="Pokémon TCG Prismatic Evolutions Elite Trainer Box"><a href="/product/prismatic-evolutions-etb"><img src="https://images.example/etb.jpg"></a><span>$54.99</span></div></body></html>'''
+        from bs4 import BeautifulSoup
+        engine_patch._SCOPED_SCAN_ACTIVE = True
+        try:
+            products = engine_recovery_patch._extract_retailer_dom_products(
+                BeautifulSoup(html, 'html.parser'), 'https://www.pokemoncenter.com/category/tcg-cards', 'Pokémon Center', 20,
+            )
+        finally:
+            engine_patch._SCOPED_SCAN_ACTIVE = False
+        self.assertEqual(len(products), 1)
+        self.assertIn('Prismatic Evolutions', products[0]['title'])
+        self.assertEqual(products[0]['price'], 54.99)
+
+    def test_target_tcin_can_supply_missing_product_href(self):
+        html = '''<html><body><li class="product-card" data-tcin="900001"><div data-product-name="Pokémon TCG Booster Bundle"><img alt=""></div><span>$29.99</span></li></body></html>'''
+        from bs4 import BeautifulSoup
+        engine_patch._SCOPED_SCAN_ACTIVE = True
+        try:
+            products = engine_recovery_patch._extract_retailer_dom_products(
+                BeautifulSoup(html, 'html.parser'), 'https://www.target.com/s?searchTerm=pokemon', 'Target', 20,
+            )
+        finally:
+            engine_patch._SCOPED_SCAN_ACTIVE = False
+        self.assertEqual(len(products), 1)
+        self.assertIn('/-/A-900001', products[0]['url'])
+
+    def test_retailer_extractor_marks_products_from_pokemon_scoped_pages(self):
+        product = {'title': 'Elite Trainer Box', 'url': 'https://www.pokemoncenter.com/product/example'}
+        engine_patch._SCOPED_SCAN_ACTIVE = True
+        try:
+            with patch.object(engine_recovery_patch, '_previous_extract_retailer_products', return_value=[dict(product)]):
+                with patch.object(engine_recovery_patch, '_extract_retailer_json_products', return_value=[]):
+                    with patch.object(engine_recovery_patch, '_extract_retailer_dom_products', return_value=[]):
+                        products = engine_recovery_patch.extract_retailer_products_recovery(
+                            BeautifulSoup('<html></html>', 'html.parser'),
+                            'https://www.pokemoncenter.com/category/tcg-cards', 'Pokémon Center', 20,
+                        )
+        finally:
+            engine_patch._SCOPED_SCAN_ACTIVE = False
+        self.assertTrue(products[0].get('pokemon_scoped'))
+
+    def test_json_target_record_can_build_pdp_url_from_explicit_tcin(self):
+        payload = {'product': {'productName': 'Pokémon TCG Booster Bundle', 'tcin': '900002', 'price': '29.99'}}
+        engine_patch._SCOPED_SCAN_ACTIVE = True
+        try:
+            item = engine_recovery_patch._product_from_json_node(
+                payload, 'https://www.target.com/s?searchTerm=pokemon', 'Target',
+            )
+        finally:
+            engine_patch._SCOPED_SCAN_ACTIVE = False
+        self.assertIsNotNone(item)
+        self.assertIn('/-/A-900002', item['url'])
+
+    def test_partial_success_marks_source_warning_and_preserves_found_items(self):
+        source = {'id': 'target-tcg', 'name': 'Target TCG', 'retailer': 'Target', 'type': 'catalog', 'url': 'https://www.target.com/s?searchTerm=pokemon'}
+        fake_result = {'state': {'products': {}, 'last_item_count': 3}, 'status': {
+            'status': 'ok', 'items_found': 3, 'successful_urls': 1, 'configured_urls': 3,
+            'message': 'Fetched 1/3 configured URL(s). 3 relevant Pokémon listing(s) recognized.'
+        }}
+        def fake_scan(*_args):
+            engine_recovery_patch._FETCH_DIAGNOSTICS.append({'url': 'https://www.target.com/alternate-one', 'bytes': 8000, 'title': 'Target search', 'product_links': 4, 'json_scripts': 2, 'challenge': False})
+            engine_recovery_patch._FETCH_DIAGNOSTICS.append({'url': 'https://www.target.com/alternate-two', 'error': 'ConnectionError: timed out'})
+            engine_recovery_patch._FETCH_DIAGNOSTICS.append({'url': 'https://www.target.com/alternate-three', 'error': 'HTTPError: 503'})
+            return [], fake_result
+        with patch.object(engine_recovery_patch, '_previous_scan_source', side_effect=fake_scan):
+            events, result = engine_recovery_patch.scan_source_with_recovery(object(), source, {}, {'items': {}})
+        self.assertEqual(events, [])
+        self.assertEqual(result['status']['status'], 'warning')
+        self.assertEqual(result['status']['response_health'], {'successful': 1, 'configured': 3, 'failed': 2, 'partial': True})
+        self.assertIn('PARTIAL: 1/3', result['status']['message'])
+        self.assertEqual(result['status']['items_found'], 3)
+        self.assertEqual(result['status']['last_known_items'], 3)
+        self.assertEqual(result['status']['current_items_found'], 3)
+        self.assertEqual(result['state']['last_item_count'], 3)
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -85,9 +85,17 @@ def _scalar(value: Any, limit: int = 1200) -> str:
 
 
 def _pick(node: dict[str, Any], keys: tuple[str, ...]) -> str:
+    """Find a retailer field at the current level, then in nested record objects."""
+    if not isinstance(node, dict):
+        return ""
     for key in keys:
         if key in node:
             value = _scalar(node.get(key))
+            if value:
+                return value
+    for child in node.values():
+        if isinstance(child, dict):
+            value = _pick(child, keys)
             if value:
                 return value
     return ""
@@ -136,6 +144,16 @@ def _product_from_json_node(node: dict[str, Any], base_url: str, retailer: str) 
     retailer_key = engine._retailer_key(retailer)
     raw_url = _pick(node, _URL_KEYS)
     product_url = _same_host_product_url(raw_url, base_url, retailer_key)
+    # Some retailer hydration payloads expose the canonical identifier but omit
+    # the URL. Synthesize only well-defined product routes (Target TCIN, Amazon ASIN).
+    if not product_url and retailer_key == "target":
+        tcin = _pick(node, ("tcin", "TCIN", "tcinId"))
+        if tcin and re.fullmatch(r"\d{6,14}", tcin):
+            product_url = _same_host_product_url(f"/p/-/A-{tcin}", base_url, retailer_key)
+    if not product_url and retailer_key == "amazon":
+        asin = _pick(node, ("asin", "ASIN"))
+        if asin and re.fullmatch(r"[A-Z0-9]{10}", asin, re.I):
+            product_url = _same_host_product_url(f"/dp/{asin}", base_url, retailer_key)
     if not product_url:
         return None
     price_raw = _pick(node, _PRICE_KEYS)
@@ -172,14 +190,41 @@ def _extract_retailer_json_products(soup: BeautifulSoup, base_url: str, retailer
     return list(found.values())
 
 
-def _product_card(anchor, base_url: str, retailer: str) -> dict[str, Any] | None:
-    retailer_key = engine._retailer_key(retailer)
-    product_url = _same_host_product_url(anchor.get("href", ""), base_url, retailer_key)
-    if not product_url:
-        return None
+def _attribute_text_values(element) -> list[str]:
+    values: list[str] = []
+    if not getattr(element, "attrs", None):
+        return values
+    for key, raw in element.attrs.items():
+        low = str(key).lower()
+        if low in {
+            "aria-label", "title", "alt", "data-product-title", "data-product-name",
+            "data-item-title", "data-name", "data-qa-title", "data-testid-title",
+            "data-automation-label", "data-product-description", "content",
+        } or low.startswith(("data-product-title", "data-product-name", "data-item-title")):
+            value = _scalar(raw, 500)
+            if value:
+                values.append(value)
+    return values
 
-    card = anchor
-    for parent in anchor.parents:
+
+def _candidate_score(value: str) -> int:
+    normalized = engine.normalize_match_text(value)
+    score = min(len(value), 200)
+    if "pokemon" in normalized:
+        score += 45
+    if any(term in normalized for term in (
+        "booster", "elite trainer", "collection", "plush", "figure", "trading card",
+        "tin", "bundle", "box", "pikachu", "charizard", "eevee",
+    )):
+        score += 35
+    if len(normalized.split()) >= 4:
+        score += 12
+    return score
+
+
+def _nearest_product_container(element):
+    fallback = element
+    for parent in element.parents:
         if getattr(parent, "name", None) in {"body", "html"}:
             break
         marker = " ".join([
@@ -188,34 +233,89 @@ def _product_card(anchor, base_url: str, retailer: str) -> dict[str, Any] | None
             engine.clean_text(parent.get("data-testid"), 100),
             engine.clean_text(parent.get("data-automation"), 100),
             engine.clean_text(parent.get("data-cy"), 100),
+            engine.clean_text(parent.get("data-qa"), 100),
         ]).lower()
-        if any(token in marker for token in ("product", "tile", "sku-item", "search-result", "grid-item")):
-            card = parent
-            break
-        if parent.find("img") is not None and len(engine.clean_text(parent.get_text(" ", strip=True), 2000)) <= 1800:
-            card = parent
+        if any(token in marker for token in (
+            "product", "tile", "sku-item", "search-result", "grid-item", "item-card", "productcard",
+        )):
+            return parent
+        if fallback is element and (parent.find("img") is not None or parent.has_attr("data-product-id")
+                                    or parent.has_attr("data-tcin") or parent.has_attr("data-asin")):
+            text = engine.clean_text(parent.get_text(" ", strip=True), 2500)
+            if len(text) <= 2200:
+                fallback = parent
+    return fallback
+
+
+def _product_card(anchor, base_url: str, retailer: str) -> dict[str, Any] | None:
+    retailer_key = engine._retailer_key(retailer)
+    card = _nearest_product_container(anchor)
+
+    url_keys = ("href", "data-product-url", "data-pdp-url", "data-url", "data-href", "data-product-link")
+    raw_url = ""
+    for element in (anchor, card):
+        for key in url_keys:
+            raw = element.get(key)
+            if raw:
+                raw_url = engine.clean_text(raw, 1200)
+                break
+        if raw_url:
             break
 
-    title_candidates = [
-        engine.clean_text(anchor.get("title"), 240),
-        engine.clean_text(anchor.get("aria-label"), 240),
-        engine.clean_text(anchor.get_text(" ", strip=True), 240),
-    ]
-    for element in card.select("h1,h2,h3,h4,[data-testid*='title'],[class*='title'],[class*='name']")[:8]:
-        title_candidates.append(engine.clean_text(element.get_text(" ", strip=True), 240))
-    for image_tag in card.find_all("img")[:5]:
-        title_candidates.extend([
-            engine.clean_text(image_tag.get("alt"), 240),
-            engine.clean_text(image_tag.get("title"), 240),
-        ])
-    title = next((engine.clean_product_title(candidate) for candidate in title_candidates if _pokemon_title_allowed(engine.clean_product_title(candidate))), "")
-    if not title:
+    def find_identifier(keys: tuple[str, ...]) -> str:
+        elements = [anchor, card]
+        elements.extend(card.find_all(True, limit=40))
+        for element in elements:
+            for key in keys:
+                value = engine.clean_text(element.get(key), 100)
+                if value:
+                    return value
+        return ""
+
+    tcin = find_identifier(("data-tcin", "data-product-tcin", "data-item-id"))
+    asin = find_identifier(("data-asin", "data-item-asin"))
+    if not raw_url and retailer_key == "target" and re.fullmatch(r"\d{6,14}", tcin or ""):
+        raw_url = f"/p/-/A-{tcin}"
+    if not raw_url and retailer_key == "amazon" and re.fullmatch(r"[A-Z0-9]{10}", asin or "", re.I):
+        raw_url = f"/dp/{asin}"
+    product_url = _same_host_product_url(raw_url, base_url, retailer_key)
+    if not product_url:
         return None
 
-    card_text = engine.clean_text(card.get_text(" ", strip=True), 3000)
+    title_candidates: list[str] = []
+    for element in (anchor, card):
+        title_candidates.extend(_attribute_text_values(element))
+    for element in card.select(
+        "h1,h2,h3,h4,[itemprop='name'],[data-testid*='title'],[data-qa*='title'],"
+        "[class*='product-title'],[class*='productTitle'],[class*='title'],[class*='name']"
+    )[:16]:
+        title_candidates.extend(_attribute_text_values(element))
+        title_candidates.append(engine.clean_text(element.get_text(" ", strip=True), 300))
+    for image_tag in card.find_all("img")[:10]:
+        title_candidates.extend(_attribute_text_values(image_tag))
+    # Some cards expose their product name on a sibling button/span rather than
+    # the anchor. Read only likely title/name nodes from this bounded tile.
+    for element in card.find_all(["a", "span", "div", "button"], limit=60):
+        title_candidates.extend(_attribute_text_values(element))
+
+    useful: dict[str, str] = {}
+    for raw in title_candidates:
+        title = engine.clean_product_title(raw)
+        if not _pokemon_title_allowed(title):
+            continue
+        key = engine.normalize_match_text(title)
+        if key:
+            previous = useful.get(key)
+            if previous is None or len(title) > len(previous):
+                useful[key] = title
+    if not useful:
+        return None
+    title = max(useful.values(), key=_candidate_score)
+
+    card_text = engine.clean_text(card.get_text(" ", strip=True), 4000)
     price_raw = ""
     for element in card.find_all(True):
-        for attr in ("data-price", "data-current-price", "data-product-price", "content"):
+        for attr in ("data-price", "data-current-price", "data-product-price", "data-price-value", "content"):
             raw = element.get(attr)
             if raw and (attr != "content" or element.get("itemprop") == "price"):
                 price_raw = engine.clean_text(raw, 80)
@@ -226,24 +326,24 @@ def _product_card(anchor, base_url: str, retailer: str) -> dict[str, Any] | None
         match = engine.PRICE_RE.search(card_text)
         price_raw = match.group(1) if match else ""
     price, currency = engine.money(price_raw) if price_raw else (None, "USD")
+
     availability = engine.normalize_availability(card_text)
     if availability == "unknown":
         for element in card.find_all(True):
-            marker = " ".join([str(element.get("class", "")), str(element.get("id", ""))]).lower()
+            marker = " ".join([
+                str(element.get("class", "")), str(element.get("id", "")),
+                str(element.get("data-testid", "")), str(element.get("data-qa", "")),
+            ]).lower()
             if any(token in marker for token in ("stock", "availability", "inventory", "fulfillment")):
                 availability = engine.normalize_availability(
-                    element.get("aria-label") or element.get("data-availability") or element.get_text(" ", strip=True)
+                    element.get("aria-label") or element.get("data-availability")
+                    or element.get("data-stock-status") or element.get_text(" ", strip=True)
                 )
                 if availability != "unknown":
                     break
-    sku = ""
-    for element in (card, anchor):
-        for attr in ("data-product-id", "data-sku", "data-tcin", "data-item-id", "data-asin"):
-            sku = engine.clean_text(element.get(attr), 100)
-            if sku:
-                break
-        if sku:
-            break
+    sku = find_identifier(("data-product-id", "data-sku", "data-tcin", "data-item-id", "data-asin", "data-productid"))
+    if not sku:
+        sku = tcin or asin
     return {
         "title": title,
         "url": product_url,
@@ -261,8 +361,19 @@ def _extract_retailer_dom_products(soup: BeautifulSoup, base_url: str, retailer:
     if limit <= 0:
         return []
     found: dict[str, dict[str, Any]] = {}
-    for anchor in soup.find_all("a", href=True):
-        item = _product_card(anchor, base_url, retailer)
+    candidates = list(soup.find_all("a", href=True))
+    # Retailer cards occasionally expose navigation only as data-product-url/data-url.
+    candidates.extend(soup.select(
+        "[data-product-url], [data-pdp-url], [data-product-link], [data-url], [data-href]"
+    ))
+    candidates.extend(soup.select("[data-tcin], [data-asin], [data-product-id], [data-productid], [data-sku]"))
+    seen_candidates: set[int] = set()
+    for candidate in candidates:
+        marker = id(candidate)
+        if marker in seen_candidates:
+            continue
+        seen_candidates.add(marker)
+        item = _product_card(candidate, base_url, retailer)
         if not item:
             continue
         found.setdefault(item["url"], item)
@@ -274,17 +385,26 @@ def _extract_retailer_dom_products(soup: BeautifulSoup, base_url: str, retailer:
 def extract_retailer_products_recovery(soup: BeautifulSoup, base_url: str, retailer: str, limit: int) -> list[dict[str, Any]]:
     existing = _previous_extract_retailer_products(soup, base_url, retailer, limit)
     if len(existing) >= limit:
+        if engine_patch._SCOPED_SCAN_ACTIVE:
+            for item in existing[:limit]:
+                item["pokemon_scoped"] = True
         return existing[:limit]
     remaining = max(0, limit - len(existing))
     additions = _extract_retailer_json_products(soup, base_url, retailer, remaining)
     additions.extend(_extract_retailer_dom_products(soup, base_url, retailer, max(0, remaining - len(additions))))
     combined = engine.deduplicate_products(existing + additions)
+    if engine_patch._SCOPED_SCAN_ACTIVE:
+        for item in combined:
+            item["pokemon_scoped"] = True
     return combined[:limit]
 
 
 def extract_json_products_recovery(payload: Any, base_url: str, retailer: str) -> list[dict[str, Any]]:
     existing = _previous_extract_json_products(payload, base_url, retailer)
     if len(existing) >= 80:
+        if engine_patch._SCOPED_SCAN_ACTIVE:
+            for item in existing:
+                item["pokemon_scoped"] = True
         return existing
     additions = []
     retailer_key = engine._retailer_key(retailer)
@@ -294,7 +414,11 @@ def extract_json_products_recovery(payload: Any, base_url: str, retailer: str) -
             additions.append(item)
         if len(existing) + len(additions) >= 100:
             break
-    return engine.deduplicate_products(existing + additions)
+    combined = engine.deduplicate_products(existing + additions)
+    if engine_patch._SCOPED_SCAN_ACTIVE:
+        for item in combined:
+            item["pokemon_scoped"] = True
+    return combined
 
 
 def _pokebeach_html_posts(body: str, source: dict[str, Any]) -> list[dict[str, Any]]:
@@ -448,10 +572,55 @@ def scan_source_with_recovery(session, source: dict[str, Any], settings: dict[st
         status["last_known_items"] = retained
         status["message"] = (status.get("message", "") + f" Last-known catalog retained: {retained} listing(s); this scan did not confirm current inventory.")[:480]
 
+    # A source is only fully healthy when every configured page responds.
+    # Retain parsed listings from reachable pages, but label 1/3 or 2/3 as PARTIAL.
+    successful = int(status.get("successful_urls", 0) or 0)
+    configured = int(status.get("configured_urls", 0) or 0)
+    failed_diagnostics = [entry for entry in _FETCH_DIAGNOSTICS if entry.get("error")]
+    partial = bool(configured and successful < configured)
+    if partial:
+        status["response_health"] = {
+            "successful": successful,
+            "configured": configured,
+            "failed": max(0, configured - successful),
+            "partial": True,
+        }
+        status["status"] = "warning"
+        parsed_count = int(status.get("items_found", 0) or 0)
+        if source.get("type") in {"catalog", "product"}:
+            saved_products = saved_state.get("products", {}) if isinstance(saved_state.get("products"), dict) else {}
+            retained = max(parsed_count, old_product_count, len(saved_products))
+            if retained:
+                saved_state["last_item_count"] = retained
+                status["last_known_items"] = retained
+                status["current_items_found"] = parsed_count
+        prefix = f"PARTIAL: {successful}/{configured} configured pages responded; {max(0, configured - successful)} failed."
+        if parsed_count:
+            prefix += f" {parsed_count} item(s) were recognized on reachable pages."
+        else:
+            prefix += " No product/news items were recognized on the pages that responded."
+        error_types = []
+        for entry in failed_diagnostics[:3]:
+            error = str(entry.get("error", ""))
+            kind = error.split(":", 1)[0][:42] if error else "Request failed"
+            if kind not in error_types:
+                error_types.append(kind)
+        if error_types:
+            prefix += " Failed-page errors: " + ", ".join(error_types) + "."
+        existing = str(status.get("message", ""))
+        status["message"] = (prefix + " " + existing)[:900]
+    elif configured:
+        status["response_health"] = {
+            "successful": successful,
+            "configured": configured,
+            "failed": 0,
+            "partial": False,
+        }
+
     # Include compact, non-sensitive diagnostics so a parser miss can be separated
     # from an anti-bot shell, empty application shell, or selector regression.
     diagnostics = [entry for entry in _FETCH_DIAGNOSTICS if "error" not in entry]
-    if diagnostics and status.get("status") == "warning":
+    if diagnostics and (status.get("status") == "warning" or partial):
         summaries = []
         for entry in diagnostics[:3]:
             detail = f"{round(entry['bytes'] / 1024)} KB"
@@ -462,7 +631,7 @@ def scan_source_with_recovery(session, source: dict[str, Any], settings: dict[st
                 detail += ", access-challenge marker detected"
             summaries.append(detail)
         status["parser_diagnostics"] = summaries
-        status["message"] = (status.get("message", "") + " Response diagnostics: " + " | ".join(summaries))[:900]
+        status["message"] = (status.get("message", "") + " Response diagnostics: " + " | ".join(summaries))[:1100]
     return events, result
 
 

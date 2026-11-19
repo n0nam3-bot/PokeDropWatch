@@ -4,9 +4,49 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
+import unicodedata
 from typing import Any, Callable
 
-from engine import is_valid_event, send_email, utc_now
+import engine
+from engine import send_email, utc_now
+
+DEFAULT_EVENT_TYPES = ["new_item", "restock", "price_drop", "news"]
+MAX_ITEM_KEYWORDS = 20
+
+
+def _normalize(value: Any) -> str:
+    text = unicodedata.normalize("NFKD", str(value or "")).encode("ascii", "ignore").decode("ascii")
+    return re.sub(r"[^a-z0-9]+", " ", text.lower()).strip()
+
+
+def _subscriber_event_types(subscriber: dict[str, Any]) -> set[str]:
+    raw = subscriber.get("event_types")
+    if not isinstance(raw, list) or not raw:
+        return set(DEFAULT_EVENT_TYPES)
+    allowed = set(DEFAULT_EVENT_TYPES)
+    # Backward compatibility: old records receive the four supported event types.
+    return {str(item) for item in raw if str(item) in allowed}
+
+
+def _subscriber_keywords(subscriber: dict[str, Any]) -> list[str]:
+    raw = subscriber.get("item_keywords") or []
+    if isinstance(raw, str):
+        raw = re.split(r"[,;\n]+", raw)
+    if not isinstance(raw, list):
+        return []
+    result: list[str] = []
+    seen: set[str] = set()
+    for item in raw[:MAX_ITEM_KEYWORDS * 2]:
+        phrase = re.sub(r"\s+", " ", str(item or "")).strip()[:80]
+        key = _normalize(phrase)
+        if len(key) < 2 or key in seen:
+            continue
+        seen.add(key)
+        result.append(key)
+        if len(result) >= MAX_ITEM_KEYWORDS:
+            break
+    return result
 
 
 def event_matches_preferences(event: dict[str, Any], subscriber: dict[str, Any]) -> bool:
@@ -14,7 +54,27 @@ def event_matches_preferences(event: dict[str, Any], subscriber: dict[str, Any])
     retailers = subscriber.get("retailers") or ["all"]
     category = event.get("category") or "collectibles"
     retailer = event.get("retailer_key") or "other"
-    return ("all" in categories or category in categories) and ("all" in retailers or retailer in retailers)
+    event_type = str(event.get("type") or "")
+    if event_type not in _subscriber_event_types(subscriber):
+        return False
+    # News is selected as an event type, separately from the product-category
+    # choices. Keep it available even if a Trainer only selected product categories.
+    category_matches = event_type == "news" or "all" in categories or category in categories
+    if not (category_matches and ("all" in retailers or retailer in retailers)):
+        return False
+
+    keywords = _subscriber_keywords(subscriber)
+    if keywords:
+        searchable = _normalize(" ".join(str(event.get(key) or "") for key in ("title", "summary", "source_name")))
+        searchable_tokens = set(searchable.split())
+        def keyword_matches(keyword: str) -> bool:
+            if keyword in searchable:
+                return True
+            tokens = keyword.split()
+            return bool(tokens) and all(token in searchable_tokens for token in tokens)
+        if not any(keyword_matches(keyword) for keyword in keywords):
+            return False
+    return True
 
 
 def delivery_batch_id(events: list[dict[str, Any]]) -> str:
@@ -51,11 +111,7 @@ def dispatch_subscriber_notifications(
     db=None,
     send_func: Callable[..., tuple[bool, str]] = send_email,
 ) -> str:
-    """Queue and send matching digests without placing subscriber PII in public state.
-
-    Failed/pending delivery batches remain in the subscriber's private Firestore
-    subcollection and are retried on the next scheduled workflow run.
-    """
+    """Queue and send matching digests without placing subscriber PII in public state."""
     service_json = env.get("FIREBASE_SERVICE_ACCOUNT_JSON", "").strip()
     if db is None:
         if not service_json:
@@ -66,7 +122,7 @@ def dispatch_subscriber_notifications(
             return f"Subscriber database unavailable ({type(exc).__name__})."
 
     site_url = env.get("PUBLIC_SITE_URL", "").strip().rstrip("/")
-    manage_url = f"{site_url}/?unsubscribe=1#subscriptions" if site_url else ""
+    manage_url = f"{site_url}/notify.html" if site_url else ""
     smtp_ready = bool(env.get("SMTP_USERNAME", "").strip() and env.get("SMTP_APP_PASSWORD", "").strip())
     active_count = 0
     sent_count = 0
@@ -82,10 +138,8 @@ def dispatch_subscriber_notifications(
             active_count += 1
             owner_copy = env.get("ALERT_EMAIL", "").strip().lower()
             if owner_copy and email.lower() == owner_copy:
-                # The optional owner-only digest already includes every new event.
                 continue
-            subscriber_ref = subscriber_snapshot.reference
-            deliveries_ref = subscriber_ref.collection("deliveries")
+            deliveries_ref = subscriber_snapshot.reference.collection("deliveries")
 
             matching = [event for event in new_events if event_matches_preferences(event, subscriber)]
             if matching:
@@ -100,11 +154,10 @@ def dispatch_subscriber_notifications(
                         "attempts": 0,
                     })
 
-            # A status-only query uses Firestore's automatic single-field index.
             for delivery_snapshot in deliveries_ref.where("status", "==", "pending").stream():
                 delivery = delivery_snapshot.to_dict() or {}
                 raw_events = delivery.get("events") or []
-                events = [event for event in raw_events if is_valid_event(event)]
+                events = [event for event in raw_events if engine.is_valid_event(event)]
                 if not events:
                     delivery_snapshot.reference.update({
                         "status": "suppressed",
@@ -120,27 +173,19 @@ def dispatch_subscriber_notifications(
                     continue
                 try:
                     sent, message = send_func(
-                        events,
-                        env,
-                        subject_prefix,
-                        recipient=email,
-                        manage_url=manage_url,
+                        events, env, subject_prefix, recipient=email, manage_url=manage_url,
                     )
                 except Exception as exc:
-                    # Avoid writing SMTP exception text to public Actions logs or Firestore.
                     sent, message = False, type(exc).__name__
                 if sent:
                     delivery_snapshot.reference.update({
-                        "status": "sent",
-                        "sent_at": utc_now(),
-                        "attempts": int(delivery.get("attempts", 0)) + 1,
-                        "last_error": "",
+                        "status": "sent", "sent_at": utc_now(),
+                        "attempts": int(delivery.get("attempts", 0)) + 1, "last_error": "",
                     })
                     sent_count += 1
                 else:
                     delivery_snapshot.reference.update({
-                        "status": "pending",
-                        "updated_at": utc_now(),
+                        "status": "pending", "updated_at": utc_now(),
                         "attempts": int(delivery.get("attempts", 0)) + 1,
                         "last_error": str(message)[:120],
                     })

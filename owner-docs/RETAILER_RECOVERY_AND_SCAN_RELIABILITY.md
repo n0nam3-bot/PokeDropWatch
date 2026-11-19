@@ -1,28 +1,25 @@
-# PokéDrop Watch — retailer recovery and scan reliability
+# PokéDrop Watch — retailer recognition and scan reliability
 
 ## What this update changes
 
-- Adds source-aware product-card and nested JSON extraction for Pokémon Center, Target, Walmart, Amazon, Best Buy, and GameStop product URL patterns.
-- Keeps sold-out product tiles in the catalogue so their availability can be compared on later scans.
-- Retains the last-known saved catalogue count when a current scan responds successfully but the parser recognizes zero items. The source still shows `NO MATCH`/warning; the old listings are explicitly described as last-known and are not treated as freshly confirmed inventory.
-- Adds compact response diagnostics to parser-miss messages: HTML response size/title, product-like link count, JSON script count, and common automated-access challenge markers. No raw page body or subscriber information is written to the public state.
-- Adds a PokéBeach homepage HTML article parser as a final fallback after the RSS and WordPress REST URLs. Its REST API currently returns HTTP 401 in the hosted scan, and the homepage fallback can still fail if the site changes markup or blocks the runner.
-- Keeps the existing 15-minute GitHub Actions cron setting. GitHub schedule events can be delayed by GitHub; the workflow run history remains the authoritative way to confirm an actual run.
+- Adds wider source-aware product extraction for Pokémon Center, Target, Walmart, Amazon, Best Buy, and GameStop. It examines nested hydration JSON, retailer-specific product identifiers, `data-*` title/URL fields, product-card attributes, image alt/title text, stock labels, and price fields.
+- Keeps sold-out products in the catalogue so their stock transition can be compared on a later scan.
+- Retains last-known catalogue rows/counts when a current page responds but no current items can be parsed. The saved count is not presented as freshly confirmed inventory.
+- Marks a source **PARTIAL** when at least one configured page succeeds and at least one fails, such as `1/3 pages responded`. Products found on reachable pages are still retained. Fully successful sources remain **MATCHES**; pages that respond but expose no recognized records remain **NO MATCH**; sources whose configured pages all fail remain **ISSUE**.
+- Adds compact diagnostics to help distinguish parser misses from empty client-rendered shells, response challenges, and connection failures. Public status stores response size/title, product-like link count, JSON script count, and broad error types—not response bodies or subscriber data.
+- Keeps PokéBeach RSS/REST/homepage fallback handling and the existing 15-minute GitHub Actions cron.
 
-## Installation
+## Install
 
-1. Upload this ZIP to the repository's `updates/` folder and commit it. The existing patch installer applies `monitor/run.py`, `monitor/engine_recovery_patch.py`, tests, and this guide.
-2. No Google Apps Script change is required.
-3. The next successful monitor run will record source response diagnostics. Compare `Last checked` with the latest `PokeDrop Watch` GitHub Actions run.
+1. Upload this ZIP to the repository's `updates/` folder and commit it. Do not unzip it manually. The existing patch installer applies the files.
+2. The same ZIP contains a complete replacement `backend/apps-script/Code.gs`. To activate Trainer notification preferences, separately replace the entire `Code.gs` in the existing Apps Script project with that file, save, then choose **Deploy → Manage deployments → Edit → New version → Deploy**. Keep the existing deployment URL and Script Properties. The ZIP cannot update Google's hosted Apps Script deployment by itself.
+3. Open GitHub Actions and confirm the patch is applied, tests pass, and a new monitor scan completes. Check the source list for `PARTIAL`, `NO MATCH`, and `ISSUE` states.
 
-## A note about scheduled runs
+## Interpreting source results
 
-The existing workflow schedule remains `*/15 * * * *` (every 15 minutes). The scan step currently follows the test step, so an unrelated test failure can skip a scan. A complete replacement workflow is included separately as `owner-docs/pokedrop-watch.yml.REPLACEMENT.txt`; it adds `if: always()` to the scan step so the monitor still runs when unit tests fail. The repository patch installer intentionally blocks writes to `.github/workflows`, so that one workflow file must be replaced manually in GitHub if you want this additional safeguard.
+- **MATCHES** — all configured pages responded and at least one relevant item/news entry was recognized.
+- **PARTIAL** — some configured URLs responded and some failed. The page displays the exact response count and current recognized-item count. Parsed items from successful responses remain available.
+- **NO MATCH** — pages responded, but the supported content did not expose recognizable product/news records. This does not mean the retailer has no stock.
+- **ISSUE** — none of the configured pages responded successfully.
 
-## What this cannot guarantee
-
-A parser cannot extract product data that the retailer does not send to the GitHub Actions runner. Best Buy connection failures and retailer anti-bot responses need to be observed in the new diagnostics. This update improves discovery and logging, but a live result cannot be guaranteed without a fresh hosted run.
-
-## One-time workflow safeguard (recommended)
-
-The replacement workflow above is the **entire** `.github/workflows/pokedrop-watch.yml` file. To enable it, open that path in GitHub, choose Edit, replace the full file contents with `owner-docs/pokedrop-watch.yml.REPLACEMENT.txt`, and commit. It preserves the 15-minute schedule and adds `if: always()` to the scan step. The scanner therefore still runs when the tests report a failure, as long as the runner setup and required dependencies are available. The workflow file cannot be installed by the normal patch ZIP because `scripts/apply_patch.py` intentionally blocks `.github/workflows` changes.
+This update broadens static HTML and embedded JSON recognition. It does not execute retailer JavaScript, solve CAPTCHA/queues, or bypass anti-bot systems. A live retailer result is confirmed only when a new hosted Actions scan actually reports recognized items.

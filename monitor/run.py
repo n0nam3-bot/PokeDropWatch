@@ -11,6 +11,7 @@ from pathlib import Path
 # Install retailer/date recovery extensions before importing scanner symbols.
 import engine_patch  # noqa: F401
 import engine_recovery_patch  # noqa: F401
+import trainer_preferences_patch  # noqa: F401
 from engine import (
     clean_product_title, deduplicate_products, is_valid_event, make_session,
     is_email_eligible_event, normalize_match_text, scan_source, send_email, utc_now,
@@ -63,9 +64,11 @@ def migrate_state(state: dict) -> dict:
         seen_events.add(key)
         deduped_events.append(event)
     state["events"] = deduped_events
+    # A verified new_item has a published release date and is email-eligible.
+    # Only unverified first_seen catalog discoveries are intentionally excluded.
     state["pending_email"] = [
         event for event in state.get("pending_email", [])
-        if is_valid_event(event) and event.get("type") not in {"first_seen", "new_item"}
+        if is_valid_event(event) and event.get("type") != "first_seen"
     ]
 
     for source_state in state.get("items", {}).values():
@@ -77,7 +80,11 @@ def migrate_state(state: dict) -> dict:
             if not isinstance(saved_item, dict):
                 continue
             saved_item["title"] = clean_product_title(saved_item.get("title", ""))
-            if is_valid_event({"category": saved_item.get("category"), "title": saved_item.get("title", "")}):
+            if is_valid_event({
+                "category": saved_item.get("category"),
+                "title": saved_item.get("title", ""),
+                "pokemon_scoped": bool(saved_item.get("pokemon_scoped")),
+            }):
                 cleaned.append(saved_item)
         unique = deduplicate_products(cleaned)
         normalized_products = {}
@@ -209,7 +216,7 @@ def main() -> int:
         f"Finished: {len(email_events)} emailed alert(s), "
         f"{state['summary']['new_items']} new item(s), "
         f"{state['summary']['first_seen']} first-seen item(s), "
-        f"{failures} source error(s), {warnings} parser miss(es). {state['email_status']} "
+        f"{failures} source error(s), {warnings} source warning(s). {state['email_status']} "
         f"Subscriber delivery: {state['subscriber_delivery_status']}"
     )
     return 0

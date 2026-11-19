@@ -112,17 +112,19 @@
       left.append(node('div', 'source-name', source.name || source.id));
       left.append(node('div', 'source-kind', source.type || 'source'));
       const status = source.status || 'error';
-      const stateLabel = status === 'ok' ? 'MATCHES' : status === 'warning' ? 'NO MATCH' : 'ISSUE';
-      const stateClass = status === 'ok' ? 'ok' : status === 'warning' ? 'warn' : 'error';
+      const succeeded = Number(source.successful_urls ?? (status === 'error' ? 0 : 1));
+      const configured = Number(source.configured_urls ?? 1);
+      const routeStatus = `${succeeded}/${configured} pages responded`;
+      const partial = Boolean((source.response_health && source.response_health.partial) || (configured > 0 && succeeded < configured));
+      const stateLabel = partial ? 'PARTIAL' : status === 'ok' ? 'MATCHES' : status === 'warning' ? 'NO MATCH' : 'ISSUE';
+      const stateClass = partial || status === 'warning' ? 'warn' : status === 'ok' ? 'ok' : 'error';
       const badge = node('span', `source-state ${stateClass}`, stateLabel);
       badge.title = [source.message || stateLabel, source.notes || ''].filter(Boolean).join(' · ');
       top.append(left, badge);
       const bottom = node('div', 'source-bottom');
       let description;
-      const succeeded = Number(source.successful_urls ?? (status === 'error' ? 0 : 1));
-      const configured = Number(source.configured_urls ?? 1);
-      const routeStatus = `${succeeded}/${configured} pages responded`;
-      if (status === 'ok') description = `${source.items_found || 0} Pokémon listings · ${routeStatus}`;
+      if (partial) description = `Partial results · ${Number(source.items_found || 0)} item(s) recognized · ${routeStatus}`;
+      else if (status === 'ok') description = `${source.items_found || 0} Pokémon listings · ${routeStatus}`;
       else if (status === 'warning') description = `No recognized items · ${routeStatus}`;
       else description = 'All configured pages failed · inspect scan log';
       const detail = node('span', '', description);
@@ -284,7 +286,7 @@
     $('listingCount').textContent = String(summary.tracked_products ?? '—');
     $('alertCount').textContent = String(summary.new_alerts ?? 0);
     $('overallStatus').textContent = sources.length
-      ? `${matches} source matches · ${warnings} parser misses · ${failures} request errors`
+      ? `${matches} source matches · ${warnings} source warnings · ${failures} request errors`
       : 'Waiting for first scan';
     $('overallLed').className = `status-led ${sources.length && failures === 0 && warnings === 0 ? 'ok' : sources.length ? 'warn' : ''}`;
     $('lastChecked').textContent = data.last_checked ? `Last checked ${dateText(data.last_checked)}` : 'The first scan runs after setup.';

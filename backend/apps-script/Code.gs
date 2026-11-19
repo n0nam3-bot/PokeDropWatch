@@ -6,6 +6,7 @@
  *
  * This is the COMPLETE Code.gs file. Replace the entire Apps Script Code.gs
  * contents with this file; do not paste individual function fragments.
+ * This version supports Trainer-selectable alert types and item watchlists.
  */
 const OTP_TTL_SECONDS = 600;
 const OTP_MAX_ATTEMPTS = 5;
@@ -13,6 +14,7 @@ const EMAIL_COOLDOWN_SECONDS = 60;
 const EMAIL_MAX_PER_HOUR = 3;
 const EMAIL_DAILY_CAP = 25;
 const CATEGORIES = ['tcg', 'plush', 'collectibles', 'games', 'accessories', 'news'];
+const EVENT_TYPES = ['new_item', 'restock', 'price_drop', 'news'];
 const RETAILERS = ['all', 'pokemon-center', 'target', 'walmart', 'best-buy', 'gamestop', 'amazon', 'pokebeach'];
 
 function doGet(e) {
@@ -148,6 +150,58 @@ function pokedropPortalOutput_(sourceOutput, title, page) {
       html = html.replace(/(<\/form>\s*)(<div class="divider">)/i, '$1' + codePanel + '\n\n        $2');
     }
 
+    // The event-type selector owns news/restock/drop/release notifications;
+    // the category selector below is only for product categories.
+    html = html.replace('<legend>What would you like to follow?</legend>', '<legend>Which product categories?</legend>');
+    html = html.replace('<label><input type="checkbox" name="category" value="news" checked> News</label>', '');
+
+    // Add notification-event filters and optional product-name watchlist to the
+    // current Trainer form without replacing the separately hosted Subscribe.html.
+    const trainerPreferenceFields = `
+      <fieldset class="group pd-event-group" id="eventTypeChoices">
+        <legend>Which notifications should we send?</legend>
+        <div class="choice-grid">
+          <label><input type="checkbox" name="eventType" value="new_item" checked> New releases</label>
+          <label><input type="checkbox" name="eventType" value="restock" checked> Restocks</label>
+          <label><input type="checkbox" name="eventType" value="price_drop" checked> Price drops</label>
+          <label><input type="checkbox" name="eventType" value="news" checked> Pokémon news</label>
+        </div>
+        <small style="display:block;color:#777875;font-size:9px;line-height:1.5;margin-top:5px">New releases are only sent when a published release date can be verified. First-seen listings are not automatically called new releases.</small>
+      </fieldset>
+      <div class="field pd-item-watchlist">
+        <label for="itemKeywords">Specific items to watch (optional)</label>
+        <textarea id="itemKeywords" rows="3" maxlength="1800" placeholder="Example: Prismatic Evolutions ETB, Pikachu plush, Charizard ex Collection Box" style="width:100%;min-height:72px;border:1px solid #ded8d2;border-radius:7px;padding:9px 10px;font:11px 'PKMN RBYGSC';resize:vertical;background:#fff;color:#242424"></textarea>
+        <small style="display:block;color:#777875;font-size:9px;line-height:1.5;margin-top:4px">Add up to 20 names, separated with commas, semicolons, or new lines. Any one name can match. Leave blank to receive every item in your selected categories and retailers.</small>
+      </div>
+      <p class="pd-trainer-edit-note" style="margin:8px 0 10px;padding:9px 11px;border:1px solid #e7e4dc;border-radius:7px;background:#fbfaf6;color:#5b5d55;font-size:10px;line-height:1.6"><strong>Already an active Trainer?</strong> Enter the same email address, change your choices, and verify the new code. Your active subscription stays active. New applications still need Gym Leader approval.</p>
+    `;
+    const subscribeButtonIndex = html.indexOf('id="subscribeButton"');
+    if (subscribeButtonIndex >= 0) {
+      const subscribeActionsIndex = html.lastIndexOf('<div class="actions"', subscribeButtonIndex);
+      if (subscribeActionsIndex >= 0 && html.indexOf('id="eventTypeChoices"') < 0) {
+        html = html.slice(0, subscribeActionsIndex) + trainerPreferenceFields + html.slice(subscribeActionsIndex);
+      }
+    }
+
+    // Carry the user's event-type and item watchlist choices through the same
+    // one-time email verification session used by existing applications.
+    html = html.replace(
+      "const retailers = selected('retailer');",
+      "const retailers = selected('retailer');\n          const eventTypes = selected('eventType');\n          const itemKeywords = $('itemKeywords') ? $('itemKeywords').value : '';"
+    );
+    html = html.replace(
+      "if (!retailers.length) throw new Error('Choose at least one retailer, or select All retailers.');",
+      "if (!retailers.length) throw new Error('Choose at least one retailer, or select All retailers.');\n          if (!eventTypes.length) throw new Error('Choose at least one notification type.');"
+    );
+    html = html.replace(
+      "return { operation, email, categories, retailers: retailers.includes('all') ? ['all'] : retailers };",
+      "return { operation, email, categories, retailers: retailers.includes('all') ? ['all'] : retailers, eventTypes, itemKeywords };"
+    );
+    html = html.replace(
+      "retailers: flow.retailers,\n            website:",
+      "retailers: flow.retailers,\n            eventTypes: flow.eventTypes,\n            itemKeywords: flow.itemKeywords,\n            website:"
+    );
+
     // Use first-person confirmation copy; do not mention Google Apps Script to applicants.
     html = html.replace('Google Apps Script accepted the email request for ', 'Accepted the email request for ');
     html = html.replace('Google Apps Script accepted the verification email request. Check your inbox and spam folder.', 'Email request accepted. Check your inbox and spam folder.');
@@ -167,6 +221,10 @@ function pokedropPortalOutput_(sourceOutput, title, page) {
         <div class="pd-help-content">
           <h2>Choose what to follow</h2>
           <p>Select one or more product categories and retailer/news sources. <strong>All retailers</strong> overrides individual retailer choices.</p>
+          <h2>Choose notification types and specific items</h2>
+          <p>Choose new releases, restocks, price drops, and Pokémon news. You can also enter a list of product names; a notification is sent when any listed phrase matches. Leave the list blank to follow all matching items in your selected categories and retailers.</p>
+          <h2>Edit an existing Trainer subscription</h2>
+          <p>Trainers can enter their own verified email address, change their preferences, and confirm the one-time code. An active subscription remains active while its preferences are updated. Gym Leaders control approval, suspension, and removal.</p>
           <h2>Verify your email</h2>
           <p>Request a six-digit code. It is sent to the mailbox you entered, expires after 10 minutes, and can only be used once. The code entry panel appears directly beneath the application button.</p>
           <h2>Application review</h2>
@@ -244,6 +302,8 @@ function requestVerificationCode(payload) {
       operation: input.operation,
       categories: input.categories,
       retailers: input.retailers,
+      eventTypes: input.eventTypes,
+      itemKeywords: input.itemKeywords,
       codeHash: codeHash,
       attempts: 0,
       createdAt: Date.now(),
@@ -616,13 +676,36 @@ function validateRequest_(payload) {
 
   let categories = [];
   let retailers = ['all'];
+  let eventTypes = EVENT_TYPES.slice();
+  let itemKeywords = [];
   if (operation === 'subscribe') {
     categories = uniqueAllowed_(input.categories, CATEGORIES);
     retailers = uniqueAllowed_(input.retailers, RETAILERS);
+    // Missing eventTypes is treated as the new default to keep older cached pages compatible.
+    eventTypes = uniqueAllowed_(Array.isArray(input.eventTypes) ? input.eventTypes : EVENT_TYPES, EVENT_TYPES);
+    itemKeywords = normalizeItemKeywords_(input.itemKeywords);
     if (!categories.length) throw new Error('Choose at least one notification category.');
     if (!retailers.length || retailers.includes('all')) retailers = ['all'];
+    if (!eventTypes.length) throw new Error('Choose at least one notification type.');
   }
-  return { email: email, operation: operation, categories: categories, retailers: retailers };
+  return {
+    email: email, operation: operation, categories: categories, retailers: retailers,
+    eventTypes: eventTypes, itemKeywords: itemKeywords
+  };
+}
+
+function normalizeItemKeywords_(value) {
+  const raw = Array.isArray(value) ? value : String(value || '').split(/[,;\n]+/);
+  const result = [];
+  const seen = {};
+  raw.slice(0, 40).forEach(item => {
+    const phrase = String(item || '').replace(/\s+/g, ' ').trim().slice(0, 80);
+    const key = phrase.toLowerCase();
+    if (phrase.length < 2 || seen[key] || result.length >= 20) return;
+    seen[key] = true;
+    result.push(phrase);
+  });
+  return result;
 }
 
 function uniqueAllowed_(values, allowed) {
@@ -703,6 +786,8 @@ function saveSubscription_(session) {
     status: status,
     categories: session.categories,
     retailers: session.retailers,
+    event_types: session.eventTypes || EVENT_TYPES,
+    item_keywords: session.itemKeywords || [],
     createdAt: existing && existing.createdAt || now,
     updatedAt: now,
     verificationMethod: 'email-code'
