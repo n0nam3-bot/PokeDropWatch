@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-11-19T11:52:08Z",
+  "last_checked": "2026-11-19T13:10:55Z",
   "items": {
     "pokemon-center-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T11:50:44Z",
+      "last_success": "2026-11-19T13:09:29Z",
       "source_url": "https://www.pokemoncenter.com/category/new-releases",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -15,7 +15,7 @@
     "pokemon-center-plush": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T11:50:44Z",
+      "last_success": "2026-11-19T13:09:29Z",
       "source_url": "https://www.pokemoncenter.com/category/back-in-stock",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -2594,7 +2594,7 @@
     "target-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T11:50:44Z",
+      "last_success": "2026-11-19T13:09:29Z",
       "source_url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -4859,7 +4859,7 @@
         }
       },
       "initialized": true,
-      "last_success": "2026-11-19T11:50:45Z",
+      "last_success": "2026-11-19T13:09:30Z",
       "source_url": "https://www.walmart.com/search?q=pokemon",
       "last_item_count": 146,
       "last_successful_urls": [
@@ -4869,7 +4869,7 @@
     "gamestop-pokemon-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T11:52:05Z",
+      "last_success": "2026-11-19T13:10:52Z",
       "source_url": "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -5034,15 +5034,52 @@
           "title": "Pokémon TCG: 30th Celebration Poster Collection - Pokemon.com",
           "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQRGxSaThaRnZFcXpPMk1tNXhZb1FZbGtqMmtPS2ZCMFJfamhwTEhndjhGS1loSkF2Nk5QQUV4eVNPNUtlTzhyTVZpUldQSzA0X2hrMWJZS1FmUlFVRFpoTXRhT2YyRDZVU1loYTJDTGVaZjQ5VkkxT2hmX29OTndydjIzNW9pdlV5OUdVTThQR0JIWWc?oc=5",
           "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "714786be68ff4eccd87f": {
+          "title": "Pokémon TCG Pocket: Dual Fusion Expansion Coming Soon - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNWFpyNnF6YzEwUTRWNGsxT0JycDk5WHV4bkpza2NBX25ORnNybUF3M1RNRzE1UUpvRmI0OHhBdUpISm11SFFCb016RlEwWlduM2dvQWplbUlBY2F1LVl3Zl9mOXc5Qk1CQlVlZ21ZMVV0d3VFNWttcVBYWmQwOUtyNTd3dmgxWkpuWFB5Tg?oc=5",
+          "first_seen": "2026-11-19T13:10:55Z"
+        },
+        "28dbd441530a20212ecf": {
+          "title": "A New Holiday Plush Collection Is Coming to Pokémon Center - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQb2RGdnNNejhPdVRlMHdrS2JuTFpvNmlpcWI3c2s4VHZLRjJ6SXh3ZXlQeUUtc05fVl94c1VaYkg2M0JCdV81Rk94WS1fNTZ1OGZUSVdfcnlGNmFRYXRIZEdWVkJLQTlsa1lqVFphMjNSRTFpMVhXTm41X09kX0hXTUNHRU5LWDBXV2RCRFNQNXRUZzNM?oc=5",
+          "first_seen": "2026-11-19T13:10:55Z"
+        },
+        "7ac2ba60a1f5152713b4": {
+          "title": "Check Out the New Pokémon TCG Pocket Cards Announced at PokémonXP - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQR2txVW04Z0gzTngtazRqU2NHT0lOeTBSTzZoMlNCeWxSOGxGa1FXY3VseTE3V2NSbXJPQWpGcUlZTEczSDV0QTNiampjU3JxYmtBeDVBY3owMHlDZWxRNksxSkVaNTkzWW5TOXN3SWdfRHg3eldHeXhPaDJLU0dzT1VNVFYzMS1weEQtZi1ydmliUVh4SXZ0OWR3Wll1dw?oc=5",
+          "first_seen": "2026-11-19T13:10:55Z"
         }
       },
       "articles": [
         {
-          "key": "cf85cfb67f4f049f2f4d",
-          "title": "Pokémon TCG: Mega Evolution—Delta Reign Product Showcase - Pokemon.com",
-          "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNRk9WblFKRmNiaUZCVWFHTF9mYl9fS1BTalIxTk1aMF9EMm5NZHNiUWQwajZZUXV4bmd0RmY4NDVTWXFtOU9mUVVud3k3cGdTSVdfa0FwbXRUbjNkY3FfZXZZOFczbW1XMjIxdWFjVGg3WVlGM2o5Y3lhaFRoVjFaMlRpWDRqLXZ6X2ttVkxVeEI?oc=5",
-          "summary": "Pokémon TCG: Mega Evolution—Delta Reign Product Showcase Pokemon.com",
-          "published": "Fri, 23 Oct 2026 07:00:00 GMT",
+          "key": "3907bb979e5c5f0bfd96",
+          "title": "Pokémon just dropped glass Evolution Stone replicas: Where to buy Fire, Water, and Thunder Stones - Mashable",
+          "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPV3FQT0cwR19mNmRBMUd2bTRkRE91UFhUZkIzWGpEOEZCUGVZYnl5X2Jrb2pQaEEzSlJZN2NKSnE1TmVGN1lreGlVWDlGZ0xlNTR4NEFWZnJWT0d3Ym9UcW16VE0zSVdSSnZYNGhUZnpzWDlraEZ4UDdoMzY3QmhWSGtkbkU?oc=5",
+          "summary": "Pokémon just dropped glass Evolution Stone replicas: Where to buy Fire, Water, and Thunder Stones Mashable",
+          "published": "Thu, 19 Nov 2026 03:56:43 GMT",
+          "publisher": "Mashable",
+          "retailer": "Mashable",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "d40c32a5fb7ed43bf0f2",
+          "title": "Pokémon Champions Balance Patch Update: December 2026 - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOQllMMTRvNjJnT3JxRFpLMENpRFVDN1dUZ2hwRmJ4VnYyNXdSUUV1ZDhFa0NBTUs2YUVITzdQT0JWaVhuYW1ZRWFxZlU5X0JBSGJFckNlZFFlQ3ZhcDdhUldINTVJRW1nUnBMM0o1R196SmtNQlJoNTkzS1BoR1h5RURQZDFNM3oxQjNMaA?oc=5",
+          "summary": "Pokémon Champions Balance Patch Update: December 2026 Pokemon.com",
+          "published": "Tue, 17 Nov 2026 08:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "3ad7b178f7824d773664",
+          "title": "Get All the Details About the Pokémon × Duolingo Collaboration - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQMUFST2hYOWkyMDNsSDNEbUNXTmtrZDlVUGduc0hPSkQzQzBFZDRFVHBRd3F3aGd0cHJoRjFxdnZjVEhONFR4YUdfdmtzaHNhTmF3WFFFMDNzNEpqTGdlUjBJRExzZ01zMU5GRF9vcUZKUS1FM0tyMkdUZmlxT09RaV9CcXkybDU1amU4emlMWm1sbEhNanZj?oc=5",
+          "summary": "Get All the Details About the Pokémon × Duolingo Collaboration Pokemon.com",
+          "published": "Tue, 17 Nov 2026 01:04:16 GMT",
           "publisher": "Pokemon.com",
           "retailer": "Pokemon.com",
           "image": "",
@@ -5071,105 +5108,6 @@
           "category": "news"
         },
         {
-          "key": "1c2f05d53238aab79f62",
-          "title": "Check Out Every Pokémon TCG Product Release in November 2026 - Pokemon.com",
-          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQN3hHOW5zZzdmSHFLLTV1X2F2bUhnX2Izakd0eGN2T0lVOFc0ejE4QTRleENYOXF5TUJhaG1KYlZ2bVVHSWpzY2pnZ1dfWnlhWXRxV2VCWER4U05ZYUptTUpsQ1VuYzN6M2RvU2VuZGdLcGVXdTBaZ1hBR1owQjFwaGdBRHV5UDZ1LWpDa1R2QjRTSTR1QzE4?oc=5",
-          "summary": "Check Out Every Pokémon TCG Product Release in November 2026 Pokemon.com",
-          "published": "Mon, 02 Nov 2026 08:00:00 GMT",
-          "publisher": "Pokemon.com",
-          "retailer": "Pokemon.com",
-          "image": "",
-          "category": "news"
-        },
-        {
-          "key": "3907bb979e5c5f0bfd96",
-          "title": "Pokémon just dropped glass Evolution Stone replicas: Where to buy Fire, Water, and Thunder Stones - Mashable",
-          "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPV3FQT0cwR19mNmRBMUd2bTRkRE91UFhUZkIzWGpEOEZCUGVZYnl5X2Jrb2pQaEEzSlJZN2NKSnE1TmVGN1lreGlVWDlGZ0xlNTR4NEFWZnJWT0d3Ym9UcW16VE0zSVdSSnZYNGhUZnpzWDlraEZ4UDdoMzY3QmhWSGtkbkU?oc=5",
-          "summary": "Pokémon just dropped glass Evolution Stone replicas: Where to buy Fire, Water, and Thunder Stones Mashable",
-          "published": "Thu, 19 Nov 2026 03:56:43 GMT",
-          "publisher": "Mashable",
-          "retailer": "Mashable",
-          "image": "",
-          "category": "news"
-        },
-        {
-          "key": "458902c4cd1b1fe738e0",
-          "title": "Pokémon TCG: 30th Celebration Ultra-Premium Collections—Day & Night - Pokemon.com",
-          "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPMkRFYnZZVl9kSU8yV213NnFsRFc3c0tfOHNkZUpFYnRVaFU0Sl8zU2E5dmU5a3JUbW9zdWZlZmxmaHBBUmN2T3RFYm96UGxESEl4cmtkQTA0WUktZ3RsUml2djdiejk2cVcwVmZmS19ibjZCVURPWldhejlDQzk2cDhrbHQxZFRaRGJjMUd5Q09TUkZraGwwWE5kRE5venRwMGE5U2dQS3B1U0E?oc=5",
-          "summary": "Pokémon TCG: 30th Celebration Ultra-Premium Collections—Day & Night Pokemon.com",
-          "published": "Fri, 06 Nov 2026 08:00:00 GMT",
-          "publisher": "Pokemon.com",
-          "retailer": "Pokemon.com",
-          "image": "",
-          "category": "news"
-        },
-        {
-          "key": "3ad7b178f7824d773664",
-          "title": "Get All the Details About the Pokémon × Duolingo Collaboration - Pokemon.com",
-          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQMUFST2hYOWkyMDNsSDNEbUNXTmtrZDlVUGduc0hPSkQzQzBFZDRFVHBRd3F3aGd0cHJoRjFxdnZjVEhONFR4YUdfdmtzaHNhTmF3WFFFMDNzNEpqTGdlUjBJRExzZ01zMU5GRF9vcUZKUS1FM0tyMkdUZmlxT09RaV9CcXkybDU1amU4emlMWm1sbEhNanZj?oc=5",
-          "summary": "Get All the Details About the Pokémon × Duolingo Collaboration Pokemon.com",
-          "published": "Tue, 17 Nov 2026 01:04:16 GMT",
-          "publisher": "Pokemon.com",
-          "retailer": "Pokemon.com",
-          "image": "",
-          "category": "news"
-        },
-        {
-          "key": "20f5e86a58645fbe7865",
-          "title": "Evolution Stone Replicas Are Available Now at Pokémon Center - Pokemon.com",
-          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQMl9INXQ3dnBjV1IwdWp5eWZjbF9BZDIxNFV1U19rcDFaVEpVTzN0WGJxMGJhWExlMDJXOG5VaFlDbDZKUGMxVEhTTVgyUEJtRHdiLW52Wm5GOExrM3dhdDdLbWdFN1k3Q3R4eXgzblcxY1ZRWk80U2FRbHJCMGpkUFRoN2V4akdEeS1sT3E0c1FSR2Z0bWo4?oc=5",
-          "summary": "Evolution Stone Replicas Are Available Now at Pokémon Center Pokemon.com",
-          "published": "Thu, 12 Nov 2026 18:13:07 GMT",
-          "publisher": "Pokemon.com",
-          "retailer": "Pokemon.com",
-          "image": "",
-          "category": "news"
-        },
-        {
-          "key": "52668e1ae07ec706bd4d",
-          "title": "Pokémon TCG: 30th Celebration Ditto Premium Collection - Pokemon.com",
-          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNSFVjejFHY2JxUzRYdGNweFl1QXR2SEFpY3M3dGxoS3pRYnNHZ3AtOW9CaXhEb0RJWmZ1eDNmWGg2R2xnbkd2VjJRY0R0UzhzYlI2Mk1BMC1URTF6QWxoWXNEYlVaUWJsOGJDNmhITTY4Qmoxb2tFS3Uwa3VGdVp6THhkR1JGTElRSHUwbzJlR2RjNE54WWVid2g5OHE?oc=5",
-          "summary": "Pokémon TCG: 30th Celebration Ditto Premium Collection Pokemon.com",
-          "published": "Fri, 06 Nov 2026 08:00:00 GMT",
-          "publisher": "Pokemon.com",
-          "retailer": "Pokemon.com",
-          "image": "",
-          "category": "news"
-        },
-        {
-          "key": "dca4366152bf813a7098",
-          "title": "Pokémon Happy Meals Return to McDonald’s in the US - Pokemon.com",
-          "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNTG14MTZiTnVYdXBYOU1fVUxJbzlTY25KNnZRZWZPb3JYX25MX1BjX08zS1RwUDNUbnJtSFpBbjczV3V5bkxxeDBsVDhZY3A3M1RHZGxVd0FvX1BqUzk2OXI3ODQyemdCWWdVdWVZNEc1c1ROSjN1MUdxc25kcWhDRlJOeElFMnV5?oc=5",
-          "summary": "Pokémon Happy Meals Return to McDonald’s in the US Pokemon.com",
-          "published": "Tue, 10 Nov 2026 08:00:00 GMT",
-          "publisher": "Pokemon.com",
-          "retailer": "Pokemon.com",
-          "image": "",
-          "category": "news"
-        },
-        {
-          "key": "d40c32a5fb7ed43bf0f2",
-          "title": "Pokémon Champions Balance Patch Update: December 2026 - Pokemon.com",
-          "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOQllMMTRvNjJnT3JxRFpLMENpRFVDN1dUZ2hwRmJ4VnYyNXdSUUV1ZDhFa0NBTUs2YUVITzdQT0JWaVhuYW1ZRWFxZlU5X0JBSGJFckNlZFFlQ3ZhcDdhUldINTVJRW1nUnBMM0o1R196SmtNQlJoNTkzS1BoR1h5RURQZDFNM3oxQjNMaA?oc=5",
-          "summary": "Pokémon Champions Balance Patch Update: December 2026 Pokemon.com",
-          "published": "Tue, 17 Nov 2026 08:00:00 GMT",
-          "publisher": "Pokemon.com",
-          "retailer": "Pokemon.com",
-          "image": "",
-          "category": "news"
-        },
-        {
-          "key": "12e3cc980cb9f82bbbc5",
-          "title": "Pokémon TCG Pocket: Dual Fusion Is Now Available - Pokemon.com",
-          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNVHUxcEtmWnFXT3p4ZFJMLVM1ZTdkd1F6NjByNWo3NHI0a1N0ZFk4U3doeWd2ejJpbEtJZXh3SVlnNlZ3dDdWTWR2cmlETHI2RXZLRkVubTF6QW8tNnJ5S1pIUzgxVzN3MnhLMTVoc0o3bExleW84Yk5tRl9aWThJa1E5eVRFUQ?oc=5",
-          "summary": "Pokémon TCG Pocket: Dual Fusion Is Now Available Pokemon.com",
-          "published": "Wed, 28 Oct 2026 07:00:00 GMT",
-          "publisher": "Pokemon.com",
-          "retailer": "Pokemon.com",
-          "image": "",
-          "category": "news"
-        },
-        {
           "key": "1e4fc7daea4985100a3c",
           "title": "Join the Apples to Applin event in Pokémon Pokopia - Nintendo",
           "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPVFpEVGtqeGllbkwzZ2prbURsbnR1NVpSdlAtTjJmeGRmbWhHUU5nS2hzak05cVRXT0V6VTdRR3RaNWE5dEpvQVREQ1NwZEVndlVxYnBMbXJYRFlsQ3hVN2k4NlEwX1B1aks5MG1YNlA3X2VUUlRrTWpxNlJ6N3U1aGVqLUpKemZjd3FPdDd2NkZzUQ?oc=5",
@@ -5181,33 +5119,22 @@
           "category": "news"
         },
         {
+          "key": "9e74385a89ae8a1065ec",
+          "title": "Gigantamax Duraludon Debuts in Pokémon GO Wild Area: Global Event - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNdkVhaFJRSmFGb1VuUWV3SW9iVW9VZzNiU2YtazRQb2tlNHFKTG45cXdnSWljTHJMT1ZIeG1STWJuUzFSVmtmLXRpTFpLM3ZHdXN2NXJBVFoxcXp2TnJkdDhpY1NySjZnSEdwTm5GTFFaeHlBdExfeXU0dEVPbjJGTjZGOWpCMlc0ZU9nbkdDTUttMGltYzVmMmJfNmI?oc=5",
+          "summary": "Gigantamax Duraludon Debuts in Pokémon GO Wild Area: Global Event Pokemon.com",
+          "published": "Fri, 13 Nov 2026 16:13:25 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
           "key": "df09e680c5bcfc9730e2",
           "title": "Discover the Perfect Present in the 2026 Pokémon Holiday Gift Guide - Pokemon.com",
           "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPR25PMUU5MGF5YlBwYkVqc3J6N2t6dWI3NEx6V0hra2M5MGNYNmdoQTQtS3ZqX3dsLXpZU3JWTlRKaTZ1NjFOMlBNNloyOHpMZ09FU0hYcFMzTXVuaGFRaWNLa0VROVk4UXowTE9ZQkNjMTFQaGZpRGF6VTdOd1hfN1VtMjZyS2tTVW9rekIzZXR4TC04aklSbEhWMUFhWVI0?oc=5",
           "summary": "Discover the Perfect Present in the 2026 Pokémon Holiday Gift Guide Pokemon.com",
           "published": "Fri, 13 Nov 2026 16:09:22 GMT",
-          "publisher": "Pokemon.com",
-          "retailer": "Pokemon.com",
-          "image": "",
-          "category": "news"
-        },
-        {
-          "key": "f1a14cae59e90ea77886",
-          "title": "Pokémon Happy Meals Are Coming to McDonald’s in an Exciting New Way - Pokemon.com",
-          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNSURsbW5GYVI0cDR0WDIxRXVGMHNRQkFFY3Z3WlV2OEp5ckFpX2FOeU5sampFUHVFUjZidUFYeXRGZzVfaUx6Z2dia2loUzB0T1dBUzVPcFJIbG1PUnRETHU2cUVzeWRJRHgzMlZvUzUwQWpPUnp4WS0zRWUxdk55UmVFc0M2UkNlN2xyRTJiUHVxM0NhOEJ5bkhXaHJnclcw?oc=5",
-          "summary": "Pokémon Happy Meals Are Coming to McDonald’s in an Exciting New Way Pokemon.com",
-          "published": "Thu, 29 Oct 2026 07:00:00 GMT",
-          "publisher": "Pokemon.com",
-          "retailer": "Pokemon.com",
-          "image": "",
-          "category": "news"
-        },
-        {
-          "key": "c5f9379a6c6f609969ff",
-          "title": "Get Shiny Xerneas in Pokémon Legends: Z‑A via Mystery Gift - Pokemon.com",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNMVlVdDZUNDlJOWkyemh2Z0lqX2lINTNnVTZNSjdQdnJFUExtajl5RGN0MXdfUTZ3NkFlVEdja05qai13ZlRSUlhTOXRqSHZEZzM2aGVvQUo2aHFDQU45NUowRzQtU3BqNmRQOVNZN1pNeTluenM2XzZldUdhdXFwUmpteUFrVDQ4d0w3bjExaXdKNWs?oc=5",
-          "summary": "Get Shiny Xerneas in Pokémon Legends: Z‑A via Mystery Gift Pokemon.com",
-          "published": "Thu, 12 Nov 2026 20:16:46 GMT",
           "publisher": "Pokemon.com",
           "retailer": "Pokemon.com",
           "image": "",
@@ -5225,11 +5152,143 @@
           "category": "news"
         },
         {
+          "key": "c5f9379a6c6f609969ff",
+          "title": "Get Shiny Xerneas in Pokémon Legends: Z‑A via Mystery Gift - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNMVlVdDZUNDlJOWkyemh2Z0lqX2lINTNnVTZNSjdQdnJFUExtajl5RGN0MXdfUTZ3NkFlVEdja05qai13ZlRSUlhTOXRqSHZEZzM2aGVvQUo2aHFDQU45NUowRzQtU3BqNmRQOVNZN1pNeTluenM2XzZldUdhdXFwUmpteUFrVDQ4d0w3bjExaXdKNWs?oc=5",
+          "summary": "Get Shiny Xerneas in Pokémon Legends: Z‑A via Mystery Gift Pokemon.com",
+          "published": "Thu, 12 Nov 2026 20:16:46 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "20f5e86a58645fbe7865",
+          "title": "Evolution Stone Replicas Are Available Now at Pokémon Center - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQMl9INXQ3dnBjV1IwdWp5eWZjbF9BZDIxNFV1U19rcDFaVEpVTzN0WGJxMGJhWExlMDJXOG5VaFlDbDZKUGMxVEhTTVgyUEJtRHdiLW52Wm5GOExrM3dhdDdLbWdFN1k3Q3R4eXgzblcxY1ZRWk80U2FRbHJCMGpkUFRoN2V4akdEeS1sT3E0c1FSR2Z0bWo4?oc=5",
+          "summary": "Evolution Stone Replicas Are Available Now at Pokémon Center Pokemon.com",
+          "published": "Thu, 12 Nov 2026 18:13:07 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "dca4366152bf813a7098",
+          "title": "Pokémon Happy Meals Return to McDonald’s in the US - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNTG14MTZiTnVYdXBYOU1fVUxJbzlTY25KNnZRZWZPb3JYX25MX1BjX08zS1RwUDNUbnJtSFpBbjczV3V5bkxxeDBsVDhZY3A3M1RHZGxVd0FvX1BqUzk2OXI3ODQyemdCWWdVdWVZNEc1c1ROSjN1MUdxc25kcWhDRlJOeElFMnV5?oc=5",
+          "summary": "Pokémon Happy Meals Return to McDonald’s in the US Pokemon.com",
+          "published": "Tue, 10 Nov 2026 08:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "458902c4cd1b1fe738e0",
+          "title": "Pokémon TCG: 30th Celebration Ultra-Premium Collections—Day & Night - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPMkRFYnZZVl9kSU8yV213NnFsRFc3c0tfOHNkZUpFYnRVaFU0Sl8zU2E5dmU5a3JUbW9zdWZlZmxmaHBBUmN2T3RFYm96UGxESEl4cmtkQTA0WUktZ3RsUml2djdiejk2cVcwVmZmS19ibjZCVURPWldhejlDQzk2cDhrbHQxZFRaRGJjMUd5Q09TUkZraGwwWE5kRE5venRwMGE5U2dQS3B1U0E?oc=5",
+          "summary": "Pokémon TCG: 30th Celebration Ultra-Premium Collections—Day & Night Pokemon.com",
+          "published": "Fri, 06 Nov 2026 08:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "52668e1ae07ec706bd4d",
+          "title": "Pokémon TCG: 30th Celebration Ditto Premium Collection - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNSFVjejFHY2JxUzRYdGNweFl1QXR2SEFpY3M3dGxoS3pRYnNHZ3AtOW9CaXhEb0RJWmZ1eDNmWGg2R2xnbkd2VjJRY0R0UzhzYlI2Mk1BMC1URTF6QWxoWXNEYlVaUWJsOGJDNmhITTY4Qmoxb2tFS3Uwa3VGdVp6THhkR1JGTElRSHUwbzJlR2RjNE54WWVid2g5OHE?oc=5",
+          "summary": "Pokémon TCG: 30th Celebration Ditto Premium Collection Pokemon.com",
+          "published": "Fri, 06 Nov 2026 08:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "1c2f05d53238aab79f62",
+          "title": "Check Out Every Pokémon TCG Product Release in November 2026 - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQN3hHOW5zZzdmSHFLLTV1X2F2bUhnX2Izakd0eGN2T0lVOFc0ejE4QTRleENYOXF5TUJhaG1KYlZ2bVVHSWpzY2pnZ1dfWnlhWXRxV2VCWER4U05ZYUptTUpsQ1VuYzN6M2RvU2VuZGdLcGVXdTBaZ1hBR1owQjFwaGdBRHV5UDZ1LWpDa1R2QjRTSTR1QzE4?oc=5",
+          "summary": "Check Out Every Pokémon TCG Product Release in November 2026 Pokemon.com",
+          "published": "Mon, 02 Nov 2026 08:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "f1a14cae59e90ea77886",
+          "title": "Pokémon Happy Meals Are Coming to McDonald’s in an Exciting New Way - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNSURsbW5GYVI0cDR0WDIxRXVGMHNRQkFFY3Z3WlV2OEp5ckFpX2FOeU5sampFUHVFUjZidUFYeXRGZzVfaUx6Z2dia2loUzB0T1dBUzVPcFJIbG1PUnRETHU2cUVzeWRJRHgzMlZvUzUwQWpPUnp4WS0zRWUxdk55UmVFc0M2UkNlN2xyRTJiUHVxM0NhOEJ5bkhXaHJnclcw?oc=5",
+          "summary": "Pokémon Happy Meals Are Coming to McDonald’s in an Exciting New Way Pokemon.com",
+          "published": "Thu, 29 Oct 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "12e3cc980cb9f82bbbc5",
+          "title": "Pokémon TCG Pocket: Dual Fusion Is Now Available - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNVHUxcEtmWnFXT3p4ZFJMLVM1ZTdkd1F6NjByNWo3NHI0a1N0ZFk4U3doeWd2ejJpbEtJZXh3SVlnNlZ3dDdWTWR2cmlETHI2RXZLRkVubTF6QW8tNnJ5S1pIUzgxVzN3MnhLMTVoc0o3bExleW84Yk5tRl9aWThJa1E5eVRFUQ?oc=5",
+          "summary": "Pokémon TCG Pocket: Dual Fusion Is Now Available Pokemon.com",
+          "published": "Wed, 28 Oct 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "cf85cfb67f4f049f2f4d",
+          "title": "Pokémon TCG: Mega Evolution—Delta Reign Product Showcase - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNRk9WblFKRmNiaUZCVWFHTF9mYl9fS1BTalIxTk1aMF9EMm5NZHNiUWQwajZZUXV4bmd0RmY4NDVTWXFtOU9mUVVud3k3cGdTSVdfa0FwbXRUbjNkY3FfZXZZOFczbW1XMjIxdWFjVGg3WVlGM2o5Y3lhaFRoVjFaMlRpWDRqLXZ6X2ttVkxVeEI?oc=5",
+          "summary": "Pokémon TCG: Mega Evolution—Delta Reign Product Showcase Pokemon.com",
+          "published": "Fri, 23 Oct 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
           "key": "92c40ce498b557700c4b",
           "title": "Get Kyogre, Groudon, and Giratina Pokémon TCG Promo Cards at Participating Retailers - Pokemon.com",
           "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOMUxRWk9rUWNZUF9NVlBSNXVqY003VFBrUHFscUN4NG9pMHoxa1dsdTRrV3ppZmNQN0RsajlUVDA4cjlOYkpJMUl6bnJQQVRrWjJUNHVaYnQwMEpmYVdLendzYmJuSlJfVHItMkFlODZmSGxJNjd5Ny1BODdBVk9XOVZvak5WQUNrV2hFVVJBLWNHek5nN1liY3Q5LXVtU3M3dDR6cFExTWY1SF9QVFRpRERKbUs?oc=5",
           "summary": "Get Kyogre, Groudon, and Giratina Pokémon TCG Promo Cards at Participating Retailers Pokemon.com",
           "published": "Fri, 23 Oct 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "714786be68ff4eccd87f",
+          "title": "Pokémon TCG Pocket: Dual Fusion Expansion Coming Soon - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNWFpyNnF6YzEwUTRWNGsxT0JycDk5WHV4bkpza2NBX25ORnNybUF3M1RNRzE1UUpvRmI0OHhBdUpISm11SFFCb016RlEwWlduM2dvQWplbUlBY2F1LVl3Zl9mOXc5Qk1CQlVlZ21ZMVV0d3VFNWttcVBYWmQwOUtyNTd3dmgxWkpuWFB5Tg?oc=5",
+          "summary": "Pokémon TCG Pocket: Dual Fusion Expansion Coming Soon Pokemon.com",
+          "published": "Tue, 20 Oct 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "28dbd441530a20212ecf",
+          "title": "A New Holiday Plush Collection Is Coming to Pokémon Center - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQb2RGdnNNejhPdVRlMHdrS2JuTFpvNmlpcWI3c2s4VHZLRjJ6SXh3ZXlQeUUtc05fVl94c1VaYkg2M0JCdV81Rk94WS1fNTZ1OGZUSVdfcnlGNmFRYXRIZEdWVkJLQTlsa1lqVFphMjNSRTFpMVhXTm41X09kX0hXTUNHRU5LWDBXV2RCRFNQNXRUZzNM?oc=5",
+          "summary": "A New Holiday Plush Collection Is Coming to Pokémon Center Pokemon.com",
+          "published": "Fri, 16 Oct 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "e3ec98c5cd4e4c71371b",
+          "title": "Read the Pokémon TCG Pocket October 2026 Producer Letter - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNUXBsdU96TkNIdmxiM1h3Y3FSalVLS3NxS211Rk15YU1MaDFXMDc2XzZRV21RRXlXTEJvdlItMW0wTmhsbW05NzNfcTVJUzNVQURpN0Q4blVwM19NYUVnOUxtMHBYWFBWUmstd0ZPRVhvUU8wU1QxSXA2bHp0cUgwSktyREJsMnZEaklLNjdueXdEZw?oc=5",
+          "summary": "Read the Pokémon TCG Pocket October 2026 Producer Letter Pokemon.com",
+          "published": "Thu, 15 Oct 2026 07:00:00 GMT",
           "publisher": "Pokemon.com",
           "retailer": "Pokemon.com",
           "image": "",
@@ -5258,22 +5317,11 @@
           "category": "news"
         },
         {
-          "key": "9e74385a89ae8a1065ec",
-          "title": "Gigantamax Duraludon Debuts in Pokémon GO Wild Area: Global Event - Pokemon.com",
-          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNdkVhaFJRSmFGb1VuUWV3SW9iVW9VZzNiU2YtazRQb2tlNHFKTG45cXdnSWljTHJMT1ZIeG1STWJuUzFSVmtmLXRpTFpLM3ZHdXN2NXJBVFoxcXp2TnJkdDhpY1NySjZnSEdwTm5GTFFaeHlBdExfeXU0dEVPbjJGTjZGOWpCMlc0ZU9nbkdDTUttMGltYzVmMmJfNmI?oc=5",
-          "summary": "Gigantamax Duraludon Debuts in Pokémon GO Wild Area: Global Event Pokemon.com",
-          "published": "Fri, 13 Nov 2026 16:13:25 GMT",
-          "publisher": "Pokemon.com",
-          "retailer": "Pokemon.com",
-          "image": "",
-          "category": "news"
-        },
-        {
-          "key": "056e439d8816b30ad031",
-          "title": "Check Out Every Pokémon TCG Product Release in September 2026 - Pokemon.com",
-          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNLXJ4Ny1mWDBzWllncHlaaVdoRnh3RmNFX0FjWGtRTkp2MlZWbjBGMVNxRHVOWlU0TnB5RU1zXzJRNFUxay1NUXNFblk2YjhvMTZlN3A2RGZjbXFobGtUdUtvMUQ2RVRmVUJKUUdZdldsV3hPVXd3djJZckxXMC1MYmdXWkZWcVJjZC1tUTlPUEtZNVZwamZXZg?oc=5",
-          "summary": "Check Out Every Pokémon TCG Product Release in September 2026 Pokemon.com",
-          "published": "Tue, 01 Sep 2026 07:00:00 GMT",
+          "key": "a16b9077f4f3600a325c",
+          "title": "Come Party at the Pokémon Center Night Out Experience - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNbGNrYzFuaWU1MUxPMHd5b3J6QUwxcEw5SmUtNmk3THhBUDRvOFNNejFTWFVwZXpJaVBrRldDXzh5SzZXdlRBRVlRQ3NHWXFEREliWTJmT040NEtVRjZDUHBvNHdxMlMzT3pBV2MyN2NNa1pPdGhaRmh1Nk04cnRxU29KQ3VXOHRlUXhKX1Z3?oc=5",
+          "summary": "Come Party at the Pokémon Center Night Out Experience Pokemon.com",
+          "published": "Tue, 22 Sep 2026 07:00:00 GMT",
           "publisher": "Pokemon.com",
           "retailer": "Pokemon.com",
           "image": "",
@@ -5291,6 +5339,17 @@
           "category": "news"
         },
         {
+          "key": "c7424d0723ff696a0fa6",
+          "title": "Pokémon TCG: 30th Celebration Poster Collection - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQRGxSaThaRnZFcXpPMk1tNXhZb1FZbGtqMmtPS2ZCMFJfamhwTEhndjhGS1loSkF2Nk5QQUV4eVNPNUtlTzhyTVZpUldQSzA0X2hrMWJZS1FmUlFVRFpoTXRhT2YyRDZVU1loYTJDTGVaZjQ5VkkxT2hmX29OTndydjIzNW9pdlV5OUdVTThQR0JIWWc?oc=5",
+          "summary": "Pokémon TCG: 30th Celebration Poster Collection Pokemon.com",
+          "published": "Wed, 16 Sep 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
           "key": "996ddce1172ac4c8a3bf",
           "title": "Get a Mewtwo Pokémon TCG Promo Card at Participating Retailers - Pokemon.com",
           "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPQzhIdElHdERXTEpyRTNpQ0o5Unp3SW9aa3RYaFFPYUZadGh6T0RQRlpSQlF6SUhzX0RSNURvZXZYTUtIaGR4elc1T2N2M0FfdmgzWWF2MzJ3dlB0bE5ydE5UaVZpX19lVHFRQW5yYjN4T1lPYTNRZnlqdGo3Q3BNU3BOUVBBRmNzTlZUZUhva2lEd0F0T0RVRWVB?oc=5",
@@ -5302,66 +5361,22 @@
           "category": "news"
         },
         {
-          "key": "b46d3f733bf0dc42b488",
-          "title": "Pokémon Unveils New Umbreon Eeveelution Design - ScreenRant",
-          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE83azNhX3JCRi02RnhxQXNSRTBIV0R5ZnRkZHF3Qi1HbFBGeDBfQ1MwUUwzZEdHNEhaY0c2SGdycGhjVmd2UmJzb05GOXM4TXBOeV80ZUc3RmZqSnIwc1hCSFIzTHJFMTlLLXFF?oc=5",
-          "summary": "Pokémon Unveils New Umbreon Eeveelution Design ScreenRant",
-          "published": "Wed, 18 Nov 2026 06:00:18 GMT",
-          "publisher": "ScreenRant",
-          "retailer": "ScreenRant",
-          "image": "",
-          "category": "news"
-        },
-        {
-          "key": "a2bbb490388ffc1061c5",
-          "title": "Pokémon Pokopia Apples to Applin Event Guide, From Syrupy Apples To A Kitchen Table - Nintendo Life",
-          "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOeUU3dUF4SFJkSTU4UW04UzU3b01sUXQzSmxvSlRGWEFSaVN4cWdxeU5NSXprdTNuakFpLWRLa0NVQ1NQQ1pOYm1uRWdKd0NDX0k5SFhzdHgtYzExWDdyOUc3TWJZNk9CaUNyU083OG90cW1rRFM4Vkd3TzZXUG44b1d6c216ZXM?oc=5",
-          "summary": "Pokémon Pokopia Apples to Applin Event Guide, From Syrupy Apples To A Kitchen Table Nintendo Life",
-          "published": "Mon, 16 Nov 2026 11:57:04 GMT",
-          "publisher": "Nintendo Life",
-          "retailer": "Nintendo Life",
-          "image": "",
-          "category": "news"
-        },
-        {
-          "key": "a16b9077f4f3600a325c",
-          "title": "Come Party at the Pokémon Center Night Out Experience - Pokemon.com",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNbGNrYzFuaWU1MUxPMHd5b3J6QUwxcEw5SmUtNmk3THhBUDRvOFNNejFTWFVwZXpJaVBrRldDXzh5SzZXdlRBRVlRQ3NHWXFEREliWTJmT040NEtVRjZDUHBvNHdxMlMzT3pBV2MyN2NNa1pPdGhaRmh1Nk04cnRxU29KQ3VXOHRlUXhKX1Z3?oc=5",
-          "summary": "Come Party at the Pokémon Center Night Out Experience Pokemon.com",
-          "published": "Tue, 22 Sep 2026 07:00:00 GMT",
+          "key": "056e439d8816b30ad031",
+          "title": "Check Out Every Pokémon TCG Product Release in September 2026 - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNLXJ4Ny1mWDBzWllncHlaaVdoRnh3RmNFX0FjWGtRTkp2MlZWbjBGMVNxRHVOWlU0TnB5RU1zXzJRNFUxay1NUXNFblk2YjhvMTZlN3A2RGZjbXFobGtUdUtvMUQ2RVRmVUJKUUdZdldsV3hPVXd3djJZckxXMC1MYmdXWkZWcVJjZC1tUTlPUEtZNVZwamZXZg?oc=5",
+          "summary": "Check Out Every Pokémon TCG Product Release in September 2026 Pokemon.com",
+          "published": "Tue, 01 Sep 2026 07:00:00 GMT",
           "publisher": "Pokemon.com",
           "retailer": "Pokemon.com",
           "image": "",
           "category": "news"
         },
         {
-          "key": "e3ec98c5cd4e4c71371b",
-          "title": "Read the Pokémon TCG Pocket October 2026 Producer Letter - Pokemon.com",
-          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNUXBsdU96TkNIdmxiM1h3Y3FSalVLS3NxS211Rk15YU1MaDFXMDc2XzZRV21RRXlXTEJvdlItMW0wTmhsbW05NzNfcTVJUzNVQURpN0Q4blVwM19NYUVnOUxtMHBYWFBWUmstd0ZPRVhvUU8wU1QxSXA2bHp0cUgwSktyREJsMnZEaklLNjdueXdEZw?oc=5",
-          "summary": "Read the Pokémon TCG Pocket October 2026 Producer Letter Pokemon.com",
-          "published": "Thu, 15 Oct 2026 07:00:00 GMT",
-          "publisher": "Pokemon.com",
-          "retailer": "Pokemon.com",
-          "image": "",
-          "category": "news"
-        },
-        {
-          "key": "6d680a6b1a0815135876",
-          "title": "Pokémon TCG: First Partner Illustration Collection—Series 3 - Pokemon.com",
-          "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPRF9QY2cwRFYxLUNGR19rS0lxc3FkTWwteU4zajItaXJzRi16VnJ2RXhxN1RWNU5TYV9BbWgxM0I5NjNLcXZIVFFXRlQyRjAxcWYwOHBHVnBKSFhhNEEzWWNpVWFlbG5RZHU0NUNlV2lMdW9qdVduUmF4alBrUlJzVXlXTkI3NjNyNktrb0VXNmZlTmdlamVZMjZwMHB5RVYtRE1B?oc=5",
-          "summary": "Pokémon TCG: First Partner Illustration Collection—Series 3 Pokemon.com",
-          "published": "Fri, 07 Aug 2026 07:00:00 GMT",
-          "publisher": "Pokemon.com",
-          "retailer": "Pokemon.com",
-          "image": "",
-          "category": "news"
-        },
-        {
-          "key": "c7424d0723ff696a0fa6",
-          "title": "Pokémon TCG: 30th Celebration Poster Collection - Pokemon.com",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQRGxSaThaRnZFcXpPMk1tNXhZb1FZbGtqMmtPS2ZCMFJfamhwTEhndjhGS1loSkF2Nk5QQUV4eVNPNUtlTzhyTVZpUldQSzA0X2hrMWJZS1FmUlFVRFpoTXRhT2YyRDZVU1loYTJDTGVaZjQ5VkkxT2hmX29OTndydjIzNW9pdlV5OUdVTThQR0JIWWc?oc=5",
-          "summary": "Pokémon TCG: 30th Celebration Poster Collection Pokemon.com",
-          "published": "Wed, 16 Sep 2026 07:00:00 GMT",
+          "key": "7ac2ba60a1f5152713b4",
+          "title": "Check Out the New Pokémon TCG Pocket Cards Announced at PokémonXP - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQR2txVW04Z0gzTngtazRqU2NHT0lOeTBSTzZoMlNCeWxSOGxGa1FXY3VseTE3V2NSbXJPQWpGcUlZTEczSDV0QTNiampjU3JxYmtBeDVBY3owMHlDZWxRNksxSkVaNTkzWW5TOXN3SWdfRHg3eldHeXhPaDJLU0dzT1VNVFYzMS1weEQtZi1ydmliUVh4SXZ0OWR3Wll1dw?oc=5",
+          "summary": "Check Out the New Pokémon TCG Pocket Cards Announced at PokémonXP Pokemon.com",
+          "published": "Fri, 28 Aug 2026 07:00:00 GMT",
           "publisher": "Pokemon.com",
           "retailer": "Pokemon.com",
           "image": "",
@@ -5370,7 +5385,7 @@
       ],
       "initialized": true,
       "source_url": "https://news.google.com/rss/search?q=%28Pokemon+TCG+OR+Pokemon+Center%29&hl=en-US&gl=US&ceid=US%3Aen",
-      "last_success": "2026-11-19T11:52:08Z",
+      "last_success": "2026-11-19T13:10:55Z",
       "last_item_count": 30,
       "last_successful_urls": [
         "https://news.google.com/rss/search?q=%28Pokemon+TCG+OR+Pokemon+Center%29&hl=en-US&gl=US&ceid=US%3Aen"
@@ -5386,10 +5401,10 @@
       "url": "https://www.pokemoncenter.com/category/new-releases",
       "response_url": "https://www.pokemoncenter.com/category/new-releases",
       "status": "warning",
-      "last_checked": "2026-11-19T11:50:44Z",
+      "last_checked": "2026-11-19T13:09:29Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 244,
+      "duration_ms": 296,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 1 KB, title=product markers=0, data-pid=0, product-like links=0, JSON blocks=0",
       "notes": "Broad Pokémon Center new-release catalog. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -5412,10 +5427,10 @@
       "url": "https://www.pokemoncenter.com/category/back-in-stock",
       "response_url": "https://www.pokemoncenter.com/category/back-in-stock",
       "status": "warning",
-      "last_checked": "2026-11-19T11:50:44Z",
+      "last_checked": "2026-11-19T13:09:29Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 68,
+      "duration_ms": 86,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 6 KB, title=Pardon Our Interruption; product markers=0, d, product-like links=0, JSON blocks=0, access-challenge marker detected",
       "notes": "Broad Pokémon Center back-in-stock catalog. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -5438,10 +5453,10 @@
       "url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "response_url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "status": "warning",
-      "last_checked": "2026-11-19T11:50:44Z",
+      "last_checked": "2026-11-19T13:09:29Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 574,
+      "duration_ms": 521,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 137 KB, title=\"pokemon\" : Target; product markers=0, data-p, product-like links=0, JSON blocks=1, access-challenge marker detected",
       "notes": "Broad Pokémon search. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -5464,10 +5479,10 @@
       "url": "https://www.walmart.com/search?q=pokemon",
       "response_url": "https://www.walmart.com/search?q=pokemon",
       "status": "warning",
-      "last_checked": "2026-11-19T11:50:45Z",
+      "last_checked": "2026-11-19T13:09:30Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 315,
+      "duration_ms": 551,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Last-known catalog retained: 146 listing(s); this scan did not confirm current inventory. Response diagnostics: 15 KB, title=Robot or human?; product markers=0, data-pid=, product-like links=0, JSON blocks=0, access-challenge marker detected",
       "notes": "Broad Pokémon search. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -5490,7 +5505,7 @@
       "type": "catalog",
       "url": "https://www.bestbuy.com/site/searchpage.jsp?browsedCategory=pcmcat1604992984556&id=pcat17071&qp=brandcharacter_facet%3DFranchise%7EPok%C3%A9mon&st=categoryid%24pcmcat1604992984556",
       "status": "error",
-      "last_checked": "2026-11-19T11:52:02Z",
+      "last_checked": "2026-11-19T13:10:47Z",
       "items_found": 0,
       "new_alerts": 0,
       "successful_urls": 0,
@@ -5506,10 +5521,10 @@
       "url": "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending",
       "response_url": "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending",
       "status": "warning",
-      "last_checked": "2026-11-19T11:52:05Z",
+      "last_checked": "2026-11-19T13:10:52Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 3321,
+      "duration_ms": 4631,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 629 KB, title=pokemon | Search Results | GameStop; product , product-like links=0, JSON blocks=1",
       "notes": "Broad Pokémon search sorted from newest release to oldest. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -5531,7 +5546,7 @@
       "type": "catalog",
       "url": "https://www.amazon.com/s?k=pokemon",
       "status": "error",
-      "last_checked": "2026-11-19T11:52:08Z",
+      "last_checked": "2026-11-19T13:10:54Z",
       "items_found": 174,
       "new_alerts": 0,
       "successful_urls": 0,
@@ -5546,14 +5561,14 @@
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=%28Pokemon+TCG+OR+Pokemon+Center%29&hl=en-US&gl=US&ceid=US%3Aen",
       "status": "ok",
-      "last_checked": "2026-11-19T11:52:08Z",
+      "last_checked": "2026-11-19T13:10:55Z",
       "items_found": 30,
-      "new_alerts": 0,
+      "new_alerts": 3,
       "successful_urls": 1,
       "configured_urls": 1,
       "message": "30 recent Pokémon news article(s) loaded.",
       "notes": "News articles matching Pokémon TCG or Pokémon Center. The official Pokémon media portal is linked on the homepage.",
-      "elapsed_ms": 573,
+      "elapsed_ms": 640,
       "response_health": {
         "successful": 1,
         "configured": 1,
@@ -5563,6 +5578,66 @@
     }
   ],
   "events": [
+    {
+      "id": "a94e8356bcfecbca43",
+      "type": "news",
+      "title": "Pokémon TCG Pocket: Dual Fusion Expansion Coming Soon - Pokemon.com",
+      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNWFpyNnF6YzEwUTRWNGsxT0JycDk5WHV4bkpza2NBX25ORnNybUF3M1RNRzE1UUpvRmI0OHhBdUpISm11SFFCb016RlEwWlduM2dvQWplbUlBY2F1LVl3Zl9mOXc5Qk1CQlVlZ21ZMVV0d3VFNWttcVBYWmQwOUtyNTd3dmgxWkpuWFB5Tg?oc=5",
+      "retailer": "Pokemon.com",
+      "retailer_key": "pokemon-news",
+      "category": "news",
+      "source_name": "Pokémon News · TCG & Pokémon Center",
+      "source_id": "pokemon-news-google",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "unknown",
+      "image": "",
+      "release_date": "",
+      "summary": "Pokémon TCG Pocket: Dual Fusion Expansion Coming Soon Pokemon.com",
+      "detected_at": "2026-11-19T13:10:55Z",
+      "email_sent": true
+    },
+    {
+      "id": "2818d57414fe339548",
+      "type": "news",
+      "title": "A New Holiday Plush Collection Is Coming to Pokémon Center - Pokemon.com",
+      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQb2RGdnNNejhPdVRlMHdrS2JuTFpvNmlpcWI3c2s4VHZLRjJ6SXh3ZXlQeUUtc05fVl94c1VaYkg2M0JCdV81Rk94WS1fNTZ1OGZUSVdfcnlGNmFRYXRIZEdWVkJLQTlsa1lqVFphMjNSRTFpMVhXTm41X09kX0hXTUNHRU5LWDBXV2RCRFNQNXRUZzNM?oc=5",
+      "retailer": "Pokemon.com",
+      "retailer_key": "pokemon-news",
+      "category": "news",
+      "source_name": "Pokémon News · TCG & Pokémon Center",
+      "source_id": "pokemon-news-google",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "unknown",
+      "image": "",
+      "release_date": "",
+      "summary": "A New Holiday Plush Collection Is Coming to Pokémon Center Pokemon.com",
+      "detected_at": "2026-11-19T13:10:55Z",
+      "email_sent": true
+    },
+    {
+      "id": "b75bff999cb9eac934",
+      "type": "news",
+      "title": "Check Out the New Pokémon TCG Pocket Cards Announced at PokémonXP - Pokemon.com",
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQR2txVW04Z0gzTngtazRqU2NHT0lOeTBSTzZoMlNCeWxSOGxGa1FXY3VseTE3V2NSbXJPQWpGcUlZTEczSDV0QTNiampjU3JxYmtBeDVBY3owMHlDZWxRNksxSkVaNTkzWW5TOXN3SWdfRHg3eldHeXhPaDJLU0dzT1VNVFYzMS1weEQtZi1ydmliUVh4SXZ0OWR3Wll1dw?oc=5",
+      "retailer": "Pokemon.com",
+      "retailer_key": "pokemon-news",
+      "category": "news",
+      "source_name": "Pokémon News · TCG & Pokémon Center",
+      "source_id": "pokemon-news-google",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "unknown",
+      "image": "",
+      "release_date": "",
+      "summary": "Check Out the New Pokémon TCG Pocket Cards Announced at PokémonXP Pokemon.com",
+      "detected_at": "2026-11-19T13:10:55Z",
+      "email_sent": true
+    },
     {
       "id": "46fb49a67ee8c49cdb",
       "type": "first_seen",
@@ -7067,16 +7142,16 @@
     }
   ],
   "pending_email": [],
-  "email_status": "No new personal alerts in this scan.",
+  "email_status": "Email digest sent successfully.",
   "summary": {
     "enabled_sources": 8,
     "successful_sources": 1,
     "failed_sources": 2,
     "warning_sources": 5,
-    "new_alerts": 0,
+    "new_alerts": 3,
     "first_seen": 0,
     "new_items": 0,
-    "tracked_products": 0
+    "tracked_products": 320
   },
   "subscriber_delivery_status": "1 active subscriber(s); 0 digest(s) sent; 0 queued for retry.",
   "retailer_route_rotation": {
@@ -7110,5 +7185,6 @@
       "source_id": "best-buy-pokemon-tcg",
       "message": "All available source routes failed at the request layer."
     }
-  }
+  },
+  "last_trigger": "push"
 }

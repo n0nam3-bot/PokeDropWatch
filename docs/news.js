@@ -75,9 +75,13 @@
       });
     }
 
-    return [...byUrl.values()].sort((a, b) =>
-      String(b.published || b.detected_at || '').localeCompare(String(a.published || a.detected_at || ''))
-    );
+    const publishedTime = (article) => {
+      const published = Date.parse(String(article.published || ''));
+      if (Number.isFinite(published)) return published;
+      const detected = Date.parse(String(article.detected_at || ''));
+      return Number.isFinite(detected) ? detected : 0;
+    };
+    return [...byUrl.values()].sort((a, b) => publishedTime(b) - publishedTime(a));
   }
 
   function matchesFilters(article) {
@@ -237,6 +241,23 @@
     });
   }
 
+  function updateRunMetadata() {
+    const lastChecked = $('lastChecked');
+    if (!lastChecked || !latestData?.last_checked) return;
+    const checked = new Date(latestData.last_checked);
+    if (Number.isNaN(checked.getTime())) return;
+    const formatted = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(checked);
+    const triggerLabels = {
+      schedule: 'scheduled check',
+      push: 'ZIP upload',
+      workflow_dispatch: 'manual run',
+      'manual/local': 'manual/local run',
+    };
+    const trigger = triggerLabels[latestData.last_trigger] || '';
+    const text = `Last checked ${formatted}${trigger ? ` · ${trigger}` : ''}`;
+    if (lastChecked.textContent !== text) lastChecked.textContent = text;
+  }
+
   async function refresh() {
     try {
       const response = await fetch(`./data/state.json?t=${Date.now()}`, { cache: 'no-store' });
@@ -244,6 +265,7 @@
       latestData = await response.json();
       renderNews();
       updateSourceCards();
+      updateRunMetadata();
     } catch (error) {
       console.warn('PokéDrop Watch news/filter extension could not refresh:', error);
     }
@@ -261,6 +283,11 @@
     if (['categoryFilter', 'retailerFilter', 'exactMatch'].includes(event.target?.id)) queueRender();
   });
   $('alertSearch')?.addEventListener('input', queueRender);
+
+  const lastChecked = $('lastChecked');
+  if (lastChecked && 'MutationObserver' in window) {
+    new MutationObserver(updateRunMetadata).observe(lastChecked, { childList: true, characterData: true, subtree: true });
+  }
 
   const sourceGrid = $('sourceGrid');
   if (sourceGrid && 'MutationObserver' in window) {

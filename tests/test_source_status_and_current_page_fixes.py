@@ -29,7 +29,18 @@ class SourceStatusAndPageFixesTests(unittest.TestCase):
     def test_source_guide_explains_broad_search_and_current_scan_policy(self):
         guide = self.read("docs/SOURCE_HEALTH.md")
         self.assertIn("Broad retailer searches are used where available", guide)
-        self.assertIn("Every configured primary retailer route is checked on every scan", guide)
+        self.assertIn("intended interval, not a guarantee", guide)
+        self.assertIn("**PARTIAL**", guide)
+        self.assertIn("**BLOCKED**", guide)
+        self.assertIn("**NO MATCH**", guide)
+
+    def test_dashboard_labels_saved_catalogs_as_products_tracked(self):
+        page = self.read("docs/index.html")
+        self.assertIn("PRODUCTS TRACKED", page)
+        self.assertIn("last-known records when a source is unavailable", page)
+        runner = self.read("monitor/run.py")
+        self.assertIn('state["last_trigger"] = os.environ.get("GITHUB_EVENT_NAME", "manual/local")', runner)
+        self.assertIn('count_saved_product_records(sources, state.get("items", {}))', runner)
 
     def test_source_guide_explains_gym_leader_review_states_and_session_security(self):
         guide = self.read("docs/SOURCE_HEALTH.html")
@@ -49,6 +60,8 @@ class SourceStatusAndPageFixesTests(unittest.TestCase):
             self.assertIn("cron: '*/15 * * * *'", text)
         guide = self.read("docs/SOURCE_HEALTH.html")
         self.assertIn("every 15 minutes", guide)
+        runner = self.read("monitor/run.py")
+        self.assertIn("intended interval, not a guarantee", runner)
 
 
 if __name__ == "__main__":

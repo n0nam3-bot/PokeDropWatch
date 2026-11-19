@@ -7,12 +7,12 @@ The news feed is scanned separately from retailer inventory. Its current article
 ## Statuses
 
 - **MATCHES** — at least one current product or article was recognized.
-- **FALLBACK** — the primary route did not provide usable entries; a backup route did.
-- **BLOCKED** — the retailer returned an access-protection page.
-- **NO MATCH** — the checked content returned no recognized entries.
-- **ISSUE** — the request failed.
+- **PARTIAL** — only some configured URLs responded or produced usable results; coverage for that source is incomplete.
+- **BLOCKED** — a retailer returned an access-protection page such as a bot check or “Pardon Our Interruption.” The page responded, but it did not expose usable inventory.
+- **NO MATCH** — the page responded without an access block, but the parser recognized no products or articles. This is a parser miss, not proof that the retailer has no Pokémon products.
+- **ISSUE** — all configured URLs failed at the request layer, such as a connection or retry failure.
 
-Every configured primary retailer route is checked on every scan. All configured URLs for that source are handled in the same 15-minute cycle; no route is rotated or postponed to a later scan.
+The GitHub Actions workflow is configured to start every 15 minutes. That is the intended interval, not a guarantee that GitHub will start every scheduled run exactly on time. ZIP uploads and manual workflow runs also trigger scans, so “Last checked” may reflect one of those runs instead of a scheduled scan.
 
 ## Product categories
 
@@ -20,7 +20,7 @@ The retailer parser stores the category detected for each item. The public site 
 
 ## Current versus saved records
 
-A product retained from an earlier scan remains in the saved catalog so its price and availability history are not lost. Its last-seen timestamp indicates when the monitor last observed it. A saved record is not a live stock confirmation.
+The dashboard’s **Products tracked** number counts distinct product records retained in the saved retailer catalogs. It can include last-known records when the latest request is blocked or fails. Source cards separately report what the latest scan actually recognized. A saved record is not a live stock confirmation; its last-seen timestamp indicates when the monitor last observed it.
 
 ## Owner troubleshooting
 

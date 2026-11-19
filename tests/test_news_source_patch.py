@@ -64,6 +64,18 @@ class NewsSourcePatchTests(unittest.TestCase):
         self.assertEqual(events[0]["retailer"], "Another Publisher")
         self.assertEqual(len(result["state"]["articles"]), 2)
 
+    def test_articles_are_saved_newest_to_oldest_regardless_of_feed_order(self):
+        body = feed(
+            article("older", "Older Pokémon story", "https://news.example/older", "Tue, 17 Nov 2026 10:00:00 GMT", "News Example"),
+            article("newer", "Newer Pokémon story", "https://news.example/newer", "Thu, 19 Nov 2026 10:00:00 GMT", "News Example"),
+            article("middle", "Middle Pokémon story", "https://news.example/middle", "Wed, 18 Nov 2026 10:00:00 GMT", "News Example"),
+        )
+        _events, result = self.scan(body, {"items": {}})
+        self.assertEqual(
+            [item["title"] for item in result["state"]["articles"]],
+            ["Newer Pokémon story", "Middle Pokémon story", "Older Pokémon story"],
+        )
+
     def test_changed_feed_url_establishes_a_quiet_new_baseline(self):
         previous = {
             "source_url": "https://news.example/old-feed", "initialized": True,

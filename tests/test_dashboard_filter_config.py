@@ -12,6 +12,11 @@ class DashboardFilterConfigTests(unittest.TestCase):
         self.assertIn('<option value="news">News</option>', page)
         self.assertIn('data-filter="news"', page)
 
+    def test_news_feed_is_sorted_by_parsed_publication_time_newest_first(self):
+        news = (ROOT / "docs" / "news.js").read_text(encoding="utf-8")
+        self.assertIn("Date.parse(String(article.published || ''))", news)
+        self.assertIn("publishedTime(b) - publishedTime(a)", news)
+
     def test_retailer_routes_are_compact_and_broad_where_supported(self):
         config = json.loads((ROOT / "config" / "sources.json").read_text(encoding="utf-8"))
         sources = {source["id"]: source for source in config["sources"]}

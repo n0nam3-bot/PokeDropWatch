@@ -7,6 +7,8 @@ from __future__ import annotations
 
 import hashlib
 import time
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 import xml.etree.ElementTree as ET
 from typing import Any
 from urllib.parse import urlparse
@@ -44,6 +46,23 @@ def _feed_publishers(body: str) -> dict[str, str]:
             publishers[link] = publisher
     return publishers
 
+
+
+def _published_timestamp(value: Any) -> float:
+    """Parse RSS RFC-822 and ISO-8601 dates for chronological sorting."""
+    raw = engine.clean_text(value, 120)
+    if not raw:
+        return float("-inf")
+    try:
+        parsed = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+    except ValueError:
+        try:
+            parsed = parsedate_to_datetime(raw)
+        except (TypeError, ValueError, OverflowError):
+            return float("-inf")
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc).timestamp()
 
 def _valid_feed_document(body: str) -> bool:
     try:
@@ -123,7 +142,11 @@ def scan_source_with_article_archive(
         detail = " | ".join(fetch_errors) or "No configured feed URL could be read."
         raise requests.RequestException(f"All configured news feed URLs failed. {detail}")
 
-    articles = list(collected.values())[:30]
+    articles = sorted(
+        collected.values(),
+        key=lambda item: _published_timestamp(item.get("published")),
+        reverse=True,
+    )[:30]
     events: list[dict[str, Any]] = []
     now = engine.utc_now()
     for article in articles:

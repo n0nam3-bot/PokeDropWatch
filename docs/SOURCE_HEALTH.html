@@ -52,7 +52,7 @@
 
       <section class="health-card">
         <h2>How often the monitor checks</h2>
-        <p>The GitHub Actions workflow is scheduled to start every 15 minutes. A scan timestamp changes only after the monitor completes and writes a new dashboard state. The workflow runs its automated tests before scanning; when a test fails, the scan and email-digest step is skipped, so the dashboard keeps showing the last successful scan time.</p>
+        <p>The GitHub Actions workflow is configured to start every 15 minutes. This is the intended interval, not a guarantee that GitHub will start every scheduled run exactly on time. ZIP uploads and manual workflow runs also trigger scans. The Last checked timestamp records the latest completed monitor run and identifies whether it was a scheduled check, ZIP upload, or manual run. The scan step is configured to run even when automated tests fail, so a red workflow can still have refreshed the dashboard.</p>
         <div class="health-note"><p><strong>Reading “Last checked”:</strong> compare the timestamp with your local time. A timestamp several hours old means the dashboard is showing an older successful scan, not that the stores have been rechecked and confirmed unchanged. Check the latest <strong>PokeDrop Watch</strong> run in GitHub Actions. A failed “Run automated tests” step prevents “Scan sources and send email digest” from running.</p></div>
       </section>
 
@@ -62,6 +62,8 @@
           <thead><tr><th>Status</th><th>What happened</th><th>How to interpret it</th></tr></thead>
           <tbody>
             <tr><td><span class="health-pill match">MATCHES</span></td><td>The page or feed responded and the parser recognized one or more usable Pokémon entries.</td><td>At least one listing was read. It does not mean every listing was found or that every item is available to buy.</td></tr>
+            <tr><td><span class="health-pill nomatch">PARTIAL</span></td><td>Only some configured URLs responded or produced usable results.</td><td>Some coverage is available, but this source was not fully checked. Failed or blocked alternate routes may hide additional listings.</td></tr>
+            <tr><td><span class="health-pill issue">BLOCKED</span></td><td>The retailer returned an access-protection or bot-check page.</td><td>The HTTP request may have returned a page successfully, but it did not expose usable inventory. This is not a normal parser miss.</td></tr>
             <tr><td><span class="health-pill nomatch">NO MATCH</span></td><td>The request succeeded, but the parser found zero usable Pokémon entries in the returned content.</td><td>This is a parser miss, not proof the retailer has no Pokémon products. The site may render results with JavaScript, have changed its markup, return different data to automated requests, or require a session/location.</td></tr>
             <tr><td><span class="health-pill issue">ISSUE</span></td><td>The request failed before usable content could be parsed, for example a connection timeout, retry failure, block, DNS/TLS failure, or HTTP error.</td><td>This is an automated-access or source-availability problem. It does not prove the retailer's public site is unavailable to people.</td></tr>
           </tbody>
@@ -70,7 +72,7 @@
         <div class="health-note"><p><strong>Example:</strong> a summary of “3 source matches · 5 parser misses · 2 request errors” means three source groups contributed parsed Pokémon entries, five groups responded but produced no recognized entries, and two groups could not be fetched. If the catalog says 176 listings, that is the number of products the monitor currently recognizes and tracks—not a count of every product on those stores, and not a guarantee they are in stock.</p></div>
         <div class="health-grid">
           <div class="health-mini"><strong>Source matches</strong><p>The number of configured source groups whose parser recognized Pokémon entries. It is not the number of pages that responded.</p></div>
-          <div class="health-mini"><strong>Listings seen</strong><p>The number of distinct product records in the latest saved catalog after normalization and duplicate handling.</p></div>
+          <div class="health-mini"><strong>Products tracked</strong><p>The number of distinct saved product records across retailer catalogs. This includes last-known listings when a source is blocked or its latest request fails.</p></div>
           <div class="health-mini"><strong>New alerts</strong><p>Events currently counted in the latest monitor state, such as a first discovery, observed restock, price drop, or news item.</p></div>
           <div class="health-mini"><strong>Configured sources</strong><p>The number of enabled retailer/category/news source groups. A group may request one URL or several alternatives.</p></div>
         </div>

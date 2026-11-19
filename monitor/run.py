@@ -101,6 +101,31 @@ def migrate_state(state: dict) -> dict:
 
 
 
+def count_saved_product_records(sources: list[dict], items: dict) -> int:
+    """Count distinct saved product records, including last-known records."""
+    identities = set()
+    for source in sources:
+        if source.get("type") not in {"catalog", "product"}:
+            continue
+        source_state = items.get(source.get("id"), {}) if isinstance(items, dict) else {}
+        products = source_state.get("products", {}) if isinstance(source_state, dict) else {}
+        if not isinstance(products, dict):
+            continue
+        fallback_retailer = source.get("retailer_key") or normalize_match_text(
+            source.get("retailer") or source.get("name") or "other"
+        ).replace(" ", "-")
+        for product in products.values():
+            if not isinstance(product, dict):
+                continue
+            title = normalize_match_text(product.get("title", ""))
+            retailer = product.get("retailer_key") or fallback_retailer
+            retailer = normalize_match_text(retailer).replace(" ", "-")
+            if title:
+                identities.add((retailer, title))
+    return len(identities)
+
+
+
 OBSOLETE_EXPERIMENT_FILES = (
     "monitor/broad_source_patch.py",
     "monitor/engine_retailer_group_patch.py",
@@ -123,12 +148,52 @@ def cleanup_obsolete_experiment_files(repo_root: Path) -> None:
             target.unlink()
 
 
+def refresh_public_source_health_guide(repo_root: Path) -> None:
+    """Refresh the existing guide's interval, status, and saved-count explanations."""
+    guide = repo_root / "docs" / "SOURCE_HEALTH.html"
+    if not guide.is_file():
+        return
+    content = guide.read_text(encoding="utf-8")
+    old_schedule = (
+        "The GitHub Actions workflow is scheduled to start every 15 minutes. A scan timestamp changes only after the monitor completes and writes a new dashboard state. "
+        "The workflow runs its automated tests before scanning; when a test fails, the scan and email-digest step is skipped, so the dashboard keeps showing the last successful scan time."
+    )
+    new_schedule = (
+        "The GitHub Actions workflow is configured to start every 15 minutes. This is the intended interval, not a guarantee that GitHub will start every scheduled run exactly on time. "
+        "ZIP uploads and manual workflow runs also trigger scans. The Last checked timestamp records the latest completed monitor run and identifies whether it was a scheduled check, ZIP upload, or manual run. "
+        "The scan step is configured to run even when automated tests fail, so a red workflow can still have refreshed the dashboard."
+    )
+    content = content.replace(old_schedule, new_schedule)
+    partial_row = (
+        '<tr><td><span class="health-pill nomatch">PARTIAL</span></td>'
+        '<td>Only some configured URLs responded or produced usable results.</td>'
+        '<td>Some coverage is available, but this source was not fully checked. Failed or blocked alternate routes may hide additional listings.</td></tr>\n            '
+    )
+    blocked_row = (
+        '<tr><td><span class="health-pill issue">BLOCKED</span></td>'
+        '<td>The retailer returned an access-protection or bot-check page.</td>'
+        '<td>The HTTP request may have returned a page successfully, but it did not expose usable inventory. This is not a normal parser miss.</td></tr>\n            '
+    )
+    no_match_marker = '<tr><td><span class="health-pill nomatch">NO MATCH</span>'
+    if partial_row.splitlines()[0] not in content and no_match_marker in content:
+        content = content.replace(no_match_marker, partial_row + blocked_row + no_match_marker, 1)
+    content = content.replace("<strong>Listings seen</strong>", "<strong>Products tracked</strong>")
+    content = content.replace(
+        "The number of distinct product records in the latest saved catalog after normalization and duplicate handling.",
+        "The number of distinct saved product records across retailer catalogs. This includes last-known listings when a source is blocked or its latest request fails.",
+    )
+    if content != guide.read_text(encoding="utf-8"):
+        guide.write_text(content, encoding="utf-8")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", default="config/sources.json")
     parser.add_argument("--state", default="docs/data/state.json")
     args = parser.parse_args()
-    cleanup_obsolete_experiment_files(Path(__file__).resolve().parents[1])
+    repo_root = Path(__file__).resolve().parents[1]
+    cleanup_obsolete_experiment_files(repo_root)
+    refresh_public_source_health_guide(repo_root)
     config_path, state_path = Path(args.config), Path(args.state)
     config = read_json(config_path, {})
     state = read_json(state_path, {
@@ -189,6 +254,7 @@ def main() -> int:
             print(f"ERROR {source['id']}: {exc}", file=sys.stderr)
 
     state["last_checked"] = utc_now()
+    state["last_trigger"] = os.environ.get("GITHUB_EVENT_NAME", "manual/local")
     state["source_status"] = source_status
     email_events = [event for event in new_events if is_email_eligible_event(event)]
     all_events = email_events + state.get("pending_email", [])
@@ -227,7 +293,6 @@ def main() -> int:
         settings.get("email_digest_subject_prefix", "PokéDrop Watch"),
     )
 
-    product_source_ids = {source["id"] for source in sources if source.get("type") in {"catalog", "product"}}
     state["summary"] = {
         "enabled_sources": len(sources),
         "successful_sources": sum(1 for item in source_status if item["status"] == "ok"),
@@ -236,11 +301,7 @@ def main() -> int:
         "new_alerts": len(email_events),
         "first_seen": sum(1 for event in new_events if event.get("type") == "first_seen"),
         "new_items": sum(1 for event in new_events if event.get("type") == "new_item"),
-        "tracked_products": sum(
-            int(item.get("current_items_found", item.get("items_found", 0)) or 0)
-            for item in source_status
-            if item.get("id") in product_source_ids and item.get("status") != "error"
-        ),
+        "tracked_products": count_saved_product_records(sources, state.get("items", {})),
     }
     write_json(state_path, state)
     print(
