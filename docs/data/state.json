@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-11-19T05:31:19Z",
+  "last_checked": "2026-11-19T10:05:47Z",
   "items": {
     "pokemon-center-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T05:29:51Z",
+      "last_success": "2026-11-19T10:04:20Z",
       "source_url": "https://www.pokemoncenter.com/category/tcg-cards",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -15,7 +15,7 @@
     "pokemon-center-plush": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T05:29:51Z",
+      "last_success": "2026-11-19T10:04:20Z",
       "source_url": "https://www.pokemoncenter.com/category/plush",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -2594,7 +2594,7 @@
     "target-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T05:29:52Z",
+      "last_success": "2026-11-19T10:04:21Z",
       "source_url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -4859,7 +4859,7 @@
         }
       },
       "initialized": true,
-      "last_success": "2026-11-19T05:29:53Z",
+      "last_success": "2026-11-19T10:04:21Z",
       "source_url": "https://www.walmart.com/search?q=pokemon",
       "last_item_count": 146,
       "last_successful_urls": [
@@ -4881,7 +4881,7 @@
           "pokemon_scoped": true,
           "retailer_key": "gamestop",
           "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T05:31:14Z",
+          "last_seen": "2026-11-19T10:05:42Z",
           "availability_checked": false
         },
         "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-delta-reign-booster-bundle/450740.html": {
@@ -4897,7 +4897,7 @@
           "pokemon_scoped": true,
           "retailer_key": "gamestop",
           "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T05:31:14Z",
+          "last_seen": "2026-11-19T10:05:42Z",
           "availability_checked": false
         },
         "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-30th-celebration-ultra-premium-collection-styles-may-vary/450768.html": {
@@ -4913,7 +4913,7 @@
           "pokemon_scoped": true,
           "retailer_key": "gamestop",
           "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T05:31:14Z",
+          "last_seen": "2026-11-19T10:05:42Z",
           "availability_checked": false
         },
         "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-delta-reign-three-booster-blister/450743.html": {
@@ -4929,7 +4929,7 @@
           "pokemon_scoped": true,
           "retailer_key": "gamestop",
           "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T05:31:14Z",
+          "last_seen": "2026-11-19T10:05:42Z",
           "availability_checked": false
         },
         "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-mega-rayquaza-ex-premium-tournament-box/453567.html": {
@@ -4945,7 +4945,7 @@
           "pokemon_scoped": true,
           "retailer_key": "gamestop",
           "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T05:31:14Z",
+          "last_seen": "2026-11-19T10:05:42Z",
           "availability_checked": false
         },
         "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-delta-reign-sleeved-booster-pack-styles-may-vary/450719.html": {
@@ -4961,7 +4961,7 @@
           "pokemon_scoped": true,
           "retailer_key": "gamestop",
           "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T05:31:14Z",
+          "last_seen": "2026-11-19T10:05:42Z",
           "availability_checked": false
         },
         "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-30th-celebration-ditto-premium-collection-and-squishmallows-pokemon-eevee-10-in-medium-plush-bundle/454323.html": {
@@ -4977,7 +4977,7 @@
           "pokemon_scoped": true,
           "retailer_key": "gamestop",
           "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T05:31:14Z",
+          "last_seen": "2026-11-19T10:05:42Z",
           "availability_checked": false
         },
         "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-pokemon-day-2027-collection/454507.html": {
@@ -4993,7 +4993,7 @@
           "pokemon_scoped": true,
           "retailer_key": "gamestop",
           "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T05:31:14Z",
+          "last_seen": "2026-11-19T10:05:42Z",
           "availability_checked": false
         },
         "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-delta-reign-elite-trainer-box/450739.html": {
@@ -5009,7 +5009,7 @@
           "pokemon_scoped": true,
           "retailer_key": "gamestop",
           "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T05:31:14Z",
+          "last_seen": "2026-11-19T10:05:42Z",
           "availability_checked": false
         },
         "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-tcg-30th-celebration-bundle-with-1-ultra-premium-collection-style-may-vary-24-inch-mew-plush/453744.html": {
@@ -5025,7 +5025,7 @@
           "pokemon_scoped": true,
           "retailer_key": "gamestop",
           "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T05:31:14Z",
+          "last_seen": "2026-11-19T10:05:42Z",
           "availability_checked": false
         },
         "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-30th-celebration-binder-collection/448589.html": {
@@ -5041,7 +5041,7 @@
           "pokemon_scoped": true,
           "retailer_key": "gamestop",
           "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T05:31:14Z",
+          "last_seen": "2026-11-19T10:05:42Z",
           "availability_checked": false
         },
         "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-charizard-ex-special-collection/421027.html": {
@@ -5057,7 +5057,7 @@
           "pokemon_scoped": true,
           "retailer_key": "gamestop",
           "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T05:31:14Z",
+          "last_seen": "2026-11-19T10:05:42Z",
           "availability_checked": false
         },
         "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-prismatic-evolutions-elite-trainer-box/417631.html": {
@@ -5073,7 +5073,7 @@
           "pokemon_scoped": true,
           "retailer_key": "gamestop",
           "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T05:31:14Z",
+          "last_seen": "2026-11-19T10:05:42Z",
           "availability_checked": false
         },
         "https://www.gamestop.com/toys-games/trading-cards/products/ultra-pro-pokemon-weedle-evolutions-9-pocket-pro-binder/439014.html": {
@@ -5089,7 +5089,7 @@
           "pokemon_scoped": true,
           "retailer_key": "gamestop",
           "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T05:31:14Z",
+          "last_seen": "2026-11-19T10:05:42Z",
           "availability_checked": false
         },
         "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-delta-reign-booster-box/450757.html": {
@@ -5105,7 +5105,7 @@
           "pokemon_scoped": true,
           "retailer_key": "gamestop",
           "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T05:31:14Z",
+          "last_seen": "2026-11-19T10:05:42Z",
           "availability_checked": false
         },
         "https://www.gamestop.com/toys-games/trading-cards/products/ultra-pro-pokemon-mew-9-pocket-pro-binder/449904.html": {
@@ -5121,7 +5121,7 @@
           "pokemon_scoped": true,
           "retailer_key": "gamestop",
           "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T05:31:14Z",
+          "last_seen": "2026-11-19T10:05:42Z",
           "availability_checked": false
         },
         "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-pitch-black-booster-bundle/445745.html": {
@@ -5137,7 +5137,7 @@
           "pokemon_scoped": true,
           "retailer_key": "gamestop",
           "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T05:31:14Z",
+          "last_seen": "2026-11-19T10:05:42Z",
           "availability_checked": false
         },
         "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-delta-reign-build-and-battle-box/450760.html": {
@@ -5168,7 +5168,7 @@
           "pokemon_scoped": true,
           "retailer_key": "gamestop",
           "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T05:31:14Z",
+          "last_seen": "2026-11-19T10:05:42Z",
           "availability_checked": false
         },
         "https://www.gamestop.com/toys-games/trading-cards/products/ultra-pro-pokemon-energy-water-deck-protector-sleeves-65-count/448291.html": {
@@ -5184,7 +5184,7 @@
           "pokemon_scoped": true,
           "retailer_key": "gamestop",
           "first_seen_at": "2026-11-18T16:52:28Z",
-          "last_seen": "2026-11-19T05:31:14Z",
+          "last_seen": "2026-11-19T10:05:42Z",
           "availability_checked": false
         },
         "https://www.gamestop.com/toys-games/trading-cards/products/gamestop-power-pack-2025-series-2-styles-may-vary/424728.html": {
@@ -5200,7 +5200,7 @@
           "pokemon_scoped": true,
           "retailer_key": "gamestop",
           "first_seen_at": "2026-11-19T02:07:53Z",
-          "last_seen": "2026-11-19T05:31:14Z",
+          "last_seen": "2026-11-19T10:05:42Z",
           "availability_checked": false
         },
         "https://www.gamestop.com/toys-games": {
@@ -5216,12 +5216,12 @@
           "pokemon_scoped": true,
           "retailer_key": "gamestop",
           "first_seen_at": "2026-11-19T02:07:53Z",
-          "last_seen": "2026-11-19T05:31:14Z",
+          "last_seen": "2026-11-19T10:05:42Z",
           "availability_checked": false
         }
       },
       "initialized": true,
-      "last_success": "2026-11-19T05:31:14Z",
+      "last_success": "2026-11-19T10:05:42Z",
       "source_url": "https://www.gamestop.com/toys-games/trading-cards/trading-card-games?prefn1=franchise&prefv1=Pokemon&view=new&hybrid=true&srule=most-popular",
       "last_item_count": 21,
       "last_successful_urls": [
@@ -5286,10 +5286,10 @@
       "url": "https://www.pokemoncenter.com/category/tcg-cards",
       "response_url": "https://www.pokemoncenter.com/category/tcg-cards",
       "status": "warning",
-      "last_checked": "2026-11-19T05:29:51Z",
+      "last_checked": "2026-11-19T10:04:20Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 263,
+      "duration_ms": 191,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 6 KB, title=Pardon Our Interruption, product-like links=0, JSON blocks=0",
       "notes": "Pokémon Center trading-card catalog.",
       "successful_urls": 1,
@@ -5312,10 +5312,10 @@
       "url": "https://www.pokemoncenter.com/category/plush",
       "response_url": "https://www.pokemoncenter.com/category/plush",
       "status": "warning",
-      "last_checked": "2026-11-19T05:29:51Z",
+      "last_checked": "2026-11-19T10:04:20Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 76,
+      "duration_ms": 28,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 6 KB, title=Pardon Our Interruption, product-like links=0, JSON blocks=0",
       "notes": "Pokémon Center plush catalog.",
       "successful_urls": 1,
@@ -5338,10 +5338,10 @@
       "url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "response_url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "status": "warning",
-      "last_checked": "2026-11-19T05:29:52Z",
+      "last_checked": "2026-11-19T10:04:21Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 592,
+      "duration_ms": 527,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 137 KB, title=\"pokemon\" : Target, product-like links=0, JSON blocks=1, access-challenge marker detected",
       "notes": "Broad Pokémon search. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -5364,10 +5364,10 @@
       "url": "https://www.walmart.com/search?q=pokemon",
       "response_url": "https://www.walmart.com/search?q=pokemon",
       "status": "warning",
-      "last_checked": "2026-11-19T05:29:53Z",
+      "last_checked": "2026-11-19T10:04:21Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 429,
+      "duration_ms": 194,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Last-known catalog retained: 146 listing(s); this scan did not confirm current inventory. Response diagnostics: 15 KB, title=Robot or human?, product-like links=0, JSON blocks=0, access-challenge marker detected",
       "notes": "Broad Pokémon search. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -5390,7 +5390,7 @@
       "type": "catalog",
       "url": "https://www.bestbuy.com/site/searchpage.jsp?browsedCategory=pcmcat1604992984556&id=pcat17071&qp=brandcharacter_facet%3DFranchise%7EPok%C3%A9mon&st=categoryid%24pcmcat1604992984556",
       "status": "error",
-      "last_checked": "2026-11-19T05:31:10Z",
+      "last_checked": "2026-11-19T10:05:38Z",
       "items_found": 0,
       "new_alerts": 0,
       "successful_urls": 0,
@@ -5406,10 +5406,10 @@
       "url": "https://www.gamestop.com/toys-games/trading-cards/trading-card-games?prefn1=franchise&prefv1=Pokemon&view=new&hybrid=true&srule=most-popular",
       "response_url": "https://www.gamestop.com/toys-games/trading-cards/trading-card-games?prefn1=franchise&prefv1=Pokemon&view=new&hybrid=true&srule=most-popular",
       "status": "ok",
-      "last_checked": "2026-11-19T05:31:14Z",
+      "last_checked": "2026-11-19T10:05:42Z",
       "items_found": 21,
       "new_alerts": 0,
-      "duration_ms": 4182,
+      "duration_ms": 4173,
       "message": "Fetched 1/1 configured URL(s). 21 relevant Pokémon listing(s) recognized.",
       "notes": "Current configured GameStop Pokémon TCG catalog route.",
       "successful_urls": 1,
@@ -5428,7 +5428,7 @@
       "type": "catalog",
       "url": "https://www.amazon.com/s?k=pokemon",
       "status": "error",
-      "last_checked": "2026-11-19T05:31:16Z",
+      "last_checked": "2026-11-19T10:05:44Z",
       "items_found": 174,
       "new_alerts": 0,
       "successful_urls": 0,
@@ -5443,7 +5443,7 @@
       "type": "rss",
       "url": "https://www.pokebeach.com/feed",
       "status": "error",
-      "last_checked": "2026-11-19T05:31:19Z",
+      "last_checked": "2026-11-19T10:05:47Z",
       "items_found": 6,
       "new_alerts": 0,
       "successful_urls": 0,
