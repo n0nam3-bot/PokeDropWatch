@@ -1,0 +1,217 @@
+name: PokeDrop Watch
+
+on:
+  push:
+    paths:
+      - '*.zip'
+      - '**/*.zip'
+      - '.github/workflows/pokedrop-watch.yml'
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokedrop-watch
+  cancel-in-progress: false
+
+jobs:
+  run-monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Find and install the uploaded application ZIP
+        shell: bash
+        run: |
+          python - <<'PY'
+          from __future__ import annotations
+          from io import BytesIO
+          from pathlib import Path, PurePosixPath
+          import stat
+          import zipfile
+
+          ROOT = Path.cwd().resolve()
+          REQUIRED = ('monitor/run.py', 'docs/index.html', 'config/sources.json')
+          MAX_FILES = 1500
+          MAX_EXPANDED = 75 * 1024 * 1024
+
+          def clean_name(raw: str) -> str:
+              name = raw.replace('\\', '/')
+              while name.startswith('./'):
+                  name = name[2:]
+              path = PurePosixPath(name)
+              if path.is_absolute() or not path.parts or any(p in {'', '.', '..'} for p in path.parts):
+                  raise ValueError(f'Unsafe ZIP path: {raw}')
+              return path.as_posix()
+
+          def install_from_zip_bytes(blob: bytes, label: str, depth: int = 0) -> bool:
+              if depth > 3:
+                  return False
+              try:
+                  archive = zipfile.ZipFile(BytesIO(blob))
+              except zipfile.BadZipFile:
+                  return False
+
+              with archive:
+                  files = [item for item in archive.infolist() if not item.is_dir()]
+                  if len(files) > MAX_FILES or sum(item.file_size for item in files) > MAX_EXPANDED:
+                      raise SystemExit(f'{label}: ZIP is too large or contains too many files.')
+
+                  normalized = {}
+                  for item in files:
+                      normalized[item] = clean_name(item.filename)
+
+                  prefixes = []
+                  for marker in REQUIRED:
+                      matches = [name[:-len(marker)] for name in normalized.values() if name.endswith(marker)]
+                      if not matches:
+                          prefixes = []
+                          break
+                      prefixes.append(matches[0])
+                  if prefixes and len(set(prefixes)) == 1:
+                      prefix = prefixes[0]
+                      plan = []
+                      for item, name in normalized.items():
+                          if not name.startswith(prefix):
+                              continue
+                          relative = name[len(prefix):]
+                          relative_path = PurePosixPath(relative)
+                          if not relative_path.parts or relative_path.is_absolute() or any(p in {'', '.', '..'} for p in relative_path.parts):
+                              raise SystemExit(f'Unsafe install path in {label}: {item.filename}')
+                          if relative_path.parts[0] in {'.git', '.github', 'updates'}:
+                              raise SystemExit(f'Install ZIP may not write to {relative_path.parts[0]}/')
+                          mode = (item.external_attr >> 16) & 0xffff
+                          if stat.S_ISLNK(mode):
+                              raise SystemExit(f'Symlink rejected: {item.filename}')
+                          destination = (ROOT / Path(*relative_path.parts)).resolve()
+                          if ROOT not in destination.parents:
+                              raise SystemExit(f'Unsafe destination: {item.filename}')
+                          plan.append((item, destination))
+
+                      if not plan:
+                          raise SystemExit(f'{label}: package markers found but no files could be installed.')
+                      for item, destination in plan:
+                          destination.parent.mkdir(parents=True, exist_ok=True)
+                          with archive.open(item, 'r') as source, destination.open('wb') as target:
+                              while chunk := source.read(1024 * 1024):
+                                  target.write(chunk)
+                          print(f'INSTALLED: {destination.relative_to(ROOT)}')
+                      print(f'SUCCESS: installed {len(plan)} application files from {label}')
+                      return True
+
+                  # The original starter bundle is a ZIP containing another ZIP.
+                  # Search inner ZIP files so users can upload either download.
+                  for item in files:
+                      if item.filename.lower().endswith('.zip'):
+                          nested = archive.read(item)
+                          if install_from_zip_bytes(nested, f'{label} → {item.filename}', depth + 1):
+                              return True
+              return False
+
+          already_installed = all(Path(p).is_file() for p in REQUIRED)
+          uploaded_archives = sorted(
+              path for path in ROOT.rglob('*.zip')
+              if path.is_file() and '.git' not in path.relative_to(ROOT).parts
+          )
+          package_installed = False
+
+          for archive_path in uploaded_archives:
+              if not zipfile.is_zipfile(archive_path):
+                  print(f'SKIP: {archive_path.name} is not a valid ZIP archive.')
+                  continue
+              if install_from_zip_bytes(archive_path.read_bytes(), archive_path.name):
+                  archive_path.unlink()
+                  package_installed = True
+                  already_installed = True
+                  print(f'REMOVED UPLOAD: {archive_path.name}')
+
+          if not already_installed and uploaded_archives and not package_installed:
+              names = ', '.join(path.name for path in uploaded_archives)
+              raise SystemExit(
+                  'No PokéDrop Watch application package was found in the uploaded ZIP(s): '
+                  + names
+                  + '. Upload PokeDropWatch_Install.zip or PokeDropWatch_Starter_Bundle.zip to the repository root.'
+              )
+          if not already_installed:
+              print('WAITING: no application package found yet. Upload either supplied install ZIP to the repository root.')
+          elif not package_installed:
+              print('Application files already exist; uploaded ZIPs will be handled as patches below.')
+          PY
+
+      - name: Apply uploaded ZIP patches
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          mapfile -d '' -t zips < <(find . -type f -name '*.zip' ! -path './.git/*' -print0 | sort -z)
+          if [ ${#zips[@]} -eq 0 ]; then
+            echo "No ZIP patches waiting to be applied."
+          else
+            if [ ! -f scripts/apply_patch.py ]; then
+              echo "ERROR: patch installer is missing. The main application ZIP must be installed first."
+              exit 1
+            fi
+            for zip_file in "${zips[@]}"; do
+              echo "Applying ZIP patch: ${zip_file}"
+              python scripts/apply_patch.py "$zip_file"
+              rm -f "$zip_file"
+              echo "Applied and removed: ${zip_file}"
+            done
+          fi
+
+      - name: Install scanner dependencies
+        run: |
+          if [ -f monitor/requirements.txt ]; then
+            python -m pip install --disable-pip-version-check -r monitor/requirements.txt
+          else
+            echo "Application is not installed yet; skipping dependency installation."
+          fi
+
+      - name: Run automated tests
+        run: |
+          if [ -d tests ]; then
+            python -m unittest discover -s tests -v
+          else
+            echo "No test directory found; skipping tests."
+          fi
+
+      - name: Scan sources and send email digest
+        if: always()
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_APP_PASSWORD: ${{ secrets.SMTP_APP_PASSWORD }}
+          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+          PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
+        run: |
+          if [ -f monitor/run.py ]; then
+            python monitor/run.py
+          else
+            echo "No monitor installed yet; upload the application ZIP and run this workflow again."
+          fi
+
+      - name: Commit installed files and dashboard status
+        if: always()
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "Install or update PokeDrop Watch"
+            git push
+          else
+            echo "No repository file changes to commit."
+          fi

@@ -8,8 +8,9 @@ import os
 import sys
 from pathlib import Path
 
-# Install the focused parser/date extensions before importing scanner symbols.
+# Install retailer/date recovery extensions before importing scanner symbols.
 import engine_patch  # noqa: F401
+import engine_recovery_patch  # noqa: F401
 from engine import (
     clean_product_title, deduplicate_products, is_valid_event, make_session,
     is_email_eligible_event, normalize_match_text, scan_source, send_email, utc_now,
@@ -45,8 +46,6 @@ def migrate_state(state: dict) -> dict:
             if event.get("type") != "news":
                 event["title"] = clean_product_title(event.get("title", ""))
 
-    # Historical discoveries are not genuine product-drop alerts. Keep a single
-    # visible first-seen record per retailer/title and never retry it as email.
     deduped_events = []
     seen_events = set()
     for event in state.get("events", []):
@@ -69,8 +68,6 @@ def migrate_state(state: dict) -> dict:
         if is_valid_event(event) and event.get("type") not in {"first_seen", "new_item"}
     ]
 
-    # Clean legacy baselines and collapse duplicate marketplace cards with the
-    # same title at one retailer, preserving the best price/image record.
     for source_state in state.get("items", {}).values():
         products = source_state.get("products")
         if not isinstance(products, dict):
@@ -115,8 +112,6 @@ def main() -> int:
     sources = [s for s in config.get("sources", []) if s.get("enabled", True)]
     if not sources:
         raise SystemExit("No enabled sources found in config/sources.json")
-    # Remove baselines for retired/disabled source IDs; otherwise old products from
-    # a renamed source could appear indefinitely in the public tracked-products view.
     active_source_ids = {source["id"] for source in sources}
     state["items"] = {
         source_id: source_state for source_id, source_state in state.get("items", {}).items()
@@ -139,7 +134,7 @@ def main() -> int:
                 print(f"WARNING {source['id']}: {result['status']['message']}")
             else:
                 print(f"OK {source['id']}: {result['status']['items_found']} relevant item(s), {len(events)} alert(s)")
-        except Exception as exc:  # one blocked source must not prevent other stores from scanning
+        except Exception as exc:
             failures += 1
             prior = next((x for x in state.get("source_status", []) if x.get("id") == source["id"]), {})
             source_status.append({
@@ -153,7 +148,7 @@ def main() -> int:
                 "items_found": state.get("items", {}).get(source["id"], {}).get("last_item_count", prior.get("items_found", 0)),
                 "new_alerts": 0,
                 "successful_urls": 0,
-                "configured_urls": min(4, 1 + len(source.get("alternate_urls", []))),
+                "configured_urls": min(4, 1 + len(source.get("alternate_urls", [])) + (1 if source.get("id") == "pokebeach-news" else 0)),
                 "message": f"All configured URLs failed: {str(exc)[:210]}",
                 "notes": source.get("notes", ""),
             })
@@ -161,8 +156,6 @@ def main() -> int:
 
     state["last_checked"] = utc_now()
     state["source_status"] = source_status
-    # New-item/first-seen discoveries remain visible in the public feed and are
-    # deliberately excluded from email; only observed changes and news are mailed.
     email_events = [event for event in new_events if is_email_eligible_event(event)]
     all_events = email_events + state.get("pending_email", [])
     pending = {}
@@ -203,7 +196,7 @@ def main() -> int:
     product_source_ids = {source["id"] for source in sources if source.get("type") in {"catalog", "product"}}
     state["summary"] = {
         "enabled_sources": len(sources),
-        "successful_sources": sum(1 for x in source_status if x["status"] == "ok"),
+        "successful_sources": sum(1 for item in source_status if item["status"] == "ok"),
         "failed_sources": failures,
         "warning_sources": warnings,
         "new_alerts": len(email_events),
