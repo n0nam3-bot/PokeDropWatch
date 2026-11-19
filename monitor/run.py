@@ -12,6 +12,8 @@ from pathlib import Path
 import engine_patch  # noqa: F401
 import engine_recovery_patch  # noqa: F401
 import trainer_preferences_patch  # noqa: F401
+import baseline_patch  # noqa: F401 - suppress stale first-seen bursts on changed catalog scopes
+import news_source_patch  # noqa: F401 - persist current RSS articles for the homepage
 from engine import (
     clean_product_title, deduplicate_products, is_valid_event, make_session,
     is_email_eligible_event, normalize_match_text, scan_source, send_email, utc_now,
@@ -97,11 +99,34 @@ def migrate_state(state: dict) -> dict:
     return state
 
 
+
+OBSOLETE_EXPERIMENT_FILES = (
+    "monitor/broad_source_patch.py",
+    "monitor/engine_retailer_group_patch.py",
+    "docs/source-groups.js",
+    "docs/source-groups.css",
+    "docs/RETAILER_SCAN_DESIGN.md",
+    "docs/RETAILER_SCAN_HEALTH.html",
+    "tests/test_conditional_retailer_routes.py",
+)
+
+def cleanup_obsolete_experiment_files(repo_root: Path) -> None:
+    """Remove only the known, unreferenced route-rotation experiment leftovers."""
+    root = repo_root.resolve()
+    for relative in OBSOLETE_EXPERIMENT_FILES:
+        target = (root / relative).resolve()
+        if root not in target.parents:
+            continue
+        if target.is_file():
+            target.unlink()
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", default="config/sources.json")
     parser.add_argument("--state", default="docs/data/state.json")
     args = parser.parse_args()
+    cleanup_obsolete_experiment_files(Path(__file__).resolve().parents[1])
     config_path, state_path = Path(args.config), Path(args.state)
     config = read_json(config_path, {})
     state = read_json(state_path, {
@@ -155,7 +180,7 @@ def main() -> int:
                 "items_found": state.get("items", {}).get(source["id"], {}).get("last_item_count", prior.get("items_found", 0)),
                 "new_alerts": 0,
                 "successful_urls": 0,
-                "configured_urls": min(4, 1 + len(source.get("alternate_urls", [])) + (1 if source.get("id") == "pokebeach-news" else 0)),
+                "configured_urls": min(4, 1 + len(source.get("alternate_urls", []))),
                 "message": f"All configured URLs failed: {str(exc)[:210]}",
                 "notes": source.get("notes", ""),
             })

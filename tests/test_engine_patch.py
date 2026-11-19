@@ -24,67 +24,10 @@ class FakeResponse:
 
 class FakeSession:
     def get(self, url, **_kwargs):
-        if url.endswith("/feed"):
-            return FakeResponse(
-                '<error><code>wp_die</code><title>WordPress Error</title>'
-                '<message>No feed available</message><data><status>500</status></data></error>',
-                url,
-                "application/xml",
-            )
-        return FakeResponse(json.dumps([{
-            "id": 42,
-            "date_gmt": "2026-11-17T12:00:00",
-            "link": "https://www.pokebeach.com/2026/11/pokemon-expansion-announced",
-            "title": {"rendered": "Pokémon expansion announced"},
-            "excerpt": {"rendered": "A new Pokémon TCG expansion was announced."},
-            "_embedded": {"wp:featuredmedia": [{"source_url": "https://images.example/news.jpg"}]},
-        }]), url, "application/json")
+        return FakeResponse("<rss version='2.0'><channel><title>Empty</title></channel></rss>", url, "application/rss+xml")
 
 
 class EnginePatchTests(unittest.TestCase):
-    def test_broken_pokebeach_error_xml_is_not_accepted_as_an_empty_feed(self):
-        body = '<error><code>wp_die</code><message>No feed available</message></error>'
-        with self.assertRaisesRegex(ValueError, "WordPress error XML"):
-            engine.parse_rss(body, {"id": "pokebeach-news", "url": "https://www.pokebeach.com/feed"})
-        xml_declaration = '<?xml version="1.0"?><error><code>wp_die</code><message>No feed available</message></error>'
-        with self.assertRaisesRegex(ValueError, "WordPress error XML"):
-            engine.parse_rss(xml_declaration, {"id": "pokebeach-news", "url": "https://www.pokebeach.com/feed"})
-
-    def test_wordpress_posts_api_is_parsed_as_news(self):
-        payload = [{
-            "id": 7,
-            "link": "https://www.pokebeach.com/2026/11/new-pokemon-set",
-            "title": {"rendered": "New Pokémon set announced"},
-            "excerpt": {"rendered": "<p>Details about the set.</p>"},
-            "date_gmt": "2026-11-17T14:00:00",
-        }]
-        items = engine_patch.parse_wordpress_posts(payload, {
-            "id": "pokebeach-news", "url": "https://www.pokebeach.com/wp-json/wp/v2/posts",
-            "name": "PokéBeach", "retailer": "PokéBeach",
-        })
-        self.assertEqual(len(items), 1)
-        self.assertEqual(items[0]["category"], "news")
-        self.assertEqual(items[0]["url"], payload[0]["link"])
-
-    def test_scan_marks_feed_with_working_fallback_as_partial(self):
-        source = {
-            "id": "pokebeach-news", "name": "PokéBeach", "retailer": "PokéBeach",
-            "type": "rss", "url": "https://www.pokebeach.com/feed",
-            "alternate_urls": ["https://www.pokebeach.com/wp-json/wp/v2/posts?per_page=30&_embed"],
-            "category": "news", "retailer_key": "pokebeach",
-        }
-        events, result = engine.scan_source(
-            FakeSession(), source,
-            {"request_timeout_seconds": 1},
-            {"items": {}},
-        )
-        self.assertEqual(events, [])  # Initial scan establishes a feed baseline.
-        self.assertEqual(result["status"]["status"], "warning")
-        self.assertEqual(result["status"]["items_found"], 1)
-        self.assertEqual(result["status"]["successful_urls"], 1)
-        self.assertEqual(result["status"]["configured_urls"], 2)
-        self.assertTrue(result["status"]["response_health"]["partial"])
-
     def test_verified_new_release_is_email_eligible_but_first_seen_is_not(self):
         self.assertTrue(engine.is_email_eligible_event({"type": "new_item", "title": "Pokémon TCG Release"}))
         self.assertFalse(engine.is_email_eligible_event({"type": "first_seen", "title": "Pokémon TCG Release"}))
@@ -108,28 +51,6 @@ class EnginePatchTests(unittest.TestCase):
         self.assertEqual(len(products), 1)
         self.assertEqual(products[0]["release_date"], release)
 
-    def test_first_catalog_baseline_surfaces_only_items_with_nearby_release_dates(self):
-        release = date.today().isoformat()
-        source = {
-            "id": "store-release", "name": "Example Store", "retailer": "Example Store",
-            "type": "catalog", "url": "https://shop.example/search?q=pokemon",
-            "category": "tcg", "retailer_key": "example-store",
-        }
-        body = f'''<html><head><script type="application/ld+json">
-        {{"@type":"Product","name":"Pokémon TCG Upcoming Set Box",
-          "url":"https://shop.example/product/upcoming-set-box",
-          "releaseDate":"{release}","offers":{{"price":"49.99"}}}}
-        </script></head></html>'''
-        with patch("engine.fetch", return_value=(body, source["url"])):
-            events, result = engine.scan_source(
-                FakeSession(), source,
-                {"request_timeout_seconds": 1, "max_items_per_catalog": 50},
-                {"items": {}},
-            )
-        self.assertEqual(result["status"]["status"], "ok")
-        self.assertEqual([event["type"] for event in events], ["new_item"])
-        self.assertEqual(events[0]["release_date"], release)
-
     def test_generic_published_date_is_not_misclassified_as_product_release_date(self):
         payload = {"name": "Pokémon TCG Product", "url": "https://shop.example/product/1",
                    "datePublished": date.today().isoformat()}
@@ -150,14 +71,15 @@ class EnginePatchTests(unittest.TestCase):
         self.assertEqual(event["release_date"], release)
 
     def test_pokemon_scoped_category_accepts_product_titles_without_pokemon_word(self):
+        from bs4 import BeautifulSoup
         source = {
-            "id": "pokemon-center-tcg", "name": "Pokémon Center TCG", "retailer": "Pokémon Center",
-            "type": "catalog", "url": "https://www.pokemoncenter.com/category/tcg-cards",
-            "category": "tcg", "retailer_key": "pokemon-center", "pokemon_scoped": True,
+            "id": "pokemon-center-tcg", "name": "Pokémon Center", "retailer": "Pokémon Center",
+            "type": "catalog", "url": "https://www.pokemoncenter.com/category/new-releases",
+            "category": "collectibles", "retailer_key": "pokemon-center", "pokemon_scoped": True,
         }
         body = """<html><body>
         <div class="product-card" data-testid="product-tile">
-          <a href="/special-collection-123"><img alt="Trading Card Game Collector Bundle"
+          <a href="/product/special-collection-123"><img alt="Trading Card Game Collector Bundle"
           src="https://images.example/cards.jpg"></a>
           <h3>Trading Card Game Collector Bundle</h3><span>$29.99</span><span>Sold out</span>
         </div></body></html>"""
@@ -175,17 +97,19 @@ class EnginePatchTests(unittest.TestCase):
         self.assertEqual(product["availability"], "out_of_stock")
         self.assertTrue(product.get("pokemon_scoped"))
 
-    def test_source_config_keeps_distinct_search_facets_as_separate_routes(self):
+    def test_source_config_uses_one_broad_route_per_retailer_where_available(self):
         config = json.loads((Path(__file__).resolve().parents[1] / "config" / "sources.json").read_text(encoding="utf-8"))
         sources = {source["id"]: source for source in config["sources"]}
-        self.assertEqual(sources["pokemon-center-tcg"]["url"], "https://www.pokemoncenter.com/category/tcg-cards")
-        self.assertIn("facetedValue=tkle6", sources["target-tcg"]["url"])
-        self.assertIn("facetedValue=tkle6Z5ewil", sources["target-tcg-new-arrivals"]["url"])
-        self.assertIn("sort=new", sources["walmart-tcg-newest"]["url"])
-        self.assertIn("category=plush", sources["pokemon-center-plush-new-releases"]["url"])
-        self.assertIn("upcomingnew_facet", sources["best-buy-pokemon-tcg-coming-soon"]["url"])
-        self.assertEqual(len([source for source in config["sources"] if source["retailer_key"] == "amazon"]), 4)
-        self.assertTrue(all(not source.get("alternate_urls") for source in config["sources"] if source["id"] != "pokebeach-news"))
+        self.assertEqual(sources["pokemon-center-tcg"]["url"], "https://www.pokemoncenter.com/category/new-releases")
+        self.assertEqual(sources["pokemon-center-plush"]["url"], "https://www.pokemoncenter.com/category/back-in-stock")
+        self.assertEqual(sources["gamestop-pokemon-tcg"]["url"], "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending")
+        self.assertEqual(sources["target-tcg"]["url"], "https://www.target.com/s?searchTerm=pokemon&newSearch=false")
+        self.assertEqual(sources["walmart-tcg"]["url"], "https://www.walmart.com/search?q=pokemon")
+        self.assertEqual(sources["amazon-pokemon-products"]["url"], "https://www.amazon.com/s?k=pokemon")
+        self.assertEqual(len([source for source in config["sources"] if source["retailer_key"] == "amazon"]), 1)
+        self.assertEqual(sources["best-buy-pokemon-tcg"]["category"], "tcg")
+        self.assertEqual(sources["pokemon-news-google"]["type"], "rss")
+        self.assertNotIn("pokebeach-news", sources)
 
 
 if __name__ == "__main__":

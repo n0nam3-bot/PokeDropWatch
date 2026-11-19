@@ -1,25 +1,25 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-11-19T10:05:47Z",
+  "last_checked": "2026-11-19T11:10:41Z",
   "items": {
     "pokemon-center-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T10:04:20Z",
-      "source_url": "https://www.pokemoncenter.com/category/tcg-cards",
+      "last_success": "2026-11-19T11:09:16Z",
+      "source_url": "https://www.pokemoncenter.com/category/new-releases",
       "last_item_count": 0,
       "last_successful_urls": [
-        "https://www.pokemoncenter.com/category/tcg-cards"
+        "https://www.pokemoncenter.com/category/new-releases"
       ]
     },
     "pokemon-center-plush": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T10:04:20Z",
-      "source_url": "https://www.pokemoncenter.com/category/plush",
+      "last_success": "2026-11-19T11:09:16Z",
+      "source_url": "https://www.pokemoncenter.com/category/back-in-stock",
       "last_item_count": 0,
       "last_successful_urls": [
-        "https://www.pokemoncenter.com/category/plush"
+        "https://www.pokemoncenter.com/category/back-in-stock"
       ]
     },
     "amazon-pokemon-products": {
@@ -2594,7 +2594,7 @@
     "target-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T10:04:21Z",
+      "last_success": "2026-11-19T11:09:16Z",
       "source_url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -4859,7 +4859,7 @@
         }
       },
       "initialized": true,
-      "last_success": "2026-11-19T10:04:21Z",
+      "last_success": "2026-11-19T11:09:17Z",
       "source_url": "https://www.walmart.com/search?q=pokemon",
       "last_item_count": 146,
       "last_successful_urls": [
@@ -4867,406 +4867,13 @@
       ]
     },
     "gamestop-pokemon-tcg": {
-      "products": {
-        "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-30th-celebration-booster-bundle/452105.html": {
-          "title": "Pokemon Trading Card Game: 30th Celebration Booster Bundle",
-          "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-30th-celebration-booster-bundle/452105.html",
-          "price": null,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "",
-          "sku": "",
-          "retailer": "GameStop",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "gamestop",
-          "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T10:05:42Z",
-          "availability_checked": false
-        },
-        "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-delta-reign-booster-bundle/450740.html": {
-          "title": "Pokemon Trading Card Game: Delta Reign Booster Bundle",
-          "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-delta-reign-booster-bundle/450740.html",
-          "price": null,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "",
-          "sku": "",
-          "retailer": "GameStop",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "gamestop",
-          "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T10:05:42Z",
-          "availability_checked": false
-        },
-        "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-30th-celebration-ultra-premium-collection-styles-may-vary/450768.html": {
-          "title": "Pokemon Trading Card Game: 30th Celebration Ultra-Premium Collection (Styles May Vary)",
-          "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-30th-celebration-ultra-premium-collection-styles-may-vary/450768.html",
-          "price": null,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "",
-          "sku": "",
-          "retailer": "GameStop",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "gamestop",
-          "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T10:05:42Z",
-          "availability_checked": false
-        },
-        "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-delta-reign-three-booster-blister/450743.html": {
-          "title": "Pokemon Trading Card Game: Delta Reign Three-Booster Blister",
-          "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-delta-reign-three-booster-blister/450743.html",
-          "price": null,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "",
-          "sku": "",
-          "retailer": "GameStop",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "gamestop",
-          "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T10:05:42Z",
-          "availability_checked": false
-        },
-        "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-mega-rayquaza-ex-premium-tournament-box/453567.html": {
-          "title": "Pokemon Trading Card Game: Mega Rayquaza ex Premium Tournament Box",
-          "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-mega-rayquaza-ex-premium-tournament-box/453567.html",
-          "price": null,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "",
-          "sku": "",
-          "retailer": "GameStop",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "gamestop",
-          "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T10:05:42Z",
-          "availability_checked": false
-        },
-        "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-delta-reign-sleeved-booster-pack-styles-may-vary/450719.html": {
-          "title": "Pokemon Trading Card Game: Delta Reign Sleeved Booster Pack (Styles May Vary)",
-          "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-delta-reign-sleeved-booster-pack-styles-may-vary/450719.html",
-          "price": null,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "",
-          "sku": "",
-          "retailer": "GameStop",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "gamestop",
-          "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T10:05:42Z",
-          "availability_checked": false
-        },
-        "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-30th-celebration-ditto-premium-collection-and-squishmallows-pokemon-eevee-10-in-medium-plush-bundle/454323.html": {
-          "title": "Pokemon Trading Card Game: 30th Celebration Ditto Premium Collection and Squishmallows Pokemon Eevee 10-in Medium Plush Bundle",
-          "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-30th-celebration-ditto-premium-collection-and-squishmallows-pokemon-eevee-10-in-medium-plush-bundle/454323.html",
-          "price": null,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "",
-          "sku": "",
-          "retailer": "GameStop",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "gamestop",
-          "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T10:05:42Z",
-          "availability_checked": false
-        },
-        "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-pokemon-day-2027-collection/454507.html": {
-          "title": "Pokemon Trading Card Game: Pokemon Day 2027 Collection",
-          "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-pokemon-day-2027-collection/454507.html",
-          "price": null,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "",
-          "sku": "",
-          "retailer": "GameStop",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "gamestop",
-          "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T10:05:42Z",
-          "availability_checked": false
-        },
-        "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-delta-reign-elite-trainer-box/450739.html": {
-          "title": "Pokemon Trading Card Game: Delta Reign Elite Trainer Box",
-          "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-delta-reign-elite-trainer-box/450739.html",
-          "price": null,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "",
-          "sku": "",
-          "retailer": "GameStop",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "gamestop",
-          "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T10:05:42Z",
-          "availability_checked": false
-        },
-        "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-tcg-30th-celebration-bundle-with-1-ultra-premium-collection-style-may-vary-24-inch-mew-plush/453744.html": {
-          "title": "Pokémon TCG: 30th Celebration Bundle with 1 Ultra Premium Collection (Style May Vary) + 24-Inch Mew Plush",
-          "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-tcg-30th-celebration-bundle-with-1-ultra-premium-collection-style-may-vary-24-inch-mew-plush/453744.html",
-          "price": null,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "",
-          "sku": "",
-          "retailer": "GameStop",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "gamestop",
-          "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T10:05:42Z",
-          "availability_checked": false
-        },
-        "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-30th-celebration-binder-collection/448589.html": {
-          "title": "Pokemon Trading Card Game: 30th Celebration Binder Collection",
-          "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-30th-celebration-binder-collection/448589.html",
-          "price": null,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "",
-          "sku": "",
-          "retailer": "GameStop",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "gamestop",
-          "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T10:05:42Z",
-          "availability_checked": false
-        },
-        "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-charizard-ex-special-collection/421027.html": {
-          "title": "Pokemon Trading Card Game: Charizard ex Special Collection",
-          "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-charizard-ex-special-collection/421027.html",
-          "price": null,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "",
-          "sku": "",
-          "retailer": "GameStop",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "gamestop",
-          "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T10:05:42Z",
-          "availability_checked": false
-        },
-        "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-prismatic-evolutions-elite-trainer-box/417631.html": {
-          "title": "Pokemon Trading Card Game Prismatic Evolutions Elite Trainer Box",
-          "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-prismatic-evolutions-elite-trainer-box/417631.html",
-          "price": null,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "",
-          "sku": "",
-          "retailer": "GameStop",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "gamestop",
-          "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T10:05:42Z",
-          "availability_checked": false
-        },
-        "https://www.gamestop.com/toys-games/trading-cards/products/ultra-pro-pokemon-weedle-evolutions-9-pocket-pro-binder/439014.html": {
-          "title": "Ultra Pro Pokemon Weedle Evolutions 9-Pocket Pro-Binder",
-          "url": "https://www.gamestop.com/toys-games/trading-cards/products/ultra-pro-pokemon-weedle-evolutions-9-pocket-pro-binder/439014.html",
-          "price": null,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "",
-          "sku": "",
-          "retailer": "GameStop",
-          "category": "accessories",
-          "pokemon_scoped": true,
-          "retailer_key": "gamestop",
-          "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T10:05:42Z",
-          "availability_checked": false
-        },
-        "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-delta-reign-booster-box/450757.html": {
-          "title": "Pokemon Trading Card Game: Delta Reign Booster Box",
-          "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-delta-reign-booster-box/450757.html",
-          "price": null,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "",
-          "sku": "",
-          "retailer": "GameStop",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "gamestop",
-          "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T10:05:42Z",
-          "availability_checked": false
-        },
-        "https://www.gamestop.com/toys-games/trading-cards/products/ultra-pro-pokemon-mew-9-pocket-pro-binder/449904.html": {
-          "title": "Ultra Pro Pokemon Mew 9-Pocket PRO-Binder",
-          "url": "https://www.gamestop.com/toys-games/trading-cards/products/ultra-pro-pokemon-mew-9-pocket-pro-binder/449904.html",
-          "price": null,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "",
-          "sku": "",
-          "retailer": "GameStop",
-          "category": "accessories",
-          "pokemon_scoped": true,
-          "retailer_key": "gamestop",
-          "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T10:05:42Z",
-          "availability_checked": false
-        },
-        "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-pitch-black-booster-bundle/445745.html": {
-          "title": "Pokemon Trading Card Game: Pitch Black Booster Bundle",
-          "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-pitch-black-booster-bundle/445745.html",
-          "price": null,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "",
-          "sku": "",
-          "retailer": "GameStop",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "gamestop",
-          "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T10:05:42Z",
-          "availability_checked": false
-        },
-        "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-delta-reign-build-and-battle-box/450760.html": {
-          "title": "Pokemon Trading Card Game: Delta Reign Build and Battle Box",
-          "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-delta-reign-build-and-battle-box/450760.html",
-          "price": null,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "",
-          "sku": "",
-          "retailer": "GameStop",
-          "category": "tcg",
-          "retailer_key": "gamestop",
-          "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-18T05:38:27Z",
-          "availability_checked": false
-        },
-        "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-30th-celebration-tin-styles-may-vary/453350.html": {
-          "title": "Pokemon Trading Card Game: 30th Celebration Tin (Styles May Vary)",
-          "url": "https://www.gamestop.com/toys-games/trading-cards/products/pokemon-trading-card-game-30th-celebration-tin-styles-may-vary/453350.html",
-          "price": null,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "",
-          "sku": "",
-          "retailer": "GameStop",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "gamestop",
-          "first_seen_at": "2026-11-18T05:00:11Z",
-          "last_seen": "2026-11-19T10:05:42Z",
-          "availability_checked": false
-        },
-        "https://www.gamestop.com/toys-games/trading-cards/products/ultra-pro-pokemon-energy-water-deck-protector-sleeves-65-count/448291.html": {
-          "title": "Ultra Pro Pokemon Energy Water Deck Protector Sleeves (65 Count)",
-          "url": "https://www.gamestop.com/toys-games/trading-cards/products/ultra-pro-pokemon-energy-water-deck-protector-sleeves-65-count/448291.html",
-          "price": null,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "",
-          "sku": "",
-          "retailer": "GameStop",
-          "category": "accessories",
-          "pokemon_scoped": true,
-          "retailer_key": "gamestop",
-          "first_seen_at": "2026-11-18T16:52:28Z",
-          "last_seen": "2026-11-19T10:05:42Z",
-          "availability_checked": false
-        },
-        "https://www.gamestop.com/toys-games/trading-cards/products/gamestop-power-pack-2025-series-2-styles-may-vary/424728.html": {
-          "title": "GameStop Power Pack 2025 Series 2 (Styles May Vary)",
-          "url": "https://www.gamestop.com/toys-games/trading-cards/products/gamestop-power-pack-2025-series-2-styles-may-vary/424728.html",
-          "price": null,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "",
-          "sku": "",
-          "retailer": "GameStop",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "gamestop",
-          "first_seen_at": "2026-11-19T02:07:53Z",
-          "last_seen": "2026-11-19T10:05:42Z",
-          "availability_checked": false
-        },
-        "https://www.gamestop.com/toys-games": {
-          "title": "Currently Refined by Category: Trading Card Games",
-          "url": "https://www.gamestop.com/toys-games",
-          "price": 0.0,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://www.gamestop.com/on/demandware.static/Sites-gamestop-us-Site/-/default/dw73b9439b/images/svg-icons/ship-to-home.svg",
-          "sku": "",
-          "retailer": "GameStop",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "gamestop",
-          "first_seen_at": "2026-11-19T02:07:53Z",
-          "last_seen": "2026-11-19T10:05:42Z",
-          "availability_checked": false
-        }
-      },
+      "products": {},
       "initialized": true,
-      "last_success": "2026-11-19T10:05:42Z",
-      "source_url": "https://www.gamestop.com/toys-games/trading-cards/trading-card-games?prefn1=franchise&prefv1=Pokemon&view=new&hybrid=true&srule=most-popular",
-      "last_item_count": 21,
+      "last_success": "2026-11-19T11:10:38Z",
+      "source_url": "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending",
+      "last_item_count": 0,
       "last_successful_urls": [
-        "https://www.gamestop.com/toys-games/trading-cards/trading-card-games?prefn1=franchise&prefv1=Pokemon&view=new&hybrid=true&srule=most-popular"
-      ]
-    },
-    "pokebeach-news": {
-      "seen": {
-        "933ea8eeea18b91360e2": {
-          "title": "Gold & Silver TCG Products to Release Alongside Pokemon ex★ Series!",
-          "url": "https://www.pokebeach.com/2026/11/gold-silver-tcg-products-to-release-alongside-pokemon-ex%e2%98%85-series",
-          "first_seen": "2026-11-19T01:21:18Z"
-        },
-        "176827a9113c64b45167": {
-          "title": "“Magma Heartbeat,” “Lightning Impact,” and “Aurora Ripples” to Launch Pokemon ex★ Series in May 2027!",
-          "url": "https://www.pokebeach.com/2026/11/magma-heartbeat-lightning-impact-and-aurora-ripples-to-launch-pokemon-ex%e2%98%85-series-in-may-2027",
-          "first_seen": "2026-11-19T01:21:18Z"
-        },
-        "749b09baa63a3809fa3b": {
-          "title": "“Pokemon Day 2027 Collection” Revealed for January!",
-          "url": "https://www.pokebeach.com/2026/11/pokemon-day-2027-collection-revealed-for-january",
-          "first_seen": "2026-11-19T01:21:18Z"
-        },
-        "8ef430ed0286c3bef56a": {
-          "title": "Vulpix and Ninetales from “Aura Seeker” Revealed!",
-          "url": "https://www.pokebeach.com/2026/11/vulpix-and-ninetales-from-aura-seeker-revealed",
-          "first_seen": "2026-11-19T01:21:18Z"
-        },
-        "a0f53a816ca16b9739f5": {
-          "title": "The Best Way to Play Rayquaza Isn’t What You Think!",
-          "url": "https://www.pokebeach.com/2026/11/the-best-way-to-play-rayquaza-isnt-what-you-think",
-          "first_seen": "2026-11-19T01:21:18Z"
-        },
-        "d5f352995f382a459fae": {
-          "title": "Infernal Evolution — Mega Charizard Returns with Delta Reign",
-          "url": "https://www.pokebeach.com/2026/11/infernal-evolution-mega-charizard-returns-with-delta-reign",
-          "first_seen": "2026-11-19T01:21:18Z"
-        }
-      },
-      "initialized": true,
-      "last_success": "2026-11-19T05:13:55Z",
-      "source_url": "https://www.pokebeach.com/feed",
-      "last_item_count": 6,
-      "last_successful_urls": [
-        "https://www.pokebeach.com/"
+        "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending"
       ]
     },
     "best-buy-pokemon-tcg": {
@@ -5275,23 +4882,516 @@
       "source_url": "https://www.bestbuy.com/site/searchpage.jsp?browsedCategory=pcmcat1604992984556&id=pcat17071&qp=brandcharacter_facet%3DFranchise%7EPok%C3%A9mon&st=categoryid%24pcmcat1604992984556",
       "last_item_count": 0,
       "last_success": ""
+    },
+    "pokemon-news-google": {
+      "seen": {
+        "cf85cfb67f4f049f2f4d": {
+          "title": "Pokémon TCG: Mega Evolution—Delta Reign Product Showcase - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNRk9WblFKRmNiaUZCVWFHTF9mYl9fS1BTalIxTk1aMF9EMm5NZHNiUWQwajZZUXV4bmd0RmY4NDVTWXFtOU9mUVVud3k3cGdTSVdfa0FwbXRUbjNkY3FfZXZZOFczbW1XMjIxdWFjVGg3WVlGM2o5Y3lhaFRoVjFaMlRpWDRqLXZ6X2ttVkxVeEI?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "46b0722c9e56819841dc": {
+          "title": "New Prizes Are Coming to Play! Pokémon Stores in December 2026 - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPUXNvVXpIV1piZWotdkxOT2VUd3VxeDNWckZnSndKWFRzZTJQY3B0RXBJVDEwb3dNbGNoc0FGTWt6RENLRFZUcGR1b3M2cVNmNEpkM2h2LVNjanRacjFpdFpfOWR5WXVablo0R3RsOFltU05sTmc1T3pvV3J3SXBuTUZ3aW9URFdDbU5HcEcyc1UwQ3g0YjRpUg?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "9830768a0363b9239d61": {
+          "title": "Tune In to the 2027 Latin America International Championships to Get Digital Rewards - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPOVVZTnVqckZuRnFQbjlpQmlPV2FpdjRNZ3cyQ0FBSG1zUnlvTllORWNtUXRGdFFZV3RUT01MZU1oNWh3Q2dIai1jWF81YVNLdXhsaEdmWWlwMzRKWnFrNFZSVUhpTE01UzRHb21pRjRlX180N0pRMzlVaEN5YTNBOXB4SWFrdGFCTWprYnJYNURKZ0w3dzVORzBKdDRJaGFwNHZSdWl0V2Jsb1Jla0llLWdMOTFTQ1U?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "1c2f05d53238aab79f62": {
+          "title": "Check Out Every Pokémon TCG Product Release in November 2026 - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQN3hHOW5zZzdmSHFLLTV1X2F2bUhnX2Izakd0eGN2T0lVOFc0ejE4QTRleENYOXF5TUJhaG1KYlZ2bVVHSWpzY2pnZ1dfWnlhWXRxV2VCWER4U05ZYUptTUpsQ1VuYzN6M2RvU2VuZGdLcGVXdTBaZ1hBR1owQjFwaGdBRHV5UDZ1LWpDa1R2QjRTSTR1QzE4?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "3907bb979e5c5f0bfd96": {
+          "title": "Pokémon just dropped glass Evolution Stone replicas: Where to buy Fire, Water, and Thunder Stones - Mashable",
+          "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPV3FQT0cwR19mNmRBMUd2bTRkRE91UFhUZkIzWGpEOEZCUGVZYnl5X2Jrb2pQaEEzSlJZN2NKSnE1TmVGN1lreGlVWDlGZ0xlNTR4NEFWZnJWT0d3Ym9UcW16VE0zSVdSSnZYNGhUZnpzWDlraEZ4UDdoMzY3QmhWSGtkbkU?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "458902c4cd1b1fe738e0": {
+          "title": "Pokémon TCG: 30th Celebration Ultra-Premium Collections—Day & Night - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPMkRFYnZZVl9kSU8yV213NnFsRFc3c0tfOHNkZUpFYnRVaFU0Sl8zU2E5dmU5a3JUbW9zdWZlZmxmaHBBUmN2T3RFYm96UGxESEl4cmtkQTA0WUktZ3RsUml2djdiejk2cVcwVmZmS19ibjZCVURPWldhejlDQzk2cDhrbHQxZFRaRGJjMUd5Q09TUkZraGwwWE5kRE5venRwMGE5U2dQS3B1U0E?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "20f5e86a58645fbe7865": {
+          "title": "Evolution Stone Replicas Are Available Now at Pokémon Center - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQMl9INXQ3dnBjV1IwdWp5eWZjbF9BZDIxNFV1U19rcDFaVEpVTzN0WGJxMGJhWExlMDJXOG5VaFlDbDZKUGMxVEhTTVgyUEJtRHdiLW52Wm5GOExrM3dhdDdLbWdFN1k3Q3R4eXgzblcxY1ZRWk80U2FRbHJCMGpkUFRoN2V4akdEeS1sT3E0c1FSR2Z0bWo4?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "3ad7b178f7824d773664": {
+          "title": "Get All the Details About the Pokémon × Duolingo Collaboration - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQMUFST2hYOWkyMDNsSDNEbUNXTmtrZDlVUGduc0hPSkQzQzBFZDRFVHBRd3F3aGd0cHJoRjFxdnZjVEhONFR4YUdfdmtzaHNhTmF3WFFFMDNzNEpqTGdlUjBJRExzZ01zMU5GRF9vcUZKUS1FM0tyMkdUZmlxT09RaV9CcXkybDU1amU4emlMWm1sbEhNanZj?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "52668e1ae07ec706bd4d": {
+          "title": "Pokémon TCG: 30th Celebration Ditto Premium Collection - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNSFVjejFHY2JxUzRYdGNweFl1QXR2SEFpY3M3dGxoS3pRYnNHZ3AtOW9CaXhEb0RJWmZ1eDNmWGg2R2xnbkd2VjJRY0R0UzhzYlI2Mk1BMC1URTF6QWxoWXNEYlVaUWJsOGJDNmhITTY4Qmoxb2tFS3Uwa3VGdVp6THhkR1JGTElRSHUwbzJlR2RjNE54WWVid2g5OHE?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "dca4366152bf813a7098": {
+          "title": "Pokémon Happy Meals Return to McDonald’s in the US - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNTG14MTZiTnVYdXBYOU1fVUxJbzlTY25KNnZRZWZPb3JYX25MX1BjX08zS1RwUDNUbnJtSFpBbjczV3V5bkxxeDBsVDhZY3A3M1RHZGxVd0FvX1BqUzk2OXI3ODQyemdCWWdVdWVZNEc1c1ROSjN1MUdxc25kcWhDRlJOeElFMnV5?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "d40c32a5fb7ed43bf0f2": {
+          "title": "Pokémon Champions Balance Patch Update: December 2026 - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOQllMMTRvNjJnT3JxRFpLMENpRFVDN1dUZ2hwRmJ4VnYyNXdSUUV1ZDhFa0NBTUs2YUVITzdQT0JWaVhuYW1ZRWFxZlU5X0JBSGJFckNlZFFlQ3ZhcDdhUldINTVJRW1nUnBMM0o1R196SmtNQlJoNTkzS1BoR1h5RURQZDFNM3oxQjNMaA?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "12e3cc980cb9f82bbbc5": {
+          "title": "Pokémon TCG Pocket: Dual Fusion Is Now Available - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNVHUxcEtmWnFXT3p4ZFJMLVM1ZTdkd1F6NjByNWo3NHI0a1N0ZFk4U3doeWd2ejJpbEtJZXh3SVlnNlZ3dDdWTWR2cmlETHI2RXZLRkVubTF6QW8tNnJ5S1pIUzgxVzN3MnhLMTVoc0o3bExleW84Yk5tRl9aWThJa1E5eVRFUQ?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "1e4fc7daea4985100a3c": {
+          "title": "Join the Apples to Applin event in Pokémon Pokopia - Nintendo",
+          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPVFpEVGtqeGllbkwzZ2prbURsbnR1NVpSdlAtTjJmeGRmbWhHUU5nS2hzak05cVRXT0V6VTdRR3RaNWE5dEpvQVREQ1NwZEVndlVxYnBMbXJYRFlsQ3hVN2k4NlEwX1B1aks5MG1YNlA3X2VUUlRrTWpxNlJ6N3U1aGVqLUpKemZjd3FPdDd2NkZzUQ?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "df09e680c5bcfc9730e2": {
+          "title": "Discover the Perfect Present in the 2026 Pokémon Holiday Gift Guide - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPR25PMUU5MGF5YlBwYkVqc3J6N2t6dWI3NEx6V0hra2M5MGNYNmdoQTQtS3ZqX3dsLXpZU3JWTlRKaTZ1NjFOMlBNNloyOHpMZ09FU0hYcFMzTXVuaGFRaWNLa0VROVk4UXowTE9ZQkNjMTFQaGZpRGF6VTdOd1hfN1VtMjZyS2tTVW9rekIzZXR4TC04aklSbEhWMUFhWVI0?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "c5f9379a6c6f609969ff": {
+          "title": "Get Shiny Xerneas in Pokémon Legends: Z‑A via Mystery Gift - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNMVlVdDZUNDlJOWkyemh2Z0lqX2lINTNnVTZNSjdQdnJFUExtajl5RGN0MXdfUTZ3NkFlVEdja05qai13ZlRSUlhTOXRqSHZEZzM2aGVvQUo2aHFDQU45NUowRzQtU3BqNmRQOVNZN1pNeTluenM2XzZldUdhdXFwUmpteUFrVDQ4d0w3bjExaXdKNWs?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "f1a14cae59e90ea77886": {
+          "title": "Pokémon Happy Meals Are Coming to McDonald’s in an Exciting New Way - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNSURsbW5GYVI0cDR0WDIxRXVGMHNRQkFFY3Z3WlV2OEp5ckFpX2FOeU5sampFUHVFUjZidUFYeXRGZzVfaUx6Z2dia2loUzB0T1dBUzVPcFJIbG1PUnRETHU2cUVzeWRJRHgzMlZvUzUwQWpPUnp4WS0zRWUxdk55UmVFc0M2UkNlN2xyRTJiUHVxM0NhOEJ5bkhXaHJnclcw?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "7fc2cdd7c160bc60d092": {
+          "title": "Savor Summer Days with Wartortle in a New POKÉTOON Short on YouTube - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPeUNaOHowT0lDd2hIQ2dqeWNmNWZZMElzMFR6TzBOMXkwTklldXZEemo2Wjd4eWNmZTJ6d1FNUmhwRHRKQkFFeWZkMVpTWGF0TF81dnZFWDBiOXdTUExGN0xRMW5rV184RHRFZzBiWEp6QnVMZ1FNUjQ1Zmd0VU5HOXlTQnd4WXlYcExMNDhEOVdMTHBHZFhIdHQ3WFhHRksz?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "92c40ce498b557700c4b": {
+          "title": "Get Kyogre, Groudon, and Giratina Pokémon TCG Promo Cards at Participating Retailers - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOMUxRWk9rUWNZUF9NVlBSNXVqY003VFBrUHFscUN4NG9pMHoxa1dsdTRrV3ppZmNQN0RsajlUVDA4cjlOYkpJMUl6bnJQQVRrWjJUNHVaYnQwMEpmYVdLendzYmJuSlJfVHItMkFlODZmSGxJNjd5Ny1BODdBVk9XOVZvak5WQUNrV2hFVVJBLWNHek5nN1liY3Q5LXVtU3M3dDR6cFExTWY1SF9QVFRpRERKbUs?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "94151c89e69fbc1aa631": {
+          "title": "Check Out Every Pokémon TCG Product Release in October 2026 - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNM3dHMHpiMnQzZlFLcmxEck9nX1ZBeU11bXhYNEN4eVprNm9NT0s1c3hLUmdPRHZVdEZfRnhiQzU1OVNCT0xHMmRNTmtnMjdIbktja2Q2X0EtX05mV3pJS0NHTHk0SFpiUDFIUE40dVM2aWxBcERBeTZuSHVlOUNQOGpHODZJaHpVR1ZLMmlqcGJrcGxQWWc?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "82d90bba1eab2b45270b": {
+          "title": "Play at a Pokémon TCG: Mega Evolution—Delta Reign Prerelease Event - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQUjlLdkpfLTlzMFJQUHNHMW1Fc1daSE4xYUNIUTk0cUJLQ3otanVmWWJ1MWoybWp6WGtKY3FrVHlRTThGOVNRcmtNZnhSSVpLTEZxTE16NW8yRlF5bEFtMktzVWkzS1FjamNOTWk5VGVBanpNU2MyUkFQS3hjVmpvb3ZGTUlQc1JwakNWZWNlSF9ESU1DQWVBWkYtMzA1Zw?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "9e74385a89ae8a1065ec": {
+          "title": "Gigantamax Duraludon Debuts in Pokémon GO Wild Area: Global Event - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNdkVhaFJRSmFGb1VuUWV3SW9iVW9VZzNiU2YtazRQb2tlNHFKTG45cXdnSWljTHJMT1ZIeG1STWJuUzFSVmtmLXRpTFpLM3ZHdXN2NXJBVFoxcXp2TnJkdDhpY1NySjZnSEdwTm5GTFFaeHlBdExfeXU0dEVPbjJGTjZGOWpCMlc0ZU9nbkdDTUttMGltYzVmMmJfNmI?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "056e439d8816b30ad031": {
+          "title": "Check Out Every Pokémon TCG Product Release in September 2026 - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNLXJ4Ny1mWDBzWllncHlaaVdoRnh3RmNFX0FjWGtRTkp2MlZWbjBGMVNxRHVOWlU0TnB5RU1zXzJRNFUxay1NUXNFblk2YjhvMTZlN3A2RGZjbXFobGtUdUtvMUQ2RVRmVUJKUUdZdldsV3hPVXd3djJZckxXMC1MYmdXWkZWcVJjZC1tUTlPUEtZNVZwamZXZg?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "59d370a81b560a4f7824": {
+          "title": "Pokémon Partners with the European Space Agency for World Space Week 2026 - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNcmU4aFBaeTB5bmlCS0xMWXF6dWM3MVZtcDJXYWRXS3RkbHBxV3BfLU9KRWRUUDh2R2N5SkhFWU1FanJSUXl2NFh0cXVId0t1RURReE5RbENrcU8zUER6NWVuTVpBQVp1N0ttS0ctU0NkRWxWNHkzSlI2ZFlMRkpLNVRTYmF0d2pCR2I4SEU5QVpCMGxtNW5NN05uNU1IRWQ1b054alBTVms?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "996ddce1172ac4c8a3bf": {
+          "title": "Get a Mewtwo Pokémon TCG Promo Card at Participating Retailers - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPQzhIdElHdERXTEpyRTNpQ0o5Unp3SW9aa3RYaFFPYUZadGh6T0RQRlpSQlF6SUhzX0RSNURvZXZYTUtIaGR4elc1T2N2M0FfdmgzWWF2MzJ3dlB0bE5ydE5UaVZpX19lVHFRQW5yYjN4T1lPYTNRZnlqdGo3Q3BNU3BOUVBBRmNzTlZUZUhva2lEd0F0T0RVRWVB?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "b46d3f733bf0dc42b488": {
+          "title": "Pokémon Unveils New Umbreon Eeveelution Design - ScreenRant",
+          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE83azNhX3JCRi02RnhxQXNSRTBIV0R5ZnRkZHF3Qi1HbFBGeDBfQ1MwUUwzZEdHNEhaY0c2SGdycGhjVmd2UmJzb05GOXM4TXBOeV80ZUc3RmZqSnIwc1hCSFIzTHJFMTlLLXFF?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "a2bbb490388ffc1061c5": {
+          "title": "Pokémon Pokopia Apples to Applin Event Guide, From Syrupy Apples To A Kitchen Table - Nintendo Life",
+          "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOeUU3dUF4SFJkSTU4UW04UzU3b01sUXQzSmxvSlRGWEFSaVN4cWdxeU5NSXprdTNuakFpLWRLa0NVQ1NQQ1pOYm1uRWdKd0NDX0k5SFhzdHgtYzExWDdyOUc3TWJZNk9CaUNyU083OG90cW1rRFM4Vkd3TzZXUG44b1d6c216ZXM?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "a16b9077f4f3600a325c": {
+          "title": "Come Party at the Pokémon Center Night Out Experience - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNbGNrYzFuaWU1MUxPMHd5b3J6QUwxcEw5SmUtNmk3THhBUDRvOFNNejFTWFVwZXpJaVBrRldDXzh5SzZXdlRBRVlRQ3NHWXFEREliWTJmT040NEtVRjZDUHBvNHdxMlMzT3pBV2MyN2NNa1pPdGhaRmh1Nk04cnRxU29KQ3VXOHRlUXhKX1Z3?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "e3ec98c5cd4e4c71371b": {
+          "title": "Read the Pokémon TCG Pocket October 2026 Producer Letter - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNUXBsdU96TkNIdmxiM1h3Y3FSalVLS3NxS211Rk15YU1MaDFXMDc2XzZRV21RRXlXTEJvdlItMW0wTmhsbW05NzNfcTVJUzNVQURpN0Q4blVwM19NYUVnOUxtMHBYWFBWUmstd0ZPRVhvUU8wU1QxSXA2bHp0cUgwSktyREJsMnZEaklLNjdueXdEZw?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "6d680a6b1a0815135876": {
+          "title": "Pokémon TCG: First Partner Illustration Collection—Series 3 - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPRF9QY2cwRFYxLUNGR19rS0lxc3FkTWwteU4zajItaXJzRi16VnJ2RXhxN1RWNU5TYV9BbWgxM0I5NjNLcXZIVFFXRlQyRjAxcWYwOHBHVnBKSFhhNEEzWWNpVWFlbG5RZHU0NUNlV2lMdW9qdVduUmF4alBrUlJzVXlXTkI3NjNyNktrb0VXNmZlTmdlamVZMjZwMHB5RVYtRE1B?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        },
+        "c7424d0723ff696a0fa6": {
+          "title": "Pokémon TCG: 30th Celebration Poster Collection - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQRGxSaThaRnZFcXpPMk1tNXhZb1FZbGtqMmtPS2ZCMFJfamhwTEhndjhGS1loSkF2Nk5QQUV4eVNPNUtlTzhyTVZpUldQSzA0X2hrMWJZS1FmUlFVRFpoTXRhT2YyRDZVU1loYTJDTGVaZjQ5VkkxT2hmX29OTndydjIzNW9pdlV5OUdVTThQR0JIWWc?oc=5",
+          "first_seen": "2026-11-19T11:10:41Z"
+        }
+      },
+      "articles": [
+        {
+          "key": "cf85cfb67f4f049f2f4d",
+          "title": "Pokémon TCG: Mega Evolution—Delta Reign Product Showcase - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNRk9WblFKRmNiaUZCVWFHTF9mYl9fS1BTalIxTk1aMF9EMm5NZHNiUWQwajZZUXV4bmd0RmY4NDVTWXFtOU9mUVVud3k3cGdTSVdfa0FwbXRUbjNkY3FfZXZZOFczbW1XMjIxdWFjVGg3WVlGM2o5Y3lhaFRoVjFaMlRpWDRqLXZ6X2ttVkxVeEI?oc=5",
+          "summary": "Pokémon TCG: Mega Evolution—Delta Reign Product Showcase Pokemon.com",
+          "published": "Fri, 23 Oct 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "46b0722c9e56819841dc",
+          "title": "New Prizes Are Coming to Play! Pokémon Stores in December 2026 - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPUXNvVXpIV1piZWotdkxOT2VUd3VxeDNWckZnSndKWFRzZTJQY3B0RXBJVDEwb3dNbGNoc0FGTWt6RENLRFZUcGR1b3M2cVNmNEpkM2h2LVNjanRacjFpdFpfOWR5WXVablo0R3RsOFltU05sTmc1T3pvV3J3SXBuTUZ3aW9URFdDbU5HcEcyc1UwQ3g0YjRpUg?oc=5",
+          "summary": "New Prizes Are Coming to Play! Pokémon Stores in December 2026 Pokemon.com",
+          "published": "Mon, 16 Nov 2026 16:04:53 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "9830768a0363b9239d61",
+          "title": "Tune In to the 2027 Latin America International Championships to Get Digital Rewards - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPOVVZTnVqckZuRnFQbjlpQmlPV2FpdjRNZ3cyQ0FBSG1zUnlvTllORWNtUXRGdFFZV3RUT01MZU1oNWh3Q2dIai1jWF81YVNLdXhsaEdmWWlwMzRKWnFrNFZSVUhpTE01UzRHb21pRjRlX180N0pRMzlVaEN5YTNBOXB4SWFrdGFCTWprYnJYNURKZ0w3dzVORzBKdDRJaGFwNHZSdWl0V2Jsb1Jla0llLWdMOTFTQ1U?oc=5",
+          "summary": "Tune In to the 2027 Latin America International Championships to Get Digital Rewards Pokemon.com",
+          "published": "Mon, 16 Nov 2026 16:04:53 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "1c2f05d53238aab79f62",
+          "title": "Check Out Every Pokémon TCG Product Release in November 2026 - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQN3hHOW5zZzdmSHFLLTV1X2F2bUhnX2Izakd0eGN2T0lVOFc0ejE4QTRleENYOXF5TUJhaG1KYlZ2bVVHSWpzY2pnZ1dfWnlhWXRxV2VCWER4U05ZYUptTUpsQ1VuYzN6M2RvU2VuZGdLcGVXdTBaZ1hBR1owQjFwaGdBRHV5UDZ1LWpDa1R2QjRTSTR1QzE4?oc=5",
+          "summary": "Check Out Every Pokémon TCG Product Release in November 2026 Pokemon.com",
+          "published": "Mon, 02 Nov 2026 08:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "3907bb979e5c5f0bfd96",
+          "title": "Pokémon just dropped glass Evolution Stone replicas: Where to buy Fire, Water, and Thunder Stones - Mashable",
+          "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPV3FQT0cwR19mNmRBMUd2bTRkRE91UFhUZkIzWGpEOEZCUGVZYnl5X2Jrb2pQaEEzSlJZN2NKSnE1TmVGN1lreGlVWDlGZ0xlNTR4NEFWZnJWT0d3Ym9UcW16VE0zSVdSSnZYNGhUZnpzWDlraEZ4UDdoMzY3QmhWSGtkbkU?oc=5",
+          "summary": "Pokémon just dropped glass Evolution Stone replicas: Where to buy Fire, Water, and Thunder Stones Mashable",
+          "published": "Thu, 19 Nov 2026 03:56:43 GMT",
+          "publisher": "Mashable",
+          "retailer": "Mashable",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "458902c4cd1b1fe738e0",
+          "title": "Pokémon TCG: 30th Celebration Ultra-Premium Collections—Day & Night - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPMkRFYnZZVl9kSU8yV213NnFsRFc3c0tfOHNkZUpFYnRVaFU0Sl8zU2E5dmU5a3JUbW9zdWZlZmxmaHBBUmN2T3RFYm96UGxESEl4cmtkQTA0WUktZ3RsUml2djdiejk2cVcwVmZmS19ibjZCVURPWldhejlDQzk2cDhrbHQxZFRaRGJjMUd5Q09TUkZraGwwWE5kRE5venRwMGE5U2dQS3B1U0E?oc=5",
+          "summary": "Pokémon TCG: 30th Celebration Ultra-Premium Collections—Day & Night Pokemon.com",
+          "published": "Fri, 06 Nov 2026 08:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "20f5e86a58645fbe7865",
+          "title": "Evolution Stone Replicas Are Available Now at Pokémon Center - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQMl9INXQ3dnBjV1IwdWp5eWZjbF9BZDIxNFV1U19rcDFaVEpVTzN0WGJxMGJhWExlMDJXOG5VaFlDbDZKUGMxVEhTTVgyUEJtRHdiLW52Wm5GOExrM3dhdDdLbWdFN1k3Q3R4eXgzblcxY1ZRWk80U2FRbHJCMGpkUFRoN2V4akdEeS1sT3E0c1FSR2Z0bWo4?oc=5",
+          "summary": "Evolution Stone Replicas Are Available Now at Pokémon Center Pokemon.com",
+          "published": "Thu, 12 Nov 2026 18:13:07 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "3ad7b178f7824d773664",
+          "title": "Get All the Details About the Pokémon × Duolingo Collaboration - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQMUFST2hYOWkyMDNsSDNEbUNXTmtrZDlVUGduc0hPSkQzQzBFZDRFVHBRd3F3aGd0cHJoRjFxdnZjVEhONFR4YUdfdmtzaHNhTmF3WFFFMDNzNEpqTGdlUjBJRExzZ01zMU5GRF9vcUZKUS1FM0tyMkdUZmlxT09RaV9CcXkybDU1amU4emlMWm1sbEhNanZj?oc=5",
+          "summary": "Get All the Details About the Pokémon × Duolingo Collaboration Pokemon.com",
+          "published": "Tue, 17 Nov 2026 01:04:16 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "52668e1ae07ec706bd4d",
+          "title": "Pokémon TCG: 30th Celebration Ditto Premium Collection - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNSFVjejFHY2JxUzRYdGNweFl1QXR2SEFpY3M3dGxoS3pRYnNHZ3AtOW9CaXhEb0RJWmZ1eDNmWGg2R2xnbkd2VjJRY0R0UzhzYlI2Mk1BMC1URTF6QWxoWXNEYlVaUWJsOGJDNmhITTY4Qmoxb2tFS3Uwa3VGdVp6THhkR1JGTElRSHUwbzJlR2RjNE54WWVid2g5OHE?oc=5",
+          "summary": "Pokémon TCG: 30th Celebration Ditto Premium Collection Pokemon.com",
+          "published": "Fri, 06 Nov 2026 08:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "dca4366152bf813a7098",
+          "title": "Pokémon Happy Meals Return to McDonald’s in the US - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNTG14MTZiTnVYdXBYOU1fVUxJbzlTY25KNnZRZWZPb3JYX25MX1BjX08zS1RwUDNUbnJtSFpBbjczV3V5bkxxeDBsVDhZY3A3M1RHZGxVd0FvX1BqUzk2OXI3ODQyemdCWWdVdWVZNEc1c1ROSjN1MUdxc25kcWhDRlJOeElFMnV5?oc=5",
+          "summary": "Pokémon Happy Meals Return to McDonald’s in the US Pokemon.com",
+          "published": "Tue, 10 Nov 2026 08:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "d40c32a5fb7ed43bf0f2",
+          "title": "Pokémon Champions Balance Patch Update: December 2026 - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOQllMMTRvNjJnT3JxRFpLMENpRFVDN1dUZ2hwRmJ4VnYyNXdSUUV1ZDhFa0NBTUs2YUVITzdQT0JWaVhuYW1ZRWFxZlU5X0JBSGJFckNlZFFlQ3ZhcDdhUldINTVJRW1nUnBMM0o1R196SmtNQlJoNTkzS1BoR1h5RURQZDFNM3oxQjNMaA?oc=5",
+          "summary": "Pokémon Champions Balance Patch Update: December 2026 Pokemon.com",
+          "published": "Tue, 17 Nov 2026 08:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "12e3cc980cb9f82bbbc5",
+          "title": "Pokémon TCG Pocket: Dual Fusion Is Now Available - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNVHUxcEtmWnFXT3p4ZFJMLVM1ZTdkd1F6NjByNWo3NHI0a1N0ZFk4U3doeWd2ejJpbEtJZXh3SVlnNlZ3dDdWTWR2cmlETHI2RXZLRkVubTF6QW8tNnJ5S1pIUzgxVzN3MnhLMTVoc0o3bExleW84Yk5tRl9aWThJa1E5eVRFUQ?oc=5",
+          "summary": "Pokémon TCG Pocket: Dual Fusion Is Now Available Pokemon.com",
+          "published": "Wed, 28 Oct 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "1e4fc7daea4985100a3c",
+          "title": "Join the Apples to Applin event in Pokémon Pokopia - Nintendo",
+          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPVFpEVGtqeGllbkwzZ2prbURsbnR1NVpSdlAtTjJmeGRmbWhHUU5nS2hzak05cVRXT0V6VTdRR3RaNWE5dEpvQVREQ1NwZEVndlVxYnBMbXJYRFlsQ3hVN2k4NlEwX1B1aks5MG1YNlA3X2VUUlRrTWpxNlJ6N3U1aGVqLUpKemZjd3FPdDd2NkZzUQ?oc=5",
+          "summary": "Join the Apples to Applin event in Pokémon Pokopia Nintendo",
+          "published": "Mon, 16 Nov 2026 13:02:21 GMT",
+          "publisher": "Nintendo",
+          "retailer": "Nintendo",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "df09e680c5bcfc9730e2",
+          "title": "Discover the Perfect Present in the 2026 Pokémon Holiday Gift Guide - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPR25PMUU5MGF5YlBwYkVqc3J6N2t6dWI3NEx6V0hra2M5MGNYNmdoQTQtS3ZqX3dsLXpZU3JWTlRKaTZ1NjFOMlBNNloyOHpMZ09FU0hYcFMzTXVuaGFRaWNLa0VROVk4UXowTE9ZQkNjMTFQaGZpRGF6VTdOd1hfN1VtMjZyS2tTVW9rekIzZXR4TC04aklSbEhWMUFhWVI0?oc=5",
+          "summary": "Discover the Perfect Present in the 2026 Pokémon Holiday Gift Guide Pokemon.com",
+          "published": "Fri, 13 Nov 2026 16:09:22 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "c5f9379a6c6f609969ff",
+          "title": "Get Shiny Xerneas in Pokémon Legends: Z‑A via Mystery Gift - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNMVlVdDZUNDlJOWkyemh2Z0lqX2lINTNnVTZNSjdQdnJFUExtajl5RGN0MXdfUTZ3NkFlVEdja05qai13ZlRSUlhTOXRqSHZEZzM2aGVvQUo2aHFDQU45NUowRzQtU3BqNmRQOVNZN1pNeTluenM2XzZldUdhdXFwUmpteUFrVDQ4d0w3bjExaXdKNWs?oc=5",
+          "summary": "Get Shiny Xerneas in Pokémon Legends: Z‑A via Mystery Gift Pokemon.com",
+          "published": "Thu, 12 Nov 2026 20:16:46 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "f1a14cae59e90ea77886",
+          "title": "Pokémon Happy Meals Are Coming to McDonald’s in an Exciting New Way - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNSURsbW5GYVI0cDR0WDIxRXVGMHNRQkFFY3Z3WlV2OEp5ckFpX2FOeU5sampFUHVFUjZidUFYeXRGZzVfaUx6Z2dia2loUzB0T1dBUzVPcFJIbG1PUnRETHU2cUVzeWRJRHgzMlZvUzUwQWpPUnp4WS0zRWUxdk55UmVFc0M2UkNlN2xyRTJiUHVxM0NhOEJ5bkhXaHJnclcw?oc=5",
+          "summary": "Pokémon Happy Meals Are Coming to McDonald’s in an Exciting New Way Pokemon.com",
+          "published": "Thu, 29 Oct 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "7fc2cdd7c160bc60d092",
+          "title": "Savor Summer Days with Wartortle in a New POKÉTOON Short on YouTube - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPeUNaOHowT0lDd2hIQ2dqeWNmNWZZMElzMFR6TzBOMXkwTklldXZEemo2Wjd4eWNmZTJ6d1FNUmhwRHRKQkFFeWZkMVpTWGF0TF81dnZFWDBiOXdTUExGN0xRMW5rV184RHRFZzBiWEp6QnVMZ1FNUjQ1Zmd0VU5HOXlTQnd4WXlYcExMNDhEOVdMTHBHZFhIdHQ3WFhHRksz?oc=5",
+          "summary": "Savor Summer Days with Wartortle in a New POKÉTOON Short on YouTube Pokemon.com",
+          "published": "Fri, 13 Nov 2026 16:08:25 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "92c40ce498b557700c4b",
+          "title": "Get Kyogre, Groudon, and Giratina Pokémon TCG Promo Cards at Participating Retailers - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOMUxRWk9rUWNZUF9NVlBSNXVqY003VFBrUHFscUN4NG9pMHoxa1dsdTRrV3ppZmNQN0RsajlUVDA4cjlOYkpJMUl6bnJQQVRrWjJUNHVaYnQwMEpmYVdLendzYmJuSlJfVHItMkFlODZmSGxJNjd5Ny1BODdBVk9XOVZvak5WQUNrV2hFVVJBLWNHek5nN1liY3Q5LXVtU3M3dDR6cFExTWY1SF9QVFRpRERKbUs?oc=5",
+          "summary": "Get Kyogre, Groudon, and Giratina Pokémon TCG Promo Cards at Participating Retailers Pokemon.com",
+          "published": "Fri, 23 Oct 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "94151c89e69fbc1aa631",
+          "title": "Check Out Every Pokémon TCG Product Release in October 2026 - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNM3dHMHpiMnQzZlFLcmxEck9nX1ZBeU11bXhYNEN4eVprNm9NT0s1c3hLUmdPRHZVdEZfRnhiQzU1OVNCT0xHMmRNTmtnMjdIbktja2Q2X0EtX05mV3pJS0NHTHk0SFpiUDFIUE40dVM2aWxBcERBeTZuSHVlOUNQOGpHODZJaHpVR1ZLMmlqcGJrcGxQWWc?oc=5",
+          "summary": "Check Out Every Pokémon TCG Product Release in October 2026 Pokemon.com",
+          "published": "Thu, 01 Oct 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "82d90bba1eab2b45270b",
+          "title": "Play at a Pokémon TCG: Mega Evolution—Delta Reign Prerelease Event - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQUjlLdkpfLTlzMFJQUHNHMW1Fc1daSE4xYUNIUTk0cUJLQ3otanVmWWJ1MWoybWp6WGtKY3FrVHlRTThGOVNRcmtNZnhSSVpLTEZxTE16NW8yRlF5bEFtMktzVWkzS1FjamNOTWk5VGVBanpNU2MyUkFQS3hjVmpvb3ZGTUlQc1JwakNWZWNlSF9ESU1DQWVBWkYtMzA1Zw?oc=5",
+          "summary": "Play at a Pokémon TCG: Mega Evolution—Delta Reign Prerelease Event Pokemon.com",
+          "published": "Mon, 28 Sep 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "9e74385a89ae8a1065ec",
+          "title": "Gigantamax Duraludon Debuts in Pokémon GO Wild Area: Global Event - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNdkVhaFJRSmFGb1VuUWV3SW9iVW9VZzNiU2YtazRQb2tlNHFKTG45cXdnSWljTHJMT1ZIeG1STWJuUzFSVmtmLXRpTFpLM3ZHdXN2NXJBVFoxcXp2TnJkdDhpY1NySjZnSEdwTm5GTFFaeHlBdExfeXU0dEVPbjJGTjZGOWpCMlc0ZU9nbkdDTUttMGltYzVmMmJfNmI?oc=5",
+          "summary": "Gigantamax Duraludon Debuts in Pokémon GO Wild Area: Global Event Pokemon.com",
+          "published": "Fri, 13 Nov 2026 16:13:25 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "056e439d8816b30ad031",
+          "title": "Check Out Every Pokémon TCG Product Release in September 2026 - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNLXJ4Ny1mWDBzWllncHlaaVdoRnh3RmNFX0FjWGtRTkp2MlZWbjBGMVNxRHVOWlU0TnB5RU1zXzJRNFUxay1NUXNFblk2YjhvMTZlN3A2RGZjbXFobGtUdUtvMUQ2RVRmVUJKUUdZdldsV3hPVXd3djJZckxXMC1MYmdXWkZWcVJjZC1tUTlPUEtZNVZwamZXZg?oc=5",
+          "summary": "Check Out Every Pokémon TCG Product Release in September 2026 Pokemon.com",
+          "published": "Tue, 01 Sep 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "59d370a81b560a4f7824",
+          "title": "Pokémon Partners with the European Space Agency for World Space Week 2026 - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNcmU4aFBaeTB5bmlCS0xMWXF6dWM3MVZtcDJXYWRXS3RkbHBxV3BfLU9KRWRUUDh2R2N5SkhFWU1FanJSUXl2NFh0cXVId0t1RURReE5RbENrcU8zUER6NWVuTVpBQVp1N0ttS0ctU0NkRWxWNHkzSlI2ZFlMRkpLNVRTYmF0d2pCR2I4SEU5QVpCMGxtNW5NN05uNU1IRWQ1b054alBTVms?oc=5",
+          "summary": "Pokémon Partners with the European Space Agency for World Space Week 2026 Pokemon.com",
+          "published": "Mon, 21 Sep 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "996ddce1172ac4c8a3bf",
+          "title": "Get a Mewtwo Pokémon TCG Promo Card at Participating Retailers - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPQzhIdElHdERXTEpyRTNpQ0o5Unp3SW9aa3RYaFFPYUZadGh6T0RQRlpSQlF6SUhzX0RSNURvZXZYTUtIaGR4elc1T2N2M0FfdmgzWWF2MzJ3dlB0bE5ydE5UaVZpX19lVHFRQW5yYjN4T1lPYTNRZnlqdGo3Q3BNU3BOUVBBRmNzTlZUZUhva2lEd0F0T0RVRWVB?oc=5",
+          "summary": "Get a Mewtwo Pokémon TCG Promo Card at Participating Retailers Pokemon.com",
+          "published": "Thu, 10 Sep 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "b46d3f733bf0dc42b488",
+          "title": "Pokémon Unveils New Umbreon Eeveelution Design - ScreenRant",
+          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE83azNhX3JCRi02RnhxQXNSRTBIV0R5ZnRkZHF3Qi1HbFBGeDBfQ1MwUUwzZEdHNEhaY0c2SGdycGhjVmd2UmJzb05GOXM4TXBOeV80ZUc3RmZqSnIwc1hCSFIzTHJFMTlLLXFF?oc=5",
+          "summary": "Pokémon Unveils New Umbreon Eeveelution Design ScreenRant",
+          "published": "Wed, 18 Nov 2026 06:00:18 GMT",
+          "publisher": "ScreenRant",
+          "retailer": "ScreenRant",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "a2bbb490388ffc1061c5",
+          "title": "Pokémon Pokopia Apples to Applin Event Guide, From Syrupy Apples To A Kitchen Table - Nintendo Life",
+          "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOeUU3dUF4SFJkSTU4UW04UzU3b01sUXQzSmxvSlRGWEFSaVN4cWdxeU5NSXprdTNuakFpLWRLa0NVQ1NQQ1pOYm1uRWdKd0NDX0k5SFhzdHgtYzExWDdyOUc3TWJZNk9CaUNyU083OG90cW1rRFM4Vkd3TzZXUG44b1d6c216ZXM?oc=5",
+          "summary": "Pokémon Pokopia Apples to Applin Event Guide, From Syrupy Apples To A Kitchen Table Nintendo Life",
+          "published": "Mon, 16 Nov 2026 11:57:04 GMT",
+          "publisher": "Nintendo Life",
+          "retailer": "Nintendo Life",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "a16b9077f4f3600a325c",
+          "title": "Come Party at the Pokémon Center Night Out Experience - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNbGNrYzFuaWU1MUxPMHd5b3J6QUwxcEw5SmUtNmk3THhBUDRvOFNNejFTWFVwZXpJaVBrRldDXzh5SzZXdlRBRVlRQ3NHWXFEREliWTJmT040NEtVRjZDUHBvNHdxMlMzT3pBV2MyN2NNa1pPdGhaRmh1Nk04cnRxU29KQ3VXOHRlUXhKX1Z3?oc=5",
+          "summary": "Come Party at the Pokémon Center Night Out Experience Pokemon.com",
+          "published": "Tue, 22 Sep 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "e3ec98c5cd4e4c71371b",
+          "title": "Read the Pokémon TCG Pocket October 2026 Producer Letter - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNUXBsdU96TkNIdmxiM1h3Y3FSalVLS3NxS211Rk15YU1MaDFXMDc2XzZRV21RRXlXTEJvdlItMW0wTmhsbW05NzNfcTVJUzNVQURpN0Q4blVwM19NYUVnOUxtMHBYWFBWUmstd0ZPRVhvUU8wU1QxSXA2bHp0cUgwSktyREJsMnZEaklLNjdueXdEZw?oc=5",
+          "summary": "Read the Pokémon TCG Pocket October 2026 Producer Letter Pokemon.com",
+          "published": "Thu, 15 Oct 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "6d680a6b1a0815135876",
+          "title": "Pokémon TCG: First Partner Illustration Collection—Series 3 - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPRF9QY2cwRFYxLUNGR19rS0lxc3FkTWwteU4zajItaXJzRi16VnJ2RXhxN1RWNU5TYV9BbWgxM0I5NjNLcXZIVFFXRlQyRjAxcWYwOHBHVnBKSFhhNEEzWWNpVWFlbG5RZHU0NUNlV2lMdW9qdVduUmF4alBrUlJzVXlXTkI3NjNyNktrb0VXNmZlTmdlamVZMjZwMHB5RVYtRE1B?oc=5",
+          "summary": "Pokémon TCG: First Partner Illustration Collection—Series 3 Pokemon.com",
+          "published": "Fri, 07 Aug 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        },
+        {
+          "key": "c7424d0723ff696a0fa6",
+          "title": "Pokémon TCG: 30th Celebration Poster Collection - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQRGxSaThaRnZFcXpPMk1tNXhZb1FZbGtqMmtPS2ZCMFJfamhwTEhndjhGS1loSkF2Nk5QQUV4eVNPNUtlTzhyTVZpUldQSzA0X2hrMWJZS1FmUlFVRFpoTXRhT2YyRDZVU1loYTJDTGVaZjQ5VkkxT2hmX29OTndydjIzNW9pdlV5OUdVTThQR0JIWWc?oc=5",
+          "summary": "Pokémon TCG: 30th Celebration Poster Collection Pokemon.com",
+          "published": "Wed, 16 Sep 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "image": "",
+          "category": "news"
+        }
+      ],
+      "initialized": true,
+      "source_url": "https://news.google.com/rss/search?q=%28Pokemon+TCG+OR+Pokemon+Center%29&hl=en-US&gl=US&ceid=US%3Aen",
+      "last_success": "2026-11-19T11:10:41Z",
+      "last_item_count": 30,
+      "last_successful_urls": [
+        "https://news.google.com/rss/search?q=%28Pokemon+TCG+OR+Pokemon+Center%29&hl=en-US&gl=US&ceid=US%3Aen"
+      ]
     }
   },
   "source_status": [
     {
       "id": "pokemon-center-tcg",
-      "name": "Pokémon Center · Trading Cards",
+      "name": "Pokémon Center · New Releases",
       "retailer": "Pokémon Center",
       "type": "catalog",
-      "url": "https://www.pokemoncenter.com/category/tcg-cards",
-      "response_url": "https://www.pokemoncenter.com/category/tcg-cards",
+      "url": "https://www.pokemoncenter.com/category/new-releases",
+      "response_url": "https://www.pokemoncenter.com/category/new-releases",
       "status": "warning",
-      "last_checked": "2026-11-19T10:04:20Z",
+      "last_checked": "2026-11-19T11:09:16Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 191,
-      "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 6 KB, title=Pardon Our Interruption, product-like links=0, JSON blocks=0",
-      "notes": "Pokémon Center trading-card catalog.",
+      "duration_ms": 243,
+      "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 1 KB, product-like links=0, JSON blocks=0",
+      "notes": "Broad Pokémon Center new-release catalog. Product categories are inferred from each listing.",
       "successful_urls": 1,
       "configured_urls": 1,
       "response_health": {
@@ -5301,23 +5401,23 @@
         "partial": false
       },
       "parser_diagnostics": [
-        "6 KB, title=Pardon Our Interruption, product-like links=0, JSON blocks=0"
+        "1 KB, product-like links=0, JSON blocks=0"
       ]
     },
     {
       "id": "pokemon-center-plush",
-      "name": "Pokémon Center · Plush",
+      "name": "Pokémon Center · Back in Stock",
       "retailer": "Pokémon Center",
       "type": "catalog",
-      "url": "https://www.pokemoncenter.com/category/plush",
-      "response_url": "https://www.pokemoncenter.com/category/plush",
+      "url": "https://www.pokemoncenter.com/category/back-in-stock",
+      "response_url": "https://www.pokemoncenter.com/category/back-in-stock",
       "status": "warning",
-      "last_checked": "2026-11-19T10:04:20Z",
+      "last_checked": "2026-11-19T11:09:16Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 28,
+      "duration_ms": 61,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 6 KB, title=Pardon Our Interruption, product-like links=0, JSON blocks=0",
-      "notes": "Pokémon Center plush catalog.",
+      "notes": "Broad Pokémon Center back-in-stock catalog. Product categories are inferred from each listing.",
       "successful_urls": 1,
       "configured_urls": 1,
       "response_health": {
@@ -5338,10 +5438,10 @@
       "url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "response_url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "status": "warning",
-      "last_checked": "2026-11-19T10:04:21Z",
+      "last_checked": "2026-11-19T11:09:16Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 527,
+      "duration_ms": 387,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 137 KB, title=\"pokemon\" : Target, product-like links=0, JSON blocks=1, access-challenge marker detected",
       "notes": "Broad Pokémon search. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -5364,10 +5464,10 @@
       "url": "https://www.walmart.com/search?q=pokemon",
       "response_url": "https://www.walmart.com/search?q=pokemon",
       "status": "warning",
-      "last_checked": "2026-11-19T10:04:21Z",
+      "last_checked": "2026-11-19T11:09:17Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 194,
+      "duration_ms": 381,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Last-known catalog retained: 146 listing(s); this scan did not confirm current inventory. Response diagnostics: 15 KB, title=Robot or human?, product-like links=0, JSON blocks=0, access-challenge marker detected",
       "notes": "Broad Pokémon search. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -5390,7 +5490,7 @@
       "type": "catalog",
       "url": "https://www.bestbuy.com/site/searchpage.jsp?browsedCategory=pcmcat1604992984556&id=pcat17071&qp=brandcharacter_facet%3DFranchise%7EPok%C3%A9mon&st=categoryid%24pcmcat1604992984556",
       "status": "error",
-      "last_checked": "2026-11-19T10:05:38Z",
+      "last_checked": "2026-11-19T11:10:34Z",
       "items_found": 0,
       "new_alerts": 0,
       "successful_urls": 0,
@@ -5400,18 +5500,18 @@
     },
     {
       "id": "gamestop-pokemon-tcg",
-      "name": "GameStop · Pokémon TCG",
+      "name": "GameStop · Pokémon Products",
       "retailer": "GameStop",
       "type": "catalog",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/trading-card-games?prefn1=franchise&prefv1=Pokemon&view=new&hybrid=true&srule=most-popular",
-      "response_url": "https://www.gamestop.com/toys-games/trading-cards/trading-card-games?prefn1=franchise&prefv1=Pokemon&view=new&hybrid=true&srule=most-popular",
-      "status": "ok",
-      "last_checked": "2026-11-19T10:05:42Z",
-      "items_found": 21,
+      "url": "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending",
+      "response_url": "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending",
+      "status": "warning",
+      "last_checked": "2026-11-19T11:10:38Z",
+      "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 4173,
-      "message": "Fetched 1/1 configured URL(s). 21 relevant Pokémon listing(s) recognized.",
-      "notes": "Current configured GameStop Pokémon TCG catalog route.",
+      "duration_ms": 4024,
+      "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 629 KB, title=pokemon | Search Results | GameStop, product-like links=0, JSON blocks=1",
+      "notes": "Broad Pokémon search sorted from newest release to oldest. Product categories are inferred from each listing.",
       "successful_urls": 1,
       "configured_urls": 1,
       "response_health": {
@@ -5419,7 +5519,10 @@
         "configured": 1,
         "failed": 0,
         "partial": false
-      }
+      },
+      "parser_diagnostics": [
+        "629 KB, title=pokemon | Search Results | GameStop, product-like links=0, JSON blocks=1"
+      ]
     },
     {
       "id": "amazon-pokemon-products",
@@ -5428,7 +5531,7 @@
       "type": "catalog",
       "url": "https://www.amazon.com/s?k=pokemon",
       "status": "error",
-      "last_checked": "2026-11-19T10:05:44Z",
+      "last_checked": "2026-11-19T11:10:40Z",
       "items_found": 174,
       "new_alerts": 0,
       "successful_urls": 0,
@@ -5437,19 +5540,26 @@
       "notes": "One broad Pokémon search for cards, plush, figures, and other products. Product categories are inferred from each listing."
     },
     {
-      "id": "pokebeach-news",
-      "name": "PokéBeach · News",
-      "retailer": "PokéBeach",
+      "id": "pokemon-news-google",
+      "name": "Pokémon News · TCG & Pokémon Center",
+      "retailer": "Pokémon News",
       "type": "rss",
-      "url": "https://www.pokebeach.com/feed",
-      "status": "error",
-      "last_checked": "2026-11-19T10:05:47Z",
-      "items_found": 6,
+      "url": "https://news.google.com/rss/search?q=%28Pokemon+TCG+OR+Pokemon+Center%29&hl=en-US&gl=US&ceid=US%3Aen",
+      "status": "ok",
+      "last_checked": "2026-11-19T11:10:41Z",
+      "items_found": 30,
       "new_alerts": 0,
-      "successful_urls": 0,
-      "configured_urls": 3,
-      "message": "All configured URLs failed: All configured source URLs failed. https://www.pokebeach.com/feed: RetryError: HTTPSConnectionPool(host='www.pokebeach.com', port=443): Max retries exceeded with url: /feed (Caused by ResponseError(' | https://",
-      "notes": "PokéBeach news feed, with its WordPress REST posts endpoint as an alternate source."
+      "successful_urls": 1,
+      "configured_urls": 1,
+      "message": "30 recent Pokémon news article(s) loaded.",
+      "notes": "News articles matching Pokémon TCG or Pokémon Center. The official Pokémon media portal is linked on the homepage.",
+      "elapsed_ms": 446,
+      "response_health": {
+        "successful": 1,
+        "configured": 1,
+        "failed": 0,
+        "partial": false
+      }
     }
   ],
   "events": [
@@ -6961,12 +7071,12 @@
   "summary": {
     "enabled_sources": 8,
     "successful_sources": 1,
-    "failed_sources": 3,
-    "warning_sources": 4,
+    "failed_sources": 2,
+    "warning_sources": 5,
     "new_alerts": 0,
     "first_seen": 0,
     "new_items": 0,
-    "tracked_products": 341
+    "tracked_products": 320
   },
   "subscriber_delivery_status": "1 active subscriber(s); 0 digest(s) sent; 0 queued for retry.",
   "retailer_route_rotation": {

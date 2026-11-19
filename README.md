@@ -9,12 +9,11 @@ A fan-made Pokémon product discovery and restock monitor. The public site shows
 ## What it does
 
 - Checks all 8 configured source entries on every 15-minute scan. No retailer route is rotated or postponed to a later scan.
-- Uses broad Pokémon searches for Target, Walmart, and Amazon; categories are inferred from product data and filtered on the website.
-- Keeps Pokémon Center's known TCG and plush pages separate because a verified single broad catalog route is not configured. Best Buy and GameStop currently cover their configured Pokémon TCG pages.
-- Uses one broad search for Target, Walmart, and Amazon; categories are inferred from the returned products. Pokémon Center keeps its separate TCG and plush pages.
-- Preserves product history when older split category routes are consolidated.
+- Uses broad Pokémon Center New Releases and Back in Stock routes, a broad GameStop search sorted newest first, and broad searches for Target, Walmart, and Amazon. Product categories are inferred from listings.
+- Keeps Best Buy limited to Pokémon TCG because it does not expose a unified Pokémon catalog route.
+- Shows recent Pokémon TCG and Pokémon Center news on the homepage, separate from retailer stock alerts.
 - Offers search, exact-title, item-category, retailer and alert-type filters.
-- Sends email notifications for verified stock transitions, price drops/changes and Pokémon news to approved subscribers.
+- Sends email notifications for verified stock transitions, price drops/changes and newly published Pokémon news to approved subscribers.
 - Provides a private administrator portal to approve, reject, suspend and remove subscriber records.
 
 ## Services and configuration required
@@ -40,7 +39,7 @@ The dashboard keeps the existing source-status layout. Every configured source e
 ## Development
 
 - Source configuration: `config/sources.json`
-- Monitor: `monitor/engine.py`, `monitor/engine_recovery_patch.py`, `monitor/run.py`
+- Monitor: `monitor/engine.py`, `monitor/engine_recovery_patch.py`, `monitor/baseline_patch.py`, `monitor/news_source_patch.py`, `monitor/run.py`
 - Public website: `docs/index.html`, `docs/styles.css`, `docs/app.js`
 - Subscriber/admin bridge: `backend/apps-script/`
 - Firestore client rules: `firebase/firestore.rules`

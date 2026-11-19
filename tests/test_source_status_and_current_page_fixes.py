@@ -1,4 +1,3 @@
-import json
 import unittest
 from pathlib import Path
 
@@ -34,21 +33,17 @@ class SourceStatusAndPageFixesTests(unittest.TestCase):
 
     def test_source_guide_explains_gym_leader_review_states_and_session_security(self):
         guide = self.read("docs/SOURCE_HEALTH.html")
-        for phrase in (
-            "How Gym Leader management works", "Pending", "Active", "Suspended",
-            "Rejected", "Removed", "Sessions and security", "one hour",
-            "Firestore", "Password reset"
-        ):
+        for phrase in ("How Gym Leader management works", "Pending", "Active", "Suspended", "Rejected", "Removed", "Sessions and security", "one hour", "Firestore", "Password reset"):
             self.assertIn(phrase, guide)
 
     def test_service_worker_drops_the_generated_scene_and_bumps_cache(self):
         worker = self.read("docs/sw.js")
-        self.assertIn("pokedrop-shell-v21", worker)
+        self.assertIn("pokedrop-shell-v18", worker)
         self.assertNotIn("pokeball-flight-8bit.png", worker)
         self.assertIn("./assets/icons/pokeball-8bit.png", worker)
 
     def test_monitor_schedule_is_documented_as_quarter_hourly(self):
-        workflow = (ROOT / ".github" / "workflows" / "pokedrop-watch.yml")
+        workflow = ROOT / ".github" / "workflows" / "pokedrop-watch.yml"
         if workflow.exists():
             text = workflow.read_text(encoding="utf-8")
             self.assertIn("cron: '*/15 * * * *'", text)

@@ -34,13 +34,15 @@ class AuthArchitectureTests(unittest.TestCase):
         self.assertIn('function pokedropPortalOutput_', code)
         self.assertIn('setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)', code)
 
-    def test_service_worker_cache_is_bumped_for_current_shell(self):
+    def test_service_worker_caches_current_news_shell_without_experimental_route_ui(self):
         worker = (ROOT / 'docs' / 'sw.js').read_text(encoding='utf-8')
-        self.assertIn('pokedrop-shell-v21', worker)
+        self.assertIn('pokedrop-shell-v18', worker)
         self.assertIn("'./site-uniform.css'", worker)
         self.assertIn("'./assets/icons/pokeball-8bit.png'", worker)
-        self.assertIn("'./source-groups.js'", worker)
-        self.assertIn("'./source-groups.css'", worker)
+        self.assertIn("'./news.js'", worker)
+        self.assertIn("'./news.css'", worker)
+        self.assertNotIn("'./source-groups.js'", worker)
+        self.assertNotIn("'./source-groups.css'", worker)
         self.assertNotIn('pokeball-flight-8bit.png', worker)
 
 

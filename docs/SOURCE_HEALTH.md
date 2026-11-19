@@ -1,8 +1,8 @@
 # Source health
 
-PokéDrop Watch checks each configured retailer route on every 15-minute scan. Broad searches are used where the retailer exposes them; the monitor assigns categories from product titles and structured data, and the website filters the results into TCG, plush, figures, games, and accessories.
+Broad retailer searches are used where available. The monitor assigns product categories from titles and structured data, and the website filters the results into TCG, plush, figures, games, and accessories. Pokémon Center uses separate broad New Releases and Back in Stock pages; Best Buy remains limited to Pokémon TCG; GameStop uses its broad Pokémon search sorted newest first.
 
-Some retailers do not currently have a verified broad catalog route in this project. Pokémon Center therefore keeps its known TCG and plush category pages separate. Best Buy and GameStop currently use their configured Pokémon TCG pages. This is a coverage limitation, not a reason to stagger scans.
+The news feed is scanned separately from retailer inventory. The homepage shows its recent articles and links to the official Pokémon media portal.
 
 ## Statuses
 

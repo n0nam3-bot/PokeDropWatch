@@ -10,26 +10,26 @@
   "sources": [
     {
       "id": "pokemon-center-tcg",
-      "name": "Pokémon Center · Trading Cards",
+      "name": "Pokémon Center · New Releases",
       "retailer": "Pokémon Center",
       "type": "catalog",
-      "url": "https://www.pokemoncenter.com/category/tcg-cards",
+      "url": "https://www.pokemoncenter.com/category/new-releases",
       "enabled": true,
-      "notes": "Pokémon Center trading-card catalog.",
-      "category": "tcg",
+      "notes": "Broad Pokémon Center new-release catalog. Product categories are inferred from each listing.",
+      "category": "collectibles",
       "retailer_key": "pokemon-center",
       "pokemon_scoped": true,
       "alternate_urls": []
     },
     {
       "id": "pokemon-center-plush",
-      "name": "Pokémon Center · Plush",
+      "name": "Pokémon Center · Back in Stock",
       "retailer": "Pokémon Center",
       "type": "catalog",
-      "url": "https://www.pokemoncenter.com/category/plush",
+      "url": "https://www.pokemoncenter.com/category/back-in-stock",
       "enabled": true,
-      "notes": "Pokémon Center plush catalog.",
-      "category": "plush",
+      "notes": "Broad Pokémon Center back-in-stock catalog. Product categories are inferred from each listing.",
+      "category": "collectibles",
       "retailer_key": "pokemon-center",
       "pokemon_scoped": true,
       "alternate_urls": []
@@ -75,12 +75,12 @@
     },
     {
       "id": "gamestop-pokemon-tcg",
-      "name": "GameStop · Pokémon TCG",
+      "name": "GameStop · Pokémon Products",
       "type": "catalog",
-      "url": "https://www.gamestop.com/toys-games/trading-cards/trading-card-games?prefn1=franchise&prefv1=Pokemon&view=new&hybrid=true&srule=most-popular",
+      "url": "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending",
       "enabled": true,
-      "notes": "Current configured GameStop Pokémon TCG catalog route.",
-      "category": "tcg",
+      "notes": "Broad Pokémon search sorted from newest release to oldest. Product categories are inferred from each listing.",
+      "category": "collectibles",
       "retailer_key": "gamestop",
       "pokemon_scoped": true,
       "retailer": "GameStop",
@@ -96,21 +96,20 @@
       "notes": "One broad Pokémon search for cards, plush, figures, and other products. Product categories are inferred from each listing.",
       "category": "collectibles",
       "retailer_key": "amazon",
-      "alternate_urls": []
+      "alternate_urls": [],
+      "pokemon_scoped": true
     },
     {
-      "id": "pokebeach-news",
-      "name": "PokéBeach · News",
-      "retailer": "PokéBeach",
+      "id": "pokemon-news-google",
+      "name": "Pokémon News · TCG & Pokémon Center",
+      "retailer": "Pokémon News",
       "type": "rss",
-      "url": "https://www.pokebeach.com/feed",
+      "url": "https://news.google.com/rss/search?q=%28Pokemon+TCG+OR+Pokemon+Center%29&hl=en-US&gl=US&ceid=US%3Aen",
       "enabled": true,
-      "notes": "PokéBeach news feed, with its WordPress REST posts endpoint as an alternate source.",
+      "notes": "News articles matching Pokémon TCG or Pokémon Center. The official Pokémon media portal is linked on the homepage.",
       "category": "news",
-      "retailer_key": "pokebeach",
-      "alternate_urls": [
-        "https://www.pokebeach.com/wp-json/wp/v2/posts?per_page=30&_embed"
-      ]
+      "retailer_key": "pokemon-news",
+      "alternate_urls": []
     }
   ]
 }
