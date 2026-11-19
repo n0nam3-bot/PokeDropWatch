@@ -20,7 +20,7 @@ concurrency:
 jobs:
   run-monitor:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -186,6 +186,7 @@ jobs:
           fi
 
       - name: Scan sources and send email digest
+        if: always()
         env:
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
