@@ -4,65 +4,89 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#c83232">
-  <meta name="description" content="How PokéDrop Watch scans retailers, interprets source status, and creates alerts.">
+  <meta name="description" content="How PokéDrop Watch scans retailers, creates alerts, handles email subscriptions, and manages Gym Leader approvals.">
   <title>How it works · PokéDrop Watch</title>
   <link rel="icon" href="./pokeball.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./theme-overrides.css">
   <style>
-    .health-wrap{max-width:960px;margin:22px auto 48px}
-    .health-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;margin:14px 0}
-    .health-card h1{font:750 clamp(27px,6vw,40px)/1.08 system-ui,sans-serif;letter-spacing:-1.2px;margin:8px 0 10px}
-    .health-card h2{font:700 18px system-ui,sans-serif;margin:0 0 12px}
-    .health-card h3{font:700 13px system-ui,sans-serif;margin:17px 0 7px}
-    .health-card p,.health-card li{font-size:12px;line-height:1.75;color:#60615a}
+    .health-wrap{width:min(100%,1440px);max-width:1440px;margin:0 auto;padding:0 clamp(14px,2.25vw,32px)}
+    .health-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:clamp(15px,1.7vw,24px);margin:14px 0;box-shadow:var(--shadow)}
+    .health-card h1{font-size:clamp(23px,2.3vw,30px);line-height:1.35;margin:8px 0 10px}
+    .health-card h2{font-size:19px;line-height:1.4;margin:0 0 12px}
+    .health-card h3{font-size:15px;line-height:1.4;margin:18px 0 7px}
+    .health-card p,.health-card li{font-size:13px;line-height:1.7;color:#60615a}
     .health-card ol,.health-card ul{padding-left:22px}
-    .health-card table{width:100%;border-collapse:collapse;font-size:11px;margin:10px 0;min-width:520px}
-    .health-card th,.health-card td{text-align:left;vertical-align:top;padding:9px 7px;border-bottom:1px solid var(--line)}
+    .health-card li+li{margin-top:5px}
+    .health-card table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0;min-width:540px}
+    .health-card th,.health-card td{text-align:left;vertical-align:top;padding:9px 8px;border-bottom:1px solid var(--line)}
     .health-card th{background:#fafaf7}
-    .health-card a{color:var(--red);font-weight:700}
-    .health-pill{display:inline-block;border-radius:5px;padding:4px 7px;font-size:9px;font-weight:800;letter-spacing:.5px;white-space:nowrap}
+    .health-card a{color:var(--red-dark);font-weight:700;text-decoration:underline;text-underline-offset:2px}
+    .health-pill{display:inline-block;border-radius:5px;padding:4px 7px;font-size:10px;font-weight:800;letter-spacing:.5px;white-space:nowrap}
     .match{background:#eaf5ee;color:#32815b}.nomatch{background:#fff5df;color:#946a16}.issue{background:#fff0ec;color:#bd5545}
     .health-table-wrap{overflow-x:auto}
-    @media(max-width:620px){.health-wrap{margin:12px auto 30px}.health-card{padding:15px}.health-card p,.health-card li{font-size:11px}.health-card table{font-size:10px}.health-card th,.health-card td{padding:7px 5px}}
+    .health-note{border-left:4px solid #d7a942;background:#fff8e9;padding:11px 14px;border-radius:0 8px 8px 0}
+    .health-note p{margin:0}
+    .health-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .health-mini{background:#fbfaf6;border:1px solid var(--line);border-radius:9px;padding:13px}
+    .health-mini strong{display:block;margin-bottom:5px;font-size:13px}
+    .health-mini p{margin:0}
+    @media(max-width:720px){.health-wrap{padding:0 12px}.health-card{padding:14px}.health-grid{grid-template-columns:1fr}.health-card p,.health-card li{font-size:12px}.health-card table{font-size:11px}.health-card th,.health-card td{padding:7px 6px}}
   </style>
 </head>
 <body class="page-info">
-  <div class="site-shell health-wrap">
-    <header class="topbar">
-      <a class="brand" href="./#top"><img class="page-ball" src="./assets/icons/pokeball-8bit.png" alt=""><span><strong>PokéDrop</strong><small>PALLET TOWN</small></span></a>
+  <div class="site-shell health-wrap" id="top">
+    <header class="topbar" id="pageTop">
+      <a class="brand" href="./#top" aria-label="PokéDrop Watch home">
+        <img class="page-ball" src="./assets/icons/pokeball-8bit.png" alt="">
+        <span><strong>PokéDrop</strong><small>PALLET TOWN</small></span>
+      </a>
       <a class="text-link" href="./#top">← Dashboard</a>
     </header>
     <main>
       <section class="health-card">
         <p class="eyebrow">POKÉDROP WATCH GUIDE</p>
-        <h1>How the monitor works</h1>
-        <p>PokéDrop Watch checks configured retailer and news pages on a schedule, looks for Pokémon-related products or articles, compares the results with its saved scan history, and publishes the changes it can verify. A status describes what the automated request and parser could see; it is not a guarantee that a store has stock.</p>
+        <h1>How PokéDrop Watch works</h1>
+        <p>PokéDrop Watch checks configured retailer and Pokémon news pages on a schedule, looks for product listings or articles, compares the results with saved scan history, and publishes changes it can verify. The dashboard reports what the automated request and parser could read. It is not a promise that a retailer has stock or that every product on the retailer's website was found.</p>
       </section>
 
       <section class="health-card">
-        <h2>What source status means</h2>
+        <h2>How often the monitor checks</h2>
+        <p>The GitHub Actions workflow is scheduled to start every 15 minutes. A scan timestamp changes only after the monitor completes and writes a new dashboard state. The workflow runs its automated tests before scanning; when a test fails, the scan and email-digest step is skipped, so the dashboard keeps showing the last successful scan time.</p>
+        <div class="health-note"><p><strong>Reading “Last checked”:</strong> compare the timestamp with your local time. A timestamp several hours old means the dashboard is showing an older successful scan, not that the stores have been rechecked and confirmed unchanged. Check the latest <strong>PokeDrop Watch</strong> run in GitHub Actions. A failed “Run automated tests” step prevents “Scan sources and send email digest” from running.</p></div>
+      </section>
+
+      <section class="health-card">
+        <h2>What the source statuses mean</h2>
         <div class="health-table-wrap"><table>
           <thead><tr><th>Status</th><th>What happened</th><th>How to interpret it</th></tr></thead>
           <tbody>
-            <tr><td><span class="health-pill match">MATCHES</span></td><td>The page/feed responded and the parser recognized one or more usable Pokémon entries.</td><td>At least one listing was read. It does not mean every listing was found or that every item is available to buy.</td></tr>
-            <tr><td><span class="health-pill nomatch">NO MATCH</span></td><td>The page responded, but the parser found zero usable Pokémon entries.</td><td>The retailer may still show products in a normal browser. The page may render products with JavaScript, use a changed layout, or provide data the current parser does not recognize.</td></tr>
-            <tr><td><span class="health-pill issue">ISSUE</span></td><td>The request failed before a usable page could be parsed, such as a timeout, connection error, block, DNS/TLS error, or HTTP failure.</td><td>This is an automated-access problem. It does not prove the retailer's public website is unavailable to people.</td></tr>
+            <tr><td><span class="health-pill match">MATCHES</span></td><td>The page or feed responded and the parser recognized one or more usable Pokémon entries.</td><td>At least one listing was read. It does not mean every listing was found or that every item is available to buy.</td></tr>
+            <tr><td><span class="health-pill nomatch">NO MATCH</span></td><td>The request succeeded, but the parser found zero usable Pokémon entries in the returned content.</td><td>This is a parser miss, not proof the retailer has no Pokémon products. The site may render results with JavaScript, have changed its markup, return different data to automated requests, or require a session/location.</td></tr>
+            <tr><td><span class="health-pill issue">ISSUE</span></td><td>The request failed before usable content could be parsed, for example a connection timeout, retry failure, block, DNS/TLS failure, or HTTP error.</td><td>This is an automated-access or source-availability problem. It does not prove the retailer's public site is unavailable to people.</td></tr>
           </tbody>
         </table></div>
-        <p>When several URLs are configured for one source, the dashboard reports the overall result and how many configured pages responded. A successful alternate URL can still provide listings when the primary URL fails.</p>
+        <p>Each configured source can contain more than one URL. “2/2 pages responded” means both configured URLs returned content, not that the parser found products on both. One working alternate may still provide results if the primary URL fails.</p>
+        <div class="health-note"><p><strong>Example:</strong> a summary of “3 source matches · 5 parser misses · 2 request errors” means three source groups contributed parsed Pokémon entries, five groups responded but produced no recognized entries, and two groups could not be fetched. If the catalog says 176 listings, that is the number of products the monitor currently recognizes and tracks—not a count of every product on those stores, and not a guarantee they are in stock.</p></div>
+        <div class="health-grid">
+          <div class="health-mini"><strong>Source matches</strong><p>The number of configured source groups whose parser recognized Pokémon entries. It is not the number of pages that responded.</p></div>
+          <div class="health-mini"><strong>Listings seen</strong><p>The number of distinct product records in the latest saved catalog after normalization and duplicate handling.</p></div>
+          <div class="health-mini"><strong>New alerts</strong><p>Events currently counted in the latest monitor state, such as a first discovery, observed restock, price drop, or news item.</p></div>
+          <div class="health-mini"><strong>Configured sources</strong><p>The number of enabled retailer/category/news source groups. A group may request one URL or several alternatives.</p></div>
+        </div>
       </section>
 
       <section class="health-card">
         <h2>How a scan becomes an alert</h2>
         <ol>
-          <li><strong>Fetch:</strong> the scheduled GitHub Actions monitor requests each configured source URL and any configured alternatives.</li>
+          <li><strong>Fetch:</strong> the scheduled GitHub Actions monitor requests each configured source URL and its alternatives.</li>
           <li><strong>Parse:</strong> retailer-specific and shared parsers look for product titles, links, images, prices, release dates, and stock indicators.</li>
-          <li><strong>Normalize:</strong> product links and titles are standardized so duplicate pages or tracking URLs are less likely to create duplicate listings.</li>
+          <li><strong>Normalize:</strong> titles and links are standardized so duplicate pages and tracking URLs are less likely to create duplicate listings.</li>
           <li><strong>Compare:</strong> the current catalog is compared with saved product and stock history to identify meaningful changes.</li>
-          <li><strong>Publish and notify:</strong> the latest status and alert events are written to the dashboard data. Matching events are eligible for delivery to approved, active subscribers.</li>
+          <li><strong>Publish:</strong> the latest status, catalog, and alert events are written to the public dashboard data file.</li>
+          <li><strong>Notify:</strong> eligible events are matched against the categories and retailer/source preferences of verified, Active subscribers.</li>
         </ol>
-        <p>The monitor can only report information exposed to its automated request. A normal browser may show additional results because it runs page scripts, uses a logged-in session, or receives a different version of the page.</p>
+        <p>The monitor can only report information exposed to its automated request. A normal browser can show additional results because it runs page scripts, uses a logged-in session, has location context, or receives a different version of the page.</p>
       </section>
 
       <section class="health-card">
@@ -74,39 +98,69 @@
             <tr><td><strong>First seen</strong></td><td>The monitor discovered the listing, but its release date is outside that window or unavailable.</td><td>A newly discovered listing does not qualify as a dated New item.</td></tr>
             <tr><td><strong>Restocks</strong></td><td>A listing changed from an observed out-of-stock state to an observed in-stock state.</td><td>Both stock states must have been observed. A listing that merely appears for the first time is not a restock.</td></tr>
             <tr><td><strong>Price drops</strong></td><td>A comparable current price is lower than its previously saved price.</td><td>The monitor has both a previous and a current price to compare.</td></tr>
-            <tr><td><strong>News</strong></td><td>A Pokémon news article was recognized from a configured news feed/source.</td><td>The feed provides an article entry the news parser can read.</td></tr>
+            <tr><td><strong>News</strong></td><td>A Pokémon news article was recognized from a configured news source.</td><td>The feed provides an article entry the news parser can read.</td></tr>
           </tbody>
         </table></div>
         <h3>Product filters</h3>
-        <p><strong>Item type</strong> narrows listings to TCG, plush, collectibles, games, accessories and apparel, or news. <strong>Retailer</strong> narrows products to Amazon, Walmart, Best Buy, Target, Pokémon Center, or GameStop. <strong>Exact title</strong> requires the search phrase to match the normalized title instead of matching part of it.</p>
-        <p><strong>All tracked products</strong> shows the latest catalog listings, not only event history. <strong>Latest activity</strong> shows detected events such as first discoveries, restocks, price changes, and news.</p>
+        <p><strong>Item type</strong> narrows listings to TCG, plush, collectibles, games, accessories and apparel, or news. <strong>Retailer</strong> narrows products to Amazon, Walmart, Best Buy, Target, Pokémon Center, or GameStop. <strong>Exact title</strong> requires the search phrase to match the normalized title rather than matching only part of it.</p>
+        <p><strong>Latest activity</strong> shows detected events. <strong>All tracked products</strong> shows catalog listings even when they do not have a recent alert event. Clicking a product image or its View Item link opens the retailer's product page in a new tab.</p>
       </section>
 
       <section class="health-card">
         <h2>How email notifications work</h2>
         <ol>
-          <li>A visitor selects the categories and retailers/sources they want to follow and requests a verification code.</li>
-          <li>The six-digit code is sent to the entered mailbox. It expires after 10 minutes and can only be used once.</li>
-          <li>After successful verification, the application is saved with Pending status.</li>
-          <li>An administrator reviews the application. Only Active subscribers are eligible to receive matching alert emails.</li>
-          <li>Subscriber preferences are checked against each event before the email is sent. Unsubscribe requests also require a one-time email code.</li>
+          <li>A visitor chooses the product categories and retailer/news sources they want to follow, then requests a verification code.</li>
+          <li>A six-digit code is sent to the entered mailbox. It expires after 10 minutes and can only be used once.</li>
+          <li>After successful verification, the application is saved with <strong>Pending</strong> status.</li>
+          <li>A Gym Leader reviews the application. Only <strong>Active</strong> subscribers are eligible to receive matching alert emails.</li>
+          <li>Subscriber preferences are checked against each event before an email is sent. Unsubscribe requests also require a one-time email code.</li>
         </ol>
-        <p>Approval is separate from email verification: verifying an email address does not automatically activate a subscription.</p>
-        <p><a href="./notify.html">Open the notification center ↗</a> · <a href="./admin.html">Open subscriber administration ↗</a></p>
+        <p>Email verification proves control of the mailbox; it does not automatically activate notifications. A Pending application must still be approved by a Gym Leader.</p>
+        <p><a href="./notify.html">Open Receive Notifications ↗</a></p>
+      </section>
+
+      <section class="health-card">
+        <h2>How Gym Leader management works</h2>
+        <p>The Gym Management page is the private review area for email applications. It uses the Apps Script backend for sign-in and subscriber actions. It does not use public browser access to the subscriber database.</p>
+        <h3>Sign-in and Password reset</h3>
+        <ul>
+          <li>Sign in with the Gym Leader email and password configured for the Apps Script project.</li>
+          <li>Use <strong>Forgot password?</strong> to request a one-time reset code at the configured Gym Leader mailbox. The code expires after 10 minutes, can only be used once, and the replacement password must be 12–128 characters.</li>
+          <li>Sign-in attempts are rate-limited. A temporary lock is applied after repeated incorrect passwords.</li>
+        </ul>
+        <h3>Application states and available actions</h3>
+        <div class="health-table-wrap"><table>
+          <thead><tr><th>State</th><th>Meaning</th><th>Gym Leader action</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Pending</strong></td><td>The visitor verified the email address, but the application has not been approved. No product alerts are sent yet.</td><td><strong>Approve</strong> changes it to Active. <strong>Reject</strong> closes the application without enabling delivery.</td></tr>
+            <tr><td><strong>Active</strong></td><td>The application has been approved and matching alerts can be delivered.</td><td><strong>Suspend</strong> pauses delivery. <strong>Remove</strong> marks the record as removed.</td></tr>
+            <tr><td><strong>Suspended</strong></td><td>The subscriber record remains, but alert delivery is paused.</td><td><strong>Reactivate</strong> returns it to Active. <strong>Remove</strong> removes it from active management.</td></tr>
+            <tr><td><strong>Rejected</strong></td><td>The application was not approved.</td><td>A Gym Leader can Approve it later or Remove it.</td></tr>
+            <tr><td><strong>Unsubscribed</strong></td><td>The mailbox owner completed the secure unsubscribe process.</td><td>A later verified application can be reviewed again; it begins Pending.</td></tr>
+            <tr><td><strong>Removed</strong></td><td>The record was explicitly removed by a Gym Leader.</td><td>It is not eligible for delivery. Contact the site owner if a removal needs review.</td></tr>
+          </tbody>
+        </table></div>
+        <h3>Sessions and security</h3>
+        <ul>
+          <li>Gym Leader sessions expire after one hour. Sign in again when a session expires.</li>
+          <li>Subscriber records are stored in Firestore and read or updated by the server-side Apps Script backend.</li>
+          <li>Service-account credentials and password secrets remain in server-side configuration. They must not be copied into public website JavaScript.</li>
+          <li>Firestore browser rules are intentionally private. Do not make subscriber records publicly readable or writable to troubleshoot the Gym Management page.</li>
+        </ul>
+        <p><a href="./admin.html">Open Gym Management ↗</a></p>
       </section>
 
       <section class="health-card">
         <h2>Why a product may have missing details</h2>
         <ul>
           <li><strong>No image:</strong> the page may not expose a usable product image, may return a placeholder, or may block external image loading.</li>
-          <li><strong>No price:</strong> the source may hide the price until a page script runs, require a location/session, or expose a price format the parser cannot interpret.</li>
+          <li><strong>Price not listed:</strong> the source may hide the price until a page script runs, require a location/session, or expose a price format the parser cannot interpret. The monitor does not invent a price.</li>
           <li><strong>Unknown availability:</strong> no reliable in-stock or out-of-stock indicator was found. The dashboard does not guess.</li>
           <li><strong>Missing release date:</strong> the retailer did not publish a date in the structured data or product markup the monitor received.</li>
         </ul>
-        <p>Source layouts and access rules can change. A parser miss should be investigated with the corresponding scan log and a sanitized response sample rather than treated as proof that no product exists.</p>
+        <p>Source layouts and access behavior can change. A parser miss should be investigated with the corresponding scan log and a sanitized response sample rather than treated as proof that no product exists.</p>
       </section>
     </main>
-    <footer class="footer"><span class="footer-brand"><img class="page-ball" src="./assets/icons/pokeball-8bit.png" alt="" style="width:18px;height:18px;flex-basis:18px"> PokéDrop Watch</span><a href="./#top">Back to dashboard</a></footer>
   </div>
   <script src="./page-enhancements.js" defer></script>
 </body>

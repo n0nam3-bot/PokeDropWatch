@@ -32,12 +32,14 @@ class UiConsistencyV2Tests(unittest.TestCase):
         self.assertIn('pointercancel', source)
         self.assertIn('clearInterval(press.repeatTimer)', source)
 
-    def test_home_hero_uses_the_colorful_pixel_art_scene(self):
+    def test_home_hero_uses_the_original_single_eight_bit_pokeball(self):
+        page = (ROOT / 'docs' / 'index.html').read_text(encoding='utf-8')
         source = (ROOT / 'docs' / 'page-enhancements.js').read_text(encoding='utf-8')
-        self.assertIn('./assets/hero/pokeball-flight-8bit.png', source)
-        image = ROOT / 'docs' / 'assets' / 'hero' / 'pokeball-flight-8bit.png'
-        self.assertTrue(image.exists())
-        self.assertGreater(image.stat().st_size, 100_000)
+        css = (ROOT / 'docs' / 'site-uniform.css').read_text(encoding='utf-8')
+        self.assertIn('src="./assets/icons/pokeball-8bit.png"', page)
+        self.assertNotIn('pokeball-flight-8bit.png', source + css)
+        self.assertIn('@keyframes pd-hero-ball-idle', css)
+        self.assertIn('image-rendering: pixelated', css)
 
     def test_notify_is_condensed_and_uses_the_single_receive_notifications_intro(self):
         page = (ROOT / 'backend' / 'apps-script' / 'Subscribe.html').read_text(encoding='utf-8')
@@ -51,6 +53,7 @@ class UiConsistencyV2Tests(unittest.TestCase):
     def test_admin_uses_gym_leader_copy_and_no_setup_hint(self):
         page = (ROOT / 'backend' / 'apps-script' / 'Admin.html').read_text(encoding='utf-8')
         self.assertIn('<h1>Gym Management</h1>', page)
+        self.assertNotIn('<span class="tag">GYM MANAGEMENT</span>', page)
         self.assertIn('<h2>Gym Leader sign in</h2>', page)
         self.assertIn('manage Pokémon Center notifications or subscriptions', page)
         self.assertNotIn('Use the administrator credentials configured in Apps Script.', page)

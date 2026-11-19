@@ -95,9 +95,12 @@
     let queued = false;
     const updateLocation = () => {
       queued = false;
-      const threshold = alertsSection.getBoundingClientRect().top + window.scrollY - 140;
-      locationLabel.textContent = (location.hash === '#alerts' || window.scrollY >= threshold)
-        ? 'POKÉDEX' : 'PALLET TOWN';
+      const topbar = document.querySelector('.topbar');
+      const topbarHeight = topbar ? topbar.getBoundingClientRect().height : 78;
+      const threshold = alertsSection.getBoundingClientRect().top + window.scrollY - topbarHeight - 24;
+      // Use scroll position rather than the URL hash: scrolling back above Alerts
+      // must switch the location back to Pallet Town even while #alerts remains.
+      locationLabel.textContent = window.scrollY >= threshold ? 'POKÉDEX' : 'PALLET TOWN';
     };
     const schedule = () => {
       if (queued) return;
@@ -106,15 +109,11 @@
     };
     window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('hashchange', schedule);
+    window.addEventListener('resize', schedule, { passive: true });
     updateLocation();
   }
 
-  // Replace the old single-ball hero artwork with the new colorful pixel-art scene.
-  const heroArt = document.querySelector('.hero-pixel-ball');
-  if (heroArt) {
-    heroArt.src = './assets/hero/pokeball-flight-8bit.png';
-    heroArt.alt = 'A pixel-art Poké Ball launching across a grassy field';
-  }
+  // The homepage keeps the original single 8-bit Poké Ball sprite from index.html.
 
   const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const activeThrows = new Set();

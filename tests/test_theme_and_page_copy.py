@@ -97,25 +97,31 @@ class ThemeAndPageCopyTests(unittest.TestCase):
 
     def test_source_health_is_a_permanent_how_it_works_guide(self):
         health = self.read('docs/SOURCE_HEALTH.html')
-        for topic in ('What source status means', 'How a scan becomes an alert', 'What the alert filters mean', 'How email notifications work'):
+        for topic in ('What the source statuses mean', 'How a scan becomes an alert', 'What the alert filters mean', 'How email notifications work', 'How Gym Leader management works'):
             self.assertIn(topic, health)
         self.assertNotIn('Interpreting the scan reported on November 16, 2026', health)
 
     def test_service_worker_caches_current_pixel_assets_and_scripts(self):
         worker = self.read('docs/sw.js')
-        self.assertIn('pokedrop-shell-v16', worker)
+        self.assertIn('pokedrop-shell-v17', worker)
         self.assertIn('./site-uniform.css', worker)
         self.assertIn('./page-enhancements.js', worker)
-        self.assertIn('./assets/hero/pokeball-flight-8bit.png', worker)
+        self.assertNotIn('pokeball-flight-8bit.png', worker)
         for filename in ('pokeball-8bit.png', 'ultraball-8bit.png', 'masterball-8bit.png'):
             self.assertIn(filename, worker)
 
     def test_all_three_pixel_sprites_exist_as_small_rgba_pngs(self):
-        from PIL import Image
+        import struct
+        signature = b'\x89PNG\r\n\x1a\n'
         for filename in ('pokeball-8bit.png', 'ultraball-8bit.png', 'masterball-8bit.png'):
-            with Image.open(ROOT / 'docs' / 'assets' / 'icons' / filename) as image:
-                self.assertEqual(image.mode, 'RGBA')
-                self.assertEqual(image.size, (32, 32))
+            blob = (ROOT / 'docs' / 'assets' / 'icons' / filename).read_bytes()
+            self.assertTrue(blob.startswith(signature), filename)
+            self.assertGreaterEqual(len(blob), 26, filename)
+            width, height = struct.unpack('>II', blob[16:24])
+            bit_depth, color_type = blob[24], blob[25]
+            self.assertEqual((width, height), (32, 32), filename)
+            self.assertEqual(bit_depth, 8, filename)
+            self.assertEqual(color_type, 6, filename)  # RGBA, checked without third-party Pillow.
 
 
 if __name__ == '__main__':
