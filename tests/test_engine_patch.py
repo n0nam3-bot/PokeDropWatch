@@ -175,13 +175,17 @@ class EnginePatchTests(unittest.TestCase):
         self.assertEqual(product["availability"], "out_of_stock")
         self.assertTrue(product.get("pokemon_scoped"))
 
-    def test_source_config_uses_the_supplied_category_pages(self):
+    def test_source_config_keeps_distinct_search_facets_as_separate_routes(self):
         config = json.loads((Path(__file__).resolve().parents[1] / "config" / "sources.json").read_text(encoding="utf-8"))
         sources = {source["id"]: source for source in config["sources"]}
         self.assertEqual(sources["pokemon-center-tcg"]["url"], "https://www.pokemoncenter.com/category/tcg-cards")
         self.assertIn("facetedValue=tkle6", sources["target-tcg"]["url"])
-        self.assertIn("sort=new", sources["walmart-tcg"]["alternate_urls"][0])
-        self.assertIn("category=plush", sources["pokemon-center-plush"]["alternate_urls"][0])
+        self.assertIn("facetedValue=tkle6Z5ewil", sources["target-tcg-new-arrivals"]["url"])
+        self.assertIn("sort=new", sources["walmart-tcg-newest"]["url"])
+        self.assertIn("category=plush", sources["pokemon-center-plush-new-releases"]["url"])
+        self.assertIn("upcomingnew_facet", sources["best-buy-pokemon-tcg-coming-soon"]["url"])
+        self.assertEqual(len([source for source in config["sources"] if source["retailer_key"] == "amazon"]), 4)
+        self.assertTrue(all(not source.get("alternate_urls") for source in config["sources"] if source["id"] != "pokebeach-news"))
 
 
 if __name__ == "__main__":

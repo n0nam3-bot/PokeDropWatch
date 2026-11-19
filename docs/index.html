@@ -10,6 +10,7 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./theme-overrides.css">
+  <link rel="stylesheet" href="./source-groups.css">
 </head>
 <body class="page-home">
   <div class="site-shell public-shell" id="top">
@@ -41,20 +42,20 @@
       </section>
 
       <section class="metrics" aria-label="Monitor summary">
-        <article class="metric-card"><span class="metric-label">SOURCES WITH MATCHES</span><strong id="onlineCount">—</strong><span class="metric-caption">sources with parser-recognized Pokémon entries</span></article>
-        <article class="metric-card"><span class="metric-label">LISTINGS SEEN</span><strong id="listingCount">—</strong><span class="metric-caption">across successful scans</span></article>
+        <article class="metric-card"><span class="metric-label">RETAILERS WITH MATCHES</span><strong id="onlineCount">—</strong><span class="metric-caption">retailers whose scheduled route returned current product or news matches</span></article>
+        <article class="metric-card"><span class="metric-label">TRACKED LISTINGS</span><strong id="listingCount">—</strong><span class="metric-caption">unique saved product records across category routes; some may be last-known and stale</span></article>
         <article class="metric-card"><span class="metric-label">NEW ALERTS</span><strong id="alertCount">0</strong><span class="metric-caption">recently detected</span></article>
       </section>
 
       <section class="section-block">
         <div class="section-heading">
           <div><p class="eyebrow">WHERE WE'RE LOOKING</p><h2>Watchlist sources</h2></div>
-          <span class="section-note" id="sourceCount">8 configured</span>
+          <span class="section-note" id="sourceCount">Retailers and category routes</span>
         </div>
         <div id="sourceGrid" class="source-grid">
-          <div class="empty-state">Source status will appear after the first scan.</div>
+          <div class="empty-state">Source status will appear after the first scheduled scan.</div>
         </div>
-        <p class="fine-print">MATCHES means the parser recognized Pokémon entries. NO MATCH means the page responded but its product markup was not recognized; it does not mean the retailer has no stock. ISSUE means the request failed. <a href="./SOURCE_HEALTH.html">How it works ↗</a></p>
+        <p class="fine-print">MATCHES means the parser recognized Pokémon entries. PARTIAL means a route was blocked, failed, or needed a fallback. COOLDOWN means no request was made because the retailer is in a shared retry pause. SCHEDULED means the route is due in a later rotation interval. NO MATCH means the checked pages did not yield recognized entries; it does not mean the retailer has no stock. ISSUE means all checked routes failed. <a href="./RETAILER_SCAN_HEALTH.html">Scan route guide ↗</a></p>
       </section>
 
       <section class="section-block alerts-section" id="alerts">
@@ -93,6 +94,7 @@
             <label class="exact-match-control"><input id="exactMatch" type="checkbox"> Exact title</label>
           </div>
           <p id="feedExplanation" class="feed-explanation">New items have a published release date within 30 days. First seen means the monitor discovered a listing but its release date is outside that window or unavailable.</p>
+          <p class="fine-print freshness-note">Distinct category/search routes rotate one per retailer each 15-minute scan, so a retailer with several routes is checked across successive intervals. SCHEDULED routes were not requested this interval; their last-known records are not live stock confirmations. Records from PARTIAL, COOLDOWN, NO MATCH, or ISSUE routes may also be outdated.</p>
         </div>
         <div id="alertList" class="alert-list"><div class="empty-state large-empty"><span class="empty-ball">◉</span><strong>No alerts yet</strong><span>After the next scan, verified stock and price changes will appear here.</span></div></div>
       </section>
@@ -130,5 +132,6 @@
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="./app.js" defer></script>
   <script src="./page-enhancements.js" defer></script>
+  <script src="./source-groups.js" defer></script>
 </body>
 </html>

@@ -28,12 +28,27 @@ class DashboardFilterConfigTests(unittest.TestCase):
         config = json.loads((ROOT / "config" / "sources.json").read_text(encoding="utf-8"))
         sources = {source["id"]: source for source in config["sources"]}
         expected = {
-            "pokemon-center-tcg", "pokemon-center-plush", "target-tcg", "target-plush",
-            "walmart-tcg", "walmart-plush", "best-buy-pokemon-tcg", "gamestop-pokemon-tcg",
+            "pokemon-center-tcg", "pokemon-center-plush", "pokemon-center-plush-new-releases",
+            "target-tcg", "target-tcg-new-arrivals", "target-plush", "target-plush-new-arrivals",
+            "walmart-tcg", "walmart-tcg-newest", "walmart-plush", "walmart-plush-newest",
+            "best-buy-pokemon-tcg", "best-buy-pokemon-tcg-new-arrivals",
+            "best-buy-pokemon-tcg-coming-soon", "gamestop-pokemon-tcg",
         }
         self.assertEqual({key for key, value in sources.items() if value.get("pokemon_scoped")}, expected)
         self.assertNotIn("pokemon_scoped", sources["amazon-pokemon-products"])
+        self.assertNotIn("pokemon_scoped", sources["amazon-pokemon-tcg"])
+
+    def test_each_retailer_query_scope_is_listed_once_and_grouped_by_retailer(self):
+        config = json.loads((ROOT / "config" / "sources.json").read_text(encoding="utf-8"))
+        sources = config["sources"]
+        urls = [source["url"] for source in sources]
+        self.assertEqual(len(urls), len(set(urls)))
+        self.assertEqual(len(sources), 20)
+        self.assertEqual(len({source["retailer_key"] for source in sources}), 7)
+        amazon_ids = {source["id"] for source in sources if source["retailer_key"] == "amazon"}
+        self.assertEqual(amazon_ids, {
+            "amazon-pokemon-products", "amazon-pokemon-tcg", "amazon-pokemon-plush", "amazon-pokemon-figures",
+        })
 
 
-if __name__ == "__main__":
-    unittest.main()
+if __name__ == "__main__": unittest.main()
