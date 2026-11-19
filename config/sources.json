@@ -2,7 +2,7 @@
   "settings": {
     "check_interval_minutes": 15,
     "request_timeout_seconds": 25,
-    "max_items_per_catalog": 100,
+    "max_items_per_catalog": 80,
     "history_limit": 100,
     "email_digest_subject_prefix": "PokéDrop Watch",
     "user_agent": "PokeDropWatch/1.0 (+https://github.com; public product availability monitor)"
@@ -105,7 +105,7 @@
       "type": "rss",
       "url": "https://www.pokebeach.com/feed",
       "enabled": true,
-      "notes": "PokéBeach news feed. The WordPress REST endpoint and homepage are tried only when the primary feed does not yield articles.",
+      "notes": "PokéBeach news feed, with its WordPress REST posts endpoint as an alternate source.",
       "category": "news",
       "retailer_key": "pokebeach",
       "alternate_urls": [

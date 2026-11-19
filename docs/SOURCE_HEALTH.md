@@ -12,7 +12,7 @@ Some retailers do not currently have a verified broad catalog route in this proj
 - **NO MATCH** — the checked content returned no recognized entries.
 - **ISSUE** — the request failed.
 
-The monitor tries a backup only after the primary route fails, is blocked, or produces no usable entries. It does not rotate category routes across later scans. Every configured primary route is checked on every scan.
+Every configured primary retailer route is checked on every scan. All configured URLs for that source are handled in the same 15-minute cycle; no route is rotated or postponed to a later scan.
 
 ## Product categories
 

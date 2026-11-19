@@ -8,10 +8,10 @@ A fan-made Pokémon product discovery and restock monitor. The public site shows
 
 ## What it does
 
-- Checks each configured primary retailer route on every 15-minute scan.
+- Checks all 8 configured source entries on every 15-minute scan. No retailer route is rotated or postponed to a later scan.
 - Uses broad Pokémon searches for Target, Walmart, and Amazon; categories are inferred from product data and filtered on the website.
 - Keeps Pokémon Center's known TCG and plush pages separate because a verified single broad catalog route is not configured. Best Buy and GameStop currently cover their configured Pokémon TCG pages.
-- Tries a backup only when the primary route fails, is blocked, or returns no usable entries.
+- Uses one broad search for Target, Walmart, and Amazon; categories are inferred from the returned products. Pokémon Center keeps its separate TCG and plush pages.
 - Preserves product history when older split category routes are consolidated.
 - Offers search, exact-title, item-category, retailer and alert-type filters.
 - Sends email notifications for verified stock transitions, price drops/changes and Pokémon news to approved subscribers.
@@ -35,13 +35,13 @@ Follow [`owner-docs/SETUP.md`](owner-docs/SETUP.md) for exact links, menu paths,
 
 ## Monitoring status
 
-The dashboard groups source status by retailer. Backups are tried only when the primary route fails, is blocked, or returns no usable entries. Retailers that do not expose a verified broad route keep only the necessary category pages.
+The dashboard keeps the existing source-status layout. Every configured source entry is checked during each 15-minute scan; retailer searches are not rotated between scans.
 
 ## Development
 
 - Source configuration: `config/sources.json`
-- Monitor: `monitor/engine.py`, `monitor/engine_recovery_patch.py`, `monitor/broad_source_patch.py`, `monitor/run.py`
-- Public website: `docs/index.html`, `docs/styles.css`, `docs/app.js`, `docs/source-groups.js`
+- Monitor: `monitor/engine.py`, `monitor/engine_recovery_patch.py`, `monitor/run.py`
+- Public website: `docs/index.html`, `docs/styles.css`, `docs/app.js`
 - Subscriber/admin bridge: `backend/apps-script/`
 - Firestore client rules: `firebase/firestore.rules`
 - Roadmap: `docs/ROADMAP.md`

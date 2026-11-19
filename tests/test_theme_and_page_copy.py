@@ -103,11 +103,11 @@ class ThemeAndPageCopyTests(unittest.TestCase):
 
     def test_service_worker_caches_current_pixel_assets_and_scripts(self):
         worker = self.read('docs/sw.js')
-        self.assertIn('pokedrop-shell-v21', worker)
+        self.assertIn('pokedrop-shell-v17', worker)
         self.assertIn('./site-uniform.css', worker)
         self.assertIn('./page-enhancements.js', worker)
-        self.assertIn('./source-groups.js', worker)
-        self.assertIn('./source-groups.css', worker)
+        self.assertNotIn('./source-groups.js', worker)
+        self.assertNotIn('./source-groups.css', worker)
         self.assertNotIn('pokeball-flight-8bit.png', worker)
         for filename in ('pokeball-8bit.png', 'ultraball-8bit.png', 'masterball-8bit.png'):
             self.assertIn(filename, worker)

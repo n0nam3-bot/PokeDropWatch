@@ -8,14 +8,12 @@ import os
 import sys
 from pathlib import Path
 
-# Install retailer/date recovery and primary-first conditional fallback before
-# binding the scanner function. Every configured primary is checked each run.
+# Install retailer/date recovery extensions before importing scanner symbols.
 import engine_patch  # noqa: F401
 import engine_recovery_patch  # noqa: F401
-import broad_source_patch  # noqa: F401
 import trainer_preferences_patch  # noqa: F401
 from engine import (
-    clean_product_title, deduplicate_products, infer_category, is_valid_event, make_session,
+    clean_product_title, deduplicate_products, is_valid_event, make_session,
     is_email_eligible_event, normalize_match_text, scan_source, send_email, utc_now,
 )
 from subscribers import dispatch_subscriber_notifications
@@ -35,27 +33,6 @@ def write_json(path: Path, value) -> None:
     temp = path.with_suffix(path.suffix + ".tmp")
     temp.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     temp.replace(path)
-
-
-def deduplicate_events(events: list[dict]) -> list[dict]:
-    """Collapse duplicate alerts when the same product appears in multiple routes."""
-    unique = []
-    seen = set()
-    for event in events:
-        event_type = event.get("type", "")
-        title = normalize_match_text(event.get("title", ""))
-        retailer = normalize_match_text(
-            event.get("retailer_key") or event.get("retailer") or event.get("source_name", "")
-        )
-        price = "" if event_type in {"first_seen", "new_item"} else str(event.get("price", ""))
-        previous = "" if event_type in {"first_seen", "new_item"} else str(event.get("previous_price", ""))
-        url = str(event.get("url", "")) if event_type == "news" else ""
-        key = (event_type, retailer, title, price, previous, url)
-        if key in seen:
-            continue
-        seen.add(key)
-        unique.append(event)
-    return unique
 
 
 def migrate_state(state: dict) -> dict:
@@ -116,69 +93,9 @@ def migrate_state(state: dict) -> dict:
             if key:
                 normalized_products[key] = item
         source_state["products"] = normalized_products
-        # This is the size of the retained catalogue, not the number confirmed
-        # in the latest scan. Per-source current_items_found reports freshness.
         source_state["last_item_count"] = len(normalized_products)
     return state
 
-
-
-# Histories from the earlier category-split setup are folded into the one broad
-# retailer catalog where possible. This preserves product history while removing
-# the old scheduled routes from the active scan list.
-LEGACY_SOURCE_MERGES = {
-    "pokemon-center-plush": ["pokemon-center-plush-new-releases"],
-    "target-tcg": ["target-tcg-new-arrivals", "target-plush", "target-plush-new-arrivals"],
-    "walmart-tcg": ["walmart-tcg-newest", "walmart-plush", "walmart-plush-newest"],
-    "best-buy-pokemon-tcg": ["best-buy-pokemon-tcg-new-arrivals", "best-buy-pokemon-tcg-coming-soon"],
-    "amazon-pokemon-products": ["amazon-pokemon-tcg", "amazon-pokemon-plush", "amazon-pokemon-figures"],
-}
-LEGACY_CATEGORIES = {
-    "pokemon-center-plush-new-releases": "plush",
-    "target-tcg-new-arrivals": "tcg", "target-plush": "plush", "target-plush-new-arrivals": "plush",
-    "walmart-tcg-newest": "tcg", "walmart-plush": "plush", "walmart-plush-newest": "plush",
-    "best-buy-pokemon-tcg-new-arrivals": "tcg", "best-buy-pokemon-tcg-coming-soon": "tcg",
-    "amazon-pokemon-tcg": "tcg", "amazon-pokemon-plush": "plush", "amazon-pokemon-figures": "collectibles",
-}
-
-
-def merge_legacy_source_histories(state: dict, sources: list[dict]) -> None:
-    items = state.setdefault("items", {})
-    source_by_id = {source["id"]: source for source in sources}
-    for target_id, legacy_ids in LEGACY_SOURCE_MERGES.items():
-        target_source = source_by_id.get(target_id)
-        if not target_source:
-            continue
-        target = items.setdefault(target_id, {})
-        products = target.get("products") if isinstance(target.get("products"), dict) else {}
-        products = dict(products)
-        initialized = bool(target.get("initialized"))
-        last_success_values = [str(target.get("last_success") or "")]
-        for legacy_id in legacy_ids:
-            legacy = items.get(legacy_id)
-            if not isinstance(legacy, dict):
-                continue
-            initialized = initialized or bool(legacy.get("initialized"))
-            last_success_values.append(str(legacy.get("last_success") or ""))
-            old_products = legacy.get("products") if isinstance(legacy.get("products"), dict) else {}
-            for old_key, raw_item in old_products.items():
-                if not isinstance(raw_item, dict):
-                    continue
-                item = dict(raw_item)
-                fallback_category = LEGACY_CATEGORIES.get(legacy_id, target_source.get("category", "collectibles"))
-                item["category"] = item.get("category") or infer_category(item.get("title", ""), fallback_category)
-                item["retailer_key"] = target_source.get("retailer_key") or target_id
-                product_key = item.get("url") or item.get("sku") or old_key or normalize_match_text(item.get("title", ""))
-                if not product_key:
-                    continue
-                previous = products.get(product_key)
-                if not previous or str(item.get("last_seen", "")) >= str(previous.get("last_seen", "")):
-                    products[product_key] = item
-        target["products"] = products
-        target["initialized"] = initialized
-        target["source_url"] = target_source.get("url", target.get("source_url", ""))
-        target["last_item_count"] = len(products)
-        target["last_success"] = max(last_success_values, default="")
 
 def main() -> int:
     parser = argparse.ArgumentParser()
@@ -198,9 +115,8 @@ def main() -> int:
         "subscriber_delivery_status": "Not configured",
     })
     settings = config.get("settings", {})
-    sources = [s for s in config.get("sources", []) if s.get("enabled", True)]
-    merge_legacy_source_histories(state, sources)
     state = migrate_state(state)
+    sources = [s for s in config.get("sources", []) if s.get("enabled", True)]
     if not sources:
         raise SystemExit("No enabled sources found in config/sources.json")
     active_source_ids = {source["id"] for source in sources}
@@ -224,37 +140,27 @@ def main() -> int:
                 warnings += 1
                 print(f"WARNING {source['id']}: {result['status']['message']}")
             else:
-                print(f"OK {source['id']}: {result['status']['items_found']} current item(s), {len(events)} alert(s)")
+                print(f"OK {source['id']}: {result['status']['items_found']} relevant item(s), {len(events)} alert(s)")
         except Exception as exc:
             failures += 1
             prior = next((x for x in state.get("source_status", []) if x.get("id") == source["id"]), {})
-            last_known_items = state.get("items", {}).get(source["id"], {}).get("last_item_count", prior.get("items_found", 0))
-            failure_message = f"Request failed: {str(exc)[:210]}"
             source_status.append({
                 "id": source["id"],
                 "name": source.get("name", source["id"]),
                 "retailer": source.get("retailer", ""),
-                "retailer_key": source.get("retailer_key", ""),
-                "category": source.get("category", ""),
                 "type": source.get("type", ""),
                 "url": source.get("url", ""),
                 "status": "error",
                 "last_checked": utc_now(),
-                "items_found": 0,
-                "current_items_found": 0,
-                "last_known_items": last_known_items,
+                "items_found": state.get("items", {}).get(source["id"], {}).get("last_item_count", prior.get("items_found", 0)),
                 "new_alerts": 0,
                 "successful_urls": 0,
-                "configured_urls": 1 + len(source.get("alternate_urls", [])) + (1 if source.get("id") == "pokebeach-news" else 0),
-                "available_urls": 1 + len(source.get("alternate_urls", [])) + (1 if source.get("id") == "pokebeach-news" else 0),
-                "attempted_urls": 0,
-                "message": failure_message,
+                "configured_urls": min(4, 1 + len(source.get("alternate_urls", [])) + (1 if source.get("id") == "pokebeach-news" else 0)),
+                "message": f"All configured URLs failed: {str(exc)[:210]}",
                 "notes": source.get("notes", ""),
             })
             print(f"ERROR {source['id']}: {exc}", file=sys.stderr)
 
-    # Collapse duplicate product/event alerts if a broad page repeats a listing.
-    new_events = deduplicate_events(new_events)
     state["last_checked"] = utc_now()
     state["source_status"] = source_status
     email_events = [event for event in new_events if is_email_eligible_event(event)]
@@ -294,37 +200,16 @@ def main() -> int:
         settings.get("email_digest_subject_prefix", "PokéDrop Watch"),
     )
 
-    product_sources = {source["id"]: source for source in sources if source.get("type") in {"catalog", "product"}}
-    tracked_product_keys = set()
-    for source_id, source in product_sources.items():
-        products = state.get("items", {}).get(source_id, {}).get("products", {})
-        if not isinstance(products, dict):
-            continue
-        fallback_retailer = source.get("retailer_key") or source.get("retailer") or source_id
-        for product in products.values():
-            if not isinstance(product, dict):
-                continue
-            title_key = normalize_match_text(product.get("title", ""))
-            retailer = normalize_match_text(product.get("retailer_key") or fallback_retailer)
-            if title_key:
-                tracked_product_keys.add((retailer, title_key))
-
-    current_listings = sum(
-        int(item.get("current_items_found", item.get("items_found", 0)) or 0)
-        for item in source_status
-        if item.get("type") in {"catalog", "product"}
-    )
+    product_source_ids = {source["id"] for source in sources if source.get("type") in {"catalog", "product"}}
     state["summary"] = {
         "enabled_sources": len(sources),
-        "retailer_groups": len({source.get("retailer_key") or source.get("retailer") or source["id"] for source in sources}),
         "successful_sources": sum(1 for item in source_status if item["status"] == "ok"),
         "failed_sources": failures,
         "warning_sources": warnings,
         "new_alerts": len(email_events),
         "first_seen": sum(1 for event in new_events if event.get("type") == "first_seen"),
         "new_items": sum(1 for event in new_events if event.get("type") == "new_item"),
-        "tracked_products": len(tracked_product_keys),
-        "current_listings_found": current_listings,
+        "tracked_products": sum(state.get("items", {}).get(source_id, {}).get("last_item_count", 0) for source_id in product_source_ids),
     }
     write_json(state_path, state)
     print(
