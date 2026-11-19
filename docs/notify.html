@@ -24,16 +24,6 @@
     .bottom-bar a[aria-current="page"] { background:#fff2ee; color:var(--red-dark); }
     @media(max-width:760px) { .notify-shell { padding:0 12px; } .notify-main { padding-top:12px; } #notifyPortalFrame { height:1280px; } }
     @media(max-width:420px) { #notifyPortalFrame { height:1380px; } }
-  
-    .portal-launch-panel { min-height:360px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:15px; padding:34px 24px; border:1px solid var(--line); border-radius:13px; background:linear-gradient(145deg,#fffdfa,#f7f1ed); box-shadow:var(--shadow); text-align:center; }
-    .portal-launch-icon { width:58px; height:58px; display:grid; place-items:center; border-radius:16px; background:#fff0ea; color:var(--red-dark); font-size:25px; }
-    .portal-launch-copy { max-width:620px; }
-    .portal-launch-copy h2 { margin:4px 0 8px; font:750 clamp(21px,3vw,29px)/1.15 system-ui,sans-serif; letter-spacing:-.7px; }
-    .portal-launch-copy p:last-child { margin:0; color:#777970; font-size:13px; line-height:1.65; }
-    .portal-launch-actions { display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:12px; margin-top:5px; }
-    .portal-launch-primary { display:inline-flex; min-height:44px; align-items:center; justify-content:center; padding:0 19px; border-radius:9px; background:var(--red-dark); color:#fff; font-size:11px; font-weight:850; letter-spacing:.5px; text-decoration:none; }
-    .portal-launch-secondary { color:var(--red-dark); font-size:12px; font-weight:750; text-decoration:underline; text-underline-offset:3px; }
-    @media(max-width:520px) { .portal-launch-panel { min-height:320px; padding:26px 16px; } .portal-launch-actions { width:100%; flex-direction:column; } .portal-launch-primary { width:min(100%,320px); } }
   </style>
 </head>
 <body class="page-notify">
@@ -55,18 +45,10 @@
         <h1>Notification center</h1>
         <p>Choose the Pokémon categories and retailers you want to follow. Verify your email with a one-time code; applications remain pending until approved by the administrator.</p>
       </section>
-<section class="portal-launch-panel" aria-label="Notify portal">
-      <div class="portal-launch-icon" aria-hidden="true">✉</div>
-      <div class="portal-launch-copy">
-        <p class="eyebrow">GOOGLE APPS SCRIPT PORTAL</p>
-        <h2>Open the notification center</h2>
-        <p>Google sign-in and security cookies are more reliable when this portal is opened directly, rather than inside an embedded frame. Your PokéDrop Watch page will remain available in this tab.</p>
+      <div class="notify-frame-wrap">
+        <iframe id="notifyPortalFrame" src="https://script.google.com/macros/s/AKfycbwGfc1E_t1nj-HG5Sf5V1Y-J_cwY_PmwLIUAfbPPBVtl7mbxOhCkz5Q6BNosWmEUmVm/exec?page=subscribe" title="PokéDrop Watch email notification application" loading="eager" referrerpolicy="strict-origin-when-cross-origin"></iframe>
       </div>
-      <div class="portal-launch-actions">
-        <a class="portal-launch-primary" href="https://script.google.com/macros/s/AKfycbwGfc1E_t1nj-HG5Sf5V1Y-J_cwY_PmwLIUAfbPPBVtl7mbxOhCkz5Q6BNosWmEUmVm/exec?page=subscribe" target="_blank" rel="noopener noreferrer">OPEN NOTIFY IN NEW TAB ↗</a>
-        <a class="portal-launch-secondary" href="https://script.google.com/macros/s/AKfycbwGfc1E_t1nj-HG5Sf5V1Y-J_cwY_PmwLIUAfbPPBVtl7mbxOhCkz5Q6BNosWmEUmVm/exec?page=subscribe">Open in this tab</a>
-      </div>
-    </section>
+      <p class="portal-fallback">If the Google form does not load here, <a href="https://script.google.com/macros/s/AKfycbwGfc1E_t1nj-HG5Sf5V1Y-J_cwY_PmwLIUAfbPPBVtl7mbxOhCkz5Q6BNosWmEUmVm/exec?page=subscribe" target="_blank" rel="noopener noreferrer">open Notify directly in a new tab ↗</a>.</p>
     </main>
   </div>
   <nav class="bottom-bar" aria-label="Quick navigation">
@@ -78,8 +60,7 @@
       <a href="https://github.com/n0nam3-bot/PokeDropWatch" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">↗</span><small>GitHub</small></a>
     </div>
   </nav>
-  <script>// POKEDROP_NOTIFY_TOP_LEVEL_PORTAL_V2
-document.getElementById('refreshNotifyButton').addEventListener('click', () => window.location.assign('https://script.google.com/macros/s/AKfycbwGfc1E_t1nj-HG5Sf5V1Y-J_cwY_PmwLIUAfbPPBVtl7mbxOhCkz5Q6BNosWmEUmVm/exec?page=subscribe'));</script>
+  <script>document.getElementById('refreshNotifyButton').addEventListener('click', () => window.location.reload());</script>
   <script src="./page-enhancements.js" defer></script>
 </body>
 </html>

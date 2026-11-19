@@ -1,13 +1,16 @@
 (() => {
   'use strict';
 
-  // News lives in the existing Latest alerts feed. It is shown only when the
-  // trainer chooses the News activity chip, or Item type = News with All activity.
+  // News stays inside the existing Latest alerts / All tracked products feed.
+  // Latest activity is intentionally limited to the last 30 days; the All
+  // tracked products view exposes the full saved archive.
   const $ = (id) => document.getElementById(id);
   const list = $('alertList');
   if (!list) return;
 
   const feedSourceId = 'pokemon-news-google';
+  const DAY = 86400000;
+  const LATEST_WINDOW_DAYS = 30;
   let latestData = null;
   let renderTimer = 0;
 
@@ -23,6 +26,16 @@
     }
   }
 
+  function dateValue(value) {
+    if (!value) return 0;
+    const parsed = Date.parse(String(value));
+    return Number.isFinite(parsed) ? parsed : 0;
+  }
+
+  function articleTime(article) {
+    return dateValue(article.published) || dateValue(article.detected_at) || dateValue(article.first_seen);
+  }
+
   function formatDate(value) {
     if (!value) return '';
     const date = new Date(value);
@@ -36,10 +49,16 @@
     return document.querySelector('#alertTypeFilters .filter-chip.active')?.dataset.filter || 'all';
   }
 
+  function isArchiveView() {
+    return Boolean($('productsViewButton')?.classList.contains('active'));
+  }
+
   function shouldShowNews() {
-    if ($('productsViewButton')?.classList.contains('active')) return false;
     const type = activeActivityFilter();
     const category = $('categoryFilter')?.value || 'all';
+    // Keep the original Latest Activity rule: the News chip always opens news;
+    // Item type = News opens it when All activity is selected. The same two
+    // controls also work in All tracked products without leaving that view.
     return type === 'news' || (type === 'all' && category === 'news');
   }
 
@@ -51,37 +70,36 @@
     for (const item of articles) {
       const url = safeHttpUrl(item?.url);
       if (!url || !item?.title) continue;
+      const publisher = item.publisher || item.retailer || 'Pokémon News';
       byUrl.set(url, {
         ...item,
         type: 'news',
         category: 'news',
+        retailer_key: 'pokemon-news',
         url,
-        publisher: item.publisher || item.retailer || 'Pokémon News',
-        retailer: item.publisher || item.retailer || 'Pokémon News',
+        publisher,
+        retailer: publisher,
       });
     }
 
-    // Existing news alerts remain visible as a fallback for older saved states.
+    // Older states may contain news events that predate the persistent archive.
     for (const item of (Array.isArray(data?.events) ? data.events : [])) {
       if (item?.type !== 'news') continue;
       const url = safeHttpUrl(item.url);
       if (!url || !item.title || byUrl.has(url)) continue;
+      const publisher = item.publisher || item.retailer || item.source_name || 'Pokémon News';
       byUrl.set(url, {
         ...item,
         type: 'news',
         category: 'news',
+        retailer_key: 'pokemon-news',
         url,
-        publisher: item.publisher || item.retailer || item.source_name || 'Pokémon News',
+        publisher,
+        retailer: publisher,
       });
     }
 
-    const publishedTime = (article) => {
-      const published = Date.parse(String(article.published || ''));
-      if (Number.isFinite(published)) return published;
-      const detected = Date.parse(String(article.detected_at || ''));
-      return Number.isFinite(detected) ? detected : 0;
-    };
-    return [...byUrl.values()].sort((a, b) => publishedTime(b) - publishedTime(a));
+    return [...byUrl.values()].sort((a, b) => articleTime(b) - articleTime(a));
   }
 
   function matchesFilters(article) {
@@ -91,11 +109,10 @@
     const query = normalize($('alertSearch')?.value || '');
     const exact = Boolean($('exactMatch')?.checked);
     const title = normalize(article.title);
-    const publisher = normalize(article.publisher || article.retailer || '');
 
     if (type !== 'all' && type !== 'news') return false;
     if (category !== 'all' && category !== 'news') return false;
-    if (retailer !== 'all' && publisher.replace(/\s+/g, '-') !== retailer) return false;
+    if (retailer !== 'all' && retailer !== 'pokemon-news') return false;
     if (query && (exact ? title !== query : !title.includes(query))) return false;
     return true;
   }
@@ -145,7 +162,7 @@
     const publisher = document.createElement('span');
     publisher.textContent = article.publisher || 'Pokémon News';
     meta.append(publisher);
-    const publishedText = formatDate(article.published || article.detected_at);
+    const publishedText = formatDate(article.published || article.detected_at || article.first_seen);
     if (publishedText) {
       meta.append(document.createElement('span'));
       meta.lastChild.textContent = '·';
@@ -185,18 +202,27 @@
 
   function renderNews() {
     if (!shouldShowNews() || !latestData) return;
-    const articles = currentArticles(latestData).filter(matchesFilters);
+    const archiveView = isArchiveView();
+    const cutoff = Date.now() - LATEST_WINDOW_DAYS * DAY;
+    let articles = currentArticles(latestData);
+    if (!archiveView) {
+      articles = articles.filter(article => articleTime(article) >= cutoff);
+    }
+    articles = articles.filter(matchesFilters);
+
     list.replaceChildren();
-    $('feedHeading').textContent = 'Pokémon News';
+    $('feedHeading').textContent = archiveView ? 'Pokémon News Archive' : 'Pokémon News · Last 30 Days';
     const fragment = document.createDocumentFragment();
-    articles.slice(0, 30).forEach(article => fragment.append(makeArticleCard(article)));
+    articles.forEach(article => fragment.append(makeArticleCard(article)));
     if (!fragment.childNodes.length) {
       const empty = document.createElement('div');
       empty.className = 'empty-state large-empty';
       const heading = document.createElement('strong');
-      heading.textContent = 'No matching Pokémon news articles';
+      heading.textContent = archiveView ? 'No archived Pokémon news articles' : 'No Pokémon news in the last 30 days';
       const note = document.createElement('span');
-      note.textContent = 'The feed will show current articles here after a successful news scan. Try All retailers or clear the title search.';
+      note.textContent = archiveView
+        ? 'Older articles will remain here as the monitor collects them. Try All retailers or clear the title search.'
+        : 'The Latest activity news view only shows articles published or first detected within the last 30 days. Choose All tracked products and Item type = News to browse the full archive.';
       empty.append(heading, note);
       list.append(empty);
     } else {
@@ -214,7 +240,7 @@
       ? source.parser_diagnostics.join(' ')
       : '';
     const message = `${source?.message || ''} ${diagnostic}`.toLowerCase();
-    return /access-challenge|pardon our interruption|robot or human|captcha|access denied|verify you are human|request blocked/.test(message);
+    return Boolean(source?.access_blocked) || /access-challenge|pardon our interruption|robot or human|captcha|access denied|verify you are human|request blocked/.test(message);
   }
 
   function updateSourceCards() {
@@ -232,10 +258,10 @@
       if (isAccessBlocked(source)) {
         badge.textContent = 'BLOCKED';
         badge.title = 'The retailer returned an access-protection page. The monitor cannot confirm current inventory.';
-        detail.textContent = 'Access protection · no current listings confirmed';
+        detail.textContent = `Access protection · ${Number(source.last_known_items || source.items_found || 0)} last-known listing(s) · current stock not confirmed`;
         detail.title = source.message || 'Access protection page detected.';
-      } else if (source.status === 'error' && Number(source.items_found || 0) > 0) {
-        detail.textContent = `Last known only · ${Number(source.items_found)} saved listing(s) · latest request failed`;
+      } else if (source.status === 'error' && Number(source.last_known_items || source.items_found || 0) > 0) {
+        detail.textContent = `Last known only · ${Number(source.last_known_items || source.items_found)} saved listing(s) · latest request failed`;
         detail.title = source.message || detail.textContent;
       }
     });

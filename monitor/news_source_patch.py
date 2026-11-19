@@ -1,7 +1,10 @@
-"""Persist a readable current-article list for RSS news sources.
+"""Persist a growing news archive while keeping the current-feed scan lightweight.
 
-This wraps the existing product scanner only for RSS source entries. Catalog and
-product scans continue through the existing recovery/date-aware scanner.
+The previous implementation replaced the archive with the latest 30 RSS items
+on every scan. This version merges incoming entries with saved articles, older
+news events, and the seen-index URLs. Latest Activity applies its 30-day window
+in the browser; the All tracked products + Item type=News view can browse the
+larger archive.
 """
 from __future__ import annotations
 
@@ -18,6 +21,8 @@ import requests
 import engine
 
 _previous_scan_source = engine.scan_source
+NEWS_ARCHIVE_LIMIT = 5000
+NEWS_SEEN_LIMIT = 10000
 
 
 def _local_name(tag: str) -> str:
@@ -47,9 +52,8 @@ def _feed_publishers(body: str) -> dict[str, str]:
     return publishers
 
 
-
 def _published_timestamp(value: Any) -> float:
-    """Parse RSS RFC-822 and ISO-8601 dates for chronological sorting."""
+    """Parse RSS RFC-822 and ISO-8601 dates for reliable newest-first sorting."""
     raw = engine.clean_text(value, 120)
     if not raw:
         return float("-inf")
@@ -63,6 +67,17 @@ def _published_timestamp(value: Any) -> float:
     if parsed.tzinfo is None:
         parsed = parsed.replace(tzinfo=timezone.utc)
     return parsed.astimezone(timezone.utc).timestamp()
+
+
+def _article_timestamp(article: dict[str, Any]) -> float:
+    published = _published_timestamp(article.get("published"))
+    if published != float("-inf"):
+        return published
+    detected = _published_timestamp(article.get("detected_at"))
+    if detected != float("-inf"):
+        return detected
+    return _published_timestamp(article.get("first_seen"))
+
 
 def _valid_feed_document(body: str) -> bool:
     try:
@@ -78,17 +93,37 @@ def _safe_article(item: dict[str, Any], source: dict[str, Any]) -> dict[str, Any
     parsed = urlparse(url)
     if not title or parsed.scheme not in {"http", "https"} or not parsed.netloc:
         return None
+    publisher = engine.clean_text(
+        item.get("publisher") or item.get("retailer") or source.get("retailer") or source.get("name"),
+        100,
+    )
     return {
         "key": engine.clean_text(item.get("key"), 80) or hashlib.sha256(url.encode("utf-8")).hexdigest()[:20],
         "title": title,
         "url": url,
         "summary": engine.clean_text(item.get("summary"), 420),
         "published": engine.clean_text(item.get("published"), 100),
-        "publisher": engine.clean_text(item.get("publisher") or item.get("retailer") or source.get("retailer") or source.get("name"), 100),
-        "retailer": engine.clean_text(item.get("publisher") or item.get("retailer") or source.get("retailer") or source.get("name"), 100),
+        "publisher": publisher,
+        "retailer": publisher,
+        "retailer_key": "pokemon-news",
         "image": engine.clean_text(item.get("image"), 1200),
         "category": "news",
+        "detected_at": engine.clean_text(item.get("detected_at") or item.get("first_seen"), 100),
     }
+
+
+def _archive_from_seen(key: str, record: dict[str, Any], source: dict[str, Any]) -> dict[str, Any] | None:
+    """Recover seen article URLs when an older state has no full article object."""
+    if not isinstance(record, dict) or not record.get("url") or not record.get("title"):
+        return None
+    return _safe_article({
+        "key": key,
+        "title": record.get("title"),
+        "url": record.get("url"),
+        "publisher": record.get("publisher") or source.get("retailer") or "Pokémon News",
+        "first_seen": record.get("first_seen"),
+        "detected_at": record.get("first_seen"),
+    }, source)
 
 
 def scan_source_with_article_archive(
@@ -97,7 +132,7 @@ def scan_source_with_article_archive(
     settings: dict[str, Any],
     state: dict[str, Any],
 ):
-    """Keep current news available on the page, including the first scan."""
+    """Keep a deduplicated, growing RSS archive while emitting new-article events."""
     if source.get("type") != "rss":
         return _previous_scan_source(session, source, settings, state)
 
@@ -142,38 +177,65 @@ def scan_source_with_article_archive(
         detail = " | ".join(fetch_errors) or "No configured feed URL could be read."
         raise requests.RequestException(f"All configured news feed URLs failed. {detail}")
 
-    articles = sorted(
-        collected.values(),
-        key=lambda item: _published_timestamp(item.get("published")),
-        reverse=True,
-    )[:30]
+    # Rebuild from every recoverable source in the saved state before adding the
+    # newest feed batch. This carries forward older articles from previous scans.
+    archive_by_url: dict[str, dict[str, Any]] = {}
+    for saved in previous.get("articles", []) if isinstance(previous.get("articles"), list) else []:
+        article = _safe_article(saved, source) if isinstance(saved, dict) else None
+        if article:
+            archive_by_url[article["url"]] = article
+
+    # Older monitor versions kept news in the main event list, not the archive.
+    for saved_event in state.get("events", []):
+        if not isinstance(saved_event, dict) or saved_event.get("type") != "news":
+            continue
+        article = _safe_article(saved_event, source)
+        if article and article["url"] not in archive_by_url:
+            archive_by_url[article["url"]] = article
+
+    # Earlier archives kept only a seen index (up to 300 entries). Recover any
+    # titles/URLs that are no longer in the top-30 article list.
+    for key, record in seen.items():
+        article = _archive_from_seen(str(key), record, source)
+        if article and article["url"] not in archive_by_url:
+            archive_by_url[article["url"]] = article
+
     events: list[dict[str, Any]] = []
     now = engine.utc_now()
-    for article in articles:
-        key = article["key"]
-        if not is_baseline and key not in seen:
+    for key, article in collected.items():
+        already_archived = article["url"] in archive_by_url
+        if not is_baseline and key not in seen and not already_archived:
             events.append(engine.event_record("news", article, source))
+        article["detected_at"] = article.get("detected_at") or now
+        archive_by_url[article["url"]] = article
+        old = seen.get(key, {}) if isinstance(seen.get(key), dict) else {}
         seen[key] = {
             "title": article["title"],
             "url": article["url"],
-            "first_seen": seen.get(key, {}).get("first_seen", now),
+            "publisher": article["publisher"],
+            "first_seen": old.get("first_seen") or now,
         }
 
+    # Keep all collected articles up to a generous bounded archive size. This is
+    # no longer limited to the 30 entries currently returned by the RSS feed.
+    articles = sorted(archive_by_url.values(), key=_article_timestamp, reverse=True)[:NEWS_ARCHIVE_LIMIT]
+    current_count = len(collected)
     current_state = {
-        "seen": dict(list(seen.items())[-300:]),
+        "seen": dict(list(seen.items())[-NEWS_SEEN_LIMIT:]),
         "articles": articles,
         "initialized": True,
         "source_url": source.get("url", ""),
         "last_success": now,
-        "last_item_count": len(articles),
+        "last_item_count": current_count,
+        "archive_count": len(articles),
         "last_successful_urls": successful_urls,
     }
     elapsed_ms = int((time.monotonic() - started) * 1000)
-    status_value = "ok" if articles else "warning"
-    if articles:
-        status_message = f"{len(articles)} recent Pokémon news article(s) loaded."
+    status_value = "ok" if current_count else "warning"
+    if current_count:
+        status_message = f"{current_count} recent Pokémon news article(s) loaded; {len(articles)} article(s) retained in the archive."
     else:
-        status_message = "The feed responded, but no matching articles were returned."
+        status_message = f"The feed responded, but no matching articles were returned. {len(articles)} older article(s) remain archived."
 
     partial = bool(fetch_errors and successful_urls)
     if partial:
@@ -187,7 +249,8 @@ def scan_source_with_article_archive(
         "url": source.get("url", ""),
         "status": status_value,
         "last_checked": now,
-        "items_found": len(articles),
+        "items_found": current_count,
+        "archive_count": len(articles),
         "new_alerts": len(events),
         "successful_urls": len(successful_urls),
         "configured_urls": len(configured_urls),

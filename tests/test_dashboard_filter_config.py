@@ -12,10 +12,19 @@ class DashboardFilterConfigTests(unittest.TestCase):
         self.assertIn('<option value="news">News</option>', page)
         self.assertIn('data-filter="news"', page)
 
-    def test_news_feed_is_sorted_by_parsed_publication_time_newest_first(self):
+    def test_news_feed_sorts_archive_by_parsed_article_time_newest_first(self):
         news = (ROOT / "docs" / "news.js").read_text(encoding="utf-8")
-        self.assertIn("Date.parse(String(article.published || ''))", news)
-        self.assertIn("publishedTime(b) - publishedTime(a)", news)
+        self.assertIn("Date.parse(String(value))", news)
+        self.assertIn("articleTime(b) - articleTime(a)", news)
+        self.assertIn("LATEST_WINDOW_DAYS = 30", news)
+        self.assertIn("articles.forEach(article => fragment.append(makeArticleCard(article)))", news)
+
+    def test_news_archive_is_not_limited_to_the_latest_thirty_feed_items(self):
+        source = (ROOT / "monitor" / "news_source_patch.py").read_text(encoding="utf-8")
+        self.assertIn("NEWS_ARCHIVE_LIMIT = 5000", source)
+        self.assertIn('previous.get("articles", [])', source)
+        self.assertIn('state.get("events", [])', source)
+        self.assertNotIn("[:30]", source)
 
     def test_retailer_routes_are_compact_and_broad_where_supported(self):
         config = json.loads((ROOT / "config" / "sources.json").read_text(encoding="utf-8"))

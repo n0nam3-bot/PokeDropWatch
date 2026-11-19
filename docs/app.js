@@ -206,9 +206,10 @@
       new Option('Best Buy', 'best-buy'),
       new Option('Target', 'target'),
       new Option('Pokémon Center', 'pokemon-center'),
-      new Option('GameStop', 'gamestop')
+      new Option('GameStop', 'gamestop'),
+      new Option('Pokémon News', 'pokemon-news')
     );
-    select.value = ['all', 'amazon', 'walmart', 'best-buy', 'target', 'pokemon-center', 'gamestop'].includes(selected) ? selected : 'all';
+    select.value = ['all', 'amazon', 'walmart', 'best-buy', 'target', 'pokemon-center', 'gamestop', 'pokemon-news'].includes(selected) ? selected : 'all';
     state.retailer = select.value;
   }
   function itemMatches(item, includeActivityType = false) {
@@ -377,11 +378,6 @@
   $('alertSearch').addEventListener('input', (event) => { state.query = event.target.value; renderEvents(); });
   $('categoryFilter').addEventListener('change', (event) => {
     state.category = event.target.value;
-    if (state.view === 'products' && state.category === 'news') {
-      state.view = 'alerts';
-      $('alertsViewButton').classList.add('active');
-      $('productsViewButton').classList.remove('active');
-    }
     renderEvents();
   });
   $('retailerFilter').addEventListener('change', (event) => { state.retailer = event.target.value; renderEvents(); });
@@ -401,11 +397,6 @@
   document.querySelectorAll('.filter-chip').forEach(button => button.addEventListener('click', () => {
     document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.toggle('active', chip === button));
     state.filter = button.dataset.filter;
-    if (state.view === 'products' && state.filter === 'news') {
-      state.view = 'alerts';
-      $('alertsViewButton').classList.add('active');
-      $('productsViewButton').classList.remove('active');
-    }
     renderEvents();
   }));
   refresh();

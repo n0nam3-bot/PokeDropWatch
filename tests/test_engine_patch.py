@@ -8,6 +8,7 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "monitor"))
 import engine_patch
 import engine_recovery_patch  # noqa: F401
+import retailer_payload_patch  # noqa: F401 - uses product-local JSON fields
 import trainer_preferences_patch  # noqa: F401
 import engine
 

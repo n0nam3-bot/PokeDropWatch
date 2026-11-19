@@ -1,7 +1,9 @@
 """Targeted GameStop product-link support and clearer access-block detection.
 
 Imported after engine_recovery_patch so the existing scanner can use the added
-GameStop PDP patterns without changing other retailer URL rules.
+GameStop PDP patterns without changing other retailer URL rules. The bootstrap
+imports below install the shared payload and source-health fixes into the
+production monitor as well as in the unit-test process.
 """
 from __future__ import annotations
 
@@ -41,8 +43,6 @@ def same_host_product_url_with_gamestop(raw_url: str, base_url: str, retailer_ke
         return ""
 
     path = parsed.path.lower().rstrip("/")
-    # Never treat the search route itself as a product, even if it contains
-    # query parameters that resemble an ID.
     if path.startswith(("/search", "/search-new", "/search-old", "/account", "/cart", "/checkout")):
         return ""
 
@@ -54,15 +54,11 @@ def same_host_product_url_with_gamestop(raw_url: str, base_url: str, retailer_ke
             for key, value in query.items() if key.lower() in _GAMESTOP_QUERY_KEYS
         )
 
-    if has_product_id:
-        return engine.stable_url(absolute)
-    return ""
+    return engine.stable_url(absolute) if has_product_id else ""
 
 
 def extract_retailer_dom_products_with_pid(soup, base_url: str, retailer: str, limit: int):
     if engine._retailer_key(retailer) == "gamestop":
-        # GameStop product tiles commonly store their product identifier on the
-        # tile container. Alias it to the attribute the shared extractor reads.
         for element in soup.select("[data-pid]"):
             if not element.get("data-product-id"):
                 element["data-product-id"] = element.get("data-pid", "")
@@ -70,7 +66,7 @@ def extract_retailer_dom_products_with_pid(soup, base_url: str, retailer: str, l
 
 
 def response_diagnostic_with_product_markers(body: str, url: str):
-    """Include safe structural clues when a large retailer page parses empty."""
+    """Include structural clues when a large retailer page parses empty."""
     diagnostic = _ORIGINAL_RESPONSE_DIAGNOSTIC(body, url)
     from bs4 import BeautifulSoup
 
@@ -113,3 +109,10 @@ recovery._CHALLENGE_RE = re.compile(
     recovery._CHALLENGE_RE.pattern + r"|pardon our interruption",
     re.I,
 )
+
+# These modules must load after the GameStop hooks above. They install the
+# corrected local-record JSON picker, source health states, and non-destructive
+# public-page patcher. run.py already imports this diagnostics module.
+import retailer_payload_patch  # noqa: F401,E402
+import source_health_patch  # noqa: F401,E402
+import public_ui_fixes_patch  # noqa: F401,E402

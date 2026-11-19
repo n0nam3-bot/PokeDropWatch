@@ -10,6 +10,7 @@ sys.path.insert(0, str(ROOT / 'monitor'))
 import engine
 import engine_patch
 import engine_recovery_patch
+import retailer_payload_patch  # noqa: F401 - avoid parent/list field mixing
 
 
 class RetailerRecoveryTests(unittest.TestCase):
@@ -47,7 +48,7 @@ class RetailerRecoveryTests(unittest.TestCase):
         self.assertEqual(len(products), 1)
         self.assertEqual(products[0]['availability'], 'out_of_stock')
 
-    def test_nested_retailer_json_product_is_extracted(self):
+    def test_nested_retailer_json_product_is_extracted_once_from_its_own_record(self):
         payload = {'data': {'products': [{
             'productName': 'Pokemon TCG Collection Box',
             'canonicalUrl': 'https://www.walmart.com/ip/pokemon-tcg-collection-box/123456',
