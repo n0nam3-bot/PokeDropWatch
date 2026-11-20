@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-11-20T17:19:23Z",
+  "last_checked": "2026-11-20T23:16:25Z",
   "items": {
     "pokemon-center-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-20T17:17:55Z",
+      "last_success": "2026-11-20T23:14:59Z",
       "source_url": "https://www.pokemoncenter.com/category/new-releases",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -15,7 +15,7 @@
     "pokemon-center-plush": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-20T17:17:55Z",
+      "last_success": "2026-11-20T23:14:59Z",
       "source_url": "https://www.pokemoncenter.com/category/back-in-stock",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -2679,166 +2679,6 @@
           "last_seen": "2026-11-20T17:19:22Z",
           "availability_checked": false
         },
-        "https://amazon.com/dp/B01CYZHGC8": {
-          "title": "50 Pokemon Cards Plus a Rare Legendary Pokemon Card | Bundle with LCC Deck Box",
-          "url": "https://amazon.com/dp/B01CYZHGC8",
-          "price": null,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/51nPZl7aogL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B001DIJ48C": {
-          "title": "Pokémon TCG 3 Booster Packs, 30 Cards Total, 100% Authentic, Random Rares & Holofoils, 3 Blister Packs",
-          "url": "https://amazon.com/dp/B001DIJ48C",
-          "price": 24.88,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/71DkGmS7qjL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B0HG3MQDWP": {
-          "title": "Pokémon TCG: Mega Evolution—Delta Reign Elite Trainer Box",
-          "url": "https://amazon.com/dp/B0HG3MQDWP",
-          "price": 98.86,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/91eCZVMy79L._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B0H783FY5Z": {
-          "title": "Pokémon TCG: 30th Celebration Booster Bundle",
-          "url": "https://amazon.com/dp/B0H783FY5Z",
-          "price": 79.45,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/71ilu-FwFyL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B0H2JVZYZZ": {
-          "title": "Pokémon TCG: First Partner Illustration Collection—Series 3",
-          "url": "https://amazon.com/dp/B0H2JVZYZZ",
-          "price": 33.99,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/81LQc5zS0+L._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B087N96VRS": {
-          "title": "Accutime Kids Pokemon Digital LCD Quartz Watch for Boys, Girls, and Adults All Ages",
-          "url": "https://amazon.com/dp/B087N96VRS",
-          "price": 12.03,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/71jrrOOV+OL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "collectibles",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B0GR6M4JV3": {
-          "title": "Pokémon TCG: Mega Evolution—Chaos Rising Triple Pack (1 Foil Promo Card & 3 Booster Packs)",
-          "url": "https://amazon.com/dp/B0GR6M4JV3",
-          "price": 24.99,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/919C05yGWOL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B0GXCRBL5J": {
-          "title": "Pokemon Card Game MEGA Expansion Pack 30th Celebration Box",
-          "url": "https://amazon.com/dp/B0GXCRBL5J",
-          "price": 209.99,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/711dPI8FndL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B0GXJ8CSTY": {
-          "title": "Pokémon TCG: Mega Greninja ex Premium Collection, 8 Booster Pack",
-          "url": "https://amazon.com/dp/B0GXJ8CSTY",
-          "price": 64.22,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/91E+9GLiyyL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B0DPFPV4QY": {
-          "title": "Pokemon Soft Fleece Bed Blanket, Warm Bed Throw 51 x 59 inches for Sofa Bedroom Accessories, Anime Gifts for Kids Teens",
-          "url": "https://amazon.com/dp/B0DPFPV4QY",
-          "price": 32.49,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/916zNWW-i-L._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "accessories",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
         "https://amazon.com/dp/B0G2SZ6DS8": {
           "title": "LEGO Pokémon Iconic Trainer Moments Poké Ball 72154 | Collectible Building Set for Adults, Ages 18+, Pokémon Model Kit wit...",
           "url": "https://amazon.com/dp/B0G2SZ6DS8",
@@ -2854,316 +2694,12 @@
           "first_seen_at": "2026-11-20T17:19:22Z",
           "last_seen": "2026-11-20T17:19:22Z",
           "availability_checked": false
-        },
-        "https://amazon.com/dp/B0GP928YDZ": {
-          "title": "Pokemon Card Game MEGA Expansion Pack Storm Emerald Box",
-          "url": "https://amazon.com/dp/B0GP928YDZ",
-          "price": 103.0,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/715FaccxhwL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B0D5595V5X": {
-          "title": "Pokémon 100 Pokemon Card Lot with Legendary Ultra Rare Cards- Bundle with a LCC Deck Box Included",
-          "url": "https://amazon.com/dp/B0D5595V5X",
-          "price": 39.98,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/91NBmupECHL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "accessories",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B0HDWX4J41": {
-          "title": "Pokémon TCG: Deck Crafter’s Collection (2026)",
-          "url": "https://amazon.com/dp/B0HDWX4J41",
-          "price": 11.99,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/81vPiJ6dwhL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B0GZ9S9KDR": {
-          "title": "Pokémon TCG: Mega Evolution—Pitch Black Booster Display Box, 36 Booster Pack",
-          "url": "https://amazon.com/dp/B0GZ9S9KDR",
-          "price": 215.87,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/81oV7PbLhBL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/1604382414": {
-          "title": "Pokémon Deluxe Character Guide (Pokemon Pikachu Press) by Alex Irvine",
-          "url": "https://amazon.com/dp/1604382414",
-          "price": 39.84,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/71Nn0lXQ7yL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "collectibles",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B0H7FDBNSB": {
-          "title": "Pokémon TCG: 30th Celebration Knock Out Collection",
-          "url": "https://amazon.com/dp/B0H7FDBNSB",
-          "price": 32.0,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/71j4bKRdhRL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B0HG3RVZLW": {
-          "title": "Pokémon TCG: Mega Evolution—Delta Reign Booster Bundle",
-          "url": "https://amazon.com/dp/B0HG3RVZLW",
-          "price": 49.99,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/81junkzzqfL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B0GYVHLP4L": {
-          "title": "Pokémon TCG: Mega Evolution—Pitch Black Elite Trainer Box",
-          "url": "https://amazon.com/dp/B0GYVHLP4L",
-          "price": 89.99,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/81nYHGhNIOL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B0GR6N18F6": {
-          "title": "Pokémon TCG: Mega Evolution—Chaos Rising Elite Trainer Box",
-          "url": "https://amazon.com/dp/B0GR6N18F6",
-          "price": 89.96,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/81EPbaDcgQL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B0C6B6V2VK": {
-          "title": "Pokemon TCG: Authentic Factory Sealed Booster Pack (Includes Mystery Card Bundle - V/VMAX 1 in 3 - Bonus Free Protective Card Holder!)",
-          "url": "https://amazon.com/dp/B0C6B6V2VK",
-          "price": 9.44,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/61kCpCJbRPL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B0HGTBCCXX": {
-          "title": "Pokémon TCG: Mega Evolution—Delta Reign Booster Display Box",
-          "url": "https://amazon.com/dp/B0HGTBCCXX",
-          "price": 160.99,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/81iY+9gqnsL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B0BJS24RFT": {
-          "title": "Pokemon Squirtle 8\" Plush Toy - Quality Soft Stuffed Animal Figure - Gift for Kids, Boys, Girls - 2+",
-          "url": "https://amazon.com/dp/B0BJS24RFT",
-          "price": 17.9,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/714JfQmLi3L._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "plush",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/1604382627": {
-          "title": "Pokémon Epic Sticker Collection 3rd Edition: From Kanto to Paldea: Over 1,400 Stickers! by Pikachu Press",
-          "url": "https://amazon.com/dp/1604382627",
-          "price": 11.48,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/81UE4rqNDpL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "collectibles",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B09Z16XWH9": {
-          "title": "Pokémon GO Plus + Jul 14, 2023 ESRB Rating: Rating Pending",
-          "url": "https://amazon.com/dp/B09Z16XWH9",
-          "price": 59.99,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/61T1QciCF3L._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "collectibles",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B0GHYFH499": {
-          "title": "LEGO Pokémon SMART Play: Training House with Pikachu 72164 All-in-One Building Set, Boys & Girls, Ages 6+, Interactive Pokémon Toys W/ Sounds, SMART Brick, 4 Tags & Charger, 400 pieces",
-          "url": "https://amazon.com/dp/B0GHYFH499",
-          "price": 69.96,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/81j7LCubVcL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "collectibles",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B0G2T18T5F": {
-          "title": "LEGO Pokémon SMART Play: Mewtwo's Lab Break 72163 Compatible Set, Building Toys, Boys & Girls, Ages 10+, Interactive Pokémon Toys, 1 SMART Tag, 605 pieces, Gift Idea",
-          "url": "https://amazon.com/dp/B0G2T18T5F",
-          "price": 55.99,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/81mgX9FmMnL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "collectibles",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B0FQP3YQ47": {
-          "title": "Pokemon TCG: Q4 Poke Ball Tins",
-          "url": "https://amazon.com/dp/B0FQP3YQ47",
-          "price": 34.52,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/712OrW9EjzL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B0DHHMB67J": {
-          "title": "eKids Pokemon Pikachu Walkie Talkies for Kids, Indoor and Outdoor Toys Static Free and Extended Range",
-          "url": "https://amazon.com/dp/B0DHHMB67J",
-          "price": 19.99,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/51aTzNwRsRL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "collectibles",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
-        },
-        "https://amazon.com/dp/B0GG11K25W": {
-          "title": "Pokémon TCG: Mega Evolution—Perfect Order Booster Bundle, 6 Booster Pack",
-          "url": "https://amazon.com/dp/B0GG11K25W",
-          "price": 44.99,
-          "currency": "USD",
-          "availability": "unknown",
-          "image": "https://m.media-amazon.com/images/I/81oqIqpLjrL._AC_UL320_.jpg",
-          "sku": "",
-          "retailer": "Amazon",
-          "category": "tcg",
-          "pokemon_scoped": true,
-          "retailer_key": "amazon",
-          "first_seen_at": "2026-11-20T17:19:22Z",
-          "last_seen": "2026-11-20T17:19:22Z",
-          "availability_checked": false
         }
       },
       "initialized": true,
       "last_success": "2026-11-20T17:19:22Z",
       "source_url": "https://www.amazon.com/s?k=pokemon",
-      "last_item_count": 60,
+      "last_item_count": 180,
       "last_successful_urls": [
         "https://www.amazon.com/s?k=pokemon"
       ]
@@ -3171,7 +2707,7 @@
     "target-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-20T17:17:56Z",
+      "last_success": "2026-11-20T23:15:00Z",
       "source_url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -5436,7 +4972,7 @@
         }
       },
       "initialized": true,
-      "last_success": "2026-11-20T17:17:56Z",
+      "last_success": "2026-11-20T23:15:01Z",
       "source_url": "https://www.walmart.com/search?q=pokemon",
       "last_item_count": 146,
       "last_successful_urls": [
@@ -5446,7 +4982,7 @@
     "gamestop-pokemon-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-20T17:19:17Z",
+      "last_success": "2026-11-20T23:16:23Z",
       "source_url": "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -5842,6 +5378,18 @@
           "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxOT0hPNGUwV3ZEbFcyTDZpS1lmOGozU0VYREh3eF9ZTEV5TlgxR240QW5qaUptNUtxbTRpXy1QeHk4SkY1Zng5U3gydEZKbjFIT2dtQ01mTjB6b2F4SEpVMnJsZWtTY19xcDRsVFhsMXEyY1FoaUx6TmlLcFQtQ0dJbXE5dmI3Zw?oc=5",
           "publisher": "Pokemon.com",
           "first_seen": "2026-11-20T17:19:23Z"
+        },
+        "3e8927bd816129e10567": {
+          "title": "New Pokemon Snowman Plushies Announced For Pokemon Center Japan - NintendoSoup",
+          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOdFZkYnRidWxPQlB3NldoX1BfXzZ5aDlRc2lFU19pMkVlYnBCY3k1eHRndTlES1NlZ01fNE15ejkxanpMc1lhY0U4dnJHQU9DVVRUa2wwQXBNUG9RdF9nY2FNc00yaWw3QlFkY2taSVNJOGVYRGFpcC12ODc5UHo5bXNSVktiakM2QzB2eUtNVHNSeDjSAZgBQVVfeXFMTlM0a1Rtclk2Rm1DRlhkcE9lMnItYzBDMjRlNzl5TTc0Tk4zbDc2LTM0YWJqSDlTUjFxV2hDZFl1cHgyai1LVFFDZ2NpM0RCcnBzSFhtbHo1X1BLNUVKb29EZjdRaFhMYVV5RWF6TFZsNE4wYnhmZHFDa2hBU2VScnJQaW10U0J4MlhVYV9icjk1ODNqWHJhanI?oc=5",
+          "publisher": "NintendoSoup",
+          "first_seen": "2026-11-20T23:16:25Z"
+        },
+        "2901e88f853fa77db967": {
+          "title": "“”PIKA PIKA Fresh Farm” Merch Line Announced For Pokemon Center Japan - NintendoSoup",
+          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQaWRDNm9LMVl0dlVad3RIc0Yzd3hVTW9fZndtNm8xZDN1VlVELWN3aTdhNG42VElpMzQ5cU5TTlBfY09MWk5yNXFPTGxPQ1NUYVl2RHY3MDRqckU3M2p4cDFqZ3BVQ08yUGt4OWI2cVdsT3FkQ213R1hSakRDUVdIT3I1bkxsUTFvQWhTUkNuQ3ktcnpNTWpF0gGcAUFVX3lxTE51UzFFRUZneFBUVjg0eG9RVW5mS2tCM3p0LUpDZURwNlZVdjgtZUExdzU2R1oydVZhUWxSSng0WjdMbVYxTl94Zi1lTUh4NzZESjAxbHFUSnN6TzhUMU02UjRJa0kyS3o5bDZVSTRpVldDOGlwallkZFlZUEhXZkpqTGRaa2ZsNFhSc2ZNRE5NbGVrR0ZPcV94V3AwVA?oc=5",
+          "publisher": "NintendoSoup",
+          "first_seen": "2026-11-20T23:16:25Z"
         }
       },
       "articles": [
@@ -5850,13 +5398,13 @@
           "title": "Art of the Pokémon TCG: Mega Evolution—Delta Reign Expansion - Pokemon.com",
           "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQV01NU0JISVNvTGo2MGU0R3RhRlEzcjh0ZDZ5YldvMWdPa1FSa3E3cndyNWlNMEJKUU1PU1N0Rkdlek9JdUlnZFB5WEdsVVlRZFVpUzQwb2xLdDdZU3Ewc05YU0dzVTBjaGpvck0tbHRFRldNQmFOZnBjMGpwS3QwT3ZHWHdPUGQwTXpUQzY0ZlV2Vjc4QXZ5dVBIZw?oc=5",
           "summary": "Art of the Pokémon TCG: Mega Evolution—Delta Reign Expansion Pokemon.com",
-          "published": "Fri, 20 Nov 2026 16:02:43 GMT",
+          "published": "Fri, 20 Nov 2026 16:14:03 GMT",
           "publisher": "Pokemon.com",
           "retailer": "Pokemon.com",
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "af59f1eafbbf4e222abc",
@@ -5869,7 +5417,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "810075958029be908e7c",
@@ -5882,7 +5430,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "1c193e902a5765df54e4",
@@ -5895,7 +5443,33 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
+        },
+        {
+          "key": "3e8927bd816129e10567",
+          "title": "New Pokemon Snowman Plushies Announced For Pokemon Center Japan - NintendoSoup",
+          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOdFZkYnRidWxPQlB3NldoX1BfXzZ5aDlRc2lFU19pMkVlYnBCY3k1eHRndTlES1NlZ01fNE15ejkxanpMc1lhY0U4dnJHQU9DVVRUa2wwQXBNUG9RdF9nY2FNc00yaWw3QlFkY2taSVNJOGVYRGFpcC12ODc5UHo5bXNSVktiakM2QzB2eUtNVHNSeDjSAZgBQVVfeXFMTlM0a1Rtclk2Rm1DRlhkcE9lMnItYzBDMjRlNzl5TTc0Tk4zbDc2LTM0YWJqSDlTUjFxV2hDZFl1cHgyai1LVFFDZ2NpM0RCcnBzSFhtbHo1X1BLNUVKb29EZjdRaFhMYVV5RWF6TFZsNE4wYnhmZHFDa2hBU2VScnJQaW10U0J4MlhVYV9icjk1ODNqWHJhanI?oc=5",
+          "summary": "New Pokemon Snowman Plushies Announced For Pokemon Center Japan NintendoSoup",
+          "published": "Fri, 20 Nov 2026 06:46:38 GMT",
+          "publisher": "NintendoSoup",
+          "retailer": "NintendoSoup",
+          "retailer_key": "pokemon-news",
+          "image": "",
+          "category": "news",
+          "detected_at": "2026-11-20T23:16:25Z"
+        },
+        {
+          "key": "2901e88f853fa77db967",
+          "title": "“”PIKA PIKA Fresh Farm” Merch Line Announced For Pokemon Center Japan - NintendoSoup",
+          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQaWRDNm9LMVl0dlVad3RIc0Yzd3hVTW9fZndtNm8xZDN1VlVELWN3aTdhNG42VElpMzQ5cU5TTlBfY09MWk5yNXFPTGxPQ1NUYVl2RHY3MDRqckU3M2p4cDFqZ3BVQ08yUGt4OWI2cVdsT3FkQ213R1hSakRDUVdIT3I1bkxsUTFvQWhTUkNuQ3ktcnpNTWpF0gGcAUFVX3lxTE51UzFFRUZneFBUVjg0eG9RVW5mS2tCM3p0LUpDZURwNlZVdjgtZUExdzU2R1oydVZhUWxSSng0WjdMbVYxTl94Zi1lTUh4NzZESjAxbHFUSnN6TzhUMU02UjRJa0kyS3o5bDZVSTRpVldDOGlwallkZFlZUEhXZkpqTGRaa2ZsNFhSc2ZNRE5NbGVrR0ZPcV94V3AwVA?oc=5",
+          "summary": "“”PIKA PIKA Fresh Farm” Merch Line Announced For Pokemon Center Japan NintendoSoup",
+          "published": "Fri, 20 Nov 2026 06:24:14 GMT",
+          "publisher": "NintendoSoup",
+          "retailer": "NintendoSoup",
+          "retailer_key": "pokemon-news",
+          "image": "",
+          "category": "news",
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "3907bb979e5c5f0bfd96",
@@ -5921,7 +5495,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "da12b847af00b36d0d64",
@@ -5934,7 +5508,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "ab1687f730a8f25b5c9f",
@@ -5947,7 +5521,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "7fc2cdd7c160bc60d092",
@@ -5999,7 +5573,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "3ad7b178f7824d773664",
@@ -6012,7 +5586,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "46b0722c9e56819841dc",
@@ -6025,7 +5599,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "9830768a0363b9239d61",
@@ -6038,7 +5612,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "1e4fc7daea4985100a3c",
@@ -6051,7 +5625,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "4292079a1188340e3085",
@@ -6090,7 +5664,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "20f5e86a58645fbe7865",
@@ -6103,7 +5677,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "c5f9379a6c6f609969ff",
@@ -6116,7 +5690,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "dca4366152bf813a7098",
@@ -6142,7 +5716,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "52668e1ae07ec706bd4d",
@@ -6155,7 +5729,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "1c2f05d53238aab79f62",
@@ -6168,7 +5742,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "f1a14cae59e90ea77886",
@@ -6207,7 +5781,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "cf85cfb67f4f049f2f4d",
@@ -6220,7 +5794,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "92c40ce498b557700c4b",
@@ -6233,7 +5807,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "0ea89d0faddfb24645b5",
@@ -6272,7 +5846,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "e3ec98c5cd4e4c71371b",
@@ -6285,7 +5859,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "94151c89e69fbc1aa631",
@@ -6298,7 +5872,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "82d90bba1eab2b45270b",
@@ -6311,7 +5885,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "982386a17eed7a5ef707",
@@ -6324,7 +5898,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "a16b9077f4f3600a325c",
@@ -6337,7 +5911,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "59d370a81b560a4f7824",
@@ -6350,7 +5924,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "c7424d0723ff696a0fa6",
@@ -6376,7 +5950,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "056e439d8816b30ad031",
@@ -6389,7 +5963,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "7ac2ba60a1f5152713b4",
@@ -6402,7 +5976,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "d9468e2e7a979fa37592",
@@ -6415,7 +5989,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "795194e9f90ed529139f",
@@ -6428,7 +6002,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "6d680a6b1a0815135876",
@@ -6441,7 +6015,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "f61639ed0864478405d3",
@@ -6467,7 +6041,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "4a02937972f8f71b0653",
@@ -6480,7 +6054,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "364622aa6ac9bc273e3c",
@@ -6493,7 +6067,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "b5f5512ec865b25cee11",
@@ -6506,7 +6080,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "4660888f7cda85e729cb",
@@ -6519,7 +6093,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "c873d42f36a0fc292c61",
@@ -6532,7 +6106,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "9a41cb6f5959c3d09448",
@@ -6545,7 +6119,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T08:33:59Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "a9549fac7da412035d54",
@@ -6558,7 +6132,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "f2bb4d1c5d26ba6b3445",
@@ -6571,7 +6145,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "83b8f505d8f2511b338d",
@@ -6597,7 +6171,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "6fa27987f55dc8de13d4",
@@ -6623,7 +6197,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "7979f979730a7613239d",
@@ -6636,7 +6210,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "f64f2ad1385cec44d2a1",
@@ -6649,7 +6223,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         },
         {
           "key": "1efa7885f3c710cf8b98",
@@ -6675,14 +6249,14 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T17:19:23Z"
+          "detected_at": "2026-11-20T23:16:25Z"
         }
       ],
       "initialized": true,
       "source_url": "https://news.google.com/rss/search?q=%28Pokemon+TCG+OR+Pokemon+Center%29&hl=en-US&gl=US&ceid=US%3Aen",
-      "last_success": "2026-11-20T17:19:23Z",
+      "last_success": "2026-11-20T23:16:25Z",
       "last_item_count": 50,
-      "archive_count": 64,
+      "archive_count": 66,
       "last_successful_urls": [
         "https://news.google.com/rss/search?q=%28Pokemon+TCG+OR+Pokemon+Center%29&hl=en-US&gl=US&ceid=US%3Aen"
       ]
@@ -6697,10 +6271,10 @@
       "url": "https://www.pokemoncenter.com/category/new-releases",
       "response_url": "https://www.pokemoncenter.com/category/new-releases",
       "status": "warning",
-      "last_checked": "2026-11-20T17:17:55Z",
+      "last_checked": "2026-11-20T23:14:59Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 249,
+      "duration_ms": 270,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 1 KB, title=product markers=0, data-pid=0, product-like links=0, JSON blocks=0 The response was a very small page shell with no product links or JSON payload; this is not evidence of an empty catalog.",
       "notes": "Broad Pokémon Center new-release catalog. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -6726,10 +6300,10 @@
       "url": "https://www.pokemoncenter.com/category/back-in-stock",
       "response_url": "https://www.pokemoncenter.com/category/back-in-stock",
       "status": "warning",
-      "last_checked": "2026-11-20T17:17:55Z",
+      "last_checked": "2026-11-20T23:14:59Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 105,
+      "duration_ms": 124,
       "message": "BLOCKED: the returned page is an access-protection challenge, so current inventory could not be checked. Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 6 KB, title=Pardon Our Interruption; product markers=0, d, product-like links=0, JSON blocks=0, access-challenge marker detected",
       "notes": "Broad Pokémon Center back-in-stock catalog. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -6754,10 +6328,10 @@
       "url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "response_url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "status": "warning",
-      "last_checked": "2026-11-20T17:17:56Z",
+      "last_checked": "2026-11-20T23:15:00Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 558,
+      "duration_ms": 618,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 137 KB, title=\"pokemon\" : Target; product markers=0, data-p, product-like links=0, JSON blocks=1",
       "notes": "Broad Pokémon search. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -6782,10 +6356,10 @@
       "url": "https://www.walmart.com/search?q=pokemon",
       "response_url": "https://www.walmart.com/search?q=pokemon",
       "status": "warning",
-      "last_checked": "2026-11-20T17:17:56Z",
+      "last_checked": "2026-11-20T23:15:01Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 485,
+      "duration_ms": 468,
       "message": "BLOCKED: the returned page is an access-protection challenge, so current inventory could not be checked. 146 last-known listing(s) are retained; they are not fresh stock confirmation. Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Last-known catalog retained: 146 listing(s); this scan did not confirm current inventory. Response diagnostics: 15 KB, title=Robot or human?; product markers=0, data-pid=, product-like links=0, JSON blocks=0, access-challenge marker detected",
       "notes": "Broad Pokémon search. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -6810,7 +6384,7 @@
       "type": "catalog",
       "url": "https://www.bestbuy.com/site/searchpage.jsp?browsedCategory=pcmcat1604992984556&id=pcat17071&qp=brandcharacter_facet%3DFranchise%7EPok%C3%A9mon&st=categoryid%24pcmcat1604992984556",
       "status": "error",
-      "last_checked": "2026-11-20T17:19:13Z",
+      "last_checked": "2026-11-20T23:16:18Z",
       "items_found": 0,
       "new_alerts": 0,
       "successful_urls": 0,
@@ -6826,10 +6400,10 @@
       "url": "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending",
       "response_url": "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending",
       "status": "warning",
-      "last_checked": "2026-11-20T17:19:17Z",
+      "last_checked": "2026-11-20T23:16:23Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 3560,
+      "duration_ms": 4648,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 630 KB, title=pokemon | Search Results | GameStop; product , product-like links=0, JSON blocks=1",
       "notes": "Broad Pokémon search sorted from newest release to oldest. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -6852,25 +6426,14 @@
       "retailer": "Amazon",
       "type": "catalog",
       "url": "https://www.amazon.com/s?k=pokemon",
-      "response_url": "https://www.amazon.com/s?k=pokemon",
-      "status": "ok",
-      "last_checked": "2026-11-20T17:19:22Z",
-      "items_found": 60,
-      "new_alerts": 34,
-      "duration_ms": 5275,
-      "message": "Fetched 1/1 configured URL(s). 60 relevant Pokémon listing(s) recognized.",
-      "notes": "One broad Pokémon search for cards, plush, figures, and other products. Product categories are inferred from each listing.",
-      "successful_urls": 1,
+      "status": "error",
+      "last_checked": "2026-11-20T23:16:25Z",
+      "items_found": 180,
+      "new_alerts": 0,
+      "successful_urls": 0,
       "configured_urls": 1,
-      "response_health": {
-        "successful": 1,
-        "configured": 1,
-        "failed": 0,
-        "partial": false
-      },
-      "access_blocked": false,
-      "parse_state": "products_recognized",
-      "freshness": "current_scan"
+      "message": "All configured URLs failed: All configured source URLs failed. https://www.amazon.com/s?k=pokemon: RetryError: HTTPSConnectionPool(host='www.amazon.com', port=443): Max retries exceeded with url: /s?k=pokemon (Caused by ResponseErr",
+      "notes": "One broad Pokémon search for cards, plush, figures, and other products. Product categories are inferred from each listing."
     },
     {
       "id": "pokemon-news-google",
@@ -6879,15 +6442,15 @@
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=%28Pokemon+TCG+OR+Pokemon+Center%29&hl=en-US&gl=US&ceid=US%3Aen",
       "status": "ok",
-      "last_checked": "2026-11-20T17:19:23Z",
+      "last_checked": "2026-11-20T23:16:25Z",
       "items_found": 50,
-      "archive_count": 64,
-      "new_alerts": 5,
+      "archive_count": 66,
+      "new_alerts": 2,
       "successful_urls": 1,
       "configured_urls": 1,
-      "message": "50 recent Pokémon news article(s) loaded; 64 article(s) retained in the archive.",
+      "message": "50 recent Pokémon news article(s) loaded; 66 article(s) retained in the archive.",
       "notes": "News articles matching Pokémon TCG or Pokémon Center. The official Pokémon media portal is linked on the homepage.",
-      "elapsed_ms": 512,
+      "elapsed_ms": 493,
       "response_health": {
         "successful": 1,
         "configured": 1,
@@ -6897,6 +6460,46 @@
     }
   ],
   "events": [
+    {
+      "id": "cb2e22a30c3ec3d549",
+      "type": "news",
+      "title": "New Pokemon Snowman Plushies Announced For Pokemon Center Japan - NintendoSoup",
+      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOdFZkYnRidWxPQlB3NldoX1BfXzZ5aDlRc2lFU19pMkVlYnBCY3k1eHRndTlES1NlZ01fNE15ejkxanpMc1lhY0U4dnJHQU9DVVRUa2wwQXBNUG9RdF9nY2FNc00yaWw3QlFkY2taSVNJOGVYRGFpcC12ODc5UHo5bXNSVktiakM2QzB2eUtNVHNSeDjSAZgBQVVfeXFMTlM0a1Rtclk2Rm1DRlhkcE9lMnItYzBDMjRlNzl5TTc0Tk4zbDc2LTM0YWJqSDlTUjFxV2hDZFl1cHgyai1LVFFDZ2NpM0RCcnBzSFhtbHo1X1BLNUVKb29EZjdRaFhMYVV5RWF6TFZsNE4wYnhmZHFDa2hBU2VScnJQaW10U0J4MlhVYV9icjk1ODNqWHJhanI?oc=5",
+      "retailer": "NintendoSoup",
+      "retailer_key": "pokemon-news",
+      "category": "news",
+      "source_name": "Pokémon News · TCG & Pokémon Center",
+      "source_id": "pokemon-news-google",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "unknown",
+      "image": "",
+      "release_date": "",
+      "summary": "New Pokemon Snowman Plushies Announced For Pokemon Center Japan NintendoSoup",
+      "detected_at": "2026-11-20T23:16:25Z",
+      "email_sent": true
+    },
+    {
+      "id": "116964d43e2a15db46",
+      "type": "news",
+      "title": "“”PIKA PIKA Fresh Farm” Merch Line Announced For Pokemon Center Japan - NintendoSoup",
+      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQaWRDNm9LMVl0dlVad3RIc0Yzd3hVTW9fZndtNm8xZDN1VlVELWN3aTdhNG42VElpMzQ5cU5TTlBfY09MWk5yNXFPTGxPQ1NUYVl2RHY3MDRqckU3M2p4cDFqZ3BVQ08yUGt4OWI2cVdsT3FkQ213R1hSakRDUVdIT3I1bkxsUTFvQWhTUkNuQ3ktcnpNTWpF0gGcAUFVX3lxTE51UzFFRUZneFBUVjg0eG9RVW5mS2tCM3p0LUpDZURwNlZVdjgtZUExdzU2R1oydVZhUWxSSng0WjdMbVYxTl94Zi1lTUh4NzZESjAxbHFUSnN6TzhUMU02UjRJa0kyS3o5bDZVSTRpVldDOGlwallkZFlZUEhXZkpqTGRaa2ZsNFhSc2ZNRE5NbGVrR0ZPcV94V3AwVA?oc=5",
+      "retailer": "NintendoSoup",
+      "retailer_key": "pokemon-news",
+      "category": "news",
+      "source_name": "Pokémon News · TCG & Pokémon Center",
+      "source_id": "pokemon-news-google",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "unknown",
+      "image": "",
+      "release_date": "",
+      "summary": "“”PIKA PIKA Fresh Farm” Merch Line Announced For Pokemon Center Japan NintendoSoup",
+      "detected_at": "2026-11-20T23:16:25Z",
+      "email_sent": true
+    },
     {
       "id": "305efc3145a37e2af3",
       "type": "first_seen",
@@ -7712,216 +7315,6 @@
       "email_sent": true
     },
     {
-      "id": "ea9813195905dad913",
-      "type": "first_seen",
-      "title": "Overall Pick Amazon's Choice: Overall Pick Products highlighted as 'Overall Pick' are: Rated 4+ stars Purchased often Returned infrequently",
-      "url": "https://amazon.com/dp/B01CYZHGC8",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "collectibles",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 19.99,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/51nPZl7aogL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "28ce5ee80beacf726e",
-      "type": "first_seen",
-      "title": "Pokémon TCG 3 Booster Packs, 30 Cards Total, 100% Authentic, Random Rares & Holofoils, 3 Blister Packs",
-      "url": "https://amazon.com/dp/B001DIJ48C",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "tcg",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 24.88,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/71DkGmS7qjL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "fd1043ed8b9bfe49da",
-      "type": "first_seen",
-      "title": "Pokémon TCG: First Partner Illustration Collection—Series 3",
-      "url": "https://amazon.com/dp/B0H2JVZYZZ",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "tcg",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 34.0,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/81LQc5zS0+L._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "d5a7c2b5345de42109",
-      "type": "first_seen",
-      "title": "Pokémon TCG: 30th Celebration Booster Bundle",
-      "url": "https://amazon.com/dp/B0H783FY5Z",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "tcg",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 79.45,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/71ilu-FwFyL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "fc7873218672103ff3",
-      "type": "first_seen",
-      "title": "Pokémon TCG: Mega Greninja ex Premium Collection, 8 Booster Pack",
-      "url": "https://amazon.com/dp/B0GXJ8CSTY",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "tcg",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 64.97,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/91E+9GLiyyL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "bbccdceb21e94ad43a",
-      "type": "first_seen",
-      "title": "Accutime Kids Pokemon Digital LCD Quartz Watch for Boys, Girls, and Adults All Ages",
-      "url": "https://amazon.com/dp/B087N96VRS",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "collectibles",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 11.91,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/71jrrOOV+OL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "384e179b719f6ac0a5",
-      "type": "first_seen",
-      "title": "Pokémon TCG: Mega Evolution—Pitch Black Booster Display Box, 36 Booster Pack",
-      "url": "https://amazon.com/dp/B0GZ9S9KDR",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "tcg",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 215.29,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/81oV7PbLhBL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "eec9d65aed07b89664",
-      "type": "first_seen",
-      "title": "Pokémon TCG: Mega Evolution—Delta Reign Elite Trainer Box",
-      "url": "https://amazon.com/dp/B0HG3MQDWP",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "tcg",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 98.66,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/91eCZVMy79L._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "15b8d4fcca792b74f8",
-      "type": "first_seen",
-      "title": "Pokémon TCG: Mega Evolution—Chaos Rising Triple Pack (1 Foil Promo Card & 3 Booster Packs)",
-      "url": "https://amazon.com/dp/B0GR6M4JV3",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "tcg",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 24.99,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/919C05yGWOL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "9842642f721a8a8e4b",
-      "type": "first_seen",
-      "title": "Pokemon Soft Fleece Bed Blanket, Warm Bed Throw 51 x 59 inches for Sofa Bedroom Accessories, Anime Gifts for Kids Teens",
-      "url": "https://amazon.com/dp/B0DPFPV4QY",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "accessories",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 32.49,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/916zNWW-i-L._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
       "id": "7fa6eaf64997a0dbc0",
       "type": "first_seen",
       "title": "Jravkfi Card Binder 4 Pocket‑Holds Up to 400 Cards | 3‑Ring Zipper Album with 50 Removable Sleeves, Ideal for Card Collect...",
@@ -7943,27 +7336,6 @@
       "pokemon_scoped": true
     },
     {
-      "id": "4633809c8c30b4aec5",
-      "type": "first_seen",
-      "title": "Pokemon Card Game MEGA Expansion Pack Storm Emerald Box",
-      "url": "https://amazon.com/dp/B0GP928YDZ",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "tcg",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 103.0,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/715FaccxhwL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
       "id": "f22d0cc3b5cb76e96b",
       "type": "first_seen",
       "title": "Christmas 2026 Holiday Advent Calendar for Kids, 25 Gift Pieces - Includes 25 Toy Character Figures",
@@ -7978,48 +7350,6 @@
       "previous_price": null,
       "availability": "unknown",
       "image": "https://m.media-amazon.com/images/I/81dzKgwGYIL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "6d40be60a08add840a",
-      "type": "first_seen",
-      "title": "Pokémon TCG: Deck Crafter’s Collection (2026)",
-      "url": "https://amazon.com/dp/B0HDWX4J41",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "tcg",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 11.99,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/81vPiJ6dwhL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "2c7df66a9fbe935d50",
-      "type": "first_seen",
-      "title": "Pokémon 100 Pokemon Card Lot with Legendary Ultra Rare Cards- Bundle with a LCC Deck Box Included",
-      "url": "https://amazon.com/dp/B0D5595V5X",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "accessories",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 39.98,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/91NBmupECHL._AC_UL320_.jpg",
       "release_date": "",
       "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
       "detected_at": "2026-11-20T08:33:59Z",
@@ -8069,258 +7399,6 @@
       "pokemon_scoped": true
     },
     {
-      "id": "fc328b42ebfa8a50a1",
-      "type": "first_seen",
-      "title": "Pokemon Squirtle 8\" Plush Toy - Quality Soft Stuffed Animal Figure - Gift for Kids, Boys, Girls - 2+",
-      "url": "https://amazon.com/dp/B0BJS24RFT",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "plush",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 17.9,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/714JfQmLi3L._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "b8af87e208d69ef802",
-      "type": "first_seen",
-      "title": "Pokémon Deluxe Character Guide (Pokemon Pikachu Press) by Alex Irvine",
-      "url": "https://amazon.com/dp/1604382414",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "collectibles",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 39.84,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/71Nn0lXQ7yL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "2ffc9a0963dbeaa12b",
-      "type": "first_seen",
-      "title": "Pokémon TCG: Mega Evolution—Delta Reign Booster Bundle",
-      "url": "https://amazon.com/dp/B0HG3RVZLW",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "tcg",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 49.99,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/81junkzzqfL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "1aee4dfe21a47f276f",
-      "type": "first_seen",
-      "title": "Pokémon TCG: Mega Evolution—Pitch Black Elite Trainer Box",
-      "url": "https://amazon.com/dp/B0GYVHLP4L",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "tcg",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 89.99,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/81nYHGhNIOL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "d961555e4466d90919",
-      "type": "first_seen",
-      "title": "Pokémon TCG: Mega Evolution—Chaos Rising Elite Trainer Box",
-      "url": "https://amazon.com/dp/B0GR6N18F6",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "tcg",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 89.99,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/81EPbaDcgQL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "93d4fe41742f5fb233",
-      "type": "first_seen",
-      "title": "Pokemon Card Game MEGA Expansion Pack 30th Celebration Box",
-      "url": "https://amazon.com/dp/B0GXCRBL5J",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "tcg",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 211.99,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/711dPI8FndL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "394bf9f5d3ca3f5ea3",
-      "type": "first_seen",
-      "title": "Pokemon TCG: Q4 Poke Ball Tins",
-      "url": "https://amazon.com/dp/B0FQP3YQ47",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "tcg",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 34.51,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/712OrW9EjzL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "426d2258f32f299fb2",
-      "type": "first_seen",
-      "title": "Pokémon TCG: Mega Evolution—Delta Reign Booster Display Box",
-      "url": "https://amazon.com/dp/B0HGTBCCXX",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "tcg",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 202.95,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/81iY+9gqnsL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "758c0d1b9ced483c89",
-      "type": "first_seen",
-      "title": "Pokémon Epic Sticker Collection 3rd Edition: From Kanto to Paldea: Over 1,400 Stickers! by Pikachu Press",
-      "url": "https://amazon.com/dp/1604382627",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "collectibles",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 11.48,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/81UE4rqNDpL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "5d15c3fd9978c36c01",
-      "type": "first_seen",
-      "title": "Pokémon GO Plus + Jul 14, 2023 ESRB Rating: Rating Pending",
-      "url": "https://amazon.com/dp/B09Z16XWH9",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "collectibles",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 59.99,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/61T1QciCF3L._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "f5bf6c8253b43dea8f",
-      "type": "first_seen",
-      "title": "LEGO Pokémon SMART Play: Mewtwo's Lab Break 72163 Compatible Set, Building Toys, Boys & Girls, Ages 10+, Interactive Pokémon Toys, 1 SMART Tag, 605 pieces, Gift Idea",
-      "url": "https://amazon.com/dp/B0G2T18T5F",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "collectibles",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 55.99,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/81mgX9FmMnL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "7a0202c32e7bcc10f1",
-      "type": "first_seen",
-      "title": "eKids Pokemon Pikachu Walkie Talkies for Kids, Indoor and Outdoor Toys Static Free and Extended Range",
-      "url": "https://amazon.com/dp/B0DHHMB67J",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "collectibles",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 19.99,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/51aTzNwRsRL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
       "id": "ad4073f74c4a537dc2",
       "type": "price_change",
       "title": "Pokemon TCG: Mega Zygarde ex Premium Collection with 8 Booster Packs | 8 Booster Packs",
@@ -8356,27 +7434,6 @@
       "previous_price": null,
       "availability": "unknown",
       "image": "https://m.media-amazon.com/images/I/71t-WxTWd2L._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "b98a19a4f2153ed07a",
-      "type": "first_seen",
-      "title": "Pokémon TCG: 30th Celebration Knock Out Collection",
-      "url": "https://amazon.com/dp/B0H7FDBNSB",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "tcg",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 32.0,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/71j4bKRdhRL._AC_UL320_.jpg",
       "release_date": "",
       "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
       "detected_at": "2026-11-20T08:33:59Z",
@@ -8447,27 +7504,6 @@
       "pokemon_scoped": true
     },
     {
-      "id": "257edfab5f4cedf554",
-      "type": "first_seen",
-      "title": "Pokémon TCG: Mega Evolution—Perfect Order Booster Bundle, 6 Booster Pack",
-      "url": "https://amazon.com/dp/B0GG11K25W",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "tcg",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 44.99,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/81oqIqpLjrL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
       "id": "187413b95d3da5d796",
       "type": "first_seen",
       "title": "Choose a language for shopping in Amazon United States. The current selection is English (EN).",
@@ -8482,27 +7518,6 @@
       "previous_price": null,
       "availability": "unknown",
       "image": "https://m.media-amazon.com/images/G/01/digital/video/merch/Other/NBA1_S2_SWM_800x78_POST_Final_noLocale_PV00096032_GraphicalCountdown_Clean_G01_G05_SH._CB763656658_.gif",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "02c1feeb148f26312a",
-      "type": "first_seen",
-      "title": "50 Pokemon Cards Plus a Rare Legendary Pokemon Card | Bundle with LCC Deck Box",
-      "url": "https://amazon.com/dp/B01CYZHGC8",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "tcg",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": null,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/51nPZl7aogL._AC_UL320_.jpg",
       "release_date": "",
       "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
       "detected_at": "2026-11-20T08:33:59Z",
@@ -8974,11 +7989,11 @@
   "email_status": "Email digest sent successfully.",
   "summary": {
     "enabled_sources": 8,
-    "successful_sources": 2,
-    "failed_sources": 1,
+    "successful_sources": 1,
+    "failed_sources": 2,
     "warning_sources": 5,
-    "new_alerts": 7,
-    "first_seen": 32,
+    "new_alerts": 2,
+    "first_seen": 0,
     "new_items": 0,
     "tracked_products": 326
   },
