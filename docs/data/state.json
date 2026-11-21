@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "last_checked": "2026-11-21T04:02:00Z",
+  "last_checked": "2026-11-21T12:39:53Z",
   "items": {
     "pokemon-center-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-21T04:00:34Z",
+      "last_success": "2026-11-21T12:38:31Z",
       "source_url": "https://www.pokemoncenter.com/category/new-releases",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -15,7 +15,7 @@
     "pokemon-center-plush": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-21T04:00:34Z",
+      "last_success": "2026-11-21T12:38:32Z",
       "source_url": "https://www.pokemoncenter.com/category/back-in-stock",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -2697,7 +2697,7 @@
         }
       },
       "initialized": true,
-      "last_success": "2026-11-20T17:19:22Z",
+      "last_success": "2026-11-21T12:39:53Z",
       "source_url": "https://www.amazon.com/s?k=pokemon",
       "last_item_count": 180,
       "last_successful_urls": [
@@ -2707,7 +2707,7 @@
     "target-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-21T04:00:34Z",
+      "last_success": "2026-11-21T12:38:32Z",
       "source_url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -5654,9 +5654,9 @@
         }
       },
       "initialized": true,
-      "last_success": "2026-11-21T04:00:37Z",
+      "last_success": "2026-11-21T12:38:32Z",
       "source_url": "https://www.walmart.com/search?q=pokemon",
-      "last_item_count": 71,
+      "last_item_count": 186,
       "last_successful_urls": [
         "https://www.walmart.com/search?q=pokemon"
       ]
@@ -5664,7 +5664,7 @@
     "gamestop-pokemon-tcg": {
       "products": {},
       "initialized": true,
-      "last_success": "2026-11-21T04:01:57Z",
+      "last_success": "2026-11-21T12:39:52Z",
       "source_url": "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending",
       "last_item_count": 0,
       "last_successful_urls": [
@@ -6078,9 +6078,70 @@
           "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPbUlEZm1jMHpQdkxReko2NlNZLWFlMzJuTzZrUE1oNi1QN0F6X2ZrWklWOWlseE1UWVFqN04ta1Yxc21WczB6ZUFLaWtHWExOU2ZhTU9reXdqaFI0QUZ0cXE3alB3WnZiaFVoUE9HOC1XVWdKRzJRcW45V0p0N01tUkpVd2Eydnk0SFNJUHU5NW53cktS?oc=5",
           "publisher": "Polygon.com",
           "first_seen": "2026-11-21T04:02:00Z"
+        },
+        "427ef71f69cb27e13977": {
+          "title": "Pokémon Flowing Fists Preorders Are Already Live - Joseph Writer Anderson",
+          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOMDBoYkR1eUU3cjBsODhmelJTR0JScHFiTlVUMGZpM3pEcmFtbl9MX1g4aXBacF9WTkM4ZzNHekZxa3RZUzhVSUx5WG1LcnI4LVYxV20wbkVfOU02NDZ0TUNMRy1KTlg3UGVTWHduV1NuVmFoY3E4ZU5wUlBkM3hSb2NrLXZnMy1HWUJLUE5ZNGpva2c?oc=5",
+          "publisher": "Joseph Writer Anderson",
+          "first_seen": "2026-11-21T12:39:53Z"
+        },
+        "393a1b25e5c65a9fccd3": {
+          "title": "Major Pokémon Center TCG Orders Delayed At The Last Minute - Polygon.com",
+          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNajlHbjc0ckpISGdTQW9RMm56eE8tTHo3enIwNkw1b1FuUEEwVWtrR3VnSmpWNHF6cm5ZR0Y4UlN6bHV3NnJYc0pQU3VQckdibVZTWXRtMnUxSU9JMUZwdHFUeWtRbmJSZ2d0NVk0T0x0ek5Ua09kU3FITFBvYWhUVmxEX1FZUVlYVENlZHFyaXh4M0JBRXZn?oc=5",
+          "publisher": "Polygon.com",
+          "first_seen": "2026-11-21T12:39:53Z"
+        },
+        "bc4e6d2fb92dacabacf4": {
+          "title": "Look Into the Future of the Pokémon TCG in this Video Interview with YOSHIROTTEN - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPRUdJTUZLUzJPYTNVdlNVT3FOa3RsWHNXMnVTWEpLVVl1dEw5djg0RWF6a2dLZWNFV3E0blBxMDJNX1g5ZUd3R1p5enNaNHlLTG5Ucl9sNHMwUXBBdm1XcGp2R19CZ1k3Mjh3dWk0cnRiN20weDllTlZENnVrOWhUSTgzM19VamoyOFJ1ejFhRmtlQmVzYWNRYzQ0cW1ON0tucElMcVh1Z19DZGN3Y3VwTWxn?oc=5",
+          "publisher": "Pokemon.com",
+          "first_seen": "2026-11-21T12:39:53Z"
+        },
+        "77309971d6c400d335a4": {
+          "title": "Pokémon TCG: Full Release Schedule for 2026 and Beyond - IGN",
+          "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQemVmZEpoOXFDeTR0M2MwUUFSWlFlbDEyb3ZoWnUyWnJlMUhDbDRMWFUtb0ZBaTlBRFpqcHBsTV9VQW83WTl1b1RpOHVxcF9vbENvNTE3Si1KMGJ5RWdRalcyWTU1QmRwM0c4dW0yRmstOEozdjNESnU1NDBhcnhtdDRB?oc=5",
+          "publisher": "IGN",
+          "first_seen": "2026-11-21T12:39:53Z"
+        },
+        "cf455a44f5cbda433ca1": {
+          "title": "Pokémon TCG Live Celebrates the 2026 Pokémon World Championships - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQbEExTlBBWTgxSEZ4VDNLSlFDMnBTNDN4LVRJNlQ0MkpHV1NVTUdicWhIMzJfbFowemZ1Mm83bl82TTFacWZWR1FxT1RPWTZrTEdGM0JJWUZGdWlNYXc4al9oekFzSmdvd21HcHFTUjlWNUZGbzdyRUNqaWdEdjI2bmJIVGFQWlJWcDQxZUNlak83dkJuNktxMk9zR0w?oc=5",
+          "publisher": "Pokemon.com",
+          "first_seen": "2026-11-21T12:39:53Z"
+        },
+        "20ea7df795946633a49b": {
+          "title": "Pokémon Center Opens More Baffling 30th Anniversary TCG Orders - Polygon.com",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQeXhXUExKT0k1QWZQX243U0JuZnBqRGcwNXdQMU51OTN0Tlp0LVZscjZEWFVVdHlmUTJFTkU2YzVjVEJLQWc3Z2MtaVNGUGJlYjBVS0FxYk1IclgyRkZER0NkQmFFeG1lN0JOUVpzdHJEbEptamlNaWN1WFpMMWstbExDZS1fd1BpV2w4eWQyUFFWWWdPbnNtTlFTNA?oc=5",
+          "publisher": "Polygon.com",
+          "first_seen": "2026-11-21T12:39:53Z"
+        },
+        "d0614623f83b304a52f1": {
+          "title": "Pokémon TCG: 30th Celebration Tech Sticker Collection - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxON2dLSk5rcnV0ejdTRFRiNlFwVkdqeGIwYm1VWmNiYlJCMGdqNFhGR0hxdzlBX0VRVGJHTWpGSklBMFVXYTIzd1RRbF9KYkRmemRFdE5JOHZlXzNfZUtySE9vOGZfTDgwUmRYaE1FdEN6US1DUHJ2WUMxUmIwMFRGcnJsTTlMUjlfR19USGx6bWtNSmlSZXFrV01IZw?oc=5",
+          "publisher": "Pokemon.com",
+          "first_seen": "2026-11-21T12:39:53Z"
+        },
+        "4fdcc5cf73778e237347": {
+          "title": "Every Pokémon TCG Product Releasing in November 2026 - Joseph Writer Anderson",
+          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQQlc4enNQdUJUQzl6LXRiUTFYMmZDQTNNOU1yZS0zQ3pvWGZ2X3dadUxWR2l6bDNmOWpFOFI5Rk1NUlRCSkNWX0NHSVpBcDVwYmJ2VjRMTHhKbERFQk5CR2czTWg4ZjQ0ZFFCTmlpU3pPOGNjWlllRklwZ2V5NVdlME9uSE9YeEg5ZEt2NWROVUVZT0lyR2JyVg?oc=5",
+          "publisher": "Joseph Writer Anderson",
+          "first_seen": "2026-11-21T12:39:53Z"
         }
       },
       "articles": [
+        {
+          "key": "427ef71f69cb27e13977",
+          "title": "Pokémon Flowing Fists Preorders Are Already Live - Joseph Writer Anderson",
+          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOMDBoYkR1eUU3cjBsODhmelJTR0JScHFiTlVUMGZpM3pEcmFtbl9MX1g4aXBacF9WTkM4ZzNHekZxa3RZUzhVSUx5WG1LcnI4LVYxV20wbkVfOU02NDZ0TUNMRy1KTlg3UGVTWHduV1NuVmFoY3E4ZU5wUlBkM3hSb2NrLXZnMy1HWUJLUE5ZNGpva2c?oc=5",
+          "summary": "Pokémon Flowing Fists Preorders Are Already Live Joseph Writer Anderson",
+          "published": "Sat, 21 Nov 2026 08:15:51 GMT",
+          "publisher": "Joseph Writer Anderson",
+          "retailer": "Joseph Writer Anderson",
+          "retailer_key": "pokemon-news",
+          "image": "",
+          "category": "news",
+          "detected_at": "2026-11-21T12:39:53Z"
+        },
         {
           "key": "1607569ddc1f4ec735d2",
           "title": "Art of the Pokémon TCG: Mega Evolution—Delta Reign Expansion - Pokemon.com",
@@ -6092,7 +6153,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "af59f1eafbbf4e222abc",
@@ -6105,7 +6166,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "810075958029be908e7c",
@@ -6118,7 +6179,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "1c193e902a5765df54e4",
@@ -6131,7 +6192,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "3e8927bd816129e10567",
@@ -6144,7 +6205,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "2901e88f853fa77db967",
@@ -6160,19 +6221,6 @@
           "detected_at": "2026-11-21T04:02:00Z"
         },
         {
-          "key": "3907bb979e5c5f0bfd96",
-          "title": "Pokémon just dropped glass Evolution Stone replicas: Where to buy Fire, Water, and Thunder Stones - Mashable",
-          "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPV3FQT0cwR19mNmRBMUd2bTRkRE91UFhUZkIzWGpEOEZCUGVZYnl5X2Jrb2pQaEEzSlJZN2NKSnE1TmVGN1lreGlVWDlGZ0xlNTR4NEFWZnJWT0d3Ym9UcW16VE0zSVdSSnZYNGhUZnpzWDlraEZ4UDdoMzY3QmhWSGtkbkU?oc=5",
-          "summary": "Pokémon just dropped glass Evolution Stone replicas: Where to buy Fire, Water, and Thunder Stones Mashable",
-          "published": "Thu, 19 Nov 2026 19:57:59 GMT",
-          "publisher": "Mashable",
-          "retailer": "Mashable",
-          "retailer_key": "pokemon-news",
-          "image": "",
-          "category": "news",
-          "detected_at": "2026-11-20T08:33:59Z"
-        },
-        {
           "key": "b6e3be8e430f80340d46",
           "title": "How to Watch the 2027 Pokémon Latin America International Championships - Pokemon.com",
           "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNQ2NGd3ljQjRIbmNxNGVwM2NDTUlKRHNPdXpUMlBXWklPLThRRkFadUZFb185VlRwVWl4VHlEN2dyNGhDY3QwLTkzLVJTbVMxNGplR3hocUdfWUdGNWpSMEMwajhPc1lvaHZIS2ZxZy1GaFZBLVpJOEMtN1FiMlVTMjlsNzdfb2t3VFZHOFB6bVFUbGNhalZvNHJYWl9mTXNnLUFPcXB3?oc=5",
@@ -6183,7 +6231,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "da12b847af00b36d0d64",
@@ -6196,7 +6244,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "ab1687f730a8f25b5c9f",
@@ -6209,7 +6257,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "7fc2cdd7c160bc60d092",
@@ -6261,7 +6309,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "3ad7b178f7824d773664",
@@ -6274,7 +6322,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "46b0722c9e56819841dc",
@@ -6287,7 +6335,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "9830768a0363b9239d61",
@@ -6300,7 +6348,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "1e4fc7daea4985100a3c",
@@ -6313,7 +6361,20 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
+        },
+        {
+          "key": "3907bb979e5c5f0bfd96",
+          "title": "Pokémon just dropped glass Evolution Stone replicas: Where to buy Fire, Water, and Thunder Stones - Mashable",
+          "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPV3FQT0cwR19mNmRBMUd2bTRkRE91UFhUZkIzWGpEOEZCUGVZYnl5X2Jrb2pQaEEzSlJZN2NKSnE1TmVGN1lreGlVWDlGZ0xlNTR4NEFWZnJWT0d3Ym9UcW16VE0zSVdSSnZYNGhUZnpzWDlraEZ4UDdoMzY3QmhWSGtkbkU?oc=5",
+          "summary": "Pokémon just dropped glass Evolution Stone replicas: Where to buy Fire, Water, and Thunder Stones Mashable",
+          "published": "Sun, 15 Nov 2026 08:00:00 GMT",
+          "publisher": "Mashable",
+          "retailer": "Mashable",
+          "retailer_key": "pokemon-news",
+          "image": "",
+          "category": "news",
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "4292079a1188340e3085",
@@ -6352,7 +6413,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "20f5e86a58645fbe7865",
@@ -6365,7 +6426,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "c5f9379a6c6f609969ff",
@@ -6394,6 +6455,19 @@
           "detected_at": "2026-11-20T17:19:23Z"
         },
         {
+          "key": "77309971d6c400d335a4",
+          "title": "Pokémon TCG: Full Release Schedule for 2026 and Beyond - IGN",
+          "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQemVmZEpoOXFDeTR0M2MwUUFSWlFlbDEyb3ZoWnUyWnJlMUhDbDRMWFUtb0ZBaTlBRFpqcHBsTV9VQW83WTl1b1RpOHVxcF9vbENvNTE3Si1KMGJ5RWdRalcyWTU1QmRwM0c4dW0yRmstOEozdjNESnU1NDBhcnhtdDRB?oc=5",
+          "summary": "Pokémon TCG: Full Release Schedule for 2026 and Beyond IGN",
+          "published": "Mon, 09 Nov 2026 08:00:00 GMT",
+          "publisher": "IGN",
+          "retailer": "IGN",
+          "retailer_key": "pokemon-news",
+          "image": "",
+          "category": "news",
+          "detected_at": "2026-11-21T12:39:53Z"
+        },
+        {
           "key": "458902c4cd1b1fe738e0",
           "title": "Pokémon TCG: 30th Celebration Ultra-Premium Collections—Day & Night - Pokemon.com",
           "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPMkRFYnZZVl9kSU8yV213NnFsRFc3c0tfOHNkZUpFYnRVaFU0Sl8zU2E5dmU5a3JUbW9zdWZlZmxmaHBBUmN2T3RFYm96UGxESEl4cmtkQTA0WUktZ3RsUml2djdiejk2cVcwVmZmS19ibjZCVURPWldhejlDQzk2cDhrbHQxZFRaRGJjMUd5Q09TUkZraGwwWE5kRE5venRwMGE5U2dQS3B1U0E?oc=5",
@@ -6404,7 +6478,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "52668e1ae07ec706bd4d",
@@ -6417,7 +6491,20 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
+        },
+        {
+          "key": "393a1b25e5c65a9fccd3",
+          "title": "Major Pokémon Center TCG Orders Delayed At The Last Minute - Polygon.com",
+          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNajlHbjc0ckpISGdTQW9RMm56eE8tTHo3enIwNkw1b1FuUEEwVWtrR3VnSmpWNHF6cm5ZR0Y4UlN6bHV3NnJYc0pQU3VQckdibVZTWXRtMnUxSU9JMUZwdHFUeWtRbmJSZ2d0NVk0T0x0ek5Ua09kU3FITFBvYWhUVmxEX1FZUVlYVENlZHFyaXh4M0JBRXZn?oc=5",
+          "summary": "Major Pokémon Center TCG Orders Delayed At The Last Minute Polygon.com",
+          "published": "Thu, 05 Nov 2026 08:00:00 GMT",
+          "publisher": "Polygon.com",
+          "retailer": "Polygon.com",
+          "retailer_key": "pokemon-news",
+          "image": "",
+          "category": "news",
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "1c2f05d53238aab79f62",
@@ -6430,7 +6517,20 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
+        },
+        {
+          "key": "4fdcc5cf73778e237347",
+          "title": "Every Pokémon TCG Product Releasing in November 2026 - Joseph Writer Anderson",
+          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQQlc4enNQdUJUQzl6LXRiUTFYMmZDQTNNOU1yZS0zQ3pvWGZ2X3dadUxWR2l6bDNmOWpFOFI5Rk1NUlRCSkNWX0NHSVpBcDVwYmJ2VjRMTHhKbERFQk5CR2czTWg4ZjQ0ZFFCTmlpU3pPOGNjWlllRklwZ2V5NVdlME9uSE9YeEg5ZEt2NWROVUVZT0lyR2JyVg?oc=5",
+          "summary": "Every Pokémon TCG Product Releasing in November 2026 Joseph Writer Anderson",
+          "published": "Sun, 01 Nov 2026 07:00:00 GMT",
+          "publisher": "Joseph Writer Anderson",
+          "retailer": "Joseph Writer Anderson",
+          "retailer_key": "pokemon-news",
+          "image": "",
+          "category": "news",
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "f1a14cae59e90ea77886",
@@ -6469,7 +6569,20 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
+        },
+        {
+          "key": "20ea7df795946633a49b",
+          "title": "Pokémon Center Opens More Baffling 30th Anniversary TCG Orders - Polygon.com",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQeXhXUExKT0k1QWZQX243U0JuZnBqRGcwNXdQMU51OTN0Tlp0LVZscjZEWFVVdHlmUTJFTkU2YzVjVEJLQWc3Z2MtaVNGUGJlYjBVS0FxYk1IclgyRkZER0NkQmFFeG1lN0JOUVpzdHJEbEptamlNaWN1WFpMMWstbExDZS1fd1BpV2w4eWQyUFFWWWdPbnNtTlFTNA?oc=5",
+          "summary": "Pokémon Center Opens More Baffling 30th Anniversary TCG Orders Polygon.com",
+          "published": "Tue, 27 Oct 2026 07:00:00 GMT",
+          "publisher": "Polygon.com",
+          "retailer": "Polygon.com",
+          "retailer_key": "pokemon-news",
+          "image": "",
+          "category": "news",
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "cf85cfb67f4f049f2f4d",
@@ -6482,7 +6595,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "92c40ce498b557700c4b",
@@ -6495,7 +6608,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "0ea89d0faddfb24645b5",
@@ -6534,7 +6647,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "e3ec98c5cd4e4c71371b",
@@ -6547,7 +6660,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "9238ff601360f34cf263",
@@ -6560,7 +6673,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "94151c89e69fbc1aa631",
@@ -6573,7 +6686,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "82d90bba1eab2b45270b",
@@ -6586,7 +6699,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "982386a17eed7a5ef707",
@@ -6612,7 +6725,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "59d370a81b560a4f7824",
@@ -6625,7 +6738,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "c7424d0723ff696a0fa6",
@@ -6638,7 +6751,20 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-20T08:33:59Z"
+          "detected_at": "2026-11-21T12:39:53Z"
+        },
+        {
+          "key": "d0614623f83b304a52f1",
+          "title": "Pokémon TCG: 30th Celebration Tech Sticker Collection - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxON2dLSk5rcnV0ejdTRFRiNlFwVkdqeGIwYm1VWmNiYlJCMGdqNFhGR0hxdzlBX0VRVGJHTWpGSklBMFVXYTIzd1RRbF9KYkRmemRFdE5JOHZlXzNfZUtySE9vOGZfTDgwUmRYaE1FdEN6US1DUHJ2WUMxUmIwMFRGcnJsTTlMUjlfR19USGx6bWtNSmlSZXFrV01IZw?oc=5",
+          "summary": "Pokémon TCG: 30th Celebration Tech Sticker Collection Pokemon.com",
+          "published": "Wed, 16 Sep 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "retailer_key": "pokemon-news",
+          "image": "",
+          "category": "news",
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "996ddce1172ac4c8a3bf",
@@ -6651,7 +6777,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "056e439d8816b30ad031",
@@ -6664,7 +6790,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "7ac2ba60a1f5152713b4",
@@ -6690,7 +6816,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "795194e9f90ed529139f",
@@ -6703,7 +6829,20 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
+        },
+        {
+          "key": "bc4e6d2fb92dacabacf4",
+          "title": "Look Into the Future of the Pokémon TCG in this Video Interview with YOSHIROTTEN - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPRUdJTUZLUzJPYTNVdlNVT3FOa3RsWHNXMnVTWEpLVVl1dEw5djg0RWF6a2dLZWNFV3E0blBxMDJNX1g5ZUd3R1p5enNaNHlLTG5Ucl9sNHMwUXBBdm1XcGp2R19CZ1k3Mjh3dWk0cnRiN20weDllTlZENnVrOWhUSTgzM19VamoyOFJ1ejFhRmtlQmVzYWNRYzQ0cW1ON0tucElMcVh1Z19DZGN3Y3VwTWxn?oc=5",
+          "summary": "Look Into the Future of the Pokémon TCG in this Video Interview with YOSHIROTTEN Pokemon.com",
+          "published": "Tue, 18 Aug 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "retailer_key": "pokemon-news",
+          "image": "",
+          "category": "news",
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "6d680a6b1a0815135876",
@@ -6716,7 +6855,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "f61639ed0864478405d3",
@@ -6732,6 +6871,19 @@
           "detected_at": "2026-11-19T19:00:17Z"
         },
         {
+          "key": "cf455a44f5cbda433ca1",
+          "title": "Pokémon TCG Live Celebrates the 2026 Pokémon World Championships - Pokemon.com",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQbEExTlBBWTgxSEZ4VDNLSlFDMnBTNDN4LVRJNlQ0MkpHV1NVTUdicWhIMzJfbFowemZ1Mm83bl82TTFacWZWR1FxT1RPWTZrTEdGM0JJWUZGdWlNYXc4al9oekFzSmdvd21HcHFTUjlWNUZGbzdyRUNqaWdEdjI2bmJIVGFQWlJWcDQxZUNlak83dkJuNktxMk9zR0w?oc=5",
+          "summary": "Pokémon TCG Live Celebrates the 2026 Pokémon World Championships Pokemon.com",
+          "published": "Thu, 06 Aug 2026 07:00:00 GMT",
+          "publisher": "Pokemon.com",
+          "retailer": "Pokemon.com",
+          "retailer_key": "pokemon-news",
+          "image": "",
+          "category": "news",
+          "detected_at": "2026-11-21T12:39:53Z"
+        },
+        {
           "key": "af54a8f1fc5b27e8815f",
           "title": "Check Out Every Pokémon TCG Product Release in August 2026 - Pokemon.com",
           "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNcUxHUWNOdy1yMVMzNEthekVYNThCR0xBemRiQ3Q1cUJPTXdJUUZBNFRzRFpQcUZ0Q2trREozdC1rVTlEcmplS19ySFZxdVhUbm1SREg2VXJsdi0xQm9uU0ZhOVowZkRTX3JXY09sMWhtMjhqOGRjNk1yZWRhbkt6LUpLMkZpaER6WjBRSDk3WUs2U0t2?oc=5",
@@ -6742,7 +6894,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "4a02937972f8f71b0653",
@@ -6755,7 +6907,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "364622aa6ac9bc273e3c",
@@ -6768,7 +6920,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "b5f5512ec865b25cee11",
@@ -6781,7 +6933,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "4660888f7cda85e729cb",
@@ -6833,7 +6985,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "f2bb4d1c5d26ba6b3445",
@@ -6872,7 +7024,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "6fa27987f55dc8de13d4",
@@ -6911,7 +7063,7 @@
           "retailer_key": "pokemon-news",
           "image": "",
           "category": "news",
-          "detected_at": "2026-11-21T04:02:00Z"
+          "detected_at": "2026-11-21T12:39:53Z"
         },
         {
           "key": "f64f2ad1385cec44d2a1",
@@ -6955,9 +7107,9 @@
       ],
       "initialized": true,
       "source_url": "https://news.google.com/rss/search?q=%28Pokemon+TCG+OR+Pokemon+Center%29&hl=en-US&gl=US&ceid=US%3Aen",
-      "last_success": "2026-11-21T04:02:00Z",
+      "last_success": "2026-11-21T12:39:53Z",
       "last_item_count": 50,
-      "archive_count": 67,
+      "archive_count": 75,
       "last_successful_urls": [
         "https://news.google.com/rss/search?q=%28Pokemon+TCG+OR+Pokemon+Center%29&hl=en-US&gl=US&ceid=US%3Aen"
       ]
@@ -6972,10 +7124,10 @@
       "url": "https://www.pokemoncenter.com/category/new-releases",
       "response_url": "https://www.pokemoncenter.com/category/new-releases",
       "status": "warning",
-      "last_checked": "2026-11-21T04:00:34Z",
+      "last_checked": "2026-11-21T12:38:31Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 276,
+      "duration_ms": 296,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 1 KB, title=product markers=0, data-pid=0, product-like links=0, JSON blocks=0 The response was a very small page shell with no product links or JSON payload; this is not evidence of an empty catalog.",
       "notes": "Broad Pokémon Center new-release catalog. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -7001,10 +7153,10 @@
       "url": "https://www.pokemoncenter.com/category/back-in-stock",
       "response_url": "https://www.pokemoncenter.com/category/back-in-stock",
       "status": "warning",
-      "last_checked": "2026-11-21T04:00:34Z",
+      "last_checked": "2026-11-21T12:38:32Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 96,
+      "duration_ms": 127,
       "message": "BLOCKED: the returned page is an access-protection challenge, so current inventory could not be checked. Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 6 KB, title=Pardon Our Interruption; product markers=0, d, product-like links=0, JSON blocks=0, access-challenge marker detected",
       "notes": "Broad Pokémon Center back-in-stock catalog. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -7029,10 +7181,10 @@
       "url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "response_url": "https://www.target.com/s?searchTerm=pokemon&newSearch=false",
       "status": "warning",
-      "last_checked": "2026-11-21T04:00:34Z",
+      "last_checked": "2026-11-21T12:38:32Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 602,
+      "duration_ms": 463,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 137 KB, title=\"pokemon\" : Target; product markers=0, data-p, product-like links=0, JSON blocks=1",
       "notes": "Broad Pokémon search. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -7056,24 +7208,27 @@
       "type": "catalog",
       "url": "https://www.walmart.com/search?q=pokemon",
       "response_url": "https://www.walmart.com/search?q=pokemon",
-      "status": "ok",
-      "last_checked": "2026-11-21T04:00:37Z",
-      "items_found": 71,
-      "new_alerts": 50,
-      "duration_ms": 2955,
-      "message": "Fetched 1/1 configured URL(s). 71 relevant Pokémon listing(s) recognized.",
+      "status": "warning",
+      "last_checked": "2026-11-21T12:38:32Z",
+      "items_found": 0,
+      "new_alerts": 0,
+      "duration_ms": 223,
+      "message": "BLOCKED: the returned page is an access-protection challenge, so current inventory could not be checked. 186 last-known listing(s) are retained; they are not fresh stock confirmation. Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Last-known catalog retained: 186 listing(s); this scan did not confirm current inventory. Response diagnostics: 15 KB, title=Robot or human?; product markers=0, data-pid=, product-like links=0, JSON blocks=0, access-challenge marker detected",
       "notes": "Broad Pokémon search. Product categories are inferred from each listing.",
       "successful_urls": 1,
       "configured_urls": 1,
+      "last_known_items": 186,
       "response_health": {
         "successful": 1,
         "configured": 1,
         "failed": 0,
         "partial": false
       },
-      "access_blocked": false,
-      "parse_state": "products_recognized",
-      "freshness": "current_scan"
+      "parser_diagnostics": [
+        "15 KB, title=Robot or human?; product markers=0, data-pid=, product-like links=0, JSON blocks=0, access-challenge marker detected"
+      ],
+      "access_blocked": true,
+      "parse_state": "access_blocked"
     },
     {
       "id": "best-buy-pokemon-tcg",
@@ -7082,7 +7237,7 @@
       "type": "catalog",
       "url": "https://www.bestbuy.com/site/searchpage.jsp?browsedCategory=pcmcat1604992984556&id=pcat17071&qp=brandcharacter_facet%3DFranchise%7EPok%C3%A9mon&st=categoryid%24pcmcat1604992984556",
       "status": "error",
-      "last_checked": "2026-11-21T04:01:55Z",
+      "last_checked": "2026-11-21T12:39:49Z",
       "items_found": 0,
       "new_alerts": 0,
       "successful_urls": 0,
@@ -7098,10 +7253,10 @@
       "url": "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending",
       "response_url": "https://www.gamestop.com/search-new/?q=pokemon&sort_by=streetDateOrAvailableDate&sort_order=descending",
       "status": "warning",
-      "last_checked": "2026-11-21T04:01:57Z",
+      "last_checked": "2026-11-21T12:39:52Z",
       "items_found": 0,
       "new_alerts": 0,
-      "duration_ms": 2622,
+      "duration_ms": 2930,
       "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Response diagnostics: 630 KB, title=pokemon | Search Results | GameStop; product , product-like links=0, JSON blocks=1",
       "notes": "Broad Pokémon search sorted from newest release to oldest. Product categories are inferred from each listing.",
       "successful_urls": 1,
@@ -7124,14 +7279,29 @@
       "retailer": "Amazon",
       "type": "catalog",
       "url": "https://www.amazon.com/s?k=pokemon",
-      "status": "error",
-      "last_checked": "2026-11-21T04:01:59Z",
-      "items_found": 180,
+      "response_url": "https://www.amazon.com/s?k=pokemon",
+      "status": "warning",
+      "last_checked": "2026-11-21T12:39:53Z",
+      "items_found": 0,
       "new_alerts": 0,
-      "successful_urls": 0,
+      "duration_ms": 149,
+      "message": "Fetched 1/1 configured URL(s). The scan found no relevant Pokémon product/feed entries; this is not a confirmed stock scan. Last-known catalog retained: 180 listing(s); this scan did not confirm current inventory. Response diagnostics: 2 KB, title=product markers=0, data-pid=0, product-like links=0, JSON blocks=0 The response was a very small page shell with no product links or JSON payload; this is not evidence of an empty catalog.",
+      "notes": "One broad Pokémon search for cards, plush, figures, and other products. Product categories are inferred from each listing.",
+      "successful_urls": 1,
       "configured_urls": 1,
-      "message": "All configured URLs failed: All configured source URLs failed. https://www.amazon.com/s?k=pokemon: RetryError: HTTPSConnectionPool(host='www.amazon.com', port=443): Max retries exceeded with url: /s?k=pokemon (Caused by ResponseErr",
-      "notes": "One broad Pokémon search for cards, plush, figures, and other products. Product categories are inferred from each listing."
+      "last_known_items": 180,
+      "response_health": {
+        "successful": 1,
+        "configured": 1,
+        "failed": 0,
+        "partial": false
+      },
+      "parser_diagnostics": [
+        "2 KB, title=product markers=0, data-pid=0, product-like links=0, JSON blocks=0",
+        "The response was a very small page shell with no product links or JSON payload; this is not evidence of an empty catalog."
+      ],
+      "access_blocked": false,
+      "parse_state": "small_or_client_rendered_shell"
     },
     {
       "id": "pokemon-news-google",
@@ -7140,15 +7310,15 @@
       "type": "rss",
       "url": "https://news.google.com/rss/search?q=%28Pokemon+TCG+OR+Pokemon+Center%29&hl=en-US&gl=US&ceid=US%3Aen",
       "status": "ok",
-      "last_checked": "2026-11-21T04:02:00Z",
+      "last_checked": "2026-11-21T12:39:53Z",
       "items_found": 50,
-      "archive_count": 67,
-      "new_alerts": 1,
+      "archive_count": 75,
+      "new_alerts": 8,
       "successful_urls": 1,
       "configured_urls": 1,
-      "message": "50 recent Pokémon news article(s) loaded; 67 article(s) retained in the archive.",
+      "message": "50 recent Pokémon news article(s) loaded; 75 article(s) retained in the archive.",
       "notes": "News articles matching Pokémon TCG or Pokémon Center. The official Pokémon media portal is linked on the homepage.",
-      "elapsed_ms": 699,
+      "elapsed_ms": 656,
       "response_health": {
         "successful": 1,
         "configured": 1,
@@ -7158,6 +7328,166 @@
     }
   ],
   "events": [
+    {
+      "id": "3515a5004ea7c1a298",
+      "type": "news",
+      "title": "Pokémon Flowing Fists Preorders Are Already Live - Joseph Writer Anderson",
+      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOMDBoYkR1eUU3cjBsODhmelJTR0JScHFiTlVUMGZpM3pEcmFtbl9MX1g4aXBacF9WTkM4ZzNHekZxa3RZUzhVSUx5WG1LcnI4LVYxV20wbkVfOU02NDZ0TUNMRy1KTlg3UGVTWHduV1NuVmFoY3E4ZU5wUlBkM3hSb2NrLXZnMy1HWUJLUE5ZNGpva2c?oc=5",
+      "retailer": "Joseph Writer Anderson",
+      "retailer_key": "pokemon-news",
+      "category": "news",
+      "source_name": "Pokémon News · TCG & Pokémon Center",
+      "source_id": "pokemon-news-google",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "unknown",
+      "image": "",
+      "release_date": "",
+      "summary": "Pokémon Flowing Fists Preorders Are Already Live Joseph Writer Anderson",
+      "detected_at": "2026-11-21T12:39:53Z",
+      "email_sent": true
+    },
+    {
+      "id": "d746f588048318c887",
+      "type": "news",
+      "title": "Major Pokémon Center TCG Orders Delayed At The Last Minute - Polygon.com",
+      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNajlHbjc0ckpISGdTQW9RMm56eE8tTHo3enIwNkw1b1FuUEEwVWtrR3VnSmpWNHF6cm5ZR0Y4UlN6bHV3NnJYc0pQU3VQckdibVZTWXRtMnUxSU9JMUZwdHFUeWtRbmJSZ2d0NVk0T0x0ek5Ua09kU3FITFBvYWhUVmxEX1FZUVlYVENlZHFyaXh4M0JBRXZn?oc=5",
+      "retailer": "Polygon.com",
+      "retailer_key": "pokemon-news",
+      "category": "news",
+      "source_name": "Pokémon News · TCG & Pokémon Center",
+      "source_id": "pokemon-news-google",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "unknown",
+      "image": "",
+      "release_date": "",
+      "summary": "Major Pokémon Center TCG Orders Delayed At The Last Minute Polygon.com",
+      "detected_at": "2026-11-21T12:39:53Z",
+      "email_sent": true
+    },
+    {
+      "id": "26db149c399b2209d1",
+      "type": "news",
+      "title": "Look Into the Future of the Pokémon TCG in this Video Interview with YOSHIROTTEN - Pokemon.com",
+      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPRUdJTUZLUzJPYTNVdlNVT3FOa3RsWHNXMnVTWEpLVVl1dEw5djg0RWF6a2dLZWNFV3E0blBxMDJNX1g5ZUd3R1p5enNaNHlLTG5Ucl9sNHMwUXBBdm1XcGp2R19CZ1k3Mjh3dWk0cnRiN20weDllTlZENnVrOWhUSTgzM19VamoyOFJ1ejFhRmtlQmVzYWNRYzQ0cW1ON0tucElMcVh1Z19DZGN3Y3VwTWxn?oc=5",
+      "retailer": "Pokemon.com",
+      "retailer_key": "pokemon-news",
+      "category": "news",
+      "source_name": "Pokémon News · TCG & Pokémon Center",
+      "source_id": "pokemon-news-google",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "unknown",
+      "image": "",
+      "release_date": "",
+      "summary": "Look Into the Future of the Pokémon TCG in this Video Interview with YOSHIROTTEN Pokemon.com",
+      "detected_at": "2026-11-21T12:39:53Z",
+      "email_sent": true
+    },
+    {
+      "id": "b6f3dfafb3abad9603",
+      "type": "news",
+      "title": "Pokémon TCG: Full Release Schedule for 2026 and Beyond - IGN",
+      "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQemVmZEpoOXFDeTR0M2MwUUFSWlFlbDEyb3ZoWnUyWnJlMUhDbDRMWFUtb0ZBaTlBRFpqcHBsTV9VQW83WTl1b1RpOHVxcF9vbENvNTE3Si1KMGJ5RWdRalcyWTU1QmRwM0c4dW0yRmstOEozdjNESnU1NDBhcnhtdDRB?oc=5",
+      "retailer": "IGN",
+      "retailer_key": "pokemon-news",
+      "category": "news",
+      "source_name": "Pokémon News · TCG & Pokémon Center",
+      "source_id": "pokemon-news-google",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "unknown",
+      "image": "",
+      "release_date": "",
+      "summary": "Pokémon TCG: Full Release Schedule for 2026 and Beyond IGN",
+      "detected_at": "2026-11-21T12:39:53Z",
+      "email_sent": true
+    },
+    {
+      "id": "af71641c5d89b821f3",
+      "type": "news",
+      "title": "Pokémon TCG Live Celebrates the 2026 Pokémon World Championships - Pokemon.com",
+      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQbEExTlBBWTgxSEZ4VDNLSlFDMnBTNDN4LVRJNlQ0MkpHV1NVTUdicWhIMzJfbFowemZ1Mm83bl82TTFacWZWR1FxT1RPWTZrTEdGM0JJWUZGdWlNYXc4al9oekFzSmdvd21HcHFTUjlWNUZGbzdyRUNqaWdEdjI2bmJIVGFQWlJWcDQxZUNlak83dkJuNktxMk9zR0w?oc=5",
+      "retailer": "Pokemon.com",
+      "retailer_key": "pokemon-news",
+      "category": "news",
+      "source_name": "Pokémon News · TCG & Pokémon Center",
+      "source_id": "pokemon-news-google",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "unknown",
+      "image": "",
+      "release_date": "",
+      "summary": "Pokémon TCG Live Celebrates the 2026 Pokémon World Championships Pokemon.com",
+      "detected_at": "2026-11-21T12:39:53Z",
+      "email_sent": true
+    },
+    {
+      "id": "292bb8d4935267173e",
+      "type": "news",
+      "title": "Pokémon Center Opens More Baffling 30th Anniversary TCG Orders - Polygon.com",
+      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQeXhXUExKT0k1QWZQX243U0JuZnBqRGcwNXdQMU51OTN0Tlp0LVZscjZEWFVVdHlmUTJFTkU2YzVjVEJLQWc3Z2MtaVNGUGJlYjBVS0FxYk1IclgyRkZER0NkQmFFeG1lN0JOUVpzdHJEbEptamlNaWN1WFpMMWstbExDZS1fd1BpV2w4eWQyUFFWWWdPbnNtTlFTNA?oc=5",
+      "retailer": "Polygon.com",
+      "retailer_key": "pokemon-news",
+      "category": "news",
+      "source_name": "Pokémon News · TCG & Pokémon Center",
+      "source_id": "pokemon-news-google",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "unknown",
+      "image": "",
+      "release_date": "",
+      "summary": "Pokémon Center Opens More Baffling 30th Anniversary TCG Orders Polygon.com",
+      "detected_at": "2026-11-21T12:39:53Z",
+      "email_sent": true
+    },
+    {
+      "id": "b7dfc7cfdda2b8cb81",
+      "type": "news",
+      "title": "Pokémon TCG: 30th Celebration Tech Sticker Collection - Pokemon.com",
+      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxON2dLSk5rcnV0ejdTRFRiNlFwVkdqeGIwYm1VWmNiYlJCMGdqNFhGR0hxdzlBX0VRVGJHTWpGSklBMFVXYTIzd1RRbF9KYkRmemRFdE5JOHZlXzNfZUtySE9vOGZfTDgwUmRYaE1FdEN6US1DUHJ2WUMxUmIwMFRGcnJsTTlMUjlfR19USGx6bWtNSmlSZXFrV01IZw?oc=5",
+      "retailer": "Pokemon.com",
+      "retailer_key": "pokemon-news",
+      "category": "news",
+      "source_name": "Pokémon News · TCG & Pokémon Center",
+      "source_id": "pokemon-news-google",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "unknown",
+      "image": "",
+      "release_date": "",
+      "summary": "Pokémon TCG: 30th Celebration Tech Sticker Collection Pokemon.com",
+      "detected_at": "2026-11-21T12:39:53Z",
+      "email_sent": true
+    },
+    {
+      "id": "9f8b7f40e9002e36f4",
+      "type": "news",
+      "title": "Every Pokémon TCG Product Releasing in November 2026 - Joseph Writer Anderson",
+      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQQlc4enNQdUJUQzl6LXRiUTFYMmZDQTNNOU1yZS0zQ3pvWGZ2X3dadUxWR2l6bDNmOWpFOFI5Rk1NUlRCSkNWX0NHSVpBcDVwYmJ2VjRMTHhKbERFQk5CR2czTWg4ZjQ0ZFFCTmlpU3pPOGNjWlllRklwZ2V5NVdlME9uSE9YeEg5ZEt2NWROVUVZT0lyR2JyVg?oc=5",
+      "retailer": "Joseph Writer Anderson",
+      "retailer_key": "pokemon-news",
+      "category": "news",
+      "source_name": "Pokémon News · TCG & Pokémon Center",
+      "source_id": "pokemon-news-google",
+      "price": null,
+      "currency": "USD",
+      "previous_price": null,
+      "availability": "unknown",
+      "image": "",
+      "release_date": "",
+      "summary": "Every Pokémon TCG Product Releasing in November 2026 Joseph Writer Anderson",
+      "detected_at": "2026-11-21T12:39:53Z",
+      "email_sent": true
+    },
     {
       "id": "23ae61889348755475",
       "type": "first_seen",
@@ -9081,185 +9411,17 @@
       "summary": "Pokémon TCG Pocket: Deluxe Pack: Mega Coming Soon Pokemon.com",
       "detected_at": "2026-11-20T17:19:23Z",
       "email_sent": true
-    },
-    {
-      "id": "7fa6eaf64997a0dbc0",
-      "type": "first_seen",
-      "title": "Jravkfi Card Binder 4 Pocket‑Holds Up to 400 Cards | 3‑Ring Zipper Album with 50 Removable Sleeves, Ideal for Card Collect...",
-      "url": "https://amazon.com/dp/B0DFYQ7HWP",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "accessories",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 17.09,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/81Kz4G7aYSL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "f22d0cc3b5cb76e96b",
-      "type": "first_seen",
-      "title": "Christmas 2026 Holiday Advent Calendar for Kids, 25 Gift Pieces - Includes 25 Toy Character Figures",
-      "url": "https://amazon.com/dp/B0HL6TN9L7",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "collectibles",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 49.99,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/81dzKgwGYIL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "06ec576f3298d0216d",
-      "type": "first_seen",
-      "title": "Pokmon Collectible Card Tcg: Mega Moonlit Mega Moonlit, includes 1 promo card, 4 booster packs",
-      "url": "https://amazon.com/dp/B0GWK631XY",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "tcg",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 32.94,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/81x6CkPqADL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "cb6467372372dced79",
-      "type": "price_change",
-      "title": "Pokémon Assorted Cards, 50 Piece Mystery Pack",
-      "url": "https://amazon.com/dp/B09JMFLQRF",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "collectibles",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 6.88,
-      "currency": "USD",
-      "previous_price": 6.84,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/71pmDq3kl4L._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "Listed price changed.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": true,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "ad4073f74c4a537dc2",
-      "type": "price_change",
-      "title": "Pokemon TCG: Mega Zygarde ex Premium Collection with 8 Booster Packs | 8 Booster Packs",
-      "url": "https://amazon.com/dp/B0GNCGT9KK",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "tcg",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 64.95,
-      "currency": "USD",
-      "previous_price": 59.45,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/81K1PWw7QeL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "Listed price changed.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": true,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "830d64304900bf91d7",
-      "type": "first_seen",
-      "title": "Ravensburger Labyrinth Pokemon Board Game - A Strategic Maze Adventure for Family Nights & Pokemon Parties - Includes Pikachu, Bulbasaur, and More - Great Birthday Gift for Kids Ages 7 and Up",
-      "url": "https://amazon.com/dp/B08XM1GQ1K",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "collectibles",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 12.99,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/71t-WxTWd2L._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "4994f54b232b27186b",
-      "type": "first_seen",
-      "title": "Pokémon TCG: Mega Moonlit Tin, 4 Booster Pack",
-      "url": "https://amazon.com/dp/B0GV6WRPRV",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "tcg",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 41.67,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/81mm4CJGgFL._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
-    },
-    {
-      "id": "c45b666fe53d692be3",
-      "type": "first_seen",
-      "title": "Crayola Giant Pokemon Coloring Book (288 Pages), 2 Sticker Sheets, Coloring Book for Kids & Adults, Travel Activity, Pokemon Gift for Kids, 3+",
-      "url": "https://amazon.com/dp/B0DY324Q92",
-      "retailer": "Amazon",
-      "retailer_key": "amazon",
-      "category": "collectibles",
-      "source_name": "Amazon · Pokémon Products",
-      "source_id": "amazon-pokemon-products",
-      "price": 5.89,
-      "currency": "USD",
-      "previous_price": null,
-      "availability": "unknown",
-      "image": "https://m.media-amazon.com/images/I/61vwVelW2+L._AC_UL320_.jpg",
-      "release_date": "",
-      "summary": "First observed by PokéDrop Watch. Original listing and release dates are unverified.",
-      "detected_at": "2026-11-20T08:33:59Z",
-      "email_sent": false,
-      "pokemon_scoped": true
     }
   ],
   "pending_email": [],
   "email_status": "Email digest sent successfully.",
   "summary": {
     "enabled_sources": 8,
-    "successful_sources": 2,
-    "failed_sources": 2,
-    "warning_sources": 4,
-    "new_alerts": 11,
-    "first_seen": 40,
+    "successful_sources": 1,
+    "failed_sources": 1,
+    "warning_sources": 6,
+    "new_alerts": 8,
+    "first_seen": 0,
     "new_items": 0,
     "tracked_products": 366
   },
